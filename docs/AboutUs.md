@@ -4,6 +4,6 @@ Display | Name | Github Profile | Portfolio
 --------|:----:|:--------------:|:---------:
 ![](https://via.placeholder.com/100.png?text=Photo) | John Doe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
 ![](https://via.placeholder.com/100.png?text=Photo) | Don Joe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
-![](./image/shixi mugshot.png) | Fan Shixi | [Github](https://github.com/fansxx) | [Portfolio](docs/team/johndoe.md)
+![](./image/shixi_mugshot.png) | Fan Shixi | [Github](https://github.com/fansxx) | [Portfolio](docs/team/johndoe.md)
 ![](https://via.placeholder.com/100.png?text=Photo) | John Roe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
 ![](https://via.placeholder.com/100.png?text=Photo) | Don Roe | [Github](https://github.com/) | [Portfolio](docs/team/johndoe.md)
