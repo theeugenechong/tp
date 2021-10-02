@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
+    compile group: 'com.dopsun.chatbot', name: 'chatbot-cli', version: '0.3.0'
 }
 
 test {
@@ -29,11 +30,11 @@ test {
 }
 
 application {
-    mainClassName = "seedu.duke.Duke"
+    mainClassName = "cooper.Cooper"
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "cooper"
     archiveClassifier = null
 }
 
