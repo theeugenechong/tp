@@ -5,10 +5,8 @@ import cooper.finance.FinanceManager;
 
 public class AddCommand extends Command {
 
-    private boolean isInflow;
-    private String amount;
-
-
+    public boolean isInflow;
+    public String amount;
 
     public AddCommand(String amount, boolean isInflow) {
         super();
@@ -17,13 +15,8 @@ public class AddCommand extends Command {
     }
 
     public void execute() {
-
         FinanceManager.addBalance(Integer.parseInt(amount));
-
-        Ui.showSeperator();
-        System.out.println("Success!");
-        System.out.println("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
-        Ui.showSeperator();
+        Ui.printAddCommand(amount, isInflow);
     }
 
 }
