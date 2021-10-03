@@ -21,6 +21,7 @@ import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
 import cooper.command.UnrecognisedCommand;
 import cooper.exceptions.InvalidArgumentException;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
 
@@ -59,7 +60,7 @@ public class CommandParser extends ParserBase {
      * @param input command to be parsed
      * @return a command object, to be passed into command handler
      */
-    public Command parse(String input) throws InvalidArgumentException {
+    public Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException {
         if (input.split(" ").length < 2) {
             return parseSimpleInput(input);
         } else {
@@ -67,7 +68,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private Command parseSimpleInput(String input) {
+    private Command parseSimpleInput(String input) throws UnrecognisedCommandException {
         switch (input) {
         case "add":
             return new AddCommand();
@@ -80,11 +81,11 @@ public class CommandParser extends ParserBase {
         case "exit":
             return new ExitCommand();
         default:
-            return new UnrecognisedCommand(input);
+            throw new UnrecognisedCommandException();
         }
     }
 
-    private Command parseComplexInput(String input) throws InvalidArgumentException {
+    private Command parseComplexInput(String input) throws UnrecognisedCommandException, InvalidArgumentException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -95,10 +96,12 @@ public class CommandParser extends ParserBase {
             case "available":
                 return parseAvailableArgs(commandArgs);
             default:
-                return new UnrecognisedCommand(input);
+                throw new UnrecognisedCommandException();
             }
         } else {
-            return new UnrecognisedCommand(input);
+            throw new UnrecognisedCommandException();
+        }
+    }
         }
     }
 
