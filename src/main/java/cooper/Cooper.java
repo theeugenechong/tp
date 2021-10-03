@@ -29,6 +29,8 @@ public class Cooper {
     public void run() {
         ui.showLogo();
         ui.showGreetingMessage();
+
+
         while (true) {
             try {
                 ui.showPrompt();
