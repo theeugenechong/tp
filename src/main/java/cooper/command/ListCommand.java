@@ -10,10 +10,7 @@ public class ListCommand extends Command {
     }
 
     public void execute() {
-        Ui.showSeperator();
-        System.out.println("This is the company's current Balance Sheet: ");
-        FinanceManager.printBalanceSheet();
-        Ui.showSeperator();
+        Ui.printList();
     }
 
 }
