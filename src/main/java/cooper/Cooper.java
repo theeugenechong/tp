@@ -3,6 +3,7 @@ package cooper;
 import java.net.URISyntaxException;
 
 import cooper.command.Command;
+import cooper.finance.FinanceManager;
 import cooper.ui.Ui;
 import cooper.parser.CommandParser;
 import cooper.exceptions.FinishAppException;
@@ -13,9 +14,11 @@ import cooper.exceptions.InvalidArgumentException;
 public class Cooper {
     private Ui ui;
     private CommandParser commandParser;
+    private FinanceManager financeManager;
 
     public Cooper() {
         ui = new Ui(System.in, System.out);
+        financeManager = new FinanceManager();
         try {
             commandParser = new CommandParser(ui);
         } catch (URISyntaxException e) {

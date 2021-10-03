@@ -29,7 +29,7 @@ public class Ui {
 
     static final String SEPERATOR = "---------------";
 
-    private PrintStream printStream;
+    private static PrintStream printStream;
     private Scanner scanner;
 
     /**
@@ -53,7 +53,7 @@ public class Ui {
         show(GREETING);
     }
 
-    public void showSeperator() {
+    public static void showSeperator() {
         show(SEPERATOR);
     }
 
@@ -109,7 +109,7 @@ public class Ui {
         printStream.close();
     }
 
-    private void show(String printMessage) {
+    private static void show(String printMessage) {
         printStream.println(printMessage);
     }
 

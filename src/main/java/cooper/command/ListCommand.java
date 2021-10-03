@@ -1,5 +1,8 @@
 package cooper.command;
 
+import cooper.ui.Ui;
+import cooper.finance.FinanceManager;
+
 public class ListCommand extends Command {
 
     public ListCommand() {
@@ -7,7 +10,10 @@ public class ListCommand extends Command {
     }
 
     public void execute() {
-        System.out.println("I want to execute this [list] command, but I do not know how!");
+        Ui.showSeperator();
+        System.out.println("This is the company's current Balance Sheet: ");
+        FinanceManager.printBalanceSheet();
+        Ui.showSeperator();
     }
 
 }
