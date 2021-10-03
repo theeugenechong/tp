@@ -71,14 +71,10 @@ public class CommandParser extends ParserBase {
 
     private Command parseSimpleInput(String input) throws InvalidCommandException {
         switch (input) {
-        case "add":
-            return new AddCommand();
         case "list":
             return new ListCommand();
         case "help":
             return new HelpCommand();
-        case "login":
-            return new LoginCommand();
         case "meetings":
             return new MeetingsCommand();
         case "exit":
@@ -99,6 +95,10 @@ public class CommandParser extends ParserBase {
             switch (command) {
             case "available":
                 return parseAvailableArgs(commandArgs);
+            case "login":
+                return parseLoginArgs(commandArgs);
+            case "add":
+                return parseAddArgs(commandArgs);
             default:
                 throw new InvalidCommandException();
             }
@@ -108,6 +108,54 @@ public class CommandParser extends ParserBase {
     }
 
 
+    private Command parseAddArgs(List<Argument> commandArgs) throws InvalidArgumentException {
+        String amount = "";
+        boolean isInflow = true;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+                case ("amount-hint"):
+                    if (argVal.charAt(0) == '(' && argVal.charAt(argVal.length()-1) == ')') {
+                        isInflow = false;
+                        amount = argVal.substring(1,argVal.length()-1);
+                    } else {
+                        isInflow = true;
+                        amount = argVal;
+                    }
+                    break;
+                default:
+                    throw new InvalidArgumentException();
+            }
+        }
+        return new AddCommand(amount, isInflow);
+    }
+    private Command parseLoginArgs(List<Argument> commandArgs) throws InvalidArgumentException {
+        Command command = new LoginCommand();
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            System.out.println("Argment name: " + argName);
+            System.out.println("Argment val: " + argVal);
+            /*
+            switch (argName) {
+            case "task-hint":
+                command.setTaskDescription(argVal);
+                break;
+            /
+            case "date-hint":
+                command.setTimeInfo(argVal);
+                break;
+            /
+            default:
+                ui.showText("Unrecognised argument for todo: " + argName);
+                throw new InvalidArgumentException();
+            }
+            */
+        }
+        return command;
+
+    }
     private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
         Command command = new AvailableCommand();
         /*
