@@ -7,6 +7,7 @@ import cooper.parser.CommandParser;
 import cooper.ui.Ui;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 public class Verifier {
 
@@ -23,23 +24,23 @@ public class Verifier {
         while (!canAccess) {
             String input = Ui.getInput();
             try {
-                AccessMethod accessMethod = commandParser.parseLoginRegisterDetails(input);
-                if (accessMethod.isRegisteredUser(registeredUsers)) {
-                    if (accessMethod instanceof Login) {
-                        canAccess = ((Login) accessMethod).hasCorrectRole(registeredUsers);
-                    } else if (accessMethod instanceof Registration) {
-                        ((Registration) accessMethod).askUserToLogin();
+                SignIn signIn = commandParser.parseLoginRegisterDetails(input);
+                if (signIn.isRegisteredUser(registeredUsers)) {
+                    if (signIn instanceof Login) {
+                        canAccess = ((Login) signIn).hasCorrectRole(registeredUsers);
+                    } else if (signIn instanceof Registration) {
+                        ((Registration) signIn).askUserToLogin();
                     }
                 } else {
-                    if (accessMethod instanceof Login) {
-                        ((Login) accessMethod).askUserToRegister();
-                    } else if (accessMethod instanceof Registration) {
-                        ((Registration) accessMethod).registerUser(registeredUsers);
+                    if (signIn instanceof Login) {
+                        ((Login) signIn).askUserToRegister();
+                    } else if (signIn instanceof Registration) {
+                        ((Registration) signIn).registerUser(registeredUsers);
                     }
                 }
             } catch (UnrecognisedCommandException e) {
                 Ui.showUnrecognisedCommandError();
-            } catch (InvalidArgumentException e) {
+            } catch (InvalidArgumentException | NoSuchElementException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (InvalidUserRoleException e) {
                 Ui.showInvalidUserRoleError();

@@ -18,7 +18,6 @@ public class Cooper {
     private Verifier verifier;
 
     public Cooper() {
-
         financeManager = new FinanceManager();
 
         try {
@@ -38,7 +37,6 @@ public class Cooper {
         Ui.showIntroduction();
 
         verifier.verify();
-
 
         while (true) {
             try {
