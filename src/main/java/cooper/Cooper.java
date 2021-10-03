@@ -20,10 +20,10 @@ public class Cooper {
     public Cooper() {
 
         financeManager = new FinanceManager();
-        verifier = new Verifier(new HashMap<>(), commandParser);
 
         try {
             commandParser = new CommandParser();
+            verifier = new Verifier(new HashMap<>(), commandParser);
         } catch (URISyntaxException e) {
             Ui.showInvalidFilePathError();
             Ui.showBye();

@@ -1,5 +1,7 @@
 package cooper.ui;
 
+import cooper.finance.FinanceManager;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -120,4 +122,21 @@ public class Ui {
         printStream.println(printMessage);
     }
 
+    public static void printList() {
+        show(LINE);
+        show("This is the company's current Balance Sheet:");
+        for (int i = 0; i < FinanceManager.balanceSheet.size(); i++) {
+            if (FinanceManager.balanceSheet.size() != 0) {
+                show(i + 1 + ". " + FinanceManager.balanceSheet.get(i));
+            }
+        }
+        show (LINE);
+    }
+
+    public static void printAddCommand(String amount, boolean isInflow) {
+        show(LINE);
+        show("Success!");
+        show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
+        show(LINE);
+    }
 }
