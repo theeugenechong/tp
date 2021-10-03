@@ -19,8 +19,8 @@ import cooper.command.ListCommand;
 import cooper.command.LoginCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
+import cooper.command.UnrecognisedCommand;
 import cooper.exceptions.InvalidArgumentException;
-import cooper.exceptions.InvalidCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
 
@@ -28,29 +28,27 @@ import cooper.util.Util;
 public class CommandParser extends ParserBase {
 
     private Parser parser;
-    private Ui ui;
 
     /**
      * Constructor. Initialise internal parser.
      */
-    public CommandParser(Ui ui) throws URISyntaxException {
+    public CommandParser() throws URISyntaxException {
         super();
 
-        this.ui = ui;
         try {
             InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
 
-            File commandSetTmpFile = Util.inputStreamtoTmpFile(commandSetInputStream,
+            File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
                     System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
 
             InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
-            File trainingTmpFile = Util.inputStreamtoTmpFile(trainingPathInputStream,
+            File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
                     System.getProperty("user.dir") + "/tmp", "/tmp_file_training.txt");
 
             parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
 
         } catch (IOException e) {
-            ui.showText("Error encountered when creating temp file: "
+            Ui.showText("Error encountered when creating temp file: "
                     + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
                     + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
         }
@@ -59,9 +57,9 @@ public class CommandParser extends ParserBase {
     /**
      * API to parse a command in string.
      * @param input command to be parsed
-     * @return a command object, to be passed into commandhandler
+     * @return a command object, to be passed into command handler
      */
-    public Command parse(String input) throws InvalidCommandException, InvalidArgumentException {
+    public Command parse(String input) throws InvalidArgumentException {
         if (input.split(" ").length < 2) {
             return parseSimpleInput(input);
         } else {
@@ -69,7 +67,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private Command parseSimpleInput(String input) throws InvalidCommandException {
+    private Command parseSimpleInput(String input) {
         switch (input) {
         case "add":
             return new AddCommand();
@@ -77,19 +75,16 @@ public class CommandParser extends ParserBase {
             return new ListCommand();
         case "help":
             return new HelpCommand();
-        case "login":
-            return new LoginCommand();
         case "meetings":
             return new MeetingsCommand();
         case "exit":
             return new ExitCommand();
         default:
-            ui.showText("Unrecognised command: " + input);
-            throw new InvalidCommandException();
+            return new UnrecognisedCommand(input);
         }
     }
 
-    private Command parseComplexInput(String input) throws InvalidCommandException, InvalidArgumentException {
+    private Command parseComplexInput(String input) throws InvalidArgumentException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -100,13 +95,12 @@ public class CommandParser extends ParserBase {
             case "available":
                 return parseAvailableArgs(commandArgs);
             default:
-                throw new InvalidCommandException();
+                return new UnrecognisedCommand(input);
             }
         } else {
-            throw new InvalidCommandException();
+            return new UnrecognisedCommand(input);
         }
     }
-
 
     private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
         Command command = new AvailableCommand();

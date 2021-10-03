@@ -12,7 +12,6 @@ import com.dopsun.chatbot.cli.input.FileCommandSet;
 import com.dopsun.chatbot.cli.input.FileTrainingSet;
 import com.dopsun.chatbot.cli.input.TrainingSet;
 import cooper.exceptions.InvalidArgumentException;
-import cooper.exceptions.InvalidCommandException;
 
 public abstract class ParserBase {
 
@@ -27,7 +26,7 @@ public abstract class ParserBase {
      * @param input command to be parsed
      * @return
      */
-    public abstract Object parse(String input) throws InvalidCommandException, InvalidArgumentException;
+    public abstract Object parse(String input) throws InvalidArgumentException;
 
     /**
      * A parser takes in a schema. Every child class needs to have its own shcema.

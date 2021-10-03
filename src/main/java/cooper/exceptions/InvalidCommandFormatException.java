@@ -1,5 +1,5 @@
 package cooper.exceptions;
 
-public class UnrecognisedCommandException extends Exception {
+public class InvalidCommandFormatException extends Exception {
   //no other code needed
 }
