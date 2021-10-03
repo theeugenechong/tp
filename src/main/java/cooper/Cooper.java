@@ -34,6 +34,7 @@ public class Cooper {
 
         verifier.verify();
 
+
         while (true) {
             try {
                 String input = Ui.getInput();
