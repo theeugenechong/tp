@@ -40,6 +40,18 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showPleaseRegisterMessage() {
+        show(LINE);
+        show("Your username does not exist, please register!");
+        show(LINE);
+    }
+
+    public static void showPleaseLoginMessage() {
+        show(LINE);
+        show("Your username already exists, please login!");
+        show(LINE);
+    }
+
     public static void showText(String text) {
         show(text);
     }
@@ -56,9 +68,8 @@ public class Ui {
     /**
      * Exception message to show invalid command error.
      **/
-    public static void showUnrecognisedCommandError(String input) {
+    public static void showUnrecognisedCommandError() {
         show(LINE);
-        showText("Unrecognised command: " + input);
         show("I don't recognise the command you entered. Enter [help] to view available commands.");
         show(LINE);
     }

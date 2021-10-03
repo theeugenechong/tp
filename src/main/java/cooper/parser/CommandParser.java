@@ -16,14 +16,20 @@ import cooper.command.AvailableCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
 import cooper.command.ListCommand;
-import cooper.command.LoginCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
-import cooper.command.UnrecognisedCommand;
 import cooper.exceptions.InvalidArgumentException;
+import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
+import cooper.verification.AccessMethod;
+import cooper.verification.Login;
+import cooper.verification.Registration;
+import cooper.verification.UserDetails;
+import cooper.verification.roles.Admin;
+import cooper.verification.roles.Employee;
+import cooper.verification.roles.UserRole;
 
 
 public class CommandParser extends ParserBase {
@@ -102,7 +108,55 @@ public class CommandParser extends ParserBase {
             throw new UnrecognisedCommandException();
         }
     }
+
+    public AccessMethod parseLoginRegisterDetails(String input) throws UnrecognisedCommandException,
+            InvalidArgumentException, InvalidUserRoleException {
+        Optional<ParseResult> optResult = parser.tryParse(input);
+        if (optResult.isPresent()) {
+            var result = optResult.get();
+            String command = result.allCommands().get(0).name();
+            List<Argument> commandArgs = result.allCommands().get(0).arguments();
+            switch (command) {
+            case "login":
+                UserDetails userDetails = parseLoginRegisterArgs(commandArgs);
+                return new Login(userDetails);
+            case "register":
+                userDetails = parseLoginRegisterArgs(commandArgs);
+                return new Registration(userDetails);
+            default:
+                throw new UnrecognisedCommandException();
+            }
+        } else {
+            throw new UnrecognisedCommandException();
         }
+    }
+
+    private UserDetails parseLoginRegisterArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
+            InvalidArgumentException {
+        String username = null;
+        UserRole userRole = null;
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "username-hint":
+                username = argVal;
+                break;
+            case "role-hint":
+                if (argVal.equals("admin")) {
+                    userRole = new Admin();
+                } else if (argVal.equals("employee")) {
+                    userRole = new Employee();
+                } else {
+                    throw new InvalidUserRoleException();
+                }
+                break;
+            default:
+                throw new InvalidArgumentException();
+            }
+        }
+        return new UserDetails(username, userRole);
     }
 
     private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
