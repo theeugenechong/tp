@@ -23,7 +23,7 @@ import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
-import cooper.verification.AccessMethod;
+import cooper.verification.SignIn;
 import cooper.verification.Login;
 import cooper.verification.Registration;
 import cooper.verification.UserDetails;
