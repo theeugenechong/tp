@@ -1,54 +1,51 @@
 package cooper;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import cooper.command.Command;
-import cooper.ui.Ui;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
-import cooper.exceptions.FinishAppException;
-import cooper.exceptions.InvalidCommandException;
 import cooper.exceptions.InvalidArgumentException;
-
+import cooper.ui.Ui;
+import cooper.verification.Verifier;
 
 public class Cooper {
-    private Ui ui;
+
     private CommandParser commandParser;
+    private Verifier verifier;
 
     public Cooper() {
-        ui = new Ui(System.in, System.out);
         try {
-            commandParser = new CommandParser(ui);
+            commandParser = new CommandParser();
+            verifier = new Verifier(new HashMap<>(), commandParser);
         } catch (URISyntaxException e) {
-            ui.showInvalidFilePathError();
-            ui.showBye();
-            ui.closeStreams();
+            Ui.showInvalidFilePathError();
+            Ui.showBye();
+            Ui.closeStreams();
             System.exit(0);
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
-        ui.showLogo();
-        ui.showGreetingMessage();
+        Ui.showLogo();
+        Ui.showIntroduction();
+
+        verifier.verify();
 
 
         while (true) {
             try {
-                ui.showPrompt();
-                String input = ui.getInput();
+                String input = Ui.getInput();
                 Command command = commandParser.parse(input);
-                if (command != null) {
-                    command.execute();
-                }
-            } catch (InvalidCommandException e) {
-                ui.showInvalidCommandError();
+                command.execute();
             } catch (InvalidArgumentException e) {
-                ui.showInvalidCommandArgumentError();
+                Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
-                ui.showInvalidNumberError();
-            } catch (FinishAppException e) {
-                ui.showBye();
-                ui.closeStreams();
-                System.exit(0);
+                Ui.showInvalidNumberError();
+            } catch (UnrecognisedCommandException e) {
+                Ui.showUnrecognisedCommandError();
             }
         }
     }
