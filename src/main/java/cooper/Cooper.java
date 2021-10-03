@@ -4,21 +4,26 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import cooper.command.Command;
+import cooper.finance.FinanceManager;
+import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
 import cooper.exceptions.InvalidArgumentException;
-import cooper.ui.Ui;
 import cooper.verification.Verifier;
 
 public class Cooper {
 
     private CommandParser commandParser;
+    private FinanceManager financeManager;
     private Verifier verifier;
 
     public Cooper() {
+
+        financeManager = new FinanceManager();
+        verifier = new Verifier(new HashMap<>(), commandParser);
+
         try {
             commandParser = new CommandParser();
-            verifier = new Verifier(new HashMap<>(), commandParser);
         } catch (URISyntaxException e) {
             Ui.showInvalidFilePathError();
             Ui.showBye();

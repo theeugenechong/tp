@@ -186,8 +186,8 @@ public class CommandParser extends ParserBase {
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
-            System.out.println("Argment name: " + argName);
-            System.out.println("Argment val: " + argVal);
+            System.out.println("Argument name: " + argName);
+            System.out.println("Argument val: " + argVal);
             /*
             switch (argName) {
             case "task-hint":
