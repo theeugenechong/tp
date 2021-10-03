@@ -139,4 +139,11 @@ public class Ui {
         show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
         show(LINE);
     }
+
+    public static void printAvailableCommand(String time, String username) {
+        show(LINE);
+        show("Success!");
+        show(username + "'s availability has been added to " + time);
+        show(LINE);
+    }
 }

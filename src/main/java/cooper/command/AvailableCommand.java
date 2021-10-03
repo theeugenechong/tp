@@ -16,7 +16,7 @@ public class AvailableCommand extends Command {
 
     public void execute() {
         meetingManager.addAvailability(time, username);
-        Ui.showText("I've added " + username + " to " + time);
+        Ui.printAvailableCommand(time, username);
     }
 
 }

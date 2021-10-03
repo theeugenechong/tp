@@ -196,7 +196,7 @@ public class CommandParser extends ParserBase {
                 time = argVal;
                 break;
             default:
-                ui.showText("Unrecognised argument for available");
+                Ui.showText("Unrecognised argument for available");
                 throw new InvalidArgumentException();
             }
         }
