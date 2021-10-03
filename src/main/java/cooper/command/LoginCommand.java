@@ -6,6 +6,7 @@ public class LoginCommand extends Command {
         super();
     }
 
+    @Override
     public void execute() {
         System.out.println("I want to execute this [login] command, but I do not know how!");
     }

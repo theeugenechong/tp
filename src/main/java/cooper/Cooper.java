@@ -3,50 +3,39 @@ package cooper;
 import java.net.URISyntaxException;
 
 import cooper.command.Command;
-import cooper.ui.Ui;
 import cooper.parser.CommandParser;
-import cooper.exceptions.FinishAppException;
-import cooper.exceptions.InvalidCommandException;
 import cooper.exceptions.InvalidArgumentException;
+import cooper.ui.Ui;
 
 
 public class Cooper {
-    private Ui ui;
+
     private CommandParser commandParser;
 
     public Cooper() {
-        ui = new Ui(System.in, System.out);
         try {
-            commandParser = new CommandParser(ui);
+            commandParser = new CommandParser();
         } catch (URISyntaxException e) {
-            ui.showInvalidFilePathError();
-            ui.showBye();
-            ui.closeStreams();
+            Ui.showInvalidFilePathError();
+            Ui.showBye();
+            Ui.closeStreams();
             System.exit(0);
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
-        ui.showLogo();
-        ui.showGreetingMessage();
+        Ui.showLogo();
+        Ui.showIntroduction();
         while (true) {
             try {
-                ui.showPrompt();
-                String input = ui.getInput();
+                String input = Ui.getInput();
                 Command command = commandParser.parse(input);
-                if (command != null) {
-                    command.execute();
-                }
-            } catch (InvalidCommandException e) {
-                ui.showInvalidCommandError();
+                command.execute();
             } catch (InvalidArgumentException e) {
-                ui.showInvalidCommandArgumentError();
+                Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
-                ui.showInvalidNumberError();
-            } catch (FinishAppException e) {
-                ui.showBye();
-                ui.closeStreams();
-                System.exit(0);
+                Ui.showInvalidNumberError();
             }
         }
     }
