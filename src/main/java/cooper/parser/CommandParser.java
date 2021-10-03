@@ -97,8 +97,6 @@ public class CommandParser extends ParserBase {
             switch (command) {
             case "available":
                 return parseAvailableArgs(commandArgs);
-            case "login":
-                return parseLoginArgs(commandArgs);
             case "add":
                 return parseAddArgs(commandArgs);
             default:
@@ -181,32 +179,7 @@ public class CommandParser extends ParserBase {
         }
         return new AddCommand(amount, isInflow);
     }
-    private Command parseLoginArgs(List<Argument> commandArgs) throws InvalidArgumentException {
-        Command command = new LoginCommand();
-        for (Argument a : commandArgs) {
-            String argName = a.name();
-            String argVal = a.value().get();
-            System.out.println("Argument name: " + argName);
-            System.out.println("Argument val: " + argVal);
-            /*
-            switch (argName) {
-            case "task-hint":
-                command.setTaskDescription(argVal);
-                break;
-            /
-            case "date-hint":
-                command.setTimeInfo(argVal);
-                break;
-            /
-            default:
-                ui.showText("Unrecognised argument for todo: " + argName);
-                throw new InvalidArgumentException();
-            }
-            */
-        }
-        return command;
 
-    }
     private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
         Command command = new AvailableCommand();
         /*
