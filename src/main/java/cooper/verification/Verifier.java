@@ -37,8 +37,12 @@ public class Verifier {
                         ((Registration) accessMethod).registerUser(registeredUsers);
                     }
                 }
-            } catch (UnrecognisedCommandException | InvalidArgumentException | InvalidUserRoleException e) {
-                e.printStackTrace();
+            } catch (UnrecognisedCommandException e) {
+                Ui.showUnrecognisedCommandError();
+            } catch (InvalidArgumentException e) {
+                Ui.showInvalidCommandArgumentError();
+            } catch (InvalidUserRoleException e) {
+                Ui.showInvalidUserRoleError();
             }
         }
     }

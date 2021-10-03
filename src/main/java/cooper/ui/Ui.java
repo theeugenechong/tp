@@ -52,6 +52,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showInvalidUserRoleError() {
+        show(LINE);
+        show("Invalid role entered! Role can only be admin or employee.");
+        show(LINE);
+    }
+
     public static void showText(String text) {
         show(text);
     }
