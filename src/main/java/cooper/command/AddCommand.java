@@ -1,15 +1,12 @@
 package cooper.command;
 
+import cooper.ui.Ui;
+import cooper.finance.FinanceManager;
+
 public class AddCommand extends Command {
 
-    private boolean isInflow;
-    private String amount;
-
-    public AddCommand() {
-        super();
-        isInflow = true;
-        amount = "";
-    }
+    public boolean isInflow;
+    public String amount;
 
     public AddCommand(String amount, boolean isInflow) {
         super();
@@ -18,9 +15,8 @@ public class AddCommand extends Command {
     }
 
     public void execute() {
-        System.out.println("I want to execute this [add] command, but I do not know how!");
-        System.out.println("Amount: " + amount);
-        System.out.println("isInflow: " + isInflow);
+        FinanceManager.addBalance(Integer.parseInt(amount));
+        Ui.printAddCommand(amount, isInflow);
     }
 
 }
