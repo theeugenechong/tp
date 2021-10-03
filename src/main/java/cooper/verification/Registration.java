@@ -4,7 +4,7 @@ import cooper.ui.Ui;
 
 import java.util.HashMap;
 
-public class Registration extends AccessMethod {
+public class Registration extends SignIn {
 
     public Registration(UserDetails userDetails) {
         super(userDetails);

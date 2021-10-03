@@ -5,10 +5,8 @@ import cooper.finance.FinanceManager;
 
 public class AddCommand extends Command {
 
-    public static boolean isInflow;
-    public static String amount;
-
-
+    public boolean isInflow;
+    public String amount;
 
     public AddCommand(String amount, boolean isInflow) {
         super();
@@ -17,7 +15,6 @@ public class AddCommand extends Command {
     }
 
     public void execute() {
-
         FinanceManager.addBalance(Integer.parseInt(amount));
         Ui.printAddCommand(amount, isInflow);
     }
