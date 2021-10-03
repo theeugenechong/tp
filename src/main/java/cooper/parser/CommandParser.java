@@ -182,28 +182,25 @@ public class CommandParser extends ParserBase {
     }
 
     private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
-        Command command = new AvailableCommand();
-        /*
-        command.setTaskType(TaskType.TODO);
+        String time = "";
+        String username = "";
+
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "task-hint":
-                command.setTaskDescription(argVal);
+            case "username-hint":
+                username = argVal;
                 break;
-            /
-            case "date-hint":
-                command.setTimeInfo(argVal);
+            case "time-hint":
+                time = argVal;
                 break;
-            /
             default:
-                ui.showText("Unrecognised argument for todo: " + argName);
+                ui.showText("Unrecognised argument for available");
                 throw new InvalidArgumentException();
             }
         }
-        */
-        return command;
+        return new AvailableCommand(time, username);
     }
 
 }
