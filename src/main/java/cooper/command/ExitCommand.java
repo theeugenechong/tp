@@ -1,5 +1,7 @@
 package cooper.command;
 
+import cooper.ui.Ui;
+
 public class ExitCommand extends Command {
 
     public ExitCommand() {
@@ -7,7 +9,9 @@ public class ExitCommand extends Command {
     }
 
     public void execute() {
-        System.out.println("I want to execute this [exit] command, but I do not know how!");
+        Ui.showBye();
+        Ui.closeStreams();
+        System.exit(0);
     }
 
 }
