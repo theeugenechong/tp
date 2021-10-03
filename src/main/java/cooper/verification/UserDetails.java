@@ -1,7 +1,5 @@
 package cooper.verification;
 
-import cooper.verification.roles.UserRole;
-
 public class UserDetails {
 
     private final String username;

@@ -27,9 +27,7 @@ import cooper.verification.AccessMethod;
 import cooper.verification.Login;
 import cooper.verification.Registration;
 import cooper.verification.UserDetails;
-import cooper.verification.roles.Admin;
-import cooper.verification.roles.Employee;
-import cooper.verification.roles.UserRole;
+import cooper.verification.UserRole;
 
 
 public class CommandParser extends ParserBase {
@@ -145,9 +143,9 @@ public class CommandParser extends ParserBase {
                 break;
             case "role-hint":
                 if (argVal.equals("admin")) {
-                    userRole = new Admin();
+                    userRole = UserRole.ADMIN;
                 } else if (argVal.equals("employee")) {
-                    userRole = new Employee();
+                    userRole = UserRole.EMPLOYEE;
                 } else {
                     throw new InvalidUserRoleException();
                 }

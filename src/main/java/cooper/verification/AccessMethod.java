@@ -1,7 +1,5 @@
 package cooper.verification;
 
-import cooper.verification.roles.UserRole;
-
 import java.util.HashMap;
 
 public abstract class AccessMethod {
