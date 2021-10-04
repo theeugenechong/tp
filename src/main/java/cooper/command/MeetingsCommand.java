@@ -1,5 +1,7 @@
 package cooper.command;
 
+import cooper.meetings.MeetingManager;
+
 public class MeetingsCommand extends Command {
 
     public MeetingsCommand() {
@@ -7,7 +9,7 @@ public class MeetingsCommand extends Command {
     }
 
     public void execute() {
-        System.out.println("I want to execute this [meetings] command, but I do not know how!");
+        MeetingManager.printAvailabilities();
     }
 
 }

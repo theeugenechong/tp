@@ -1,13 +1,21 @@
 package cooper.command;
 
-public class AvailableCommand extends Command {
+import cooper.meetings.MeetingManager;
+import cooper.ui.Ui;
 
-    public AvailableCommand() {
+public class AvailableCommand extends Command {
+    private String time;
+    private String username;
+
+    public AvailableCommand(String time, String username) {
         super();
+        this.time = time;
+        this.username = username;
     }
 
     public void execute() {
-        System.out.println("I want to execute this [available] command, but I do not know how!");
+        MeetingManager.addAvailability(time, username);
+        Ui.printAvailableCommand(time, username);
     }
 
 }

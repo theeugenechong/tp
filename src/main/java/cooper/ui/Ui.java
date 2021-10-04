@@ -1,5 +1,7 @@
 package cooper.ui;
 
+import cooper.finance.FinanceManager;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -15,6 +17,7 @@ public class Ui {
             +                  " \\_______/ \\______/  \\______/ |__/      \\_______/|__/      ";
 
     private static final String LINE = "=========================================================================";
+    private static final String TABLE_LINE = "-----------------------------------";
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
@@ -120,4 +123,34 @@ public class Ui {
         printStream.println(printMessage);
     }
 
+    public static void printList() {
+        show(LINE);
+        show("This is the company's current Balance Sheet:");
+        for (int i = 0; i < FinanceManager.balanceSheet.size(); i++) {
+            if (FinanceManager.balanceSheet.size() != 0) {
+                show(i + 1 + ". " + FinanceManager.balanceSheet.get(i));
+            }
+        }
+        show (LINE);
+    }
+
+    public static void printAddCommand(String amount, boolean isInflow) {
+        show(LINE);
+        show("Success!");
+        show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
+        show(LINE);
+    }
+
+    public static void printAvailableCommand(String time, String username) {
+        show(LINE);
+        show("Success!");
+        show(username + "'s availability has been added to " + time);
+        show(LINE);
+    }
+
+    public static void printMeetingTableHeader() {
+        show(LINE);
+        show("These are the availabilities:");
+        show(TABLE_LINE);
+    }
 }

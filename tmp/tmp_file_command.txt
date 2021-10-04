@@ -48,7 +48,7 @@ delete = d ${list-idx-hint}
 find = find ${task-hint}
 
 # add 
-available = available ${username-hint} at ${time-hint}
+available = available ${time-hint}
 
 #login
 login = login ${username-hint} as ${role-hint}
