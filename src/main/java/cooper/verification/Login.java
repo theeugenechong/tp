@@ -4,30 +4,35 @@ import cooper.ui.Ui;
 
 import java.util.HashMap;
 
-public class Login extends SignIn {
+public class Login extends SignInProtocol {
 
-    public Login(UserDetails userDetails) {
-        super(userDetails);
+    public Login(SignInDetails signInDetails) {
+        super(signInDetails);
     }
 
     @Override
-    public boolean isRegisteredUser(HashMap<String, UserRole> registeredUsers) {
-        return registeredUsers.containsKey(userDetails.getUsername());
-    }
-
-    public boolean hasCorrectRole(HashMap<String, UserRole> registeredUsers) {
-        // compares user role which is already in hashmap tp user role of current am object
-        UserRole userRoleInHashMap = registeredUsers.get(userDetails.getUsername());
-        boolean hasCorrectRole = userRoleInHashMap.equals(userDetails.getUserRole());
-        if (hasCorrectRole) {
-            Ui.showLoggedInSuccessfullyMessage(userDetails.getUsername());
-        } else {
-            Ui.showIncorrectRoleMessage();
+    public void executeSignIn(Verifier verifier, HashMap<String, UserRole> registeredUsers) {
+        if (!isRegisteredUser(registeredUsers)) {
+            askUserToRegister();
+            return;
         }
-        return hasCorrectRole;
+
+        if (!hasCorrectRole(registeredUsers)) {
+            Ui.showIncorrectRoleMessage();
+            return;
+        }
+
+        verifier.setSuccessfullySignedIn(true);
+        Ui.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
     }
 
-    public void askUserToRegister() {
+    private boolean hasCorrectRole(HashMap<String, UserRole> registeredUsers) {
+        // compares user role which is already in hashmap tp user role of current am object
+        UserRole userRoleInHashMap = registeredUsers.get(signInDetails.getUsername());
+        return userRoleInHashMap.equals(signInDetails.getUserRole());
+    }
+
+    private void askUserToRegister() {
         Ui.showPleaseRegisterMessage();
     }
 }

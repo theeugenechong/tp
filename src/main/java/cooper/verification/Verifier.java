@@ -13,38 +13,35 @@ public class Verifier {
 
     private final HashMap<String, UserRole> registeredUsers;
     private final CommandParser commandParser;
+    private boolean isSuccessfullySignedIn;
 
     public Verifier(HashMap<String, UserRole> registeredUsers, CommandParser commandParser) {
         this.registeredUsers = registeredUsers;
         this.commandParser = commandParser;
+        this.isSuccessfullySignedIn = false;
     }
 
-    public void verify() {
-        boolean canAccess = false;
-        while (!canAccess) {
-            String input = Ui.getInput();
-            try {
-                SignIn signIn = commandParser.parseLoginRegisterDetails(input);
-                if (signIn.isRegisteredUser(registeredUsers)) {
-                    if (signIn instanceof Login) {
-                        canAccess = ((Login) signIn).hasCorrectRole(registeredUsers);
-                    } else if (signIn instanceof Registration) {
-                        ((Registration) signIn).askUserToLogin();
-                    }
-                } else {
-                    if (signIn instanceof Login) {
-                        ((Login) signIn).askUserToRegister();
-                    } else if (signIn instanceof Registration) {
-                        ((Registration) signIn).registerUser(registeredUsers);
-                    }
-                }
-            } catch (UnrecognisedCommandException e) {
-                Ui.showUnrecognisedCommandError();
-            } catch (InvalidArgumentException | NoSuchElementException e) {
-                Ui.showInvalidCommandArgumentError();
-            } catch (InvalidUserRoleException e) {
-                Ui.showInvalidUserRoleError();
-            }
+    public void setSuccessfullySignedIn(boolean successfullySignedIn) {
+        this.isSuccessfullySignedIn = successfullySignedIn;
+    }
+
+    public boolean isSuccessfullySignedIn() {
+        return this.isSuccessfullySignedIn;
+    }
+
+    public UserRole verify(String input) {
+        UserRole userRole = null;
+        try {
+            SignInProtocol signInProtocol = commandParser.parseLoginRegisterDetails(input);
+            signInProtocol.executeSignIn(this, registeredUsers);
+            userRole = signInProtocol.signInDetails.getUserRole();
+        } catch (UnrecognisedCommandException e) {
+            Ui.showUnrecognisedCommandError();
+        } catch (InvalidArgumentException | NoSuchElementException e) {
+            Ui.showInvalidCommandArgumentError();
+        } catch (InvalidUserRoleException e) {
+            Ui.showInvalidUserRoleError();
         }
+        return userRole;
     }
 }
