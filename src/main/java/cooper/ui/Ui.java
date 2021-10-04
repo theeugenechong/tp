@@ -1,6 +1,7 @@
 package cooper.ui;
 
 import cooper.finance.FinanceManager;
+import cooper.verification.UserRole;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -35,8 +36,17 @@ public class Ui {
     }
 
     public static void showIntroduction() {
+        showGreetingMessage();
+        showLoginRegisterMessage();
+    }
+
+    private static void showGreetingMessage() {
         show(LINE);
         show(GREETING);
+        show(LINE);
+    }
+
+    private static void showLoginRegisterMessage() {
         show("Login or register to gain access to my features!");
         show("To login, enter [login /u yourUsername /as yourRole]");
         show("To register, enter [register /u yourUsername /as yourRole]");
@@ -52,6 +62,25 @@ public class Ui {
     public static void showPleaseLoginMessage() {
         show(LINE);
         show("Your username already exists, please login!");
+        show(LINE);
+    }
+
+    public static void showRegisteredSuccessfullyMessage(String username, UserRole userRole) {
+        String userRoleAsString = (userRole == UserRole.ADMIN) ? "admin" : "employee";
+        show(LINE);
+        show(username + " is now successfully registered as an " + userRoleAsString + "!");
+        show(LINE);
+    }
+
+    public static void showLoggedInSuccessfullyMessage(String username) {
+        show(LINE);
+        show("You are now logged in successfully as " + username + "!");
+        show(LINE);
+    }
+
+    public static void showIncorrectRoleMessage() {
+        show(LINE);
+        show("You are logging in with an incorrect role! Please try again.");
         show(LINE);
     }
 
@@ -131,7 +160,7 @@ public class Ui {
                 show(i + 1 + ". " + FinanceManager.balanceSheet.get(i));
             }
         }
-        show (LINE);
+        show(LINE);
     }
 
     public static void printAddCommand(String amount, boolean isInflow) {
