@@ -35,8 +35,17 @@ public class Ui {
     }
 
     public static void showIntroduction() {
+        showGreetingMessage();
+        showLoginRegisterMessage();
+    }
+
+    private static void showGreetingMessage() {
         show(LINE);
         show(GREETING);
+        show(LINE);
+    }
+
+    private static void showLoginRegisterMessage() {
         show("Login or register to gain access to my features!");
         show("To login, enter [login /u yourUsername /as yourRole]");
         show("To register, enter [register /u yourUsername /as yourRole]");
