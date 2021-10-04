@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import cooper.command.Command;
 import cooper.finance.FinanceManager;
+import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
@@ -15,10 +16,12 @@ public class Cooper {
 
     private CommandParser commandParser;
     private FinanceManager financeManager;
+    private MeetingManager meetingManager;
     private Verifier verifier;
 
     public Cooper() {
         financeManager = new FinanceManager();
+        meetingManager = new MeetingManager();
 
         try {
             commandParser = new CommandParser();

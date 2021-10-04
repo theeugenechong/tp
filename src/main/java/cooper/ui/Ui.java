@@ -17,6 +17,7 @@ public class Ui {
             +                  " \\_______/ \\______/  \\______/ |__/      \\_______/|__/      ";
 
     private static final String LINE = "=========================================================================";
+    private static final String TABLE_LINE = "-----------------------------------";
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
@@ -138,5 +139,18 @@ public class Ui {
         show("Success!");
         show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
         show(LINE);
+    }
+
+    public static void printAvailableCommand(String time, String username) {
+        show(LINE);
+        show("Success!");
+        show(username + "'s availability has been added to " + time);
+        show(LINE);
+    }
+
+    public static void printMeetingTableHeader() {
+        show(LINE);
+        show("These are the availabilities:");
+        show(TABLE_LINE);
     }
 }
