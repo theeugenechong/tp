@@ -19,6 +19,7 @@ public class Registration extends SignIn {
         String usernameToRegister = userDetails.getUsername();
         UserRole userRoleToRegister = userDetails.getUserRole();
         registeredUsers.put(usernameToRegister, userRoleToRegister);
+        Ui.showRegisteredSuccessfullyMessage(usernameToRegister, userRoleToRegister);
     }
 
     public void askUserToLogin() {
