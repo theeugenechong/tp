@@ -6,7 +6,6 @@ import cooper.ui.Ui;
 public class AvailableCommand extends Command {
     private String time;
     private String username;
-    private MeetingManager meetingManager = new MeetingManager();
 
     public AvailableCommand(String time, String username) {
         super();
@@ -15,7 +14,7 @@ public class AvailableCommand extends Command {
     }
 
     public void execute() {
-        meetingManager.addAvailability(time, username);
+        MeetingManager.addAvailability(time, username);
         Ui.printAvailableCommand(time, username);
     }
 
