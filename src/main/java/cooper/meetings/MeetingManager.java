@@ -5,7 +5,7 @@ import cooper.ui.Ui;
 import java.util.HashMap;
 
 public class MeetingManager {
-    private static HashMap<String, String> meetings = new HashMap(10);
+    private static HashMap<String, String> meetings = new HashMap<>(10);
 
     public static void addAvailability(String time, String name) {
         meetings.put(time, name);
