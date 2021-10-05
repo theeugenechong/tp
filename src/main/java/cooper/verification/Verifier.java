@@ -29,12 +29,12 @@ public class Verifier {
         return this.isSuccessfullySignedIn;
     }
 
-    public UserRole verify(String input) {
-        UserRole userRole = null;
+    public SignInDetails verify(String input) {
+        SignInDetails signInDetails = null;
         try {
             SignInProtocol signInProtocol = commandParser.parseLoginRegisterDetails(input);
             signInProtocol.executeSignIn(this, registeredUsers);
-            userRole = signInProtocol.signInDetails.getUserRole();
+            signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
             Ui.showUnrecognisedCommandError();
         } catch (InvalidArgumentException | NoSuchElementException e) {
@@ -42,6 +42,6 @@ public class Verifier {
         } catch (InvalidUserRoleException e) {
             Ui.showInvalidUserRoleError();
         }
-        return userRole;
+        return signInDetails;
     }
 }

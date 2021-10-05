@@ -3,7 +3,10 @@ package cooper.ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.UserRole;
 
+import javax.sound.sampled.Line;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Ui {
@@ -48,8 +51,8 @@ public class Ui {
 
     private static void showLoginRegisterMessage() {
         show("Login or register to gain access to my features!");
-        show("To login, enter [login /u yourUsername /as yourRole]");
-        show("To register, enter [register /u yourUsername /as yourRole]");
+        show("To login, enter \"login  [yourUsername] as [yourRole]\"");
+        show("To register, enter \"register [yourUsername] as [yourRole]\"");
         show(LINE);
     }
 
@@ -108,7 +111,7 @@ public class Ui {
      **/
     public static void showUnrecognisedCommandError() {
         show(LINE);
-        show("I don't recognise the command you entered. Enter [help] to view available commands.");
+        show("I don't recognise the command you entered. Enter \"help\" to view available commands.");
         show(LINE);
     }
 
@@ -158,13 +161,11 @@ public class Ui {
         printStream.println(printMessage);
     }
 
-    public static void printList() {
+    public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
         show("This is the company's current Balance Sheet:");
-        for (int i = 0; i < FinanceManager.balanceSheet.size(); i++) {
-            if (FinanceManager.balanceSheet.size() != 0) {
-                show(i + 1 + ". " + FinanceManager.balanceSheet.get(i));
-            }
+        for (int i = 0; i < balanceSheet.size(); i++) {
+            show(i + 1 + ". " + balanceSheet.get(i));
         }
         show(LINE);
     }
@@ -183,9 +184,48 @@ public class Ui {
         show(LINE);
     }
 
+    public static void printAvailabilities(HashMap<String, ArrayList<String>> meetings) {
+        Ui.printMeetingTableHeader();
+        for (String timing: meetings.keySet()) {
+            Ui.showText(timing + " | " + listOfAttendees(meetings.get(timing)));
+        }
+    }
+
+    public static String listOfAttendees(ArrayList<String> attendees) {
+        StringBuilder listOfAttendees = new StringBuilder("");
+        for (String attendee : attendees) {
+            /* don't need comma for last attendee */
+            int indexOfLastAttendee = attendees.size() - 1;
+            if (attendee.equals(attendees.get(indexOfLastAttendee))) {
+                listOfAttendees.append(attendee);
+            } else {
+                listOfAttendees.append(attendee).append(", ");
+            }
+        }
+        return String.valueOf(listOfAttendees);
+    }
+
     public static void printMeetingTableHeader() {
         show(LINE);
         show("These are the availabilities:");
         show(TABLE_LINE);
+    }
+
+    public static void printAdminHelp() {
+        show(LINE);
+        show("Here are the commands available to an admin along with their formats:");
+        show("add       | add [amount]");
+        show("list      | list");
+    }
+
+    public static void printEmployeeHelp() {
+        show(LINE);
+        show("Here are the commands available to an employee along with their formats:");
+    }
+
+    public static void printGeneralHelp() {
+        show("available | available [yourUsername] at [availableTime]");
+        show("meetings  | meetings");
+        show(LINE);
     }
 }
