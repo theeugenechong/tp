@@ -39,13 +39,13 @@ public class Cooper {
         Ui.showLogo();
         Ui.showIntroduction();
 
-        UserRole userRole = verifyUser();
+        SignInDetails signInDetails = verifyUser();
 
         while (true) {
             try {
                 String input = Ui.getInput();
                 Command command = commandParser.parse(input);
-                command.execute();
+                command.execute(signInDetails, financeManager, meetingManager);
             } catch (InvalidArgumentException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
@@ -56,15 +56,14 @@ public class Cooper {
         }
     }
 
-    private UserRole verifyUser() {
-        UserRole successfulSignInRole = null;
+    private SignInDetails verifyUser() {
+        SignInDetails successfulSignInDetails = null;
         while (!verifier.isSuccessfullySignedIn()) {
             String input = Ui.getInput();
-            successfulSignInRole = verifier.verify(input);
+            successfulSignInDetails = verifier.verify(input);
         }
-        return successfulSignInRole;
+        return successfulSignInDetails;
     }
-
 
     /**
      * Main entry-point for the java.duke.Duke application.
