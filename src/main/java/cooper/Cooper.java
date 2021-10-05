@@ -10,29 +10,28 @@ import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
 import cooper.exceptions.InvalidArgumentException;
-import cooper.verification.UserRole;
+import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
 
 public class Cooper {
 
     private CommandParser commandParser;
-    private FinanceManager financeManager;
-    private MeetingManager meetingManager;
-    private Verifier verifier;
+    private final FinanceManager financeManager;
+    private final MeetingManager meetingManager;
+    private final Verifier verifier;
 
     public Cooper() {
-        financeManager = new FinanceManager();
-        meetingManager = new MeetingManager();
-
         try {
             commandParser = new CommandParser();
-            verifier = new Verifier(new HashMap<>(), commandParser);
         } catch (URISyntaxException e) {
             Ui.showInvalidFilePathError();
             Ui.showBye();
             Ui.closeStreams();
             System.exit(0);
         }
+        verifier = new Verifier(new HashMap<>(), commandParser);
+        financeManager = new FinanceManager();
+        meetingManager = new MeetingManager();
     }
 
     @SuppressWarnings("InfiniteLoopStatement")

@@ -4,6 +4,8 @@ import cooper.finance.FinanceManager;
 import cooper.verification.UserRole;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Ui {
@@ -158,13 +160,11 @@ public class Ui {
         printStream.println(printMessage);
     }
 
-    public static void printList() {
+    public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
         show("This is the company's current Balance Sheet:");
-        for (int i = 0; i < FinanceManager.balanceSheet.size(); i++) {
-            if (FinanceManager.balanceSheet.size() != 0) {
-                show(i + 1 + ". " + FinanceManager.balanceSheet.get(i));
-            }
+        for (int i = 0; i < balanceSheet.size(); i++) {
+            show(i + 1 + ". " + balanceSheet.get(i));
         }
         show(LINE);
     }
@@ -181,6 +181,13 @@ public class Ui {
         show("Success!");
         show(username + "'s availability has been added to " + time);
         show(LINE);
+    }
+
+    public static void printAvailabilities(HashMap<String, ArrayList<String>> meetings) {
+        Ui.printMeetingTableHeader();
+        for (String key: meetings.keySet()) {
+            Ui.showText(key + " | " + meetings.get(key));
+        }
     }
 
     public static void printMeetingTableHeader() {

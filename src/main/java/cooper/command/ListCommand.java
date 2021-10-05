@@ -1,7 +1,9 @@
 package cooper.command;
 
+import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
+import cooper.verification.SignInDetails;
 
 public class ListCommand extends Command {
 
@@ -9,8 +11,9 @@ public class ListCommand extends Command {
         super();
     }
 
-    public void execute() {
-        Ui.printList();
+    @Override
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
+        Ui.printBalanceSheet(financeManager.getBalanceSheet());
     }
 
 }
