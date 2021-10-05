@@ -130,6 +130,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showDuplicateUsernameError() {
+        show(LINE);
+        show("The username has already been entered under that timeslot.");
+        show(LINE);
+    }
+
     public static void showBye() {
         show(LINE);
         show("Bye, see you next time! :D");
