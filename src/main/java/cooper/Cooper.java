@@ -10,6 +10,7 @@ import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
 import cooper.exceptions.InvalidArgumentException;
+import cooper.verification.UserRole;
 import cooper.verification.Verifier;
 
 public class Cooper {
@@ -39,7 +40,7 @@ public class Cooper {
         Ui.showLogo();
         Ui.showIntroduction();
 
-        verifier.verify();
+        UserRole userRole = verifyUser();
 
         while (true) {
             try {
@@ -54,6 +55,15 @@ public class Cooper {
                 Ui.showUnrecognisedCommandError();
             }
         }
+    }
+
+    private UserRole verifyUser() {
+        UserRole successfulSignInRole = null;
+        while (!verifier.isSuccessfullySignedIn()) {
+            String input = Ui.getInput();
+            successfulSignInRole = verifier.verify(input);
+        }
+        return successfulSignInRole;
     }
 
 

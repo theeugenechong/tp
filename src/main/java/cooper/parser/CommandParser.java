@@ -24,10 +24,10 @@ import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
-import cooper.verification.SignIn;
+import cooper.verification.SignInProtocol;
 import cooper.verification.Login;
 import cooper.verification.Registration;
-import cooper.verification.UserDetails;
+import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
 
@@ -108,7 +108,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    public SignIn parseLoginRegisterDetails(String input) throws UnrecognisedCommandException,
+    public SignInProtocol parseLoginRegisterDetails(String input) throws UnrecognisedCommandException,
             InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
@@ -117,11 +117,11 @@ public class CommandParser extends ParserBase {
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
             case "login":
-                UserDetails userDetails = parseLoginRegisterArgs(commandArgs);
-                return new Login(userDetails);
+                SignInDetails signInDetails = parseLoginRegisterArgs(commandArgs);
+                return new Login(signInDetails);
             case "register":
-                userDetails = parseLoginRegisterArgs(commandArgs);
-                return new Registration(userDetails);
+                signInDetails = parseLoginRegisterArgs(commandArgs);
+                return new Registration(signInDetails);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -130,7 +130,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private UserDetails parseLoginRegisterArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
+    private SignInDetails parseLoginRegisterArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
             InvalidArgumentException, NoSuchElementException {
         String username = null;
         UserRole userRole = null;
@@ -155,7 +155,7 @@ public class CommandParser extends ParserBase {
                 throw new InvalidArgumentException();
             }
         }
-        return new UserDetails(username, userRole);
+        return new SignInDetails(username, userRole);
     }
 
     private Command parseAddArgs(List<Argument> commandArgs) throws InvalidArgumentException, NoSuchElementException {
