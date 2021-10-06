@@ -1,13 +1,13 @@
 package cooper.ui;
 
-import cooper.finance.FinanceManager;
 import cooper.verification.UserRole;
 
-import javax.sound.sampled.Line;
 import java.io.PrintStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Ui {
 
@@ -21,7 +21,8 @@ public class Ui {
             +                  " \\_______/ \\______/  \\______/ |__/      \\_______/|__/      ";
 
     private static final String LINE = "=========================================================================";
-    private static final String TABLE_LINE = "-----------------------------------";
+    public static final String TABLE_TOP_LINE = "┌────────────────────────────────────────────────────────────────────┐";
+    public static final String TABLE_BOTTOM_LINE = "└────────────────────────────────────────────────────────────────────┘";
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
@@ -133,7 +134,13 @@ public class Ui {
         show(LINE);
     }
 
-    public static void showDuplicateUsernameError() {
+    public static void showInvalidTimeException() {
+        show(LINE);
+        show("The time format you entered is not accepted! Please enter again.");
+        show(LINE);
+    }
+
+    public static void showDuplicateUsernameException() {
         show(LINE);
         show("The username has already been entered under that timeslot.");
         show(LINE);
@@ -184,11 +191,12 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailabilities(HashMap<String, ArrayList<String>> meetings) {
-        Ui.printMeetingTableHeader();
-        for (String timing: meetings.keySet()) {
-            Ui.showText(timing + " | " + listOfAttendees(meetings.get(timing)));
+    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
+        printMeetingTableHeader();
+        for (LocalTime timing: meetings.keySet()) {
+            Ui.showText("│ " + timing + " │ " + listOfAttendees(meetings.get(timing)));
         }
+        show(TABLE_BOTTOM_LINE);
     }
 
     public static String listOfAttendees(ArrayList<String> attendees) {
@@ -208,7 +216,7 @@ public class Ui {
     public static void printMeetingTableHeader() {
         show(LINE);
         show("These are the availabilities:");
-        show(TABLE_LINE);
+        show(TABLE_TOP_LINE);
     }
 
     public static void printAdminHelp() {
