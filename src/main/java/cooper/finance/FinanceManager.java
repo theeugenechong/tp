@@ -3,14 +3,17 @@ package cooper.finance;
 import java.util.ArrayList;
 
 public class FinanceManager {
-
-    public static ArrayList<Integer> balanceSheet = new ArrayList<>();
+    private final ArrayList<Integer> balanceSheet;
 
     public FinanceManager() {
-
+        balanceSheet = new ArrayList<>();
     }
 
-    public static void addBalance(int amount) {
+    public ArrayList<Integer> getBalanceSheet() {
+        return balanceSheet;
+    }
+
+    public void addBalance(int amount) {
         balanceSheet.add(amount);
     }
 

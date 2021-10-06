@@ -10,28 +10,28 @@ import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
 import cooper.exceptions.InvalidArgumentException;
+import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
 
 public class Cooper {
 
     private CommandParser commandParser;
-    private FinanceManager financeManager;
-    private MeetingManager meetingManager;
-    private Verifier verifier;
+    private final FinanceManager financeManager;
+    private final MeetingManager meetingManager;
+    private final Verifier verifier;
 
     public Cooper() {
-        financeManager = new FinanceManager();
-        meetingManager = new MeetingManager();
-
         try {
             commandParser = new CommandParser();
-            verifier = new Verifier(new HashMap<>(), commandParser);
         } catch (URISyntaxException e) {
             Ui.showInvalidFilePathError();
             Ui.showBye();
             Ui.closeStreams();
             System.exit(0);
         }
+        verifier = new Verifier(new HashMap<>(), commandParser);
+        financeManager = new FinanceManager();
+        meetingManager = new MeetingManager();
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -39,13 +39,13 @@ public class Cooper {
         Ui.showLogo();
         Ui.showIntroduction();
 
-        verifier.verify();
+        SignInDetails signInDetails = verifyUser();
 
         while (true) {
             try {
                 String input = Ui.getInput();
                 Command command = commandParser.parse(input);
-                command.execute();
+                command.execute(signInDetails, financeManager, meetingManager);
             } catch (InvalidArgumentException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
@@ -56,6 +56,14 @@ public class Cooper {
         }
     }
 
+    private SignInDetails verifyUser() {
+        SignInDetails successfulSignInDetails = null;
+        while (!verifier.isSuccessfullySignedIn()) {
+            String input = Ui.getInput();
+            successfulSignInDetails = verifier.verify(input);
+        }
+        return successfulSignInDetails;
+    }
 
     /**
      * Main entry-point for the java.duke.Duke application.
