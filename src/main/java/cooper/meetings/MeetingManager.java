@@ -1,6 +1,6 @@
 package cooper.meetings;
 
-import cooper.exceptions.DuplicateUsernameError;
+import cooper.exceptions.DuplicateUsernameException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class MeetingManager {
         return meetings;
     }
 
-    public void addAvailability(String time, String name) throws DuplicateUsernameError {
+    public void addAvailability(String time, String name) throws DuplicateUsernameException {
         if (!meetings.containsKey(time)) {
             meetings.put(time, new ArrayList<>());
         }
@@ -25,7 +25,7 @@ public class MeetingManager {
         if (!meetings.get(time).contains(name)) {
             meetings.get(time).add(name);
         } else {
-            throw new DuplicateUsernameError();
+            throw new DuplicateUsernameException();
         }
     }
 }

@@ -133,7 +133,7 @@ public class Ui {
         show(LINE);
     }
 
-    public static void showDuplicateUsernameError() {
+    public static void showDuplicateUsernameException() {
         show(LINE);
         show("The username has already been entered under that timeslot.");
         show(LINE);

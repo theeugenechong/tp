@@ -1,6 +1,6 @@
 package cooper.command;
 
-import cooper.exceptions.DuplicateUsernameError;
+import cooper.exceptions.DuplicateUsernameException;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
@@ -21,8 +21,8 @@ public class AvailableCommand extends Command {
         try {
             meetingManager.addAvailability(time, username);
             Ui.printAvailableCommand(time, username);
-        } catch (DuplicateUsernameError e) {
-            Ui.showDuplicateUsernameError();
+        } catch (DuplicateUsernameException e) {
+            Ui.showDuplicateUsernameException();
         }
     }
 }
