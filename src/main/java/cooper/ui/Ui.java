@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Ui {
 
@@ -190,7 +191,7 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailabilities(HashMap<LocalTime, ArrayList<String>> meetings) {
+    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
         printMeetingTableHeader();
         for (LocalTime timing: meetings.keySet()) {
             Ui.showText("│ " + timing + " │ " + listOfAttendees(meetings.get(timing)));

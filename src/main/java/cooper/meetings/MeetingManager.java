@@ -7,14 +7,14 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public class MeetingManager {
     public static final String TIME_FORMAT = "HH:mm";
-    private final HashMap<LocalTime, ArrayList<String>> meetings;
+    private final TreeMap<LocalTime, ArrayList<String>> meetings;
 
     public MeetingManager() {
-        meetings = new HashMap<>(10);
+        meetings = new TreeMap<>();
     }
 
     private boolean isValidTimeFormat(String value, String format) {
@@ -29,7 +29,7 @@ public class MeetingManager {
         return false;
     }
 
-    public HashMap<LocalTime, ArrayList<String>> getMeetings() {
+    public TreeMap<LocalTime, ArrayList<String>> getMeetings() {
         return meetings;
     }
 
