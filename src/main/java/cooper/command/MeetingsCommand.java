@@ -7,15 +7,10 @@ import cooper.verification.SignInDetails;
 
 public class MeetingsCommand extends Command {
 
-    public MeetingsCommand() {
-        super();
-    }
-
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
         Ui.printAvailabilities(meetingManager.getMeetings());
     }
-
 }
 
 

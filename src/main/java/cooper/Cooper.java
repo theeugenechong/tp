@@ -1,7 +1,6 @@
 package cooper;
 
 import java.net.URISyntaxException;
-import java.util.HashMap;
 
 import cooper.command.Command;
 import cooper.finance.FinanceManager;
@@ -16,9 +15,9 @@ import cooper.verification.Verifier;
 public class Cooper {
 
     private CommandParser commandParser;
-    private final FinanceManager financeManager;
-    private final MeetingManager meetingManager;
-    private final Verifier verifier;
+    private final FinanceManager cooperFinanceManager;
+    private final MeetingManager cooperMeetingManager;
+    private final Verifier cooperVerifier;
 
     public Cooper() {
         try {
@@ -29,9 +28,9 @@ public class Cooper {
             Ui.closeStreams();
             System.exit(0);
         }
-        verifier = new Verifier(new HashMap<>(), commandParser);
-        financeManager = new FinanceManager();
-        meetingManager = new MeetingManager();
+        cooperVerifier = new Verifier(commandParser);
+        cooperFinanceManager = new FinanceManager();
+        cooperMeetingManager = new MeetingManager();
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -45,7 +44,7 @@ public class Cooper {
             try {
                 String input = Ui.getInput();
                 Command command = commandParser.parse(input);
-                command.execute(signInDetails, financeManager, meetingManager);
+                command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
             } catch (InvalidArgumentException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
@@ -58,9 +57,9 @@ public class Cooper {
 
     private SignInDetails verifyUser() {
         SignInDetails successfulSignInDetails = null;
-        while (!verifier.isSuccessfullySignedIn()) {
+        while (!cooperVerifier.isSuccessfullySignedIn()) {
             String input = Ui.getInput();
-            successfulSignInDetails = verifier.verify(input);
+            successfulSignInDetails = cooperVerifier.verify(input);
         }
         return successfulSignInDetails;
     }
@@ -72,5 +71,4 @@ public class Cooper {
         Cooper cooper = new Cooper();
         cooper.run();
     }
-
 }

@@ -202,5 +202,4 @@ public class CommandParser extends ParserBase {
         }
         return new AvailableCommand(time, username);
     }
-
 }

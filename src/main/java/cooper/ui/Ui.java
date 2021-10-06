@@ -200,7 +200,7 @@ public class Ui {
     }
 
     public static String listOfAttendees(ArrayList<String> attendees) {
-        StringBuilder listOfAttendees = new StringBuilder("");
+        StringBuilder listOfAttendees = new StringBuilder();
         for (String attendee : attendees) {
             /* don't need comma for last attendee */
             int indexOfLastAttendee = attendees.size() - 1;

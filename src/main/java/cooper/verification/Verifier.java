@@ -15,8 +15,8 @@ public class Verifier {
     private final CommandParser commandParser;
     private boolean isSuccessfullySignedIn;
 
-    public Verifier(HashMap<String, UserRole> registeredUsers, CommandParser commandParser) {
-        this.registeredUsers = registeredUsers;
+    public Verifier(CommandParser commandParser) {
+        this.registeredUsers = new HashMap<>();
         this.commandParser = commandParser;
         this.isSuccessfullySignedIn = false;
     }
