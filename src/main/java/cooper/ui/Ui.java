@@ -5,6 +5,7 @@ import cooper.verification.UserRole;
 
 import javax.sound.sampled.Line;
 import java.io.PrintStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -133,6 +134,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showInvalidTimeException() {
+        show(LINE);
+        show("The time format you entered is not accepted! Please enter again.");
+        show(LINE);
+    }
+
     public static void showDuplicateUsernameException() {
         show(LINE);
         show("The username has already been entered under that timeslot.");
@@ -184,9 +191,9 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailabilities(HashMap<String, ArrayList<String>> meetings) {
+    public static void printAvailabilities(HashMap<LocalTime, ArrayList<String>> meetings) {
         Ui.printMeetingTableHeader();
-        for (String timing: meetings.keySet()) {
+        for (LocalTime timing: meetings.keySet()) {
             Ui.showText(timing + " | " + listOfAttendees(meetings.get(timing)));
         }
     }
