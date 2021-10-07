@@ -5,24 +5,25 @@ import cooper.verification.UserRole;
 import java.io.PrintStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+@SuppressWarnings("checkstyle:LineLength")
 public class Ui {
 
-    private static final String LOGO = "            /$$$$$$   /$$$$$$  /$$$$$$$                    \n"
-            +                  "           /$$__  $$ /$$__  $$| $$__  $$                   \n"
-            +                  "  /$$$$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$ /$$$$$$   /$$$$$$ \n"
-            +                  " /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$\n"
-            +                  "| $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \\__/\n"
-            +                  "| $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$      \n"
-            +                  "|  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$      \n"
-            +                  " \\_______/ \\______/  \\______/ |__/      \\_______/|__/      ";
+    private static final String LOGO = "            /$$$$$$   /$$$$$$  /$$$$$$$\n"
+            +                          "           /$$__  $$ /$$__  $$| $$__  $$\n"
+            +                          "  /$$$$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$ /$$$$$$   /$$$$$$\n"
+            +                          " /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$\n"
+            +                          "| $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \\__/\n"
+            +                          "| $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$\n"
+            +                          "|  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$\n"
+            +                          " \\_______/ \\______/  \\______/ |__/      \\_______/|__/";
 
     private static final String LINE = "=========================================================================";
-    public static final String TABLE_TOP_LINE = "┌────────────────────────────────────────────────────────────────────┐";
-    public static final String TABLE_BOTTOM_LINE = "└────────────────────────────────────────────────────────────────────┘";
+
+    private static final String TABLE_TOP = "┌────────────────────────────────────────────────────────────────────┐";
+    private static final String TABLE_BOT = "└────────────────────────────────────────────────────────────────────┘";
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
@@ -41,7 +42,7 @@ public class Ui {
 
     public static void showIntroduction() {
         showGreetingMessage();
-        showLoginRegisterMessage();
+        showLoginRegisterMessage(true);
     }
 
     private static void showGreetingMessage() {
@@ -50,8 +51,12 @@ public class Ui {
         show(LINE);
     }
 
-    private static void showLoginRegisterMessage() {
-        show("Login or register to gain access to my features!");
+    public static void showLoginRegisterMessage(boolean isIntro) {
+        if (isIntro) {
+            show("Login or register to gain access to my features!");
+        } else {
+            show(LINE);
+        }
         show("To login, enter \"login  [yourUsername] as [yourRole]\"");
         show("To register, enter \"register [yourUsername] as [yourRole]\"");
         show(LINE);
@@ -196,11 +201,12 @@ public class Ui {
         for (LocalTime timing: meetings.keySet()) {
             Ui.showText("│ " + timing + " │ " + listOfAttendees(meetings.get(timing)));
         }
-        show(TABLE_BOTTOM_LINE);
+        show(TABLE_BOT);
+        show(LINE);
     }
 
     public static String listOfAttendees(ArrayList<String> attendees) {
-        StringBuilder listOfAttendees = new StringBuilder("");
+        StringBuilder listOfAttendees = new StringBuilder();
         for (String attendee : attendees) {
             /* don't need comma for last attendee */
             int indexOfLastAttendee = attendees.size() - 1;
@@ -216,7 +222,7 @@ public class Ui {
     public static void printMeetingTableHeader() {
         show(LINE);
         show("These are the availabilities:");
-        show(TABLE_TOP_LINE);
+        show(TABLE_TOP);
     }
 
     public static void printAdminHelp() {

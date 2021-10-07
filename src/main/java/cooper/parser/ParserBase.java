@@ -25,7 +25,6 @@ public abstract class ParserBase {
     /**
      * API to parse a string.
      * @param input command to be parsed
-     * @return
      */
     public abstract Object parse(String input) throws UnrecognisedCommandException, InvalidArgumentException;
 
