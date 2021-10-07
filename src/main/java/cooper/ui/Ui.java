@@ -263,9 +263,9 @@ public class Ui {
     }
 
     /**
-     * Storage "replays" saved commands to recover internal data structure
+     * Storage "replays" saved commands to recover internal data structure.
      * Suppress these outputs during these replays
-     **/
+     */
     public static void suppressOutput() {
         isOutputSuppressed = true;
     }
