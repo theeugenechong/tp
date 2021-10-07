@@ -13,7 +13,8 @@ src/main/resources/docs/
 *.iml
 bin/
 
-/text-ui-test/ACTUAL.txt
-text-ui-test/EXPECTED-UNIX.TXT
 tmp/tmp_file_command.txt
 tmp/tmp_file_training.txt
+src/main/java/META-INF/MANIFEST.MF
+text-ui-test/tmp/tmp_file_command.txt
+text-ui-test/tmp/tmp_file_training.txt

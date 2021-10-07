@@ -10,23 +10,22 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class MeetingManager {
-    public static final String TIME_FORMAT = "HH:mm";
+    private static final String TIME_FORMAT = "HH:mm";
     private final TreeMap<LocalTime, ArrayList<String>> meetings;
 
     public MeetingManager() {
         meetings = new TreeMap<>();
     }
 
-    private boolean isValidTimeFormat(String value, String format) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+    private boolean isValidTimeFormat(String value) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_FORMAT);
         try {
             LocalTime lt = LocalTime.parse(value, formatter);
             String result = lt.format(formatter);
             return result.equals(value);
         } catch (DateTimeParseException e) {
-
+            return false;
         }
-        return false;
     }
 
     public TreeMap<LocalTime, ArrayList<String>> getMeetings() {
@@ -35,7 +34,7 @@ public class MeetingManager {
 
     public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeException {
         LocalTime localTime;
-        if (isValidTimeFormat(time, TIME_FORMAT)) {
+        if (isValidTimeFormat(time)) {
             localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
         } else {
             throw new InvalidTimeException();
