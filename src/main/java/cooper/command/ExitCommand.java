@@ -13,7 +13,6 @@ public class ExitCommand extends Command {
         Ui.closeStreams();
         System.exit(0);
     }
-
 }
 
 

@@ -9,5 +9,6 @@ public abstract class Command {
     /**
      * Child classes are required to implement how to execute on itself.
      */
-    public abstract void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager);
+    public abstract void execute(SignInDetails signInDetails, FinanceManager financeManager,
+                                 MeetingManager meetingManager);
 }

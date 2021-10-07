@@ -32,11 +32,11 @@ public class Verifier {
     public SignInDetails verify(String input) {
         SignInDetails signInDetails = null;
         try {
-            SignInProtocol signInProtocol = commandParser.parseLoginRegisterDetails(input);
+            SignInProtocol signInProtocol = commandParser.parseSignInDetails(input);
             signInProtocol.executeSignIn(this, registeredUsers);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
-            Ui.showUnrecognisedCommandError();
+            Ui.showLoginRegisterMessage(false);
         } catch (InvalidArgumentException | NoSuchElementException e) {
             Ui.showInvalidCommandArgumentError();
         } catch (InvalidUserRoleException e) {
