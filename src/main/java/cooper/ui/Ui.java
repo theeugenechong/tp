@@ -1,24 +1,29 @@
 package cooper.ui;
 
-import cooper.finance.FinanceManager;
 import cooper.verification.UserRole;
 
 import java.io.PrintStream;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
+@SuppressWarnings("checkstyle:LineLength")
 public class Ui {
 
-    private static final String LOGO = "            /$$$$$$   /$$$$$$  /$$$$$$$                    \n"
-            +                  "           /$$__  $$ /$$__  $$| $$__  $$                   \n"
-            +                  "  /$$$$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$ /$$$$$$   /$$$$$$ \n"
-            +                  " /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$\n"
-            +                  "| $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \\__/\n"
-            +                  "| $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$      \n"
-            +                  "|  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$      \n"
-            +                  " \\_______/ \\______/  \\______/ |__/      \\_______/|__/      ";
+    private static final String LOGO = "            /$$$$$$   /$$$$$$  /$$$$$$$\n"
+            +                          "           /$$__  $$ /$$__  $$| $$__  $$\n"
+            +                          "  /$$$$$$$| $$  \\ $$| $$  \\ $$| $$  \\ $$ /$$$$$$   /$$$$$$\n"
+            +                          " /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$\n"
+            +                          "| $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \\__/\n"
+            +                          "| $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$\n"
+            +                          "|  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$\n"
+            +                          " \\_______/ \\______/  \\______/ |__/      \\_______/|__/";
 
     private static final String LINE = "=========================================================================";
-    private static final String TABLE_LINE = "-----------------------------------";
+
+    private static final String TABLE_TOP = "┌────────────────────────────────────────────────────────────────────┐";
+    private static final String TABLE_BOT = "└────────────────────────────────────────────────────────────────────┘";
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
@@ -37,7 +42,7 @@ public class Ui {
 
     public static void showIntroduction() {
         showGreetingMessage();
-        showLoginRegisterMessage();
+        showLoginRegisterMessage(true);
     }
 
     private static void showGreetingMessage() {
@@ -46,10 +51,14 @@ public class Ui {
         show(LINE);
     }
 
-    private static void showLoginRegisterMessage() {
-        show("Login or register to gain access to my features!");
-        show("To login, enter [login /u yourUsername /as yourRole]");
-        show("To register, enter [register /u yourUsername /as yourRole]");
+    public static void showLoginRegisterMessage(boolean isIntro) {
+        if (isIntro) {
+            show("Login or register to gain access to my features!");
+        } else {
+            show(LINE);
+        }
+        show("To login, enter \"login  [yourUsername] as [yourRole]\"");
+        show("To register, enter \"register [yourUsername] as [yourRole]\"");
         show(LINE);
     }
 
@@ -108,7 +117,7 @@ public class Ui {
      **/
     public static void showUnrecognisedCommandError() {
         show(LINE);
-        show("I don't recognise the command you entered. Enter [help] to view available commands.");
+        show("I don't recognise the command you entered. Enter \"help\" to view available commands.");
         show(LINE);
     }
 
@@ -127,6 +136,18 @@ public class Ui {
     public static void showInvalidNumberError() {
         show(LINE);
         show("Unrecognised number.");
+        show(LINE);
+    }
+
+    public static void showInvalidTimeException() {
+        show(LINE);
+        show("The time format you entered is not accepted! Please enter again.");
+        show(LINE);
+    }
+
+    public static void showDuplicateUsernameException() {
+        show(LINE);
+        show("The username has already been entered under that timeslot.");
         show(LINE);
     }
 
@@ -152,13 +173,11 @@ public class Ui {
         printStream.println(printMessage);
     }
 
-    public static void printList() {
+    public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
         show("This is the company's current Balance Sheet:");
-        for (int i = 0; i < FinanceManager.balanceSheet.size(); i++) {
-            if (FinanceManager.balanceSheet.size() != 0) {
-                show(i + 1 + ". " + FinanceManager.balanceSheet.get(i));
-            }
+        for (int i = 0; i < balanceSheet.size(); i++) {
+            show(i + 1 + ". " + balanceSheet.get(i));
         }
         show(LINE);
     }
@@ -177,9 +196,50 @@ public class Ui {
         show(LINE);
     }
 
+    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
+        printMeetingTableHeader();
+        for (LocalTime timing: meetings.keySet()) {
+            Ui.showText("│ " + timing + " │ " + listOfAttendees(meetings.get(timing)));
+        }
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static String listOfAttendees(ArrayList<String> attendees) {
+        StringBuilder listOfAttendees = new StringBuilder();
+        for (String attendee : attendees) {
+            /* don't need comma for last attendee */
+            int indexOfLastAttendee = attendees.size() - 1;
+            if (attendee.equals(attendees.get(indexOfLastAttendee))) {
+                listOfAttendees.append(attendee);
+            } else {
+                listOfAttendees.append(attendee).append(", ");
+            }
+        }
+        return String.valueOf(listOfAttendees);
+    }
+
     public static void printMeetingTableHeader() {
         show(LINE);
         show("These are the availabilities:");
-        show(TABLE_LINE);
+        show(TABLE_TOP);
+    }
+
+    public static void printAdminHelp() {
+        show(LINE);
+        show("Here are the commands available to an admin along with their formats:");
+        show("add       | add [amount]");
+        show("list      | list");
+    }
+
+    public static void printEmployeeHelp() {
+        show(LINE);
+        show("Here are the commands available to an employee along with their formats:");
+    }
+
+    public static void printGeneralHelp() {
+        show("available | available [yourUsername] at [availableTime]");
+        show("meetings  | meetings");
+        show(LINE);
     }
 }

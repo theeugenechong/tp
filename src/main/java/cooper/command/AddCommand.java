@@ -1,7 +1,9 @@
 package cooper.command;
 
+import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
+import cooper.verification.SignInDetails;
 
 public class AddCommand extends Command {
 
@@ -14,11 +16,11 @@ public class AddCommand extends Command {
         this.isInflow = isInflow;
     }
 
-    public void execute() {
-        FinanceManager.addBalance(Integer.parseInt(amount));
+    @Override
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
+        financeManager.addBalance(Integer.parseInt(amount));
         Ui.printAddCommand(amount, isInflow);
     }
-
 }
 
 

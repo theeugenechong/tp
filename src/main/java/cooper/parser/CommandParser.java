@@ -24,10 +24,10 @@ import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
-import cooper.verification.SignIn;
+import cooper.verification.SignInProtocol;
 import cooper.verification.Login;
 import cooper.verification.Registration;
-import cooper.verification.UserDetails;
+import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
 
@@ -65,7 +65,8 @@ public class CommandParser extends ParserBase {
      * @param input command to be parsed
      * @return a command object, to be passed into command handler
      */
-    public Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException {
+    public Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException,
+            NoSuchElementException {
         if (input.split(" ").length < 2) {
             return parseSimpleInput(input);
         } else {
@@ -88,7 +89,8 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private Command parseComplexInput(String input) throws UnrecognisedCommandException, InvalidArgumentException {
+    private Command parseComplexInput(String input) throws UnrecognisedCommandException, InvalidArgumentException,
+            NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -108,7 +110,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    public SignIn parseLoginRegisterDetails(String input) throws UnrecognisedCommandException,
+    public SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
             InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
@@ -117,11 +119,11 @@ public class CommandParser extends ParserBase {
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
             case "login":
-                UserDetails userDetails = parseLoginRegisterArgs(commandArgs);
-                return new Login(userDetails);
+                SignInDetails signInDetails = parseSignInArgs(commandArgs);
+                return new Login(signInDetails);
             case "register":
-                userDetails = parseLoginRegisterArgs(commandArgs);
-                return new Registration(userDetails);
+                signInDetails = parseSignInArgs(commandArgs);
+                return new Registration(signInDetails);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -130,7 +132,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private UserDetails parseLoginRegisterArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
+    private SignInDetails parseSignInArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
             InvalidArgumentException, NoSuchElementException {
         String username = null;
         UserRole userRole = null;
@@ -155,7 +157,7 @@ public class CommandParser extends ParserBase {
                 throw new InvalidArgumentException();
             }
         }
-        return new UserDetails(username, userRole);
+        return new SignInDetails(username, userRole);
     }
 
     private Command parseAddArgs(List<Argument> commandArgs) throws InvalidArgumentException, NoSuchElementException {
@@ -181,7 +183,8 @@ public class CommandParser extends ParserBase {
         return new AddCommand(amount, isInflow);
     }
 
-    private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
+    private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException,
+            NoSuchElementException {
         String time = "";
         String username = "";
 
@@ -202,5 +205,4 @@ public class CommandParser extends ParserBase {
         }
         return new AvailableCommand(time, username);
     }
-
 }

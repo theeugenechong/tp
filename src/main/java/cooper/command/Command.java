@@ -1,12 +1,14 @@
 package cooper.command;
 
-public abstract class Command {
+import cooper.finance.FinanceManager;
+import cooper.meetings.MeetingManager;
+import cooper.verification.SignInDetails;
 
-    public Command() {
-    }
+public abstract class Command {
 
     /**
      * Child classes are required to implement how to execute on itself.
      */
-    public abstract void execute();
+    public abstract void execute(SignInDetails signInDetails, FinanceManager financeManager,
+                                 MeetingManager meetingManager);
 }

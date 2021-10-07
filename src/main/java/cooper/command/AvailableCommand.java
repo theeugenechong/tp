@@ -1,11 +1,15 @@
 package cooper.command;
 
+import cooper.exceptions.DuplicateUsernameException;
+import cooper.exceptions.InvalidTimeException;
+import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
+import cooper.verification.SignInDetails;
 
 public class AvailableCommand extends Command {
-    private String time;
-    private String username;
+    private final String time;
+    private final String username;
 
     public AvailableCommand(String time, String username) {
         super();
@@ -13,11 +17,17 @@ public class AvailableCommand extends Command {
         this.username = username;
     }
 
-    public void execute() {
-        MeetingManager.addAvailability(time, username);
-        Ui.printAvailableCommand(time, username);
+    @Override
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
+        try {
+            meetingManager.addAvailability(time, username);
+            Ui.printAvailableCommand(time, username);
+        } catch (InvalidTimeException e1) {
+            Ui.showInvalidTimeException();
+        } catch (DuplicateUsernameException e2) {
+            Ui.showDuplicateUsernameException();
+        }
     }
-
 }
 
 

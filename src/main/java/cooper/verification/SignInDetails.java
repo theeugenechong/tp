@@ -1,11 +1,11 @@
 package cooper.verification;
 
-public class UserDetails {
+public class SignInDetails {
 
     private final String username;
     private final UserRole userRole;
 
-    public UserDetails(String username, UserRole userRole) {
+    public SignInDetails(String username, UserRole userRole) {
         this.username = username;
         this.userRole = userRole;
     }
