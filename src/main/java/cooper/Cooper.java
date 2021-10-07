@@ -16,7 +16,6 @@ import cooper.storage.Storage;
 
 public class Cooper {
 
-    private CommandParser commandParser;
     private final FinanceManager cooperFinanceManager;
     private final MeetingManager cooperMeetingManager;
     private final Verifier cooperVerifier;
@@ -33,9 +32,9 @@ public class Cooper {
     public void run() {
         Ui.showLogo();
         Ui.showIntroduction();
-
+        cooperStorage.loadLoginDetails(cooperVerifier);
         SignInDetails signInDetails = verifyUser();
-        // cooperStorage.loadStorage();
+        cooperStorage.loadResources(signInDetails, cooperFinanceManager, cooperMeetingManager);
 
         while (true) {
             try {
@@ -43,6 +42,7 @@ public class Cooper {
                 Command command = CommandParser.parse(input);
                 command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
                 cooperStorage.saveCommand(input);
+                cooperStorage.saveStorage();
             } catch (InvalidArgumentException | NoSuchElementException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
@@ -55,10 +55,14 @@ public class Cooper {
 
     private SignInDetails verifyUser() {
         SignInDetails successfulSignInDetails = null;
+        String input = "";
         while (!cooperVerifier.isSuccessfullySignedIn()) {
-            String input = Ui.getInput();
+            input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
+        cooperStorage.saveCommand("register " + successfulSignInDetails.getUsername()
+                                   + " as " + successfulSignInDetails.getUserRole().toString().toLowerCase());
+        cooperStorage.saveStorage();
         return successfulSignInDetails;
     }
 

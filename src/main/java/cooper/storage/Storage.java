@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import cooper.ui.Ui;
+import cooper.parser.CommandParser;
+import cooper.command.Command;
+import cooper.verification.SignInDetails;
+import cooper.finance.FinanceManager;
+import cooper.meetings.MeetingManager;
+import cooper.exceptions.InvalidArgumentException;
+import cooper.exceptions.UnrecognisedCommandException;
+import cooper.verification.Verifier;
 
 public class Storage {
 
@@ -38,20 +46,48 @@ public class Storage {
         storageFile = new File(fileDir.toString());
     }
 
-    public void loadStorage() {
+    public void loadLoginDetails(Verifier cooperVerifier) {
         Ui.suppressOutput();
-
         try {
             Scanner sc = new Scanner(storageFile);
             while (sc.hasNextLine()) {
-                Ui.showText(sc.nextLine());
+                String input = sc.nextLine();
+                if (input.split(" ")[0].equals("register")) {
+                    cooperVerifier.verify(input);
+                }
             }
             sc.close();
         } catch (FileNotFoundException e) {
-            Ui.unSuppressOutput();
             Ui.showNoStorage();
         }
+        Ui.unSuppressOutput();
+        return;
+    }
 
+
+
+    public void loadResources(SignInDetails signInDetails, FinanceManager cooperFinanceManager, 
+            MeetingManager cooperMeetingManager) {
+        Ui.suppressOutput();
+        try {
+            Scanner sc = new Scanner(storageFile);
+            while (sc.hasNextLine()) {
+                String input = sc.nextLine();
+                if (!input.split(" ")[0].equals("register")) { // do not load register instructions
+                    Command command = CommandParser.parse(input);
+                    command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
+                }
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            Ui.showNoStorage();
+        } catch (InvalidArgumentException e) {
+            Ui.showInvalidCommandArgumentError();
+        } catch (NumberFormatException e) {
+            Ui.showInvalidNumberError();
+        } catch (UnrecognisedCommandException e) {
+            Ui.showUnrecognisedCommandError();
+        }
         Ui.unSuppressOutput();
         return;
     }
@@ -69,6 +105,7 @@ public class Storage {
                 writer.newLine();
             }
             writer.close();
+            historyInputs.clear();
         } catch (IOException e) {
             Ui.showInvalidFilePathError();
         }
