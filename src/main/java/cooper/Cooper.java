@@ -1,6 +1,7 @@
 package cooper;
 
 import java.net.URISyntaxException;
+import java.util.NoSuchElementException;
 
 import cooper.command.Command;
 import cooper.finance.FinanceManager;
@@ -45,7 +46,7 @@ public class Cooper {
                 String input = Ui.getInput();
                 Command command = commandParser.parse(input);
                 command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
-            } catch (InvalidArgumentException e) {
+            } catch (InvalidArgumentException | NoSuchElementException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
                 Ui.showInvalidNumberError();
