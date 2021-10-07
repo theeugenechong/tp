@@ -65,7 +65,8 @@ public class CommandParser extends ParserBase {
      * @param input command to be parsed
      * @return a command object, to be passed into command handler
      */
-    public Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException {
+    public Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException,
+            NoSuchElementException {
         if (input.split(" ").length < 2) {
             return parseSimpleInput(input);
         } else {
@@ -88,7 +89,8 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private Command parseComplexInput(String input) throws UnrecognisedCommandException, InvalidArgumentException {
+    private Command parseComplexInput(String input) throws UnrecognisedCommandException, InvalidArgumentException,
+            NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -108,7 +110,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    public SignInProtocol parseLoginRegisterDetails(String input) throws UnrecognisedCommandException,
+    public SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
             InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
@@ -117,10 +119,10 @@ public class CommandParser extends ParserBase {
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
             case "login":
-                SignInDetails signInDetails = parseLoginRegisterArgs(commandArgs);
+                SignInDetails signInDetails = parseSignInArgs(commandArgs);
                 return new Login(signInDetails);
             case "register":
-                signInDetails = parseLoginRegisterArgs(commandArgs);
+                signInDetails = parseSignInArgs(commandArgs);
                 return new Registration(signInDetails);
             default:
                 throw new UnrecognisedCommandException();
@@ -130,7 +132,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private SignInDetails parseLoginRegisterArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
+    private SignInDetails parseSignInArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
             InvalidArgumentException, NoSuchElementException {
         String username = null;
         UserRole userRole = null;
@@ -181,7 +183,8 @@ public class CommandParser extends ParserBase {
         return new AddCommand(amount, isInflow);
     }
 
-    private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException {
+    private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException,
+            NoSuchElementException {
         String time = "";
         String username = "";
 
@@ -202,5 +205,4 @@ public class CommandParser extends ParserBase {
         }
         return new AvailableCommand(time, username);
     }
-
 }

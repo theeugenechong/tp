@@ -8,10 +8,6 @@ import cooper.verification.UserRole;
 
 public class HelpCommand extends Command {
 
-    public HelpCommand() {
-        super();
-    }
-
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
         UserRole userRole = signInDetails.getUserRole();

@@ -7,17 +7,12 @@ import cooper.verification.SignInDetails;
 
 public class ExitCommand extends Command {
 
-    public ExitCommand() {
-        super();
-    }
-
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
         Ui.showBye();
         Ui.closeStreams();
         System.exit(0);
     }
-
 }
 
 

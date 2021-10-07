@@ -21,7 +21,6 @@ public class AddCommand extends Command {
         financeManager.addBalance(Integer.parseInt(amount));
         Ui.printAddCommand(amount, isInflow);
     }
-
 }
 
 

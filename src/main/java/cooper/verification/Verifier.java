@@ -15,8 +15,8 @@ public class Verifier {
     private final CommandParser commandParser;
     private boolean isSuccessfullySignedIn;
 
-    public Verifier(HashMap<String, UserRole> registeredUsers, CommandParser commandParser) {
-        this.registeredUsers = registeredUsers;
+    public Verifier(CommandParser commandParser) {
+        this.registeredUsers = new HashMap<>();
         this.commandParser = commandParser;
         this.isSuccessfullySignedIn = false;
     }
@@ -32,11 +32,11 @@ public class Verifier {
     public SignInDetails verify(String input) {
         SignInDetails signInDetails = null;
         try {
-            SignInProtocol signInProtocol = commandParser.parseLoginRegisterDetails(input);
+            SignInProtocol signInProtocol = commandParser.parseSignInDetails(input);
             signInProtocol.executeSignIn(this, registeredUsers);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
-            Ui.showUnrecognisedCommandError();
+            Ui.showLoginRegisterMessage(false);
         } catch (InvalidArgumentException | NoSuchElementException e) {
             Ui.showInvalidCommandArgumentError();
         } catch (InvalidUserRoleException e) {

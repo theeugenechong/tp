@@ -7,15 +7,10 @@ import cooper.verification.SignInDetails;
 
 public class ListCommand extends Command {
 
-    public ListCommand() {
-        super();
-    }
-
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
         Ui.printBalanceSheet(financeManager.getBalanceSheet());
     }
-
 }
 
 

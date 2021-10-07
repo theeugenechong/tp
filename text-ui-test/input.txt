@@ -1,1 +1,11 @@
-James Gosling
+login Eugene as admin
+register Eugene as admin
+login Eugene as admin
+add 5000
+add (3750)
+add abc
+list
+available Eugene at 10:00
+available Eugene at tonight
+help
+exit
