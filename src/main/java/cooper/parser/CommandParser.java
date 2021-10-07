@@ -33,12 +33,13 @@ import cooper.verification.UserRole;
 
 public class CommandParser extends ParserBase {
 
+    private static CommandParser commandParserImpl = null;
     private Parser parser;
 
     /**
      * Constructor. Initialise internal parser.
      */
-    public CommandParser() throws URISyntaxException {
+    private CommandParser()  {
         super();
 
         try {
@@ -57,6 +58,10 @@ public class CommandParser extends ParserBase {
             Ui.showText("Error encountered when creating temp file: "
                     + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
                     + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
+        } catch (URISyntaxException e) {
+            Ui.showText("Error encountered when creating temp file: "
+                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
+                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
         }
     }
 
@@ -65,7 +70,24 @@ public class CommandParser extends ParserBase {
      * @param input command to be parsed
      * @return a command object, to be passed into command handler
      */
-    public Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException,
+    public static Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException,
+           NoSuchElementException {
+        if (commandParserImpl == null) {
+            commandParserImpl = new CommandParser();
+        }
+        return commandParserImpl.parseInput(input);
+    }
+
+    public static SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
+            InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
+        if (commandParserImpl == null) {
+            commandParserImpl = new CommandParser();
+        }
+        return commandParserImpl.parseSignInDetailsInternal(input);
+    }
+
+
+    public Command parseInput(String input) throws UnrecognisedCommandException, InvalidArgumentException,
             NoSuchElementException {
         if (input.split(" ").length < 2) {
             return parseSimpleInput(input);
@@ -110,7 +132,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    public SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
+    public SignInProtocol parseSignInDetailsInternal(String input) throws UnrecognisedCommandException,
             InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
