@@ -14,11 +14,13 @@ public class Login extends SignInProtocol {
     public void executeSignIn(Verifier verifier, HashMap<String, UserRole> registeredUsers) {
         if (!isRegisteredUser(registeredUsers)) {
             askUserToRegister();
+            verifier.setSuccessfullySignedIn(false);
             return;
         }
 
         if (!hasCorrectRole(registeredUsers)) {
             Ui.showIncorrectRoleMessage();
+            verifier.setSuccessfullySignedIn(false);
             return;
         }
 
