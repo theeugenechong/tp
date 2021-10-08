@@ -24,6 +24,8 @@ public class Login extends SignInProtocol {
             return;
         }
 
+        assert (isRegisteredUser(registeredUsers) && hasCorrectRole(registeredUsers));
+
         verifier.setSuccessfullySignedIn(true);
         Ui.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
     }
