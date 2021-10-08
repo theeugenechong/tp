@@ -12,24 +12,18 @@ import cooper.parser.CommandParser;
 import cooper.exceptions.InvalidArgumentException;
 import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
+import cooper.storage.Storage;
 
 public class Cooper {
 
-    private CommandParser commandParser;
     private final FinanceManager cooperFinanceManager;
     private final MeetingManager cooperMeetingManager;
     private final Verifier cooperVerifier;
+    private final Storage cooperStorage;
 
     public Cooper() {
-        try {
-            commandParser = new CommandParser();
-        } catch (URISyntaxException e) {
-            Ui.showInvalidFilePathError();
-            Ui.showBye();
-            Ui.closeStreams();
-            System.exit(0);
-        }
-        cooperVerifier = new Verifier(commandParser);
+        cooperVerifier = new Verifier();
+        cooperStorage = new Storage();
         cooperFinanceManager = new FinanceManager();
         cooperMeetingManager = new MeetingManager();
     }
@@ -38,14 +32,17 @@ public class Cooper {
     public void run() {
         Ui.showLogo();
         Ui.showIntroduction();
-
+        cooperStorage.loadLoginDetails(cooperVerifier);
         SignInDetails signInDetails = verifyUser();
+        cooperStorage.loadResources(signInDetails, cooperFinanceManager, cooperMeetingManager);
 
         while (true) {
             try {
                 String input = Ui.getInput();
-                Command command = commandParser.parse(input);
+                Command command = CommandParser.parse(input);
                 command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
+                cooperStorage.saveCommand(input);
+                cooperStorage.saveStorage();
             } catch (InvalidArgumentException | NoSuchElementException e) {
                 Ui.showInvalidCommandArgumentError();
             } catch (NumberFormatException e) {
@@ -58,10 +55,14 @@ public class Cooper {
 
     private SignInDetails verifyUser() {
         SignInDetails successfulSignInDetails = null;
+        String input = "";
         while (!cooperVerifier.isSuccessfullySignedIn()) {
-            String input = Ui.getInput();
+            input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
+        cooperStorage.saveCommand("register " + successfulSignInDetails.getUsername()
+                                   + " as " + successfulSignInDetails.getUserRole().toString().toLowerCase());
+        cooperStorage.saveStorage();
         return successfulSignInDetails;
     }
 

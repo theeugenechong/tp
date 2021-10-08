@@ -26,7 +26,7 @@ public abstract class ParserBase {
      * API to parse a string.
      * @param input command to be parsed
      */
-    public abstract Object parse(String input) throws UnrecognisedCommandException, InvalidArgumentException;
+    public abstract Object parseInput(String input) throws UnrecognisedCommandException, InvalidArgumentException;
 
     /**
      * A parser takes in a schema. Every child class needs to have its own schema.

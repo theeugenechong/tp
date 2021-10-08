@@ -12,12 +12,10 @@ import java.util.NoSuchElementException;
 public class Verifier {
 
     private final HashMap<String, UserRole> registeredUsers;
-    private final CommandParser commandParser;
     private boolean isSuccessfullySignedIn;
 
-    public Verifier(CommandParser commandParser) {
+    public Verifier() {
         this.registeredUsers = new HashMap<>();
-        this.commandParser = commandParser;
         this.isSuccessfullySignedIn = false;
     }
 
@@ -32,7 +30,7 @@ public class Verifier {
     public SignInDetails verify(String input) {
         SignInDetails signInDetails = null;
         try {
-            SignInProtocol signInProtocol = commandParser.parseSignInDetails(input);
+            SignInProtocol signInProtocol = CommandParser.parseSignInDetails(input);
             signInProtocol.executeSignIn(this, registeredUsers);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
