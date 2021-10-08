@@ -60,6 +60,7 @@ public class Cooper {
             input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
+        assert successfulSignInDetails != null;
         cooperStorage.saveCommand("register " + successfulSignInDetails.getUsername()
                                    + " as " + successfulSignInDetails.getUserRole().toString().toLowerCase());
         cooperStorage.saveStorage();

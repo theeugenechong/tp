@@ -19,6 +19,10 @@ public class Verifier {
         this.isSuccessfullySignedIn = false;
     }
 
+    public HashMap<String, UserRole> getRegisteredUsers() {
+        return registeredUsers;
+    }
+
     public void setSuccessfullySignedIn(boolean successfullySignedIn) {
         this.isSuccessfullySignedIn = successfullySignedIn;
     }
@@ -34,10 +38,13 @@ public class Verifier {
             signInProtocol.executeSignIn(this, registeredUsers);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
+            isSuccessfullySignedIn = false;
             Ui.showLoginRegisterMessage(false);
         } catch (InvalidArgumentException | NoSuchElementException e) {
+            isSuccessfullySignedIn = false;
             Ui.showInvalidCommandArgumentError();
         } catch (InvalidUserRoleException e) {
+            isSuccessfullySignedIn = false;
             Ui.showInvalidUserRoleError();
         }
         return signInDetails;

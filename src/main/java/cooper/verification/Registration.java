@@ -14,6 +14,7 @@ public class Registration extends SignInProtocol {
     public void executeSignIn(Verifier verifier, HashMap<String, UserRole> registeredUsers) {
         if (isRegisteredUser(registeredUsers)) {
             askUserToLogin();
+            verifier.setSuccessfullySignedIn(false);
         } else {
             registerUser(registeredUsers);
         }
