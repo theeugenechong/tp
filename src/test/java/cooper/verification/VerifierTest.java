@@ -46,10 +46,12 @@ public class VerifierTest {
         String input = "register Martin as admin";
         SignInDetails actual = verifier.verify(input);
 
+        SignInDetails expected = new SignInDetails("Martin", UserRole.ADMIN);
+        assertTrue(hasSameAttributeValuesAs(actual, expected));
+
         input = "login Martin as admin";
         actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", UserRole.ADMIN);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertTrue(verifier.isSuccessfullySignedIn());
 
