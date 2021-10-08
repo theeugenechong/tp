@@ -23,11 +23,11 @@ import cooper.verification.Verifier;
 
 public class Storage {
 
-    private File storageFile;
-    private ArrayList<String> historyInputs;
+    private final File storageFile;
+    private final ArrayList<String> historyInputs;
 
     public Storage() {
-        historyInputs = new ArrayList<String>();
+        historyInputs = new ArrayList<>();
         String baseDir = System.getProperty("user.dir") + "/tmp";
         String fileName = "/storage.txt";
         Path folderDir = Paths.get(baseDir);
@@ -61,10 +61,7 @@ public class Storage {
             Ui.showNoStorage();
         }
         Ui.unSuppressOutput();
-        return;
     }
-
-
 
     public void loadResources(SignInDetails signInDetails, FinanceManager cooperFinanceManager, 
             MeetingManager cooperMeetingManager) {
@@ -89,9 +86,7 @@ public class Storage {
             Ui.showUnrecognisedCommandError();
         }
         Ui.unSuppressOutput();
-        return;
     }
-
 
     public void saveCommand(String input) {
         historyInputs.add(input);
@@ -110,16 +105,4 @@ public class Storage {
             Ui.showInvalidFilePathError();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

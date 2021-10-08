@@ -54,11 +54,7 @@ public class CommandParser extends ParserBase {
 
             parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
 
-        } catch (IOException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             Ui.showText("Error encountered when creating temp file: "
                     + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
                     + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
@@ -188,17 +184,15 @@ public class CommandParser extends ParserBase {
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
-            switch (argName) {
-            case ("amount-hint"):
+            if (argName.equals("amount-hint")) {
                 if (argVal.charAt(0) == '(' && argVal.charAt(argVal.length() - 1) == ')') {
                     isInflow = false;
-                    amount = argVal.substring(1,argVal.length() - 1);
+                    amount = argVal.substring(1, argVal.length() - 1);
                 } else {
                     isInflow = true;
                     amount = argVal;
                 }
-                break;
-            default:
+            } else {
                 throw new InvalidArgumentException();
             }
         }

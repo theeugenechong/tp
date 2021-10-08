@@ -32,7 +32,6 @@ public class Ui {
 
     private static boolean isOutputSuppressed = false;
 
-
     public static String getInput() {
         showPrompt();
         return scanner.nextLine();
