@@ -3,7 +3,7 @@ package cooper.finance;
 import java.util.ArrayList;
 
 /**
- * Handles all actions and operations pertaining to financial assistance functions of the application
+ * Handles all actions and operations pertaining to financial assistance functions of the application.
  */
 public class FinanceManager {
     private final ArrayList<Integer> balanceSheet;
@@ -12,26 +12,20 @@ public class FinanceManager {
         balanceSheet = new ArrayList<>();
     }
 
-    /**
-     * Getter for the Balance Sheet
-     * @return balanceSheet ArrayList
-     */
     public ArrayList<Integer> getBalanceSheet() {
         return balanceSheet;
     }
 
     /**
-     * Adds specified amount input by user to the balanceSheet, with specified inflow or outflow
-     * @param amount
-     * @param isInflow
+     * Adds specified amount input by user to the balanceSheet, with specified inflow or outflow.
+     * @param amount amount inout by user
+     * @param isInflow boolean which specifies if {@code amount} is inflow or outflow
      */
     public void addBalance(int amount, boolean isInflow) {
         if (isInflow) {
             balanceSheet.add(amount);
-        }
-        else {
+        } else {
             balanceSheet.add(amount * -1);
         }
     }
-
 }

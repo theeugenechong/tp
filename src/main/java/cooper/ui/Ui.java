@@ -197,13 +197,11 @@ public class Ui {
         int balance = 0;
         for (int i = 0; i < balanceSheet.size(); i++) {
             if (balanceSheet.get(i) >= 0) {
-                show(i + 1 + ". inflow of: "+ balanceSheet.get(i));
-                balance += balanceSheet.get(i);
+                show(i + 1 + ". inflow of: " + balanceSheet.get(i));
+            } else {
+                show(i + 1 + ". outflow of: " + balanceSheet.get(i));
             }
-            else {
-                show(i + 1 + ". outflow of: "+ balanceSheet.get(i));
-                balance += balanceSheet.get(i);
-            }
+            balance += balanceSheet.get(i);
         }
         show("\n" + "Current balance: " + balance);
         show(LINE);
