@@ -6,7 +6,7 @@ import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 
 /**
- * The child class of Command that handles the 'add' command specifically
+ * The child class of Command that handles the 'add' command specifically.
  */
 public class AddCommand extends Command {
 
@@ -19,11 +19,11 @@ public class AddCommand extends Command {
         this.isInflow = isInflow;
     }
 
-    @Override
     /**
      * The override function for executing the 'add' command, calls for 'add' and subsequently printing the status
      * to the command line.
      */
+    @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
         financeManager.addBalance(Integer.parseInt(amount), isInflow);
         Ui.printAddCommand(amount, isInflow);
