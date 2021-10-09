@@ -1,6 +1,5 @@
 package cooper;
 
-import java.net.URISyntaxException;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
@@ -32,6 +31,7 @@ public class Cooper {
     public void run() {
         Ui.showLogo();
         Ui.showIntroduction();
+
         cooperStorage.loadLoginDetails(cooperVerifier);
         SignInDetails signInDetails = verifyUser();
         cooperStorage.loadResources(signInDetails, cooperFinanceManager, cooperMeetingManager);
@@ -55,11 +55,13 @@ public class Cooper {
 
     private SignInDetails verifyUser() {
         SignInDetails successfulSignInDetails = null;
-        String input = "";
+        String input;
+
         while (!cooperVerifier.isSuccessfullySignedIn()) {
             input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
+
         assert successfulSignInDetails != null;
         cooperStorage.saveCommand("register " + successfulSignInDetails.getUsername()
                                    + " as " + successfulSignInDetails.getUserRole().toString().toLowerCase());
