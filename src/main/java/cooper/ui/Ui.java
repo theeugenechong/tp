@@ -30,6 +30,7 @@ public class Ui {
     private static final Scanner scanner = new Scanner(System.in);
     private static final PrintStream printStream = System.out;
 
+    private static boolean isOutputSuppressed = false;
 
     public static String getInput() {
         showPrompt();
@@ -108,7 +109,7 @@ public class Ui {
      **/
     public static void showInvalidFilePathError() {
         show(LINE);
-        show("Parser received invalid input file path!");
+        show("Parser/Storage received invalid input file path!");
         show(LINE);
     }
 
@@ -157,8 +158,14 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showNoStorage() {
+        show(LINE);
+        show("No storage file detected!");
+        show(LINE);
+    }
+
     public static void showPrompt() {
-        printStream.print(">> ");
+        show(">> ", false); // false: do not print newline
     }
 
     /**
@@ -170,15 +177,33 @@ public class Ui {
     }
 
     private static void show(String printMessage) {
-        printStream.println(printMessage);
+        if (!isOutputSuppressed) {
+            printStream.println(printMessage);
+        }
+    }
+
+    private static void show(String printMessage, boolean newline) {
+        if (!isOutputSuppressed) {
+            printStream.print(printMessage);
+        }
+        if (newline) {
+            printStream.println();
+        }
     }
 
     public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
         show("This is the company's current Balance Sheet:");
+        int balance = 0;
         for (int i = 0; i < balanceSheet.size(); i++) {
-            show(i + 1 + ". " + balanceSheet.get(i));
+            if (balanceSheet.get(i) >= 0) {
+                show(i + 1 + ". inflow of: " + balanceSheet.get(i));
+            } else {
+                show(i + 1 + ". outflow of: " + balanceSheet.get(i));
+            }
+            balance += balanceSheet.get(i);
         }
+        show("\n" + "Current balance: " + balance);
         show(LINE);
     }
 
@@ -241,5 +266,17 @@ public class Ui {
         show("available | available [yourUsername] at [availableTime]");
         show("meetings  | meetings");
         show(LINE);
+    }
+
+    /**
+     * Storage "replays" saved commands to recover internal data structure.
+     * Suppress these outputs during these replays
+     */
+    public static void suppressOutput() {
+        isOutputSuppressed = true;
+    }
+
+    public static void unSuppressOutput() {
+        isOutputSuppressed = false;
     }
 }
