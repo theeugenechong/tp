@@ -27,8 +27,7 @@ public class MeetingManagerTest {
     void addAvailability_invalidTimeFormat_expectException() {
         String inputTime = "12.53";
         String inputName = "shixi";
-        assertThrows(InvalidTimeException.class,
-                () -> meetingManager.addAvailability(inputTime, inputName));
+        assertThrows(InvalidTimeException.class, () -> meetingManager.addAvailability(inputTime, inputName));
     }
 
     @Test
@@ -37,7 +36,6 @@ public class MeetingManagerTest {
         String inputTime = "12:53";
         String inputName = "shixi";
         meetingManager.addAvailability(inputTime, inputName);
-        assertThrows(DuplicateUsernameException.class,
-                () -> meetingManager.addAvailability(inputTime, inputName));
+        assertThrows(DuplicateUsernameException.class, () -> meetingManager.addAvailability(inputTime, inputName));
     }
 }
