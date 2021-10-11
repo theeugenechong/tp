@@ -3,6 +3,7 @@ package cooper;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
+import cooper.exceptions.InvalidAccessException;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
@@ -49,6 +50,8 @@ public class Cooper {
                 Ui.showInvalidNumberError();
             } catch (UnrecognisedCommandException e) {
                 Ui.showUnrecognisedCommandError();
+            } catch (InvalidAccessException e) {
+                Ui.printNoAccessError();
             }
         }
     }

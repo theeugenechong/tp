@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import cooper.exceptions.InvalidAccessException;
 import cooper.ui.Ui;
 import cooper.parser.CommandParser;
 import cooper.command.Command;
@@ -84,6 +85,8 @@ public class Storage {
             Ui.showInvalidNumberError();
         } catch (UnrecognisedCommandException e) {
             Ui.showUnrecognisedCommandError();
+        } catch (InvalidAccessException e) {
+            Ui.printNoAccessError();
         }
         Ui.unSuppressOutput();
     }

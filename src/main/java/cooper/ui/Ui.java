@@ -268,6 +268,10 @@ public class Ui {
         show(LINE);
     }
 
+    public static void printNoAccessError() {
+        show("You do not have access to this command.");
+    }
+
     /**
      * Storage "replays" saved commands to recover internal data structure.
      * Suppress these outputs during these replays
