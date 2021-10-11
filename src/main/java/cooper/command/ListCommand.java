@@ -17,12 +17,13 @@ public class ListCommand extends Command {
     /**
      * The override function for executing the 'list' command. Prints the balance sheet to the command line if and only if
      * the command is being accessed by an 'admin' level user.
-     * @param signInDetails
-     * @param financeManager
-     * @param meetingManager
+     * @param signInDetails access role
+     * @param financeManager access balance sheet
+     * @param meetingManager access meetings
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager)
+            throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
             Ui.printBalanceSheet(financeManager.getBalanceSheet());
