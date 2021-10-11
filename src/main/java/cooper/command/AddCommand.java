@@ -32,8 +32,7 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager,
-                        MeetingManager meetingManager) throws InvalidAccessException
-    {
+                        MeetingManager meetingManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
             financeManager.addBalance(Integer.parseInt(amount), isInflow);
