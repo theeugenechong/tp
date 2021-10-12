@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import cooper.command.Command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.FinanceManager;
+import cooper.log.CooperLogger;
 import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -26,6 +27,7 @@ public class Cooper {
         cooperStorage = new Storage();
         cooperFinanceManager = new FinanceManager();
         cooperMeetingManager = new MeetingManager();
+        CooperLogger.setupLogger();
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
