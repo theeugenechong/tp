@@ -1,47 +1,57 @@
 package cooper.parser;
 
-import org.junit.jupiter.api.BeforeAll;
+import cooper.exceptions.InvalidUserRoleException;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
-import cooper.parser.CommandParser;
 import cooper.exceptions.InvalidArgumentException;
 import cooper.exceptions.UnrecognisedCommandException;
 
+import java.util.NoSuchElementException;
+
 public class ParserTest {
-
-
-    @BeforeAll
-    static void setUpCommandParser() {
-    }
 
     @Test
     @Order(1)
-    void test_UnrecognisedCommandException() {
-        assertThrows(UnrecognisedCommandException.class, () -> {
-            CommandParser.parse("foo 123");
-        });
+    void parse_unnaturalInput_throwsUnrecognisedCommandException() {
+        assertThrows(UnrecognisedCommandException.class, () ->
+                CommandParser.parse("foo 123"));
 
-        assertThrows(UnrecognisedCommandException.class, () -> {
-            CommandParser.parse("$%^&&");
-        });
+        assertThrows(UnrecognisedCommandException.class, () ->
+                CommandParser.parse("$%^&&"));
+
+        assertThrows(UnrecognisedCommandException.class, () ->
+                CommandParser.parse("available Eugene at"));
+
+        assertThrows(UnrecognisedCommandException.class, () ->
+                CommandParser.parse("meetings $%^&"));
     }
 
-    void test_InvalidArgumentException() {
-        assertThrows(InvalidArgumentException.class, () -> {
-            CommandParser.parse("add $%^&");
-        });
+    @Test
+    void parse_unnaturalInput_exceptionThrown() {
+        assertThrows(NumberFormatException.class, () ->
+                CommandParser.parse("add $%^&"));
 
-        assertThrows(InvalidArgumentException.class, () -> {
-            CommandParser.parse("meetings $%^&");
-        });
+        assertThrows(NoSuchElementException.class, () ->
+                CommandParser.parse("available at 22:53"));
+    }
 
+    @Test
+    void parseSignInDetails_emptyArguments_exceptionThrown() {
+        assertThrows(NoSuchElementException.class, () ->
+                CommandParser.parseSignInDetails("login as admin"));
+
+        assertThrows(InvalidArgumentException.class, () ->
+                CommandParser.parseSignInDetails("login Topias as"));
+    }
+
+    @Test
+    void parseSignInDetails_invalidRole_throwsInvalidUserRoleException() {
+        assertThrows(InvalidUserRoleException.class, () ->
+                CommandParser.parseSignInDetails("login Topias as abc"));
+
+        assertThrows(InvalidUserRoleException.class, () ->
+                CommandParser.parseSignInDetails("register Martin as boss"));
     }
 }
