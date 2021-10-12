@@ -1,9 +1,13 @@
 package cooper.log;
 
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.Level;
 
 public class CooperLogger {
-    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static void setupLogger() {
         LogManager.getLogManager().reset();
