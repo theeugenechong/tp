@@ -8,9 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 public class MeetingManager {
     private static final String TIME_FORMAT = "HH:mm";
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final TreeMap<LocalTime, ArrayList<String>> meetings;
 
     public MeetingManager() {
@@ -43,11 +45,13 @@ public class MeetingManager {
         // if there is no time yet, create new timing
         if (!meetings.containsKey(localTime)) {
             meetings.put(localTime, new ArrayList<>());
+            LOGGER.info("A new time is created: " + time);
         }
 
         // check if the value is a duplicate
         if (!meetings.get(localTime).contains(name)) {
             meetings.get(localTime).add(name);
+            LOGGER.info(name + " has been added to " + time);
         } else {
             throw new DuplicateUsernameException();
         }
