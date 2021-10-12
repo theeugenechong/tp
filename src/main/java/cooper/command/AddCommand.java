@@ -6,7 +6,6 @@ import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
-import cooper.exceptions.InvalidAccessException;
 
 /**
  * The child class of Command that handles the 'add' command specifically.
@@ -14,9 +13,9 @@ import cooper.exceptions.InvalidAccessException;
 public class AddCommand extends Command {
 
     public boolean isInflow;
-    public String amount;
+    public int amount;
 
-    public AddCommand(String amount, boolean isInflow) {
+    public AddCommand(int amount, boolean isInflow) {
         super();
         this.amount = amount;
         this.isInflow = isInflow;
@@ -31,11 +30,11 @@ public class AddCommand extends Command {
      * @param meetingManager access meetings
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager,
-                        MeetingManager meetingManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager)
+            throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
-            financeManager.addBalance(Integer.parseInt(amount), isInflow);
+            financeManager.addBalance(amount, isInflow);
             Ui.printAddCommand(amount, isInflow);
         } else {
             Ui.printEmployeeHelp();
