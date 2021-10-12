@@ -43,6 +43,7 @@ public class Cooper {
             try {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
+                assert command != null;
                 command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
                 cooperStorage.saveCommand(input);
                 cooperStorage.saveStorage();
