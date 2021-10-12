@@ -1,6 +1,7 @@
 package cooper.verification;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  * Class representing protocols which allow a user to gain access to cOOPer's features, namely
@@ -10,6 +11,7 @@ public abstract class SignInProtocol {
 
     /* Represents the sign-in details related to this sign in protocol instance. */
     protected final SignInDetails signInDetails;
+    protected static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public SignInProtocol(SignInDetails signInDetails) {
         this.signInDetails = signInDetails;

@@ -31,19 +31,22 @@ public class Login extends SignInProtocol {
         if (!isRegisteredUser(registeredUsers)) {
             askUserToRegister();
             verifier.setSuccessfullySignedIn(false);
+            LOGGER.info("Failed sign in attempt by user with unregistered username, " + signInDetails.getUsername());
             return;
         }
+        assert isRegisteredUser(registeredUsers);
 
         if (!hasCorrectRole(registeredUsers)) {
             Ui.showIncorrectRoleMessage();
             verifier.setSuccessfullySignedIn(false);
+            LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect role.");
             return;
         }
-
         assert (isRegisteredUser(registeredUsers) && hasCorrectRole(registeredUsers));
 
         verifier.setSuccessfullySignedIn(true);
         Ui.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
+        LOGGER.info("User with username " + signInDetails.getUsername() + " successfully signed in.");
     }
 
     /**

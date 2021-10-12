@@ -19,3 +19,4 @@ src/main/java/META-INF/MANIFEST.MF
 text-ui-test/tmp/tmp_file_command.txt
 text-ui-test/tmp/tmp_file_training.txt
 tmp/storage.txt
+cooperLogs.log
