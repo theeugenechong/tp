@@ -1,5 +1,8 @@
 package cooper.verification;
 
+/**
+ * Class representing the sign in details of a user.
+ */
 public class SignInDetails {
 
     private final String username;

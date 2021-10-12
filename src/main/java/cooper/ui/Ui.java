@@ -132,11 +132,12 @@ public class Ui {
     }
 
     /**
-     * Exception message to show invalid number (such as task id) error.
+     * Exception message to show a non-integral value has been input where an integer value
+     * is expected.
      **/
     public static void showInvalidNumberError() {
         show(LINE);
-        show("Unrecognised number.");
+        show("Please enter a number for the amount.");
         show(LINE);
     }
 
@@ -207,7 +208,7 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAddCommand(String amount, boolean isInflow) {
+    public static void printAddCommand(int amount, boolean isInflow) {
         show(LINE);
         show("Success!");
         show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
@@ -266,6 +267,10 @@ public class Ui {
         show("available | available [yourUsername] at [availableTime]");
         show("meetings  | meetings");
         show(LINE);
+    }
+
+    public static void printNoAccessError() {
+        show("You do not have access to this command.");
     }
 
     /**

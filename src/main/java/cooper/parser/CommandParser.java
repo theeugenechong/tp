@@ -31,6 +31,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
@@ -146,7 +147,7 @@ public class CommandParser extends ParserBase {
                 throw new UnrecognisedCommandException();
             }
         } else {
-            throw new UnrecognisedCommandException();
+            throw new InvalidArgumentException();
         }
     }
 
@@ -178,20 +179,24 @@ public class CommandParser extends ParserBase {
         return new SignInDetails(username, userRole);
     }
 
-    private Command parseAddArgs(List<Argument> commandArgs) throws InvalidArgumentException, NoSuchElementException {
-        String amount = "";
+    private Command parseAddArgs(List<Argument> commandArgs) throws InvalidArgumentException, NoSuchElementException,
+            NumberFormatException {
+        String amountAsString;
+        int amount = 0;
         boolean isInflow = true;
+
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             if (argName.equals("amount-hint")) {
                 if (argVal.charAt(0) == '(' && argVal.charAt(argVal.length() - 1) == ')') {
                     isInflow = false;
-                    amount = argVal.substring(1, argVal.length() - 1);
+                    amountAsString = argVal.substring(1, argVal.length() - 1);
                 } else {
                     isInflow = true;
-                    amount = argVal;
+                    amountAsString = argVal;
                 }
+                amount = Integer.parseInt(amountAsString);
             } else {
                 throw new InvalidArgumentException();
             }
@@ -215,7 +220,6 @@ public class CommandParser extends ParserBase {
                 time = argVal;
                 break;
             default:
-                Ui.showText("Unrecognised argument for available");
                 throw new InvalidArgumentException();
             }
         }
