@@ -80,14 +80,14 @@ public class CommandParser extends ParserBase {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
-        assert(commandParserImpl != null);
+        assert commandParserImpl != null;
         return commandParserImpl.parseSignInDetailsInternal(input);
     }
 
 
     public Command parseInput(String input) throws UnrecognisedCommandException, InvalidArgumentException,
             NoSuchElementException {
-        assert(input != null);
+        assert input != null;
         if (input.split(" ").length < 2) {
             return parseSimpleInput(input);
         } else {
@@ -96,7 +96,7 @@ public class CommandParser extends ParserBase {
     }
 
     private Command parseSimpleInput(String input) throws UnrecognisedCommandException {
-        assert(input != null);
+        assert input != null;
         switch (input) {
         case "list":
             return new ListCommand();
