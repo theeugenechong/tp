@@ -6,7 +6,6 @@ import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
-import cooper.exceptions.InvalidAccessException;
 
 /**
  * The child class of Command that handles the 'add' command specifically.

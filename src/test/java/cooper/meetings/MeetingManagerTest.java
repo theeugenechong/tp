@@ -6,12 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.TreeMap;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MeetingManagerTest {
