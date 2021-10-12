@@ -13,9 +13,9 @@ import cooper.verification.UserRole;
 public class AddCommand extends Command {
 
     public boolean isInflow;
-    public String amount;
+    public int amount;
 
-    public AddCommand(String amount, boolean isInflow) {
+    public AddCommand(int amount, boolean isInflow) {
         super();
         this.amount = amount;
         this.isInflow = isInflow;
@@ -30,11 +30,11 @@ public class AddCommand extends Command {
      * @param meetingManager access meetings
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager,
-                        MeetingManager meetingManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager)
+            throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
-            financeManager.addBalance(Integer.parseInt(amount), isInflow);
+            financeManager.addBalance(amount, isInflow);
             Ui.printAddCommand(amount, isInflow);
         } else {
             Ui.printEmployeeHelp();
