@@ -29,7 +29,7 @@ public class FinanceManager {
             assert amount >= 0 : "entry should be positive";
         } else {
             balanceSheet.add(amount * -1);
-            assert amount < 0 : "entry should be negative";
+            assert amount * -1 < 0 : "entry should be negative";
         }
         LOGGER.info("An entry to the balance sheet is created: " + amount);
     }

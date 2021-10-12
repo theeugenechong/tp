@@ -1,0 +1,6 @@
+Oct 12, 2021 11:42:39 PM cooper.finance.FinanceManager addBalance
+INFO: An entry to the balance sheet is created: 5000
+Oct 12, 2021 11:42:43 PM cooper.finance.FinanceManager addBalance
+INFO: An entry to the balance sheet is created: 400
+Oct 12, 2021 11:42:45 PM cooper.ui.Ui printBalanceSheet
+INFO: The balance sheet is generated here
