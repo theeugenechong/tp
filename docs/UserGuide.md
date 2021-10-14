@@ -158,6 +158,7 @@ You are now logged in successfully as Sebastian!
 > #### 📝Note:
 > - `[username]` is the name you wish to enter the availability for. It is preferably your own username.
 > - `[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.
+> - Duplicate `[username]` in one timeslot will **not** be accepted.
 
 - Expected input:
 
@@ -222,6 +223,8 @@ Bye, see you next time! :D
 
 ## 8. Command Summary
 
-**Command** | **Format** | **Example**
-------------|------------|------------
+**Command** | **Format**                     | **Example**
+------------|--------------------------------|------------
+available   |`available [username] at [time]`|`available Sebastian at 10:00`
+meetings    |`meetings`                      |`meetings`
 
