@@ -193,11 +193,6 @@ These are the availabilities:
 
 ### 5.2 Generating balance sheet: `list`
 
-### 5.3 Declaring available timings for meetings: `available`
-
-### 5.4 Viewing meetings: `meetings`
-{Give detailed description of each feature}
-
 ## 6. Employee Features
 
 
