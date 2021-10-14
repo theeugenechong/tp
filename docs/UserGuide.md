@@ -150,22 +150,53 @@ You are now logged in successfully as Sebastian!
 ## 5. Employee Features
 
 ### 5.1 Declaring available timings for meetings: `available`
+- For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
+- How to input your availability:
+  1. After [logging in](#3-login) to the system, enter `available [username] at [time]`.
+  2. You will now have your name stored under the specified time in the system.
+
+> #### 📝Note:
+> - `[username]` is the name you wish to enter the availability for. It is preferably your own username.
+> - `[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.
+
+- Expected input:
+
+```
+>> available Sebastian at 14:00
+```
+
+- Expected output:
+
+```
+=========================================================================
+Success!
+Sebastian's availability has been added to 14:00
+=========================================================================
+```
 
 ### 5.2 Viewing meetings: `meetings`
-{Give detailed description of each feature}
+- To view the table of availabilities after inputting [availabilities](#51-declaring-available-timings-for-meetings-available), cOOPer allows you to visualise the availabilities in a table format.
+- How to view available timings:
+  1. After [logging in](#3-login) to the system, enter `meetings`.
+  2. You will now obtain a table with the availabilities entered.
 
-Adds a new item to the list of todo items.
+- Expected input:
 
-Format: `todo n/TODO_NAME d/DEADLINE`
+```
+>> meetings
+```
 
-* The `DEADLINE` can be in a natural language format.
-* The `TODO_NAME` cannot contain punctuation.  
+- Expected output:
 
-Example of usage: 
-
-`todo n/Write the rest of the User Guide d/next week`
-
-`todo n/Refactor the User Guide to remove passive voice d/13/04/2020`
+```
+=========================================================================
+These are the availabilities:
+┌────────────────────────────────────────────────────────────────────┐
+│ 10:00 │ Eugene
+│ 14:00 │ Sebastian
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
 
 ## 6. Exiting the program
 Exits the program.
