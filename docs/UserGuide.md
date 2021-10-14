@@ -190,6 +190,13 @@ These are the availabilities:
 ## 5. Admin Features 
 
 ### 5.1 Adding expenses: `add`
+- {description of function}
+- How to ...
+  1. {steps}
+
+- Expected input:
+
+- Expected output:
 
 ### 5.2 Generating balance sheet: `list`
 
