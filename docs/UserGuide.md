@@ -19,17 +19,16 @@ and **communicative** tasks like:
   - [2.1 Roles](#21-roles) 
   - [2.2 Signing in](#22-user-registration)
 - [3. Log in](#3-login)
-- [4. Admin Features](#4-admin-features)
-  - [4.1 Adding expenses: `add`](#41-adding-expenses-add)
-  - [4.2 Generating balance sheet: `list`](#42-generating-balance-sheet-list)
-  - [4.3 Declaring available timings for meetings: `available`](#43-declaring-available-timings-for-meetings-available)
-  - [4.4 Viewing meetings: `meetings`](#44-viewing-meetings-meetings)
-- [5. Employee Features](#5-employee-features)
-  - [5.1 Declaring available timings for meetings: `available`](#51-declaring-available-timings-for-meetings-available)
-  - [5.2 Viewing meetings: `meetings`](#52-viewing-meetings-meetings)
-- [6. Exiting the program](#6-exiting-the-program)
-- [7. FAQ](#7-faq)
-- [8. Command Summary](#8-command-summary)
+- [4. Features for all users](#4-features-for-all-users)
+  - [4.1 Declaring available timings for meetings: `available`](#41-declaring-available-timings-for-meetings-available)
+  - [4.2 Viewing meetings: `meetings`](#42-viewing-meetings-meetings)
+- [5. Admin Features](#5-admin-features)
+  - [5.1 Adding expenses: `add`](#51-adding-expenses-add)
+  - [5.2 Generating balance sheet: `list`](#52-generating-balance-sheet-list)
+- [6. Employee Features](#6-employee-features)
+- [7. Exiting the program](#7-exiting-the-program)
+- [8. FAQ](#8-faq)
+- [9. Command Summary](#9-command-summary)
   
 
 ## 1. Quick Start
@@ -136,20 +135,9 @@ You are now logged in successfully as Sebastian!
 =========================================================================
 ```
 
-## 4. Admin Features 
+## 4. Features for all users
 
-### 4.1 Adding expenses: `add`
-
-### 4.2 Generating balance sheet: `list`
-
-### 4.3 Declaring available timings for meetings: `available`
-
-### 4.4 Viewing meetings: `meetings`
-{Give detailed description of each feature}
-
-## 5. Employee Features
-
-### 5.1 Declaring available timings for meetings: `available`
+### 4.1 Declaring available timings for meetings: `available`
 - For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
 - How to input your availability:
   1. After [logging in](#3-login) to the system, enter `available [username] at [time]`.
@@ -175,8 +163,8 @@ Sebastian's availability has been added to 14:00
 =========================================================================
 ```
 
-### 5.2 Viewing meetings: `meetings`
-- To view the table of availabilities after inputting [availabilities](#51-declaring-available-timings-for-meetings-available), cOOPer allows you to visualise the availabilities in a table format.
+### 4.2 Viewing meetings: `meetings`
+- To view the table of availabilities after inputting [availabilities](#41-declaring-available-timings-for-meetings-available), cOOPer generates a table to help you visualise the availabilities.
 - How to view available timings:
   1. After [logging in](#3-login) to the system, enter `meetings`.
   2. You will now obtain a table with the availabilities entered.
@@ -199,7 +187,21 @@ These are the availabilities:
 =========================================================================
 ```
 
-## 6. Exiting the program
+## 5. Admin Features 
+
+### 5.1 Adding expenses: `add`
+
+### 5.2 Generating balance sheet: `list`
+
+### 5.3 Declaring available timings for meetings: `available`
+
+### 5.4 Viewing meetings: `meetings`
+{Give detailed description of each feature}
+
+## 6. Employee Features
+
+
+## 7. Exiting the program
 Exits the program.
 - Example input:
 
@@ -215,13 +217,13 @@ Bye, see you next time! :D
 =========================================================================
 ```
 
-## 7. FAQ
+## 8. FAQ
 
 **Q**: How do I transfer my data to another computer? 
 
 **A**: {your answer here}
 
-## 8. Command Summary
+## 9. Command Summary
 
 **Command** | **Format**                     | **Example**
 ------------|--------------------------------|------------
