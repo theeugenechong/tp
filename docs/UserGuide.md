@@ -148,7 +148,7 @@ You are now logged in successfully as Sebastian!
 > - `[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.
 > - Duplicate `[username]` in one timeslot will **not** be accepted.
 
-- Expected input:
+- Example input:
 
 ```
 >> available Sebastian at 14:00
@@ -169,7 +169,7 @@ Sebastian's availability has been added to 14:00
   1. After [logging in](#3-login) to the system, enter `meetings`.
   2. You will now obtain a table with the availabilities entered.
 
-- Expected input:
+- Example input:
 
 ```
 >> meetings
@@ -190,6 +190,7 @@ These are the availabilities:
 ## 5. Admin Features 
 
 ### 5.1 Adding expenses: `add`
+<<<<<<< HEAD
 - {description of function}
 - How to ...
   1. {steps}
@@ -199,9 +200,70 @@ These are the availabilities:
 - Expected output:
 
 ### 5.2 Generating balance sheet: `list`
+=======
+- Adds your company's expenses to a balance sheet.
+- How to add an expense:
+  1. After [logging in](#3-login) to the system, enter `add [amount]`.
+  2. The expense will be added to the balance sheet.
+
+> ####📝Note:
+> - By default, cOOPer treats `[amount]` as an inflow. To specify an outflow, a pair of parentheses should
+> be added around `[amount]`. *e.g.* `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
+> - `[amount]` should be a **positive integer** representing the amount of inflow/outflow added to the balance sheet.
+
+- Example input for inflow:
+
+```
+>> add 5000
+```
+
+- Expected output:
+
+```
+=========================================================================
+Success!
+Amount: +5000 has been added to the Balance Sheet.
+=========================================================================
+```
+
+- Example input for outflow:
+
+```
+>> add (5000)
+```
+
+- Expected output:
+
+```
+=========================================================================
+Success!
+Amount: -5000 has been added to the Balance Sheet.
+=========================================================================
+```
+
+### 5.2 Generating balance sheet: `list`
+- Prints your company's current balance sheet along with details of each expense and your current balance.
+
+- Example input:
+
+```
+>> list
+```
+
+- Expected output:
+
+```
+=========================================================================
+This is the company's current Balance Sheet:
+1. inflow of: 5000
+2. outflow of: -5000
+
+Current balance: 0
+=========================================================================
+```
 
 ## 6. Employee Features
-
+- As of v1.0, cOOPer does not have features exclusive to employees yet, there will be more to come in future versions!
 
 ## 7. Exiting the program
 Exits the program.
@@ -223,12 +285,19 @@ Bye, see you next time! :D
 
 **Q**: How do I transfer my data to another computer? 
 
-**A**: {your answer here}
+**A**: Here are the steps:
+1. [Download](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) cOOPer in the other computer. 
+2. In the old computer, you should see a folder named `tmp` in cOOPer's home folder. Refer to [Quick Start](#1-quick-start) if you do not 
+know what the *home folder* is.
+3. Copy the folder over to cOOPer's home folder in the other computer. 
+4. Running cOOPer should load your saved data.
 
 ## 9. Command Summary
 
-**Command** | **Format**                     | **Example**
-------------|--------------------------------|------------
-available   |`available [username] at [time]`|`available Sebastian at 10:00`
-meetings    |`meetings`                      |`meetings`
+**Command** | **Format**                          | **Example**
+------------|-------------------------------------|------------
+add         |`add [amount]`                       | `add 5000` or `add (5000)`
+list        |`list`                               | `list`
+available   |`available [username] at [time]`     |`available Sebastian at 10:00`
+meetings    |`meetings`                           |`meetings`
 
