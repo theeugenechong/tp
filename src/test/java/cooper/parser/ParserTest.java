@@ -1,11 +1,11 @@
 package cooper.parser;
 
+import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import cooper.exceptions.InvalidArgumentException;
 import cooper.exceptions.UnrecognisedCommandException;
 
 import java.util.NoSuchElementException;
@@ -20,12 +20,6 @@ public class ParserTest {
 
         assertThrows(UnrecognisedCommandException.class, () ->
                 CommandParser.parse("$%^&&"));
-
-        assertThrows(UnrecognisedCommandException.class, () ->
-                CommandParser.parse("available Eugene at"));
-
-        assertThrows(UnrecognisedCommandException.class, () ->
-                CommandParser.parse("meetings $%^&"));
     }
 
     @Test
@@ -42,8 +36,12 @@ public class ParserTest {
         assertThrows(NoSuchElementException.class, () ->
                 CommandParser.parseSignInDetails("login as admin"));
 
-        assertThrows(InvalidArgumentException.class, () ->
+        assertThrows(InvalidCommandFormatException.class, () ->
                 CommandParser.parseSignInDetails("login Topias as"));
+
+
+        assertThrows(InvalidCommandFormatException.class, () ->
+                CommandParser.parse("available Eugene at"));
     }
 
     @Test

@@ -103,6 +103,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showIncorrectPasswordError() {
+        show(LINE);
+        show("Incorrect password entered! Please try again.");
+        show(LINE);
+    }
+
     public static void showText(String text) {
         show(text);
     }

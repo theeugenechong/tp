@@ -24,7 +24,7 @@ public class VerifierTest {
         String input = "login Topias as admin";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Topias", UserRole.ADMIN);
+        SignInDetails expected = new SignInDetails("Topias", userRawPassword, userEncryptedPassword, userSalt, UserRole.ADMIN);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertFalse(verifier.isSuccessfullySignedIn());
     }
@@ -35,7 +35,7 @@ public class VerifierTest {
         String input = "register Martin as admin";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", UserRole.ADMIN);
+        SignInDetails expected = new SignInDetails("Martin", userRawPassword, userEncryptedPassword, userSalt, UserRole.ADMIN);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertFalse(verifier.isSuccessfullySignedIn());
     }
@@ -46,7 +46,7 @@ public class VerifierTest {
         String input = "register Martin as admin";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", UserRole.ADMIN);
+        SignInDetails expected = new SignInDetails("Martin", userRawPassword, userEncryptedPassword, userSalt, UserRole.ADMIN);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
 
         input = "login Martin as admin";
@@ -65,7 +65,7 @@ public class VerifierTest {
         String input = "login Martin as employee";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", UserRole.EMPLOYEE);
+        SignInDetails expected = new SignInDetails("Martin", userRawPassword, userEncryptedPassword, userSalt, UserRole.EMPLOYEE);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertFalse(verifier.isSuccessfullySignedIn());
     }

@@ -1,9 +1,9 @@
 package cooper.verification;
 
-import cooper.exceptions.InvalidArgumentException;
+import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.parser.CommandParser;
+import cooper.parser.SignInDetailsParser;
 import cooper.ui.Ui;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
  */
 public class Verifier {
 
-    private final HashMap<String, UserRole> registeredUsers;
+    private final HashMap<String, SignInDetails> registeredUsers;
     private boolean isSuccessfullySignedIn;
 
     public Verifier() {
@@ -22,7 +22,7 @@ public class Verifier {
         this.isSuccessfullySignedIn = false;
     }
 
-    public HashMap<String, UserRole> getRegisteredUsers() {
+    public HashMap<String, SignInDetails> getRegisteredUsers() {
         return registeredUsers;
     }
 
@@ -47,15 +47,16 @@ public class Verifier {
     public SignInDetails verify(String input) {
         SignInDetails signInDetails = null;
         try {
-            SignInProtocol signInProtocol = CommandParser.parseSignInDetails(input);
-            signInProtocol.executeSignIn(this, registeredUsers);
+            SignInProtocol signInProtocol = SignInDetailsParser.parse(input);
+            String rawPassword = SignInDetailsParser.parseRawPassword(input);
+            signInProtocol.executeSignIn(this, registeredUsers, rawPassword);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
             isSuccessfullySignedIn = false;
             Ui.showLoginRegisterMessage(false);
-        } catch (InvalidArgumentException | NoSuchElementException e) {
+        } catch (NoSuchElementException | InvalidCommandFormatException e) {
             isSuccessfullySignedIn = false;
-            Ui.showInvalidCommandArgumentError();
+            Ui.showInvalidCommandFormatError();
         } catch (InvalidUserRoleException e) {
             isSuccessfullySignedIn = false;
             Ui.showInvalidUserRoleError();
