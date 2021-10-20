@@ -33,7 +33,7 @@ public class ParserTest {
 
     @Test
     void parseSignInDetails_emptyArguments_exceptionThrown() {
-        assertThrows(NoSuchElementException.class, () ->
+        assertThrows(InvalidCommandFormatException.class, () ->
                 SignInDetailsParser.parse("login as admin"));
 
         assertThrows(InvalidCommandFormatException.class, () ->
