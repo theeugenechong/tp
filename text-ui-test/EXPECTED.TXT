@@ -60,4 +60,4 @@ To register, enter "register [yourUsername] as [yourRole]"
 To login, enter "login  [yourUsername] as [yourRole]"
 To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
->> 
+>>
