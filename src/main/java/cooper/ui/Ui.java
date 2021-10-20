@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 @SuppressWarnings("checkstyle:LineLength")
 public class Ui {
@@ -31,6 +32,8 @@ public class Ui {
     private static final PrintStream printStream = System.out;
 
     private static boolean isOutputSuppressed = false;
+
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String getInput() {
         showPrompt();
@@ -206,6 +209,7 @@ public class Ui {
         }
         show("\n" + "Current balance: " + balance);
         show(LINE);
+        LOGGER.info("The balance sheet is generated here");
     }
 
     public static void printAddCommand(int amount, boolean isInflow) {

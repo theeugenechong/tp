@@ -31,6 +31,7 @@ public class Registration extends SignInProtocol {
             askUserToLogin();
         } else {
             registerUser(registeredUsers);
+            LOGGER.info("User with username " + signInDetails.getUsername() + " has been successfully registered.");
         }
         verifier.setSuccessfullySignedIn(false);
     }
