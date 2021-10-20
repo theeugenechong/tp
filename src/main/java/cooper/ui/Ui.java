@@ -226,10 +226,10 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
+    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> availability) {
         printMeetingTableHeader();
-        for (LocalTime timing: meetings.keySet()) {
-            Ui.showText("│ " + timing + " │ " + listOfAttendees(meetings.get(timing)));
+        for (LocalTime timing: availability.keySet()) {
+            Ui.showText("│ " + timing + " │ " + listOfAttendees(availability.get(timing)));
         }
         show(TABLE_BOT);
         show(LINE);
