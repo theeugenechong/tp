@@ -17,6 +17,7 @@ import cooper.command.AvailableCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
 import cooper.command.ListCommand;
+import cooper.command.AvailabilityCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
 import cooper.exceptions.InvalidArgumentException;
@@ -102,6 +103,8 @@ public class CommandParser extends ParserBase {
             return new ListCommand();
         case "help":
             return new HelpCommand();
+        case "availability":
+            return new AvailabilityCommand();
         case "meetings":
             return new MeetingsCommand();
         case "exit":

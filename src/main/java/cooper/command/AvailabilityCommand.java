@@ -5,12 +5,10 @@ import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 
-public class MeetingsCommand extends Command {
+public class AvailabilityCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
-
+        Ui.printAvailabilities(meetingManager.getAvailability());
     }
 }
-
-

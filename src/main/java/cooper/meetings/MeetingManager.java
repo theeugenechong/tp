@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 public class MeetingManager {
     private static final String TIME_FORMAT = "HH:mm";
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private final TreeMap<LocalTime, ArrayList<String>> meetings;
+    private final TreeMap<LocalTime, ArrayList<String>> availability;
 
     public MeetingManager() {
-        meetings = new TreeMap<>();
+        availability = new TreeMap<>();
     }
 
     private boolean isValidTimeFormat(String value) {
@@ -30,8 +30,8 @@ public class MeetingManager {
         }
     }
 
-    public TreeMap<LocalTime, ArrayList<String>> getMeetings() {
-        return meetings;
+    public TreeMap<LocalTime, ArrayList<String>> getAvailability() {
+        return availability;
     }
 
     public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeException {
@@ -43,16 +43,16 @@ public class MeetingManager {
         }
 
         // if there is no time yet, create new timing
-        if (!meetings.containsKey(localTime)) {
-            assert !meetings.containsKey(localTime) : "there is no localTime object in meetings yet";
-            meetings.put(localTime, new ArrayList<>());
+        if (!availability.containsKey(localTime)) {
+            assert !availability.containsKey(localTime) : "there is no localTime object in meetings yet";
+            availability.put(localTime, new ArrayList<>());
             LOGGER.info("A new time is created: " + time);
         }
 
         // check if the value is a duplicate
-        if (!meetings.get(localTime).contains(name)) {
-            assert !meetings.get(localTime).contains(name) : "there is no " + name + " in meetings yet";
-            meetings.get(localTime).add(name);
+        if (!availability.get(localTime).contains(name)) {
+            assert !availability.get(localTime).contains(name) : "there is no " + name + " in meetings yet";
+            availability.get(localTime).add(name);
             LOGGER.info(name + " has been added to " + time);
         } else {
             throw new DuplicateUsernameException();
