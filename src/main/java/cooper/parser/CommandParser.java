@@ -213,15 +213,11 @@ public class CommandParser extends ParserBase {
     private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException,
             NoSuchElementException {
         String time = "";
-        String username = "";
 
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "username-hint":
-                username = argVal;
-                break;
             case "time-hint":
                 time = argVal;
                 break;
@@ -229,6 +225,6 @@ public class CommandParser extends ParserBase {
                 throw new InvalidArgumentException();
             }
         }
-        return new AvailableCommand(time, username);
+        return new AvailableCommand(time);
     }
 }
