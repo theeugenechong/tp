@@ -21,52 +21,47 @@ public class VerifierTest {
     @Test
     @Order(1)
     void verify_properInputFirstLoginAttempt_loginFailed() {
-        String input = "login Topias as admin";
+        String input = "login Topias pw 1111 as admin";
         SignInDetails actual = verifier.verify(input);
-
-        SignInDetails expected = new SignInDetails("Topias", userRawPassword, userEncryptedPassword, userSalt, UserRole.ADMIN);
-        assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertFalse(verifier.isSuccessfullySignedIn());
     }
 
     @Test
     @Order(2)
     void verify_properInputRegisterUser_registrationSuccessful() {
-        String input = "register Martin as admin";
+        String input = "register Martin pw 1111 as admin";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", userRawPassword, userEncryptedPassword, userSalt, UserRole.ADMIN);
-        assertTrue(hasSameAttributeValuesAs(actual, expected));
+        String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
+        String userEncryptedPassword = PasswordHasher.generatePasswordHash("1111", userSalt);
+        assertEquals(verifier.getRegisteredUsers().get("Martin").getUserEncryptedPassword(), userEncryptedPassword);
         assertFalse(verifier.isSuccessfullySignedIn());
     }
 
     @Test
     @Order(3)
     void verify_properInputLoginAfterRegister_loginSuccessful() {
-        String input = "register Martin as admin";
+        String input = "register Martin pw 1111 as admin";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", userRawPassword, userEncryptedPassword, userSalt, UserRole.ADMIN);
+        String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
+        String userEncryptedPassword = PasswordHasher.generatePasswordHash("1111", userSalt);
+        SignInDetails expected = new SignInDetails("Martin", userEncryptedPassword, userSalt, UserRole.ADMIN);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
 
-        input = "login Martin as admin";
+        input = "login Martin pw 1111 as admin";
         actual = verifier.verify(input);
 
-        assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertTrue(verifier.isSuccessfullySignedIn());
-
         assertTrue(verifier.getRegisteredUsers().containsKey("Martin"));
-        assertEquals(verifier.getRegisteredUsers().get("Martin"), UserRole.ADMIN);
     }
 
     @Test
     @Order(4)
     void verify_properInputLoginWrongRole_loginFailed() {
-        String input = "login Martin as employee";
+        String input = "login Martin pw 1111 as employee";
         SignInDetails actual = verifier.verify(input);
 
-        SignInDetails expected = new SignInDetails("Martin", userRawPassword, userEncryptedPassword, userSalt, UserRole.EMPLOYEE);
-        assertTrue(hasSameAttributeValuesAs(actual, expected));
         assertFalse(verifier.isSuccessfullySignedIn());
     }
 
@@ -113,6 +108,7 @@ public class VerifierTest {
     private static boolean hasSameAttributeValuesAs(SignInDetails actual, SignInDetails expected) {
         boolean hasSameUsername = actual.getUsername().equals(expected.getUsername());
         boolean hasSameRole = actual.getUserRole().equals(expected.getUserRole());
-        return (hasSameUsername && hasSameRole);
+        boolean hasSamePassword = actual.getUserEncryptedPassword().equals(expected.getUserEncryptedPassword());
+        return (hasSameUsername && hasSameRole && hasSamePassword);
     }
 }
