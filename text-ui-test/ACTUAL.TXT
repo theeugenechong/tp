@@ -13,47 +13,51 @@ Login or register to gain access to my features!
 To login, enter "login  [yourUsername] as [yourRole]"
 To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
+Error creating storage file: C:\Users\eugen\Desktop\NUS\YEAR 2 SEM 1\CS2113T\tP\build\libs\tmp\signInDetails.txt
+Error creating storage file: C:\Users\eugen\Desktop\NUS\YEAR 2 SEM 1\CS2113T\tP\build\libs\tmp\balanceSheet.txt
+Error creating storage file: C:\Users\eugen\Desktop\NUS\YEAR 2 SEM 1\CS2113T\tP\build\libs\tmp\meetings.txt
 >> =========================================================================
-Your username does not exist, please register!
+The command you entered is of the wrong format!
+Enter 'help' to view the format of each command.
 =========================================================================
 >> =========================================================================
-Eugene is now successfully registered as an admin!
+The command you entered is of the wrong format!
+Enter 'help' to view the format of each command.
 =========================================================================
 >> =========================================================================
-You are now logged in successfully as Eugene!
+The command you entered is of the wrong format!
+Enter 'help' to view the format of each command.
 =========================================================================
 >> =========================================================================
-Success!
-Amount: +5000 has been added to the Balance Sheet.
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-Success!
-Amount: -3750 has been added to the Balance Sheet.
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-Please enter a number for the amount.
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-This is the company's current Balance Sheet:
-1. inflow of: 5000
-2. outflow of: -3750
-
-Current balance: 1250
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-Success!
-Eugene's availability has been added to 10:00
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-The time format you entered is not accepted! Please enter again.
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-Here are the commands available to an admin along with their formats:
-add       | add [amount]
-list      | list
-available | available [yourUsername] at [availableTime]
-meetings  | meetings
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
 >> =========================================================================
-Bye, see you next time! :D
+To login, enter "login  [yourUsername] as [yourRole]"
+To register, enter "register [yourUsername] as [yourRole]"
 =========================================================================
+>> 
