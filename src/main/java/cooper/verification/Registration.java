@@ -19,14 +19,13 @@ public class Registration extends SignInProtocol {
 
     /**
      * Executes the addition/registration of a user into cOOPer's list of registered users.
-     *
-     * @param verifier A flag in {@code verifier} is set only upon successful login which allows the program
+     *  @param verifier A flag in {@code verifier} is set only upon successful login which allows the program
      *                 to proceed to the next stage - accessing cOOPer's features.
      * @param registeredUsers A list of users already registered with cOOPer along with their respective
-     *                        roles.
+     * @param rawPassword User's raw password without any hashing/encryption.
      */
     @Override
-    public void executeSignIn(Verifier verifier, HashMap<String, UserRole> registeredUsers) {
+    public void executeSignIn(Verifier verifier, HashMap<String, SignInDetails> registeredUsers, String rawPassword) {
         if (isRegisteredUser(registeredUsers)) {
             askUserToLogin();
         } else {
@@ -42,10 +41,10 @@ public class Registration extends SignInProtocol {
      * @param registeredUsers A list of details of registered users to which the username and role of
      *                        {@code signInDetails} will be added to upon successful registration.
      */
-    private void registerUser(HashMap<String, UserRole> registeredUsers) {
+    private void registerUser(HashMap<String, SignInDetails> registeredUsers) {
         String usernameToRegister = signInDetails.getUsername();
         UserRole userRoleToRegister = signInDetails.getUserRole();
-        registeredUsers.put(usernameToRegister, userRoleToRegister);
+        registeredUsers.put(usernameToRegister, signInDetails);
         Ui.showRegisteredSuccessfullyMessage(usernameToRegister, userRoleToRegister);
     }
 

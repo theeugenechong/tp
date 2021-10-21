@@ -103,6 +103,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showIncorrectPasswordError() {
+        show(LINE);
+        show("Incorrect password entered! Please try again.");
+        show(LINE);
+    }
+
     public static void showText(String text) {
         show(text);
     }
@@ -112,7 +118,13 @@ public class Ui {
      **/
     public static void showInvalidFilePathError() {
         show(LINE);
-        show("Parser/Storage received invalid input file path!");
+        show("Parser/StorageManager received invalid input file path!");
+        show(LINE);
+    }
+
+    public static void showInvalidFileDataError() {
+        show(LINE);
+        show("Invalid file data in storage files!");
         show(LINE);
     }
 
@@ -121,16 +133,18 @@ public class Ui {
      **/
     public static void showUnrecognisedCommandError() {
         show(LINE);
-        show("I don't recognise the command you entered. Enter \"help\" to view available commands.");
+        show("I don't recognise the command you entered.");
+        show("Enter 'help' to view the format of each command.");
         show(LINE);
     }
 
     /**
      * Exception message to show invalid command argument error.
      **/
-    public static void showInvalidCommandArgumentError() {
+    public static void showInvalidCommandFormatError() {
         show(LINE);
-        show("You have keyed in invalid command arguments.");
+        show("The command you entered is of the wrong format!");
+        show("Enter 'help' to view the format of each command.");
         show(LINE);
     }
 
@@ -229,24 +243,24 @@ public class Ui {
     public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
         printMeetingTableHeader();
         for (LocalTime timing: meetings.keySet()) {
-            Ui.showText("│ " + timing + " │ " + listOfAttendees(meetings.get(timing)));
+            Ui.showText("│ " + timing + " │ " + listOfAvailabilities(meetings.get(timing)));
         }
         show(TABLE_BOT);
         show(LINE);
     }
 
-    public static String listOfAttendees(ArrayList<String> attendees) {
-        StringBuilder listOfAttendees = new StringBuilder();
-        for (String attendee : attendees) {
+    public static String listOfAvailabilities(ArrayList<String> availabilities) {
+        StringBuilder listOfAvailabilities = new StringBuilder();
+        for (String a : availabilities) {
             /* don't need comma for last attendee */
-            int indexOfLastAttendee = attendees.size() - 1;
-            if (attendee.equals(attendees.get(indexOfLastAttendee))) {
-                listOfAttendees.append(attendee);
+            int indexOfLastAttendee = availabilities.size() - 1;
+            if (a.equals(availabilities.get(indexOfLastAttendee))) {
+                listOfAvailabilities.append(a);
             } else {
-                listOfAttendees.append(attendee).append(", ");
+                listOfAvailabilities.append(a).append(", ");
             }
         }
-        return String.valueOf(listOfAttendees);
+        return String.valueOf(listOfAvailabilities);
     }
 
     public static void printMeetingTableHeader() {
@@ -278,7 +292,7 @@ public class Ui {
     }
 
     /**
-     * Storage "replays" saved commands to recover internal data structure.
+     * StorageManager "replays" saved commands to recover internal data structure.
      * Suppress these outputs during these replays
      */
     public static void suppressOutput() {

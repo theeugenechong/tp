@@ -2,6 +2,7 @@ package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
 import cooper.meetings.MeetingManager;
+import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
@@ -28,13 +29,15 @@ public class AddCommand extends Command {
      * @param signInDetails access role
      * @param financeManager access balance sheet
      * @param meetingManager access meetings
+     * @param storageManager save to storage
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager)
-            throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
+                        StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
             financeManager.addBalance(amount, isInflow);
+            storageManager.saveBalanceSheet(financeManager);
             Ui.printAddCommand(amount, isInflow);
         } else {
             Ui.printEmployeeHelp();
