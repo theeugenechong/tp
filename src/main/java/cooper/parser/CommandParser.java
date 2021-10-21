@@ -22,16 +22,10 @@ import cooper.command.AvailabilityCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
 import cooper.command.ScheduleCommand;
-import cooper.exceptions.InvalidArgumentException;
-import cooper.exceptions.InvalidUserRoleException;
+import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
-import cooper.verification.SignInProtocol;
-import cooper.verification.Login;
-import cooper.verification.Registration;
-import cooper.verification.SignInDetails;
-import cooper.verification.UserRole;
 
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -70,31 +64,32 @@ public class CommandParser extends ParserBase {
      * @param input command to be parsed
      * @return a command object, to be passed into command handler
      */
-    public static Command parse(String input) throws UnrecognisedCommandException, InvalidArgumentException,
-           NoSuchElementException {
+    public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
+            InvalidCommandFormatException {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
         return commandParserImpl.parseInput(input);
     }
 
-    public static SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
-            InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
-        if (commandParserImpl == null) {
-            commandParserImpl = new CommandParser();
-        }
-        assert commandParserImpl != null;
-        return commandParserImpl.parseSignInDetailsInternal(input);
-    }
-
-
-    public Command parseInput(String input) throws UnrecognisedCommandException, InvalidArgumentException,
-            NoSuchElementException {
+    public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
+            InvalidCommandFormatException {
         assert input != null;
-        if (input.split(" ").length < 2) {
-            return parseSimpleInput(input);
-        } else {
+        String commandWord = input.split("\\s+")[0].toLowerCase();
+
+        switch (commandWord) {
+        case "list":
+        case "help":
+        case "availability":
+        case "meetings":
+        case "exit":
+            return parseSimpleInput(commandWord);
+        case "add":
+        case "available":
+        case "schedule":
             return parseComplexInput(input);
+        default:
+            throw new UnrecognisedCommandException();
         }
     }
 
@@ -116,8 +111,8 @@ public class CommandParser extends ParserBase {
         }
     }
 
-    private Command parseComplexInput(String input) throws UnrecognisedCommandException, InvalidArgumentException,
-            NoSuchElementException {
+    private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
+            InvalidCommandFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -135,62 +130,12 @@ public class CommandParser extends ParserBase {
                 throw new UnrecognisedCommandException();
             }
         } else {
-            throw new UnrecognisedCommandException();
+            throw new InvalidCommandFormatException();
         }
     }
 
-    public SignInProtocol parseSignInDetailsInternal(String input) throws UnrecognisedCommandException,
-            InvalidArgumentException, InvalidUserRoleException, NoSuchElementException {
-        Optional<ParseResult> optResult = parser.tryParse(input);
-        if (optResult.isPresent()) {
-            var result = optResult.get();
-            String command = result.allCommands().get(0).name();
-            List<Argument> commandArgs = result.allCommands().get(0).arguments();
-            switch (command) {
-            case "login":
-                SignInDetails signInDetails = parseSignInArgs(commandArgs);
-                return new Login(signInDetails);
-            case "register":
-                signInDetails = parseSignInArgs(commandArgs);
-                return new Registration(signInDetails);
-            default:
-                throw new UnrecognisedCommandException();
-            }
-        } else {
-            throw new InvalidArgumentException();
-        }
-    }
-
-    private SignInDetails parseSignInArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
-            InvalidArgumentException, NoSuchElementException {
-        String username = null;
-        UserRole userRole = null;
-
-        for (Argument a : commandArgs) {
-            String argName = a.name();
-            String argVal = a.value().get();
-            switch (argName) {
-            case "username-hint":
-                username = argVal;
-                break;
-            case "role-hint":
-                if (argVal.equals("admin")) {
-                    userRole = UserRole.ADMIN;
-                } else if (argVal.equals("employee")) {
-                    userRole = UserRole.EMPLOYEE;
-                } else {
-                    throw new InvalidUserRoleException();
-                }
-                break;
-            default:
-                throw new InvalidArgumentException();
-            }
-        }
-        return new SignInDetails(username, userRole);
-    }
-
-    private Command parseAddArgs(List<Argument> commandArgs) throws InvalidArgumentException, NoSuchElementException,
-            NumberFormatException {
+    private Command parseAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
         String amountAsString;
         int amount = 0;
         boolean isInflow = true;
@@ -208,14 +153,14 @@ public class CommandParser extends ParserBase {
                 }
                 amount = Integer.parseInt(amountAsString);
             } else {
-                throw new InvalidArgumentException();
+                throw new InvalidCommandFormatException();
             }
         }
         return new AddCommand(amount, isInflow);
     }
 
-    private Command parseAvailableArgs(List<Argument> commandArgs) throws InvalidArgumentException,
-            NoSuchElementException {
+    private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            InvalidCommandFormatException {
         String time = "";
 
         for (Argument a : commandArgs) {
@@ -226,13 +171,13 @@ public class CommandParser extends ParserBase {
                 time = argVal;
                 break;
             default:
-                throw new InvalidArgumentException();
+                throw new InvalidCommandFormatException();
             }
         }
         return new AvailableCommand(time);
     }
 
-    private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidArgumentException,
+    private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NoSuchElementException {
         ArrayList<String> usernames = new ArrayList<>();
         for (Argument a : commandArgs) {
@@ -243,7 +188,7 @@ public class CommandParser extends ParserBase {
                 usernames = parseUsernamesInSchedule(argVal);
                 break;
             default:
-                throw new InvalidArgumentException();
+                throw new InvalidCommandFormatException();
             }
         }
         return new ScheduleCommand(usernames);

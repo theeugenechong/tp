@@ -4,6 +4,7 @@ import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.InvalidTimeException;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
+import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 
@@ -23,7 +24,7 @@ public class ScheduleCommand extends Command {
     }
 
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager) {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager, StorageManager storageManager) {
         if (time == null) {
             try {
                 meetingManager.autoScheduleMeeting(usernames);

@@ -20,14 +20,13 @@ public class Login extends SignInProtocol {
 
     /**
      * Executes the logging in of a user to access cOOPer's features.
-     *
-     * @param verifier A flag in {@code verifier} is set only upon successful login which allows the program
+     *  @param verifier A flag in {@code verifier} is set only upon successful login which allows the program
      *                 to proceed to the next stage - accessing cOOPer's features.
      * @param registeredUsers A list of users already registered with cOOPer along with their respective
-     *                        roles.
+     * @param rawPassword User's raw password without any hashing/encryption.
      */
     @Override
-    public void executeSignIn(Verifier verifier, HashMap<String, UserRole> registeredUsers) {
+    public void executeSignIn(Verifier verifier, HashMap<String, SignInDetails> registeredUsers, String rawPassword) {
         if (!isRegisteredUser(registeredUsers)) {
             askUserToRegister();
             verifier.setSuccessfullySignedIn(false);
@@ -44,6 +43,12 @@ public class Login extends SignInProtocol {
         }
         assert (isRegisteredUser(registeredUsers) && hasCorrectRole(registeredUsers));
 
+        if (!hasCorrectPassword(registeredUsers, rawPassword)) {
+            Ui.showIncorrectPasswordError();
+            verifier.setSuccessfullySignedIn(false);
+            LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect password.");
+        }
+
         verifier.setSuccessfullySignedIn(true);
         Ui.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
         LOGGER.info("User with username " + signInDetails.getUsername() + " successfully signed in.");
@@ -57,10 +62,18 @@ public class Login extends SignInProtocol {
      *                        roles.
      * @return true if the role of {@code signInDetails} matches the role with which the user registered
      */
-    private boolean hasCorrectRole(HashMap<String, UserRole> registeredUsers) {
+    private boolean hasCorrectRole(HashMap<String, SignInDetails> registeredUsers) {
         // compares user role which is already in hashmap tp user role of current am object
-        UserRole userRoleInHashMap = registeredUsers.get(signInDetails.getUsername());
+        SignInDetails user = registeredUsers.get(signInDetails.getUsername());
+        UserRole userRoleInHashMap = user.getUserRole();
         return userRoleInHashMap.equals(signInDetails.getUserRole());
+    }
+
+    private boolean hasCorrectPassword(HashMap<String, SignInDetails> registeredUsers, String rawPassword) {
+        SignInDetails user = registeredUsers.get(signInDetails.getUsername());
+        String userSalt = user.getUserSalt();
+        String calculatedHash = PasswordHasher.generatePasswordHash(rawPassword, userSalt);
+        return calculatedHash.equals(user.getUserEncryptedPassword());
     }
 
     /**
