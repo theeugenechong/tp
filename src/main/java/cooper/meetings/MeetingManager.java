@@ -1,8 +1,10 @@
 package cooper.meetings;
 
 import cooper.exceptions.CannotScheduleMeetingException;
+import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.InvalidTimeException;
+import cooper.ui.Ui;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -61,13 +63,18 @@ public class MeetingManager {
         }
     }
 
-    public void autoScheduleMeeting(ArrayList<String> usernames) throws CannotScheduleMeetingException {
+    public void autoScheduleMeeting(ArrayList<String> usernames) throws CannotScheduleMeetingException, DuplicateMeetingException {
         for (LocalTime timing: availability.keySet()) {
-            if (availability.get(timing).contains(usernames)) {
+            if (availability.get(timing).containsAll(usernames)) {
                 // creates meeting and adds to list of meetings
                 Meeting meeting = new Meeting(timing, usernames);
-                meetingsList.add(meeting);
-                return;
+                if (meetingsList.contains(meeting)) {
+                    throw new DuplicateMeetingException();
+                } else {
+                    meetingsList.add(meeting);
+                    Ui.printSuccessfulScheduleCommand(timing.toString(), usernames);
+                    return;
+                }
             }
         }
         throw new CannotScheduleMeetingException();

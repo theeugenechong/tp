@@ -1,6 +1,7 @@
 package cooper.command;
 
 import cooper.exceptions.CannotScheduleMeetingException;
+import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.InvalidTimeException;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
@@ -11,15 +12,17 @@ import cooper.verification.SignInDetails;
 import java.util.ArrayList;
 
 public class ScheduleCommand extends Command {
-    private String time;
+    private String time = null;
     private final ArrayList<String> usernames;
 
     public ScheduleCommand(ArrayList<String> usernamesAndTime) {
+        /**
         if (usernamesAndTime.contains("at")) {
             this.time = usernamesAndTime.get(usernamesAndTime.size() - 1);
             usernamesAndTime.remove(usernamesAndTime.size() - 1);
             usernamesAndTime.remove(usernamesAndTime.size() - 1);
         }
+         **/
         this.usernames = usernamesAndTime;
     }
 
@@ -28,8 +31,10 @@ public class ScheduleCommand extends Command {
         if (time == null) {
             try {
                 meetingManager.autoScheduleMeeting(usernames);
-            } catch (CannotScheduleMeetingException e) {
+            } catch (CannotScheduleMeetingException e1) {
                 Ui.showCannotScheduleMeetingException();
+            } catch (DuplicateMeetingException e2) {
+                Ui.showDuplicateMeetingException();
             }
         } else {
             try {

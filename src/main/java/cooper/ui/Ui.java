@@ -176,6 +176,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showDuplicateMeetingException() {
+        show(LINE);
+        show("You have already scheduled a meeting at that time!");
+        show(LINE);
+    }
+
     public static void showBye() {
         show(LINE);
         show("Bye, see you next time! :D");
@@ -246,8 +252,15 @@ public class Ui {
         show(LINE);
     }
 
+    public static void printSuccessfulScheduleCommand(String time, ArrayList<String> usernames) {
+        show(LINE);
+        show("Success!");
+        show("You have scheduled a meeting at " + time + " with " + listOfAvailabilities(usernames));
+        show(LINE);
+    }
+
     public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> availability) {
-        printMeetingTableHeader();
+        printAvailabilityTableHeader();
         for (LocalTime timing: availability.keySet()) {
             Ui.showText("│ " + timing + " │ " + listOfAvailabilities(availability.get(timing)));
         }
@@ -269,7 +282,7 @@ public class Ui {
         return String.valueOf(listOfAvailabilities);
     }
 
-    public static void printMeetingTableHeader() {
+    public static void printAvailabilityTableHeader() {
         show(LINE);
         show("These are the availabilities:");
         show(TABLE_TOP);

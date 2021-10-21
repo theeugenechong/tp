@@ -23,14 +23,14 @@ public class MeetingsStorage extends Storage {
     }
 
     public void loadMeetings(MeetingManager cooperMeetingManager) {
-        TreeMap<LocalTime, ArrayList<String>> meetings = cooperMeetingManager.getMeetings();
+        TreeMap<LocalTime, ArrayList<String>> meetings = cooperMeetingManager.getAvailability();
         Scanner fileScanner = getScanner(filePath);
         readMeetings(fileScanner, meetings);
     }
 
     public void saveMeetings(MeetingManager cooperMeetingManager) {
         try {
-            writeMeetings(filePath, cooperMeetingManager.getMeetings());
+            writeMeetings(filePath, cooperMeetingManager.getAvailability());
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
             System.exit(1);
