@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import cooper.command.ListCommand;
 import cooper.command.AvailabilityCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
+import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidArgumentException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -125,6 +127,8 @@ public class CommandParser extends ParserBase {
             switch (command) {
             case "available":
                 return parseAvailableArgs(commandArgs);
+            case "schedule":
+                return parseScheduleArgs(commandArgs);
             case "add":
                 return parseAddArgs(commandArgs);
             default:
@@ -226,5 +230,32 @@ public class CommandParser extends ParserBase {
             }
         }
         return new AvailableCommand(time);
+    }
+
+    private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidArgumentException,
+            NoSuchElementException {
+        ArrayList<String> usernames = new ArrayList<>();
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "usernames-hint":
+                usernames = parseUsernamesInSchedule(argVal);
+                break;
+            default:
+                throw new InvalidArgumentException();
+            }
+        }
+        return new ScheduleCommand(usernames);
+    }
+
+    private ArrayList<String> parseUsernamesInSchedule(String usernames) {
+        String[] usernamesArray = usernames.split(",");
+        ArrayList<String> usernamesArrayList = new ArrayList<>();
+        for (int i = 0; i < usernamesArray.length; i++) {
+            String trimmedUsername = usernamesArray[i].trim();
+            usernamesArrayList.add(trimmedUsername);
+        }
+        return usernamesArrayList;
     }
 }

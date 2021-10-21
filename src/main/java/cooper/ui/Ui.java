@@ -156,6 +156,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showCannotScheduleMeetingException() {
+        show(LINE);
+        show("Oops, no meeting can be scheduled!");
+        show(LINE);
+    }
+
     public static void showBye() {
         show(LINE);
         show("Bye, see you next time! :D");
