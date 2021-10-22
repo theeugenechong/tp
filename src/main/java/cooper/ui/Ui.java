@@ -2,6 +2,7 @@ package cooper.ui;
 
 import cooper.verification.UserRole;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -30,8 +31,6 @@ public class Ui {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final PrintStream printStream = System.out;
-
-    private static boolean isOutputSuppressed = false;
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -113,12 +112,20 @@ public class Ui {
         show(text);
     }
 
+    public static void showFileWriteError(IOException e) {
+        show(LINE);
+        show("Error writing to file ", false);
+        show(e.getMessage(), true);
+        show(LINE);
+    }
+
     /**
      * Exception message to show file path error.
      **/
-    public static void showInvalidFilePathError() {
+    public static void showFileCreationError(IOException e) {
         show(LINE);
-        show("Parser/StorageManager received invalid input file path!");
+        show("Error creating storage file: ", false);
+        show(e.getMessage(), true);
         show(LINE);
     }
 
@@ -176,12 +183,6 @@ public class Ui {
         show(LINE);
     }
 
-    public static void showNoStorage() {
-        show(LINE);
-        show("No storage file detected!");
-        show(LINE);
-    }
-
     public static void showPrompt() {
         show(">> ", false); // false: do not print newline
     }
@@ -195,15 +196,12 @@ public class Ui {
     }
 
     private static void show(String printMessage) {
-        if (!isOutputSuppressed) {
-            printStream.println(printMessage);
-        }
+        printStream.println(printMessage);
     }
 
     private static void show(String printMessage, boolean newline) {
-        if (!isOutputSuppressed) {
-            printStream.print(printMessage);
-        }
+        printStream.print(printMessage);
+
         if (newline) {
             printStream.println();
         }
@@ -289,17 +287,5 @@ public class Ui {
 
     public static void printNoAccessError() {
         show("You do not have access to this command.");
-    }
-
-    /**
-     * StorageManager "replays" saved commands to recover internal data structure.
-     * Suppress these outputs during these replays
-     */
-    public static void suppressOutput() {
-        isOutputSuppressed = true;
-    }
-
-    public static void unSuppressOutput() {
-        isOutputSuppressed = false;
     }
 }
