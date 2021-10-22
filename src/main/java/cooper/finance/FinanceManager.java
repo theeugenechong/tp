@@ -7,16 +7,15 @@ import java.util.logging.Logger;
  * Handles all actions and operations pertaining to financial assistance functions of the application.
  */
 public class FinanceManager {
-    private final ArrayList<Integer> balanceSheet;
+    public static BalanceSheet cooperBalanceSheet;
+    public static CashFlow cooperCashFlowStatement;
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public FinanceManager() {
-        balanceSheet = new ArrayList<>();
+        this.cooperBalanceSheet = new BalanceSheet();
+        this.cooperCashFlowStatement = new CashFlow();
     }
 
-    public ArrayList<Integer> getBalanceSheet() {
-        return balanceSheet;
-    }
 
     /**
      * Adds specified amount input by user to the balanceSheet, with specified inflow or outflow.
@@ -25,12 +24,23 @@ public class FinanceManager {
      */
     public void addBalance(int amount, boolean isInflow) {
         if (isInflow) {
-            balanceSheet.add(amount);
+            cooperBalanceSheet.balanceSheet.add(amount);
             assert amount >= 0 : "entry should be positive";
         } else {
-            balanceSheet.add(amount * -1);
+            cooperBalanceSheet.balanceSheet.add(amount * -1);
             assert amount * -1 < 0 : "entry should be negative";
         }
         LOGGER.info("An entry to the balance sheet is created: " + amount);
+    }
+
+    public void addCashFlow(int amount, boolean isInflow) {
+        if (isInflow) {
+            cooperCashFlowStatement.cashFlowStatement.add(amount);
+            assert amount >= 0 : "entry should be positive";
+        } else {
+            cooperCashFlowStatement.cashFlowStatement.add(amount * -1);
+            assert amount * -1 < 0 : "entry should be negative";
+        }
+        LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }
 }

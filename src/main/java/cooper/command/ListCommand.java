@@ -1,6 +1,7 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
+import cooper.finance.BalanceSheet;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
@@ -28,7 +29,7 @@ public class ListCommand extends Command {
                         MeetingManager meetingManager, StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
-            Ui.printBalanceSheet(financeManager.getBalanceSheet());
+            Ui.printBalanceSheet(BalanceSheet.getBalanceSheet());
         } else {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();

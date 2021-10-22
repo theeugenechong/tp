@@ -1,6 +1,7 @@
 package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
+import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
 import cooper.ui.Ui;
 
@@ -16,15 +17,15 @@ public class BalanceSheetStorage extends Storage {
         super(filePath);
     }
 
-    public void loadBalanceSheet(FinanceManager cooperFinanceManager) {
-        ArrayList<Integer> balanceSheet = cooperFinanceManager.getBalanceSheet();
+    public void loadBalanceSheet(BalanceSheet cooperBalanceSheet) {
+        ArrayList<Integer> balanceSheet = cooperBalanceSheet.getBalanceSheet();
         Scanner fileScanner = getScanner(filePath);
         readBalanceSheet(fileScanner, balanceSheet);
     }
 
-    public void saveBalanceSheet(FinanceManager cooperFinanceManager) {
+    public void saveBalanceSheet(BalanceSheet cooperBalanceSheet) {
         try {
-            writeBalanceSheet(filePath, cooperFinanceManager.getBalanceSheet());
+            writeBalanceSheet(filePath, cooperBalanceSheet.getBalanceSheet());
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
             System.exit(1);

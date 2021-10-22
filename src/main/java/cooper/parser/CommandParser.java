@@ -12,18 +12,13 @@ import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
 import com.dopsun.chatbot.cli.Parser;
 
-import cooper.command.AddCommand;
-import cooper.command.AvailableCommand;
-import cooper.command.Command;
-import cooper.command.ExitCommand;
-import cooper.command.ListCommand;
-import cooper.command.MeetingsCommand;
-import cooper.command.HelpCommand;
+import cooper.command.*;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
+import cooper.finance.FinanceCommand;
 import cooper.verification.PasswordHasher;
 import cooper.verification.SignInProtocol;
 import cooper.verification.Login;
@@ -37,6 +32,7 @@ public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
     private Parser parser;
+    public static FinanceCommand financeFlag;
 
     /**
      * Constructor. Initialise internal parser.
@@ -86,6 +82,8 @@ public class CommandParser extends ParserBase {
         case "help":
         case "meetings":
         case "exit":
+        case "bs":
+        case "cf":
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
@@ -106,6 +104,13 @@ public class CommandParser extends ParserBase {
             return new MeetingsCommand();
         case "exit":
             return new ExitCommand();
+        case "cf":
+            return new CFCommand();
+        case "bs":
+            financeFlag = FinanceCommand.BS;
+            return new BSCommand();
+        case "proj":
+            financeFlag = FinanceCommand.PROJ;
         default:
             throw new UnrecognisedCommandException();
         }
@@ -154,7 +159,8 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new AddCommand(amount, isInflow);
+        return new AddCommand(amount, isInflow, financeFlag);
+
     }
 
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,

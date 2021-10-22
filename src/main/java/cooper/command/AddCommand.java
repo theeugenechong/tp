@@ -7,6 +7,7 @@ import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
+import cooper.finance.FinanceCommand;
 
 /**
  * The child class of Command that handles the 'add' command specifically.
@@ -15,11 +16,13 @@ public class AddCommand extends Command {
 
     public boolean isInflow;
     public int amount;
+    public FinanceCommand financeFlag;
 
-    public AddCommand(int amount, boolean isInflow) {
+    public AddCommand(int amount, boolean isInflow, FinanceCommand financeFlag) {
         super();
         this.amount = amount;
         this.isInflow = isInflow;
+        this.financeFlag = financeFlag;
     }
 
     /**
@@ -36,9 +39,15 @@ public class AddCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
-            financeManager.addBalance(amount, isInflow);
-            storageManager.saveBalanceSheet(financeManager);
-            Ui.printAddCommand(amount, isInflow);
+            if (financeFlag == FinanceCommand.BS) {
+                financeManager.addBalance(amount, isInflow);
+                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
+                Ui.printAddBalanceCommand(amount, isInflow);
+            } else if (financeFlag == FinanceCommand.CF) {
+                financeManager.addCashFlow(amount, isInflow);
+                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
+                Ui.printAddCashFlowCommand(amount, isInflow);
+            }
         } else {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();

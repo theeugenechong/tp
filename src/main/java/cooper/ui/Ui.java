@@ -222,14 +222,38 @@ public class Ui {
             balance += balanceSheet.get(i);
         }
         show("\n" + "Current balance: " + balance);
+        if (balance != 0) {
+            show("THERE IS AN ACCOUNTING MISTAKE! One of your entries is incorrect.");
+        } else {
+            show("Balance Sheet is perfectly balanced, as all things should be.");
+        }
         show(LINE);
         LOGGER.info("The balance sheet is generated here");
     }
 
-    public static void printAddCommand(int amount, boolean isInflow) {
+    public static void printCashFlowStatement(ArrayList<Integer> cashFlowStatement) {
+        show(LINE);
+        show("This is the company's current Cash Flow Statement:");
+        for (int i = 0; i < cashFlowStatement.size(); i++) {
+            if (cashFlowStatement.get(i) >= 0) {
+                show(i + 1 + ". inflow of: " + cashFlowStatement.get(i));
+            } else {
+                show(i + 1 + ". outflow of: " + cashFlowStatement.get(i));
+            }
+        }
+    }
+
+    public static void printAddBalanceCommand(int amount, boolean isInflow) {
         show(LINE);
         show("Success!");
         show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
+        show(LINE);
+    }
+
+    public static void printAddCashFlowCommand(int amount, boolean isInflow) {
+        show(LINE);
+        show("Success!");
+        show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Cash Flow Statement.");
         show(LINE);
     }
 
