@@ -158,6 +158,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showInvalidScheduleCommandException() {
+        show(LINE);
+        show("Oops, please enter more than one username!");
+        show(LINE);
+    }
+
     public static void showInvalidTimeException() {
         show(LINE);
         show("The time format you entered is not accepted! Please enter again.");

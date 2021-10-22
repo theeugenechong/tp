@@ -53,4 +53,23 @@ public class MeetingManagerTest {
         meetingManager.manualScheduleMeeting(listOfAttendees, time);
         assertThrows(DuplicateMeetingException.class, () -> meetingManager.manualScheduleMeeting(listOfAttendees, time));
     }
+
+    @Test
+    @Order(4)
+    void manualScheduleMeeting_InvalidTime_expectException() {
+        ArrayList<String> listOfAttendees = new ArrayList<>();
+        listOfAttendees.add("shixi");
+        listOfAttendees.add("fan");
+        String time = "1200";
+        assertThrows(InvalidTimeException.class, () -> meetingManager.manualScheduleMeeting(listOfAttendees, time));
+    }
+
+    @Test
+    @Order(5)
+    void autoScheduleMeeting_noAvailability_expectException() {
+        ArrayList<String> listOfAttendees = new ArrayList<>();
+        listOfAttendees.add("shixi");
+        listOfAttendees.add("fan");
+        assertThrows(CannotScheduleMeetingException.class, () -> meetingManager.autoScheduleMeeting(listOfAttendees));
+    }
 }

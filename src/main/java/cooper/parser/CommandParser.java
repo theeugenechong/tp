@@ -180,27 +180,50 @@ public class CommandParser extends ParserBase {
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NoSuchElementException {
         ArrayList<String> usernames = new ArrayList<>();
+        String time = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
-            switch (argName) {
-            case "usernames-hint":
+            if ("usernames-hint".equals(argName)) {
                 usernames = parseUsernamesInSchedule(argVal);
-                break;
-            default:
+                time = parseTimeInSchedule(argVal);
+            } else {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new ScheduleCommand(usernames);
+        return new ScheduleCommand(usernames, time);
     }
 
-    private ArrayList<String> parseUsernamesInSchedule(String usernames) {
-        String[] usernamesArray = usernames.split(",");
+    private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidCommandFormatException {
+        if (!args.contains(",")) {
+            throw new InvalidCommandFormatException();
+        }
+
+        String[] usernamesArray = args.split(",");
         ArrayList<String> usernamesArrayList = new ArrayList<>();
-        for (int i = 0; i < usernamesArray.length; i++) {
-            String trimmedUsername = usernamesArray[i].trim();
-            usernamesArrayList.add(trimmedUsername);
+        for (String s : usernamesArray) {
+            String trimmedUsername = s.trim();
+            // if the command args contain the time, get only the last username and add it to the list
+            getLastUsername(usernamesArrayList, trimmedUsername);
         }
         return usernamesArrayList;
+    }
+
+    private void getLastUsername(ArrayList<String> usernamesArrayList, String trimmedUsername) {
+        if (trimmedUsername.contains("/at")) {
+            String[] lastUsernameAndTime = trimmedUsername.split("/at");
+            usernamesArrayList.add(lastUsernameAndTime[0].trim());
+        } else {
+            usernamesArrayList.add(trimmedUsername);
+        }
+    }
+
+    private String parseTimeInSchedule(String args) {
+        if (args.contains("/at")) {
+            String[] argsArray = args.split("/at");
+            return argsArray[1].trim();
+        } else {
+            return null;
+        }
     }
 }

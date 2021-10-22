@@ -15,7 +15,7 @@ public class ScheduleCommand extends Command {
     private String time = null;
     private final ArrayList<String> usernames;
 
-    public ScheduleCommand(ArrayList<String> usernamesAndTime) {
+    public ScheduleCommand(ArrayList<String> usernames, String time) {
         /**
         if (usernamesAndTime.contains("at")) {
             this.time = usernamesAndTime.get(usernamesAndTime.size() - 1);
@@ -23,12 +23,14 @@ public class ScheduleCommand extends Command {
             usernamesAndTime.remove(usernamesAndTime.size() - 1);
         }
          **/
-        this.usernames = usernamesAndTime;
+        this.usernames = usernames;
+        this.time = time;
     }
 
     @Override
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
                         StorageManager storageManager) {
+        // if time field is not entered, proceed to auto schedule a meeting at the earliest time
         if (time == null) {
             try {
                 meetingManager.autoScheduleMeeting(usernames);
@@ -41,6 +43,7 @@ public class ScheduleCommand extends Command {
         } else {
             try {
                 meetingManager.manualScheduleMeeting(usernames, time);
+                storageManager.saveMeetings(meetingManager);
             } catch (InvalidTimeException e1) {
                 Ui.showInvalidTimeException();
             } catch (CannotScheduleMeetingException e2) {
