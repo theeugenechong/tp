@@ -11,4 +11,12 @@ public class Meeting {
         this.time = time;
         this.listOfAttendees = listOfAttendees;
     }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public ArrayList<String> getListOfAttendees() {
+        return listOfAttendees;
+    }
 }

@@ -1,6 +1,7 @@
 package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
+import cooper.meetings.Meeting;
 import cooper.meetings.MeetingManager;
 import cooper.ui.Ui;
 
@@ -12,9 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class MeetingsStorage extends Storage {
 
@@ -23,26 +22,26 @@ public class MeetingsStorage extends Storage {
     }
 
     public void loadMeetings(MeetingManager cooperMeetingManager) {
-        TreeMap<LocalTime, ArrayList<String>> meetings = cooperMeetingManager.getAvailability();
+        ArrayList<Meeting> meetings = cooperMeetingManager.getMeetingsList();
         Scanner fileScanner = getScanner(filePath);
         readMeetings(fileScanner, meetings);
     }
 
     public void saveMeetings(MeetingManager cooperMeetingManager) {
         try {
-            writeMeetings(filePath, cooperMeetingManager.getAvailability());
+            writeMeetings(filePath, cooperMeetingManager.getMeetingsList());
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
             System.exit(1);
         }
     }
 
-    private static void readMeetings(Scanner fileScanner, TreeMap<LocalTime, ArrayList<String>> meetings) {
+    private static void readMeetings(Scanner fileScanner, ArrayList<Meeting> meetings) {
         if (fileScanner != null) {
             while (fileScanner.hasNext()) {
-                String meeting = fileScanner.nextLine();
+                String meetingsRow = fileScanner.nextLine();
                 try {
-                    decodeMeeting(meeting, meetings);
+                    decodeMeetings(meetingsRow, meetings);
                 } catch (InvalidFileDataException e) {
                     Ui.showInvalidFileDataError();
                 }
@@ -50,21 +49,22 @@ public class MeetingsStorage extends Storage {
         }
     }
 
-    private static void decodeMeeting(String meetingAsString, TreeMap<LocalTime, ArrayList<String>> meetings)
+    private static void decodeMeetings(String meetingAsString, ArrayList<Meeting> meetings)
             throws InvalidFileDataException {
-        String[] meeting = meetingAsString.split("\\|");
-        if (isInvalidFileData(meeting)) {
+        String[] attendees = meetingAsString.split("\\|");
+        if (isInvalidFileData(attendees)) {
             throw new InvalidFileDataException();
         }
-        assert !isInvalidFileData(meeting);
+        assert !isInvalidFileData(attendees);
 
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime meetingTime = LocalTime.parse(meeting[0].trim(), timeFormat);
+        LocalTime meetingTime = LocalTime.parse(attendees[0].trim(), timeFormat);
 
-        String[] availabilitiesAsArray = meeting[1].trim().split(",");
-        ArrayList<String> availabilities = new ArrayList<>(Arrays.asList(availabilitiesAsArray));
+        String[] attendeesAsArray = attendees[1].trim().split(",");
+        ArrayList<String> attendeesArrayList = new ArrayList<>(Arrays.asList(attendeesAsArray));
+        Meeting meeting = new Meeting(meetingTime, attendeesArrayList);
 
-        meetings.put(meetingTime, availabilities);
+        meetings.add(meeting);
     }
 
     private static boolean isInvalidFileData(String[] meeting) {
@@ -87,40 +87,40 @@ public class MeetingsStorage extends Storage {
         return false;
     }
 
-    private static void writeMeetings(Path filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
+    private static void writeMeetings(Path filePath, ArrayList<Meeting> meetingsList)
             throws IOException {
         FileWriter fileWriter = new FileWriter(filePath.toString(), false);
 
-        for (Map.Entry<LocalTime, ArrayList<String>> e : meetings.entrySet()) {
-            String encodedMeeting = encodeMeeting(e);
+        for (int i = 0; i < meetingsList.size(); i++) {
+            String encodedMeeting = encodeMeeting(meetingsList.get(i));
             fileWriter.write(encodedMeeting + System.lineSeparator());
         }
         fileWriter.close();
     }
 
-    private static String encodeMeeting(Map.Entry<LocalTime, ArrayList<String>> meeting) {
+    private static String encodeMeeting(Meeting meeting) {
         StringBuilder encodedMeeting = new StringBuilder();
 
-        String meetingTime = meeting.getKey().toString();
+        String meetingTime = meeting.getTime().toString();
         encodedMeeting.append(meetingTime).append(" | ");
 
-        String availabilities = getAvailabilitiesAsString(meeting.getValue());
-        encodedMeeting.append(availabilities);
+        String attendees = getAttendeesAsString(meeting.getListOfAttendees());
+        encodedMeeting.append(attendees);
 
         return String.valueOf(encodedMeeting);
     }
 
-    private static String getAvailabilitiesAsString(ArrayList<String> availabilities) {
-        StringBuilder availabilitiesAsString = new StringBuilder();
-        for (String a : availabilities) {
+    private static String getAttendeesAsString(ArrayList<String> attendees) {
+        StringBuilder meetingAsString = new StringBuilder();
+        for (String a : attendees) {
             /* don't need comma for last attendee */
-            int indexOfLastAttendee = availabilities.size() - 1;
-            if (a.equals(availabilities.get(indexOfLastAttendee))) {
-                availabilitiesAsString.append(a);
+            int indexOfLastAttendee = attendees.size() - 1;
+            if (a.equals(attendees.get(indexOfLastAttendee))) {
+                meetingAsString.append(a);
             } else {
-                availabilitiesAsString.append(a).append(",");
+                meetingAsString.append(a).append(",");
             }
         }
-        return String.valueOf(availabilitiesAsString);
+        return String.valueOf(meetingAsString);
     }
 }

@@ -27,10 +27,12 @@ public class ScheduleCommand extends Command {
     }
 
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager, StorageManager storageManager) {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
+                        StorageManager storageManager) {
         if (time == null) {
             try {
                 meetingManager.autoScheduleMeeting(usernames);
+                storageManager.saveMeetings(meetingManager);
             } catch (CannotScheduleMeetingException e1) {
                 Ui.showCannotScheduleMeetingException();
             } catch (DuplicateMeetingException e2) {
@@ -43,6 +45,8 @@ public class ScheduleCommand extends Command {
                 Ui.showInvalidTimeException();
             } catch (CannotScheduleMeetingException e2) {
                 Ui.showCannotScheduleMeetingException();
+            } catch (DuplicateMeetingException e3) {
+                Ui.showDuplicateMeetingException();
             }
         }
     }

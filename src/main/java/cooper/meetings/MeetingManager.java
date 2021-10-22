@@ -17,10 +17,11 @@ public class MeetingManager {
     private static final String TIME_FORMAT = "HH:mm";
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private final TreeMap<LocalTime, ArrayList<String>> availability;
-    private final ArrayList<Meeting> meetingsList = new ArrayList<>();
+    private final ArrayList<Meeting> meetingsList;
 
     public MeetingManager() {
         availability = new TreeMap<>();
+        meetingsList = new ArrayList<>();
     }
 
     private boolean isValidTimeFormat(String value) {
@@ -36,6 +37,10 @@ public class MeetingManager {
 
     public TreeMap<LocalTime, ArrayList<String>> getAvailability() {
         return availability;
+    }
+
+    public ArrayList<Meeting> getMeetingsList() {
+        return meetingsList;
     }
 
     public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeException {
@@ -63,24 +68,28 @@ public class MeetingManager {
         }
     }
 
+    private void addMeeting(ArrayList<String> usernames, LocalTime timing) throws DuplicateMeetingException {
+        Meeting meeting = new Meeting(timing, usernames);
+        for (Meeting value : meetingsList) {
+            if (value.getTime().equals(meeting.getTime())) {
+                throw new DuplicateMeetingException();
+            }
+        }
+        meetingsList.add(meeting);
+        Ui.printSuccessfulScheduleCommand(timing.toString(), usernames);
+    }
+
     public void autoScheduleMeeting(ArrayList<String> usernames) throws CannotScheduleMeetingException, DuplicateMeetingException {
         for (LocalTime timing: availability.keySet()) {
             if (availability.get(timing).containsAll(usernames)) {
-                // creates meeting and adds to list of meetings
-                Meeting meeting = new Meeting(timing, usernames);
-                if (meetingsList.contains(meeting)) {
-                    throw new DuplicateMeetingException();
-                } else {
-                    meetingsList.add(meeting);
-                    Ui.printSuccessfulScheduleCommand(timing.toString(), usernames);
-                    return;
-                }
+                addMeeting(usernames, timing);
+                return;
             }
         }
         throw new CannotScheduleMeetingException();
     }
 
-    public void manualScheduleMeeting(ArrayList<String> usernames, String time) throws InvalidTimeException, CannotScheduleMeetingException {
+    public void manualScheduleMeeting(ArrayList<String> usernames, String time) throws InvalidTimeException, CannotScheduleMeetingException, DuplicateMeetingException {
         LocalTime localTime;
         if (isValidTimeFormat(time)) {
             localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
@@ -88,9 +97,8 @@ public class MeetingManager {
             throw new InvalidTimeException();
         }
 
-        if (availability.get(localTime).contains(usernames)) {
-            Meeting meeting = new Meeting(localTime, usernames);
-            meetingsList.add(meeting);
+        if (availability.get(localTime).containsAll(usernames)) {
+            addMeeting(usernames, localTime);
         } else {
             throw new CannotScheduleMeetingException();
         }
