@@ -22,7 +22,7 @@ public class AvailableCommand extends Command {
         try {
             String username = signInDetails.getUsername();
             meetingManager.addAvailability(time, username);
-            storageManager.saveMeetings(meetingManager);
+            storageManager.saveAvailability(meetingManager);
             Ui.printAvailableCommand(time, username);
         } catch (InvalidTimeException e1) {
             Ui.showInvalidTimeException();
