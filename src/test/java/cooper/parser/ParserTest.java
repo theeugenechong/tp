@@ -22,7 +22,7 @@ public class ParserTest {
                 CommandParser.parse("$%^&&"));
     }
 
-    /**
+    /*
     @Test
     void parse_unnaturalInput_exceptionThrown() {
         assertThrows(NumberFormatException.class, () ->
@@ -44,7 +44,7 @@ public class ParserTest {
         assertThrows(InvalidCommandFormatException.class, () ->
                 CommandParser.parse("available Eugene at"));
     }
-    **/
+    */
 
     @Test
     void parseSignInDetails_invalidRole_throwsInvalidUserRoleException() {
