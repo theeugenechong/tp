@@ -46,30 +46,36 @@ public class MeetingManagerTest {
         meetingManager.addAvailability("12:00", "shixi");
         meetingManager.addAvailability("12:00", "fan");
 
+        String meetingName = "Project Meeting";
         ArrayList<String> listOfAttendees = new ArrayList<>();
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
         String time = "12:00";
-        meetingManager.manualScheduleMeeting(listOfAttendees, time);
-        assertThrows(DuplicateMeetingException.class, () -> meetingManager.manualScheduleMeeting(listOfAttendees, time));
+        meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time);
+        assertThrows(DuplicateMeetingException.class, () ->
+                meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
     }
 
     @Test
     @Order(4)
     void manualScheduleMeeting_InvalidTime_expectException() {
+        String meetingName = "Project Meeting";
         ArrayList<String> listOfAttendees = new ArrayList<>();
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
         String time = "1200";
-        assertThrows(InvalidTimeException.class, () -> meetingManager.manualScheduleMeeting(listOfAttendees, time));
+        assertThrows(InvalidTimeException.class, () ->
+                meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
     }
 
     @Test
     @Order(5)
     void autoScheduleMeeting_noAvailability_expectException() {
+        String meetingName = "Project Meeting";
         ArrayList<String> listOfAttendees = new ArrayList<>();
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
-        assertThrows(CannotScheduleMeetingException.class, () -> meetingManager.autoScheduleMeeting(listOfAttendees));
+        assertThrows(CannotScheduleMeetingException.class, () ->
+                meetingManager.autoScheduleMeeting(meetingName, listOfAttendees));
     }
 }

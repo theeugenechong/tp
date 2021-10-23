@@ -68,15 +68,16 @@ public class MeetingManager {
         }
     }
 
-    private void addMeeting(ArrayList<String> usernames, LocalTime timing) throws DuplicateMeetingException {
-        Meeting meeting = new Meeting(timing, usernames);
+    private void addMeeting(String meetingName, ArrayList<String> usernames, LocalTime timing)
+            throws DuplicateMeetingException {
+        Meeting meeting = new Meeting(meetingName, timing, usernames);
         for (Meeting value : meetingsList) {
             if (value.getTime().equals(meeting.getTime())) {
                 throw new DuplicateMeetingException();
             }
         }
         meetingsList.add(meeting);
-        Ui.printSuccessfulScheduleCommand(timing.toString(), usernames);
+        Ui.printSuccessfulScheduleCommand(meetingName, timing.toString(), usernames);
     }
 
     private boolean isMeetingTimeFull(LocalTime timing) {
@@ -88,17 +89,21 @@ public class MeetingManager {
         return false;
     }
 
-    public void autoScheduleMeeting(ArrayList<String> usernames) throws CannotScheduleMeetingException, DuplicateMeetingException {
+    public void autoScheduleMeeting(String meetingName, ArrayList<String> usernames)
+            throws CannotScheduleMeetingException,
+            DuplicateMeetingException {
         for (LocalTime timing: availability.keySet()) {
             if (availability.get(timing).containsAll(usernames) && !isMeetingTimeFull(timing)) {
-                addMeeting(usernames, timing);
+                addMeeting(meetingName, usernames, timing);
                 return;
             }
         }
         throw new CannotScheduleMeetingException();
     }
 
-    public void manualScheduleMeeting(ArrayList<String> usernames, String time) throws InvalidTimeException, CannotScheduleMeetingException, DuplicateMeetingException {
+    public void manualScheduleMeeting(String meetingName, ArrayList<String> usernames, String time)
+            throws InvalidTimeException,
+            CannotScheduleMeetingException, DuplicateMeetingException {
         LocalTime localTime;
         if (isValidTimeFormat(time)) {
             localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
@@ -107,7 +112,7 @@ public class MeetingManager {
         }
 
         if (availability.get(localTime).containsAll(usernames)) {
-            addMeeting(usernames, localTime);
+            addMeeting(meetingName, usernames, localTime);
         } else {
             throw new CannotScheduleMeetingException();
         }

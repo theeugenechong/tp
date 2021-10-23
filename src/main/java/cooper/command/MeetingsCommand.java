@@ -9,7 +9,8 @@ import cooper.verification.SignInDetails;
 public class MeetingsCommand extends Command {
 
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager, StorageManager storageManager) {
+    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
+                        StorageManager storageManager) {
 
     }
 }

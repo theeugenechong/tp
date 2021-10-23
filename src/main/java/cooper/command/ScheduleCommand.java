@@ -14,10 +14,12 @@ import cooper.verification.UserRole;
 import java.util.ArrayList;
 
 public class ScheduleCommand extends Command {
+    private final String meetingName;
     private final String time;
     private final ArrayList<String> usernames;
 
-    public ScheduleCommand(ArrayList<String> usernames, String time) {
+    public ScheduleCommand(String meetingName, ArrayList<String> usernames, String time) {
+        this.meetingName = meetingName;
         this.usernames = usernames;
         this.time = time;
     }
@@ -30,7 +32,7 @@ public class ScheduleCommand extends Command {
             // if time field is not entered, proceed to auto schedule a meeting at the earliest time
             if (time == null) {
                 try {
-                    meetingManager.autoScheduleMeeting(usernames);
+                    meetingManager.autoScheduleMeeting(meetingName, usernames);
                     storageManager.saveMeetings(meetingManager);
                 } catch (CannotScheduleMeetingException e1) {
                     Ui.showCannotScheduleMeetingException();
@@ -39,7 +41,7 @@ public class ScheduleCommand extends Command {
                 }
             } else {
                 try {
-                    meetingManager.manualScheduleMeeting(usernames, time);
+                    meetingManager.manualScheduleMeeting(meetingName, usernames, time);
                     storageManager.saveMeetings(meetingManager);
                 } catch (InvalidTimeException e1) {
                     Ui.showInvalidTimeException();

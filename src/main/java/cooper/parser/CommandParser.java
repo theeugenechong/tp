@@ -179,19 +179,25 @@ public class CommandParser extends ParserBase {
 
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NoSuchElementException {
+        String meetingName = null;
         ArrayList<String> usernames = new ArrayList<>();
         String time = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
-            if ("usernames-hint".equals(argName)) {
+            switch (argName) {
+            case "meeting-hint":
+                meetingName = argVal;
+                break;
+            case "usernames-hint":
                 usernames = parseUsernamesInSchedule(argVal);
                 time = parseTimeInSchedule(argVal);
-            } else {
+                break;
+            default:
                 throw new InvalidCommandFormatException();
             }
         }
-        return new ScheduleCommand(usernames, time);
+        return new ScheduleCommand(meetingName, usernames, time);
     }
 
     private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidCommandFormatException {

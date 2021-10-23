@@ -258,10 +258,11 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printSuccessfulScheduleCommand(String time, ArrayList<String> usernames) {
+    public static void printSuccessfulScheduleCommand(String meetingName, String time, ArrayList<String> usernames) {
         show(LINE);
         show("Success!");
-        show("You have scheduled a meeting at " + time + " with " + listOfAvailabilities(usernames));
+        show("You have scheduled a <<" + meetingName + ">> meeting at " + time + " with "
+                + listOfAvailabilities(usernames));
         show(LINE);
     }
 

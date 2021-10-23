@@ -50,7 +50,8 @@ public class AvailabilityStorage extends Storage {
         }
     }
 
-    private static void decodeAvailability(String availabilityRowAsString, TreeMap<LocalTime, ArrayList<String>> availability)
+    private static void decodeAvailability(String availabilityRowAsString, TreeMap<LocalTime,
+            ArrayList<String>> availability)
             throws InvalidFileDataException {
         String[] availabilityRowAsArray = availabilityRowAsString.split("\\|");
         if (isInvalidFileData(availabilityRowAsArray)) {

@@ -60,9 +60,11 @@ public class MeetingsStorage extends Storage {
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime meetingTime = LocalTime.parse(attendees[0].trim(), timeFormat);
 
-        String[] attendeesAsArray = attendees[1].trim().split(",");
+        String meetingName = attendees[1];
+
+        String[] attendeesAsArray = attendees[2].trim().split(",");
         ArrayList<String> attendeesArrayList = new ArrayList<>(Arrays.asList(attendeesAsArray));
-        Meeting meeting = new Meeting(meetingTime, attendeesArrayList);
+        Meeting meeting = new Meeting(meetingName, meetingTime, attendeesArrayList);
 
         meetings.add(meeting);
     }
@@ -103,6 +105,9 @@ public class MeetingsStorage extends Storage {
 
         String meetingTime = meeting.getTime().toString();
         encodedMeeting.append(meetingTime).append(" | ");
+
+        String meetingName = meeting.getMeetingName();
+        encodedMeeting.append(meetingName).append(" | ");
 
         String attendees = getAttendeesAsString(meeting.getListOfAttendees());
         encodedMeeting.append(attendees);
