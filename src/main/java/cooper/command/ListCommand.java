@@ -1,12 +1,12 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
-import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
+import cooper.resources.ResourcesManager;
 
 /**
  * The child class of Command that handles the 'list' function specifically.
@@ -24,13 +24,20 @@ public class ListCommand extends Command {
      * @param storageManager save to storage
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager,
-                        MeetingManager meetingManager, StorageManager storageManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, 
+            ResourcesManager resourcesManager, StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
-        if (userRole.equals(UserRole.ADMIN)) {
-            Ui.printBalanceSheet(financeManager.getBalanceSheet());
+        FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
+        if (financeManager != null) {
+            if (userRole.equals(UserRole.ADMIN)) {
+                Ui.printBalanceSheet(financeManager.getBalanceSheet());
+            } else {
+                Ui.printEmployeeHelp();
+                Ui.printGeneralHelp();
+                throw new InvalidAccessException();
+            }
         } else {
-            Ui.printEmployeeHelp();
+            Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }

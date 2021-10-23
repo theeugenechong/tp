@@ -14,6 +14,7 @@ import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
 import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
+import cooper.resources.ResourcesManager;
 
 public class Cooper {
 
@@ -21,14 +22,19 @@ public class Cooper {
     private final MeetingManager cooperMeetingManager;
     private final Verifier cooperVerifier;
     private final StorageManager cooperStorageManager;
+    private final ResourcesManager cooperResourcesManager;
 
     public Cooper() {
         cooperVerifier = new Verifier();
         cooperStorageManager = new StorageManager();
         cooperFinanceManager = new FinanceManager();
         cooperMeetingManager = new MeetingManager();
+        cooperResourcesManager = new ResourcesManager(
+                cooperFinanceManager,
+                cooperMeetingManager);
         CooperLogger.setupLogger();
     }
+
 
     /**
      * Main entry-point for the java.duke.Duke application.
@@ -47,7 +53,9 @@ public class Cooper {
     private void setUp() {
         Ui.showLogo();
         Ui.showIntroduction();
-        cooperStorageManager.loadAllData(cooperVerifier, cooperFinanceManager, cooperMeetingManager);
+        cooperStorageManager.loadAllData(cooperVerifier,
+                cooperFinanceManager,
+                cooperMeetingManager);
     }
 
     private SignInDetails verifyUser() {
@@ -72,7 +80,7 @@ public class Cooper {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
                 assert command != null;
-                command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager, cooperStorageManager);
+                command.execute(signInDetails, cooperResourcesManager, cooperStorageManager);
             } catch (NoSuchElementException | InvalidCommandFormatException e) {
                 Ui.showInvalidCommandFormatError();
             } catch (NumberFormatException e) {
