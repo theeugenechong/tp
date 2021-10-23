@@ -299,6 +299,7 @@ public class Ui {
         show("Here are the commands available to an admin along with their formats:");
         show("add       | add [amount]");
         show("list      | list");
+        show("schedule  | schedule [username1], [username2] at [meetingTime]");
     }
 
     public static void printEmployeeHelp() {
@@ -309,7 +310,6 @@ public class Ui {
     public static void printGeneralHelp() {
         show("available     | available [availableTime]");
         show("availability  | availability");
-        show("schedule      | schedule [username1], [username2] at [meetingTime]");
         show("meetings      | meetings");
         show(LINE);
     }
