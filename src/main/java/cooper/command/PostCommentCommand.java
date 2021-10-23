@@ -11,19 +11,21 @@ import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
 /**
- * The child class of Command that handles the 'post delete' command specifically.
+ * The child class of Command that handles the 'post comment' command specifically.
  */
-public class PostDeleteCommand extends Command {
+public class PostCommentCommand extends Command {
     private int postId;
+    private String content;
 
-    public PostDeleteCommand(int postId) {
+    public PostCommentCommand(int postId, String content) {
         super();
         this.postId = postId;
+        this.content = content;
     }
 
     /**
-     * The override function for executing the 'post add' command
-     * It adds a new post thread to the forum
+     * The override function for executing the 'post comment' command
+     * It comments on an existing post
      * the command is being accessed by 'employee' and 'admin' level users.
      * @param signInDetails access role
      * @param resourcesManager handles all manager classes and their access rights
@@ -37,12 +39,10 @@ public class PostDeleteCommand extends Command {
         if (forumManager != null) {
             try {
                 String username = signInDetails.getUsername();
-                String contentDeleted = forumManager.deletePost(username, postId);
-                Ui.printDeletePostCommand(username, contentDeleted);
+                String postContent = forumManager.commentPost(username, content, postId);
+                Ui.printCommentPostCommand(username, postContent, content);
             } catch (InvalidForumPostIdException e) {
                 Ui.printInvalidForumPostIndexError();
-            } catch (InvalidForumDeleteByNonOwnerException e) {
-                Ui.printInvalidForumDeleteByNonOwnerError();
             }
         } else {
             Ui.printEmployeeHelp();

@@ -20,6 +20,7 @@ import cooper.command.ListCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
 import cooper.command.PostAddCommand;
+import cooper.command.PostCommentCommand;
 import cooper.command.PostDeleteCommand;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -236,7 +237,6 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        //return new PostCommentCommand(postId,content);
-        return null;
+        return new PostCommentCommand(postId,content);
     }
 }

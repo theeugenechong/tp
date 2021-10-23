@@ -269,6 +269,34 @@ public class Ui {
         show(TABLE_TOP);
     }
 
+    public static void printNewPostCommand(String username, String content) {
+        show(LINE);
+        show(username + " has just posted to forum:");
+        show(TABLE_TOP);
+        show("|  " + content);
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printDeletePostCommand(String username, String content) {
+        show(LINE);
+        show(username + " has just deleted a  post from forum:");
+        show(TABLE_TOP);
+        show("|  " + content);
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printCommentPostCommand(String username, String content, String comment) {
+        show(LINE);
+        show(username + " has just commented on a  post from forum:");
+        show(TABLE_TOP);
+        show("|  " + content);
+        show("|    ∟  " + comment);
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
     public static void printAdminHelp() {
         show(LINE);
         show("Here are the commands available to an admin along with their formats:");
@@ -293,6 +321,10 @@ public class Ui {
 
     public static void printInvalidForumPostIndexError() {
         show("The forum index you just keyed in is outside the valid range.");
+    }
+
+    public static void printInvalidForumDeleteByNonOwnerError() {
+        show("You cannot delete a forum post that is not owned by you!.");
     }
 
     /**

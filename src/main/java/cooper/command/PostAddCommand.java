@@ -35,7 +35,9 @@ public class PostAddCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
         if (forumManager != null) {
-            forumManager.addPost(signInDetails.getUsername(), content);
+            String username = signInDetails.getUsername();
+            forumManager.addPost(username, content);
+            Ui.printNewPostCommand(username, content);
         } else {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();
