@@ -63,8 +63,8 @@ public class Ui {
         } else {
             show(LINE);
         }
-        show("To login, enter \"login  [yourUsername] as [yourRole]\"");
-        show("To register, enter \"register [yourUsername] as [yourRole]\"");
+        show("To login, enter \"login  [yourUsername] pw [password] as [yourRole]\"");
+        show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
         show(LINE);
     }
 
@@ -255,11 +255,15 @@ public class Ui {
         show(LINE);
         show("Here is the list of forum posts:");
         show(TABLE_TOP);
+        Integer cntPost = 1;
         for (var post : forumPosts) {
-            show("|  " + post.toString());
+            show("|  " + cntPost.toString() + ". " + post.toString());
+            Integer cntComment = 1;
             for (var comment : post.getComments()) {
-                show("|    ∟  " + comment.toString());
+                show("|    ∟  " + cntComment.toString() + ". " + comment.toString());
+                cntComment ++;
             }
+            cntPost ++;
         }
         show(TABLE_BOT);
         show(LINE);
@@ -270,6 +274,13 @@ public class Ui {
         show("Here is the forum post:");
         show(TABLE_TOP);
         show("|  " + forumPosts.get(postId).toString());
+
+        Integer cntComment = 1;
+        for (var comment : forumPosts.get(postId).getComments()) {
+            show("|    ∟  " + cntComment.toString() + "." + comment.toString());
+            cntComment ++;
+        }
+
         show(TABLE_BOT);
         show(LINE);
     }
@@ -337,6 +348,10 @@ public class Ui {
     public static void printGeneralHelp() {
         show("available | available [yourUsername] at [availableTime]");
         show("meetings  | meetings");
+        show("post add  | post add [postContent]");
+        show("post delete   | post delete [postId]");
+        show("post comment  | post comment [commentContent] on [postId]");
+        show("post list all | post list all/[postId]");
         show(LINE);
     }
 

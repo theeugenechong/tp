@@ -37,7 +37,7 @@ public class PostDeleteCommand extends Command {
         if (forumManager != null) {
             try {
                 String username = signInDetails.getUsername();
-                String contentDeleted = forumManager.deletePost(username, postId);
+                String contentDeleted = forumManager.deletePost(username, postId - 1);
                 Ui.printDeletePostCommand(username, contentDeleted);
             } catch (InvalidForumPostIdException e) {
                 Ui.printInvalidForumPostIndexError();

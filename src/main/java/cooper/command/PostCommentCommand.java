@@ -39,7 +39,7 @@ public class PostCommentCommand extends Command {
         if (forumManager != null) {
             try {
                 String username = signInDetails.getUsername();
-                String postContent = forumManager.commentPost(username, content, postId);
+                String postContent = forumManager.commentPost(username, content, postId - 1);
                 Ui.printCommentPostCommand(username, postContent, content);
             } catch (InvalidForumPostIdException e) {
                 Ui.printInvalidForumPostIndexError();

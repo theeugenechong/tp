@@ -40,7 +40,7 @@ public class PostListCommand extends Command {
                 forumManager.listPosts();
             } else {
                 try {
-                    forumManager.listPost(postId);
+                    forumManager.listPost(postId - 1);
                 } catch (InvalidForumPostIdException e) {
                     Ui.printInvalidForumPostIndexError();
                 }
