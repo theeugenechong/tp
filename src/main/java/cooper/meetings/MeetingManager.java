@@ -53,14 +53,14 @@ public class MeetingManager {
 
         // if there is no time yet, create new timing
         if (!availability.containsKey(localTime)) {
-            assert !availability.containsKey(localTime) : "there is no localTime object in meetings yet";
+            assert !availability.containsKey(localTime) : "there is no localTime object in availability yet";
             availability.put(localTime, new ArrayList<>());
             LOGGER.info("A new time is created: " + time);
         }
 
         // check if the value is a duplicate
         if (!availability.get(localTime).contains(name)) {
-            assert !availability.get(localTime).contains(name) : "there is no " + name + " in meetings yet";
+            assert !availability.get(localTime).contains(name) : "there is no " + name + " in availability yet";
             availability.get(localTime).add(name);
             LOGGER.info(name + " has been added to " + time);
         } else {
@@ -79,9 +79,18 @@ public class MeetingManager {
         Ui.printSuccessfulScheduleCommand(timing.toString(), usernames);
     }
 
+    private boolean isMeetingTimeFull(LocalTime timing) {
+        for (Meeting value : meetingsList) {
+            if (value.getTime().equals(timing)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void autoScheduleMeeting(ArrayList<String> usernames) throws CannotScheduleMeetingException, DuplicateMeetingException {
         for (LocalTime timing: availability.keySet()) {
-            if (availability.get(timing).containsAll(usernames)) {
+            if (availability.get(timing).containsAll(usernames) && !isMeetingTimeFull(timing)) {
                 addMeeting(usernames, timing);
                 return;
             }

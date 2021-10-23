@@ -307,8 +307,10 @@ public class Ui {
     }
 
     public static void printGeneralHelp() {
-        show("available | available [yourUsername] at [availableTime]");
-        show("meetings  | meetings");
+        show("available     | available [availableTime]");
+        show("availability  | availability");
+        show("schedule      | schedule [username1], [username2] at [meetingTime]");
+        show("meetings      | meetings");
         show(LINE);
     }
 
