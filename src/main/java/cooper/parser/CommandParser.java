@@ -21,6 +21,7 @@ import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
 import cooper.command.PostAddCommand;
 import cooper.command.PostCommentCommand;
+import cooper.command.PostListCommand;
 import cooper.command.PostDeleteCommand;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -127,6 +128,8 @@ public class CommandParser extends ParserBase {
                 return parsePostDeleteArgs(commandArgs);
             case "postComment":
                 return parsePostCommentArgs(commandArgs);
+            case "postList":
+                return parsePostListArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -238,5 +241,26 @@ public class CommandParser extends ParserBase {
             }
         }
         return new PostCommentCommand(postId,content);
+    }
+
+    private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
+            NumberFormatException {
+        int postId = -1;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "list-hint":
+                if (argVal.equals("all")) {
+                    postId = -1; // list all
+                } else {
+                    postId = Integer.parseInt(argVal);
+                }
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostListCommand(postId);
     }
 }

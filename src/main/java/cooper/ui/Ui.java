@@ -1,6 +1,7 @@
 package cooper.ui;
 
 import cooper.verification.UserRole;
+import cooper.forum.ForumPost;
 
 import java.io.PrintStream;
 import java.time.LocalTime;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.logging.Logger;
+
 
 @SuppressWarnings("checkstyle:LineLength")
 public class Ui {
@@ -245,6 +247,29 @@ public class Ui {
         for (LocalTime timing: meetings.keySet()) {
             Ui.showText("│ " + timing + " │ " + listOfAvailabilities(meetings.get(timing)));
         }
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printForumPosts(ArrayList<ForumPost> forumPosts) {
+        show(LINE);
+        show("Here is the list of forum posts:");
+        show(TABLE_TOP);
+        for (var post : forumPosts) {
+            show("|  " + post.toString());
+            for (var comment : post.getComments()) {
+                show("|    ∟  " + comment.toString());
+            }
+        }
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printForumPost(ArrayList<ForumPost> forumPosts, int postId) {
+        show(LINE);
+        show("Here is the forum post:");
+        show(TABLE_TOP);
+        show("|  " + forumPosts.get(postId).toString());
         show(TABLE_BOT);
         show(LINE);
     }

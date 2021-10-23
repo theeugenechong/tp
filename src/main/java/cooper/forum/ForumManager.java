@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.exceptions.InvalidForumDeleteByNonOwnerException;
+import cooper.ui.Ui;
 
 
 public class ForumManager {
@@ -36,13 +37,21 @@ public class ForumManager {
             throw new InvalidForumDeleteByNonOwnerException();
         }
     }
-
     
     public String commentPost(String username, String content, int postId)  
             throws InvalidForumPostIdException {
         checkValidPostId(postId);
         forumPosts.get(postId).addComment(username, content);
         return forumPosts.get(postId).getContent(); // return the original post for Ui
+    }
+
+    public void listPosts() {
+        Ui.printForumPosts(forumPosts);
+    }
+
+    public void listPost(int postId) throws InvalidForumPostIdException {
+        checkValidPostId(postId);
+        Ui.printForumPost(forumPosts, postId);
     }
 
     private void checkValidPostId(int postId) throws InvalidForumPostIdException {

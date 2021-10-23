@@ -14,4 +14,8 @@ public class ForumPost extends ForumPostBase{
         forumComments.add(new ForumComment(username, content));
     }
 
+    public ArrayList<ForumComment> getComments() {
+        return forumComments;
+    }
+
 }
