@@ -2,7 +2,7 @@ package cooper.forum;
 
 import java.util.ArrayList;
 
-public class ForumPost extends ForumPostBase{
+public class ForumPost extends ForumPostBase {
     private ArrayList<ForumComment> forumComments;
 
     public ForumPost(String username, String content) {

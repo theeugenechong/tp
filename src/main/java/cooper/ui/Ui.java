@@ -261,9 +261,9 @@ public class Ui {
             Integer cntComment = 1;
             for (var comment : post.getComments()) {
                 show("|    ∟  " + cntComment.toString() + ". " + comment.toString());
-                cntComment ++;
+                cntComment++;
             }
-            cntPost ++;
+            cntPost++;
         }
         show(TABLE_BOT);
         show(LINE);
@@ -278,7 +278,7 @@ public class Ui {
         Integer cntComment = 1;
         for (var comment : forumPosts.get(postId).getComments()) {
             show("|    ∟  " + cntComment.toString() + "." + comment.toString());
-            cntComment ++;
+            cntComment++;
         }
 
         show(TABLE_BOT);
