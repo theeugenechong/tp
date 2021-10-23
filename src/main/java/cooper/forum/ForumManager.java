@@ -24,4 +24,16 @@ public class ForumManager {
             forumPosts.get(postId).addComment(username, content);
         }
     }
+
+    public void deletePost(String username, int postId) throws InvalidForumPostIdException{
+        if (postId >= forumPosts.size() || postId < 0) {
+            throw new InvalidForumPostIdException();
+        } else {
+            ForumPost post = forumPosts.get(postId);
+            if (post.getUsername() == username) {
+                // can only delete one's own post
+                forumPosts.remove(postId);
+            }
+        }
+    }
 }

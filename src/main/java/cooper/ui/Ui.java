@@ -291,6 +291,10 @@ public class Ui {
         show("You do not have access to this command.");
     }
 
+    public static void printInvalidForumPostIndexError() {
+        show("The forum index you just keyed in is outside the valid range.");
+    }
+
     /**
      * StorageManager "replays" saved commands to recover internal data structure.
      * Suppress these outputs during these replays

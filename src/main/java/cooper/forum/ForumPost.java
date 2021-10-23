@@ -11,7 +11,7 @@ public class ForumPost extends ForumPostBase{
     }
 
     public void addComment(String username, String content) {
-        forumComments.add(new ForumComment(username, contnet));
+        forumComments.add(new ForumComment(username, content));
     }
 
 }

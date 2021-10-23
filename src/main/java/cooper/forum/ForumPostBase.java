@@ -9,6 +9,14 @@ public abstract class ForumPostBase {
         this.content = content;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
     public String toString() {
         return "@" + username + ": " + content;
     }

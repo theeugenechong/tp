@@ -19,17 +19,12 @@ import cooper.command.ExitCommand;
 import cooper.command.ListCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
+import cooper.command.PostAddCommand;
+import cooper.command.PostDeleteCommand;
 import cooper.exceptions.InvalidCommandFormatException;
-import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
-import cooper.verification.PasswordHasher;
-import cooper.verification.SignInProtocol;
-import cooper.verification.Login;
-import cooper.verification.Registration;
-import cooper.verification.SignInDetails;
-import cooper.verification.UserRole;
 
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -89,6 +84,7 @@ public class CommandParser extends ParserBase {
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
+        case "post":
             return parseComplexInput(input);
         default:
             throw new UnrecognisedCommandException();
@@ -124,6 +120,12 @@ public class CommandParser extends ParserBase {
                 return parseAvailableArgs(commandArgs);
             case "add":
                 return parseAddArgs(commandArgs);
+            case "postAdd":
+                return parsePostAddArgs(commandArgs);
+            case "postDelete":
+                return parsePostDeleteArgs(commandArgs);
+            case "postComment":
+                return parsePostCommentArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -177,5 +179,64 @@ public class CommandParser extends ParserBase {
             }
         }
         return new AvailableCommand(time, username);
+    }
+
+    private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
+        String content = "";
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "content-hint":
+                content = argVal;
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostAddCommand(content);
+    }
+
+    private Command parsePostDeleteArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
+        int postId = -1;
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "index-hint":
+                postId = Integer.parseInt(argVal);
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostDeleteCommand(postId);
+    }
+
+    private Command parsePostCommentArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
+        String content = "";
+        int postId = -1;
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "content-hint":
+                content = argVal;
+                break;
+            case "index-hint":
+                postId = Integer.parseInt(argVal);
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        //return new PostCommentCommand(postId,content);
+        return null;
     }
 }
