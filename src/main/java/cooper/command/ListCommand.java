@@ -19,8 +19,7 @@ public class ListCommand extends Command {
      * to the command line if and only if
      * the command is being accessed by an 'admin' level user.
      * @param signInDetails access role
-     * @param financeManager access balance sheet
-     * @param meetingManager access meetings
+     * @param resourcesManager handles all manager classes and their access rights
      * @param storageManager save to storage
      */
     @Override

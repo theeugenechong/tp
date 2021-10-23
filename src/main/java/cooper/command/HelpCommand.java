@@ -10,7 +10,7 @@ public class HelpCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager, StorageManager storageManager){
+            ResourcesManager resourcesManager, StorageManager storageManager) {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
             Ui.printAdminHelp();
