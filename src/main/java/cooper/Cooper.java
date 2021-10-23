@@ -6,6 +6,7 @@ import cooper.command.Command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.finance.FinanceManager;
+import cooper.forum.ForumManager;
 import cooper.log.CooperLogger;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
@@ -19,6 +20,7 @@ import cooper.resources.ResourcesManager;
 public class Cooper {
 
     private final FinanceManager cooperFinanceManager;
+    private final ForumManager cooperForumManager;
     private final MeetingManager cooperMeetingManager;
     private final Verifier cooperVerifier;
     private final StorageManager cooperStorageManager;
@@ -29,9 +31,11 @@ public class Cooper {
         cooperStorageManager = new StorageManager();
         cooperFinanceManager = new FinanceManager();
         cooperMeetingManager = new MeetingManager();
+        cooperForumManager = new ForumManager();
         cooperResourcesManager = new ResourcesManager(
                 cooperFinanceManager,
-                cooperMeetingManager);
+                cooperMeetingManager,
+                cooperForumManager);
         CooperLogger.setupLogger();
     }
 
