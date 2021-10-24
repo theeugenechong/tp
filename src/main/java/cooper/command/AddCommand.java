@@ -1,6 +1,7 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
+import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
@@ -19,7 +20,6 @@ public class AddCommand extends Command {
 
     public boolean isInflow;
     public int amount;
-    public int balanceSheetStage = 1;
     public FinanceCommand financeFlag;
 
     public AddCommand(int amount, boolean isInflow, FinanceCommand financeFlag) {
@@ -41,23 +41,23 @@ public class AddCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
         StorageManager storageManager = resourcesManager.getStorageManager();
-        if (financeManager == null) {
+        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
       
         if (financeFlag == FinanceCommand.BS) {
-            financeManager.addBalance(amount, isInflow);
+            financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
             storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
-            Ui.printAddBalanceCommand(amount, isInflow);
-            balanceSheetStage++;
+            Ui.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
+            BalanceSheet.balanceSheetStage++;
         } else if (financeFlag == FinanceCommand.CF) {
             financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
             storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
             Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
             CashFlow.cashFlowStage++;
-        }  
+        }
     }
 }
 

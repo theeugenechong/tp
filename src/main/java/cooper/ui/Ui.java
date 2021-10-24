@@ -238,22 +238,38 @@ public class Ui {
     public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
         show(FinanceUI.balanceOpening);
+        show(FinanceUI.headersUI[3]);
+        int i;
         int balance = 0;
-        for (int i = 0; i < balanceSheet.size(); i++) {
-            if (balanceSheet.get(i) >= 0) {
-                show(i + 1 + ". inflow of: " + balanceSheet.get(i));
-            } else {
-                show(i + 1 + ". outflow of: " + balanceSheet.get(i));
+        for (i = 0; i < balanceSheet.size(); i++) {
+            switch (i) {
+            case FinanceManager.endOfAssets:
+                show(FinanceUI.balanceSheetUI[i] + balanceSheet.get(i));
+                show(FinanceUI.netAmountsUI[3] + " " + FinanceManager.netAssets);
+                show(FinanceUI.headersUI[4]);
+                break;
+            case FinanceManager.endOfLiabilities:
+                show(FinanceUI.balanceSheetUI[i] + balanceSheet.get(i));
+                show(FinanceUI.netAmountsUI[4] + " " + FinanceManager.netLiabilities);
+                show(FinanceUI.headersUI[5]);
+                break;
+            default:
+                show(FinanceUI.balanceSheetUI[i] + balanceSheet.get(i));
+                break;
             }
-            balance += balanceSheet.get(i);
         }
-        show("\n" + "Current balance: " + balance);
+        if (i == balanceSheet.size()) {
+            show(FinanceUI.netAmountsUI[5] + " " + FinanceManager.netSE);
+        }
+        balance = FinanceManager.netAssets - FinanceManager.netLiabilities - FinanceManager.netSE;
         if (balance != 0) {
             show(FinanceUI.accountMistake);
         } else {
             show(FinanceUI.accountCorrect);
         }
+        show(FinanceUI.netAmountsUI[6] + ": " + balance);
         show(LINE);
+
         LOGGER.info("The balance sheet is generated here");
     }
 
@@ -262,9 +278,14 @@ public class Ui {
         show(FinanceUI.firstEntryCashFlow);
     }
 
+    public static void initiateBalanceSheet() {
+        show(FinanceUI.initiateBalanceSheet);
+        show(FinanceUI.firstEntryBalanceSheet);
+    }
+
     public static void printCashFlowStatement(ArrayList<Integer> cashFlowStatement) {
         show(LINE);
-        show(FinanceUI.statementDescription);
+        show(FinanceUI.statementOpening);
         show(FinanceUI.headersUI[0]);
         int i;
         for (i = 0; i < cashFlowStatement.size(); i++) {
@@ -294,10 +315,34 @@ public class Ui {
         show(FinanceUI.cashFlowComplete);
     }
 
-    public static void printAddBalanceCommand(int amount, boolean isInflow) {
+    public static void printBalanceSheetComplete() {
+        show(FinanceUI.balanceSheetComplete);
+    }
+
+    public static void printAddBalanceCommand(int amount, boolean isInflow, int balanceSheetStage) {
         show(LINE);
         show("Success!");
-        show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Balance Sheet.");
+        show((isInflow ? "+" : "-") + amount + " has been added as " + FinanceUI.balanceSheetUI[balanceSheetStage]);
+        switch (balanceSheetStage) {
+        case FinanceManager.endOfAssets:
+            show(FinanceUI.netAmountsUI[3] + " " + FinanceManager.netAssets);
+            show("\n" + "next, please enter " + FinanceUI.balanceSheetUI[balanceSheetStage + 1]);
+            break;
+        case FinanceManager.endOfLiabilities:
+            show(FinanceUI.netAmountsUI[4] + " " + FinanceManager.netLiabilities);
+            show("\n" + "next, please enter " + FinanceUI.balanceSheetUI[balanceSheetStage + 1]);
+            break;
+        case FinanceManager.endOfSE:
+            show(FinanceUI.netAmountsUI[5] + " " + FinanceManager.netSE);
+            break;
+        default:
+            show("\n" + "next, please enter " + FinanceUI.balanceSheetUI[balanceSheetStage + 1]);
+            break;
+        }
+
+        if (balanceSheetStage == 11) {
+            printBalanceSheetComplete();
+        }
         show(LINE);
     }
 
@@ -308,9 +353,11 @@ public class Ui {
         switch (cashFlowStage) {
         case FinanceManager.endOfOA:
             show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
+            show("\n" + "next, please enter " + FinanceUI.cashFlowUI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfIA:
             show(FinanceUI.netAmountsUI[1] + " " + FinanceManager.netIA);
+            show("\n" + "next, please enter " + FinanceUI.cashFlowUI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfFA:
             show(FinanceUI.netAmountsUI[2] + " " + FinanceManager.netFA);
@@ -323,6 +370,12 @@ public class Ui {
         if (cashFlowStage == 8) {
             printCashFlowComplete();
         }
+        show(LINE);
+    }
+
+    public static void showListNotFoundException() {
+        show(LINE);
+        show("The financial statement is currently empty! Please add an entry.");
         show(LINE);
     }
 
