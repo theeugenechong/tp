@@ -1,13 +1,16 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
+import cooper.finance.CashFlow;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
+import cooper.ui.FinanceUI;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.finance.FinanceCommand;
+
 
 /**
  * The child class of Command that handles the 'add' command specifically.
@@ -16,6 +19,7 @@ public class AddCommand extends Command {
 
     public boolean isInflow;
     public int amount;
+    public int balanceSheetStage = 1;
     public FinanceCommand financeFlag;
 
     public AddCommand(int amount, boolean isInflow, FinanceCommand financeFlag) {
@@ -43,10 +47,12 @@ public class AddCommand extends Command {
                 financeManager.addBalance(amount, isInflow);
                 storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
                 Ui.printAddBalanceCommand(amount, isInflow);
+                balanceSheetStage++;
             } else if (financeFlag == FinanceCommand.CF) {
-                financeManager.addCashFlow(amount, isInflow);
+                financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
                 storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
-                Ui.printAddCashFlowCommand(amount, isInflow);
+                Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
+                CashFlow.cashFlowStage++;
             }
         } else {
             Ui.printEmployeeHelp();

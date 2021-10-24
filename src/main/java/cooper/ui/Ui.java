@@ -1,5 +1,7 @@
 package cooper.ui;
 
+import cooper.finance.CashFlow;
+import cooper.finance.FinanceManager;
 import cooper.verification.UserRole;
 
 import java.io.PrintStream;
@@ -211,7 +213,7 @@ public class Ui {
 
     public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
-        show("This is the company's current Balance Sheet:");
+        show(FinanceUI.balanceOpening);
         int balance = 0;
         for (int i = 0; i < balanceSheet.size(); i++) {
             if (balanceSheet.get(i) >= 0) {
@@ -223,24 +225,49 @@ public class Ui {
         }
         show("\n" + "Current balance: " + balance);
         if (balance != 0) {
-            show("THERE IS AN ACCOUNTING MISTAKE! One of your entries is incorrect.");
+            show(FinanceUI.accountMistake);
         } else {
-            show("Balance Sheet is perfectly balanced, as all things should be.");
+            show(FinanceUI.accountCorrect);
         }
         show(LINE);
         LOGGER.info("The balance sheet is generated here");
     }
 
+    public static void initiateCashFlowStatement() {
+        show(FinanceUI.initiateCashFlow);
+        show(FinanceUI.firstEntryCashFlow);
+    }
+
     public static void printCashFlowStatement(ArrayList<Integer> cashFlowStatement) {
         show(LINE);
-        show("This is the company's current Cash Flow Statement:");
-        for (int i = 0; i < cashFlowStatement.size(); i++) {
-            if (cashFlowStatement.get(i) >= 0) {
-                show(i + 1 + ". inflow of: " + cashFlowStatement.get(i));
-            } else {
-                show(i + 1 + ". outflow of: " + cashFlowStatement.get(i));
+        int i = 0;
+        show(FinanceUI.statementDescription);
+        show(FinanceUI.headersUI[0]);
+        for (i = 0; i < cashFlowStatement.size(); i++) {
+            switch(i) {
+                case FinanceManager.endOfOA:
+                    show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
+                    show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
+                    show(FinanceUI.headersUI[1]);
+                    break;
+                case FinanceManager.endOfIA:
+                    show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
+                    show(FinanceUI.netAmountsUI[1] + " " + FinanceManager.netIA);
+                    show(FinanceUI.headersUI[2]);
+                    break;
+                default:
+                    show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
+                    break;
             }
         }
+        if (i == cashFlowStatement.size()) {
+            show(FinanceUI.netAmountsUI[2] + " " + FinanceManager.netFA);
+        }
+        show(LINE);
+    }
+
+    public static void printCashFlowComplete() {
+        show(FinanceUI.cashFlowComplete);
     }
 
     public static void printAddBalanceCommand(int amount, boolean isInflow) {
@@ -250,10 +277,29 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAddCashFlowCommand(int amount, boolean isInflow) {
+    public static void printAddCashFlowCommand(int amount, boolean isInflow, int cashFlowStage) {
         show(LINE);
+        int i = cashFlowStage;
         show("Success!");
-        show("Amount: " + (isInflow ? "+" : "-") + amount + " has been added to the Cash Flow Statement.");
+        show((isInflow ? "+" : "-") + amount + " has been added as " + FinanceUI.cashFlowUI[i]);
+        switch(i) {
+        case FinanceManager.endOfOA:
+            show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
+            break;
+        case FinanceManager.endOfIA:
+            show(FinanceUI.netAmountsUI[1] + " " + FinanceManager.netIA);
+            break;
+        case FinanceManager.endOfFA:
+            show(FinanceUI.netAmountsUI[2] + " " + FinanceManager.netFA);
+            break;
+        default:
+            show("\n" + "next, please enter " + FinanceUI.cashFlowUI[i + 1]);
+            break;
+        }
+
+        if (cashFlowStage == 8) {
+            printCashFlowComplete();
+        }
         show(LINE);
     }
 

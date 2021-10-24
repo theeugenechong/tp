@@ -6,6 +6,8 @@ import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.parser.CommandParser;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUI;
+import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 
 public class CFCommand extends Command {
@@ -18,5 +20,6 @@ public class CFCommand extends Command {
     public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
                         StorageManager storageManager) throws InvalidAccessException {
         CommandParser.financeFlag = FinanceCommand.CF;
+        Ui.initiateCashFlowStatement();
     }
 }

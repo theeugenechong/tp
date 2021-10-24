@@ -1,5 +1,8 @@
 package cooper.finance;
 
+import cooper.ui.FinanceUI;
+import cooper.ui.Ui;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -10,12 +13,17 @@ public class FinanceManager {
     public static BalanceSheet cooperBalanceSheet;
     public static CashFlow cooperCashFlowStatement;
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static final int endOfOA = 4; //INDEX
+    public static final int endOfIA = 6; //INDEX
+    public static final int endOfFA = 8; //INDEX
+    public static int netOA = 0;
+    public static int netIA = 0;
+    public static int netFA = 0;
 
     public FinanceManager() {
         this.cooperBalanceSheet = new BalanceSheet();
         this.cooperCashFlowStatement = new CashFlow();
     }
-
 
     /**
      * Adds specified amount input by user to the balanceSheet, with specified inflow or outflow.
@@ -23,23 +31,33 @@ public class FinanceManager {
      * @param isInflow boolean which specifies if {@code amount} is inflow or outflow
      */
     public void addBalance(int amount, boolean isInflow) {
+        int signedAmount = amount;
         if (isInflow) {
-            cooperBalanceSheet.balanceSheet.add(amount);
+            cooperBalanceSheet.balanceSheet.add(signedAmount);
             assert amount >= 0 : "entry should be positive";
         } else {
-            cooperBalanceSheet.balanceSheet.add(amount * -1);
+            signedAmount *= -1;
+            cooperBalanceSheet.balanceSheet.add(signedAmount);
             assert amount * -1 < 0 : "entry should be negative";
         }
         LOGGER.info("An entry to the balance sheet is created: " + amount);
     }
 
-    public void addCashFlow(int amount, boolean isInflow) {
+    public void addCashFlow(int amount, boolean isInflow, int cashFlowStage) {
+        int signedAmount = amount;
         if (isInflow) {
-            cooperCashFlowStatement.cashFlowStatement.add(amount);
             assert amount >= 0 : "entry should be positive";
         } else {
-            cooperCashFlowStatement.cashFlowStatement.add(amount * -1);
+            signedAmount *= -1;
             assert amount * -1 < 0 : "entry should be negative";
+        }
+        CashFlow.cashFlowStatement.add(signedAmount);
+        if (cashFlowStage <= endOfOA) {
+            netOA += signedAmount;
+        } else if (cashFlowStage <= endOfIA) {
+            netIA += signedAmount;
+        } else if (cashFlowStage <= endOfFA) {
+            netFA += signedAmount;
         }
         LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }

@@ -32,7 +32,7 @@ public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
     private Parser parser;
-    public static FinanceCommand financeFlag;
+    public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
     /**
      * Constructor. Initialise internal parser.
@@ -97,7 +97,7 @@ public class CommandParser extends ParserBase {
         assert input != null;
         switch (input) {
         case "list":
-            return new ListCommand();
+            return new ListCommand(financeFlag);
         case "help":
             return new HelpCommand();
         case "meetings":
