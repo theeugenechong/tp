@@ -1,16 +1,21 @@
-# cOOPer User Guide
+![cOOPer](userGuideImages/cooperLogo.png)
+
+# User Guide
 
 ## Introducing cOOPer
+cOOPer is a **desktop application** developed to simplify administrative processes of **tech startups**
+such as **communication** and **finance management**.
 
-cOOPer is a **desktop application**, optimized for use via a **Command Line Interface (CLI)**.
-cOOPer was developed to simplify administrative processes such as **communication**
-and **finance management** of **tech startups**. If you are running a tech startup, cOOPer can help you with **accounting**
+If you are running a tech startup, cOOPer can help you with **accounting**
 and **communicative** tasks like:
 - **Generating** your company's **balance sheet**
 - **Forecasting** your company's **cash flow**
 - **Managing** and **generating** your company's **invoices**
 - **Scheduling meetings** with your employees
 - Having **discussions** with your employees
+
+cOOPer  is optimized for use via a **Command Line Interface (CLI)**, so if you are someone who types fast,
+cOOPer can help you manage your startup efficiently.
 
 ## What's in This User Guide
 
@@ -195,7 +200,7 @@ These are the availabilities:
   1. After [logging in](#3-login) to the system, enter `add [amount]`.
   2. The expense will be added to the balance sheet.
 
-> ####📝Note:
+> #### 📝Note:
 > - By default, cOOPer treats `[amount]` as an inflow. To specify an outflow, a pair of parentheses should
 > be added around `[amount]`. *e.g.* `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
 > - `[amount]` should be a **positive integer** representing the amount of inflow/outflow added to the balance sheet.

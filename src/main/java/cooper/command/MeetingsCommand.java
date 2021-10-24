@@ -1,18 +1,23 @@
 package cooper.command;
 
-import cooper.finance.FinanceManager;
+import cooper.exceptions.InvalidAccessException;
 import cooper.meetings.MeetingManager;
-import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
+import cooper.verification.UserRole;
+import cooper.resources.ResourcesManager;
 
 public class MeetingsCommand extends Command {
 
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
-                        StorageManager storageManager) {
-        Ui.printAvailabilities(meetingManager.getMeetings());
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
+        UserRole userRole = signInDetails.getUserRole();
+        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
+        if (meetingManager == null) {
+            Ui.printEmployeeHelp();
+            Ui.printGeneralHelp();
+            Ui.printAdminHelp();
+            throw new InvalidAccessException();
+        }
     }
 }
-
-

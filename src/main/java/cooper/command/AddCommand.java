@@ -10,7 +10,7 @@ import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.finance.FinanceCommand;
-
+import cooper.resources.ResourcesManager;
 
 /**
  * The child class of Command that handles the 'add' command specifically.
@@ -34,31 +34,30 @@ public class AddCommand extends Command {
      * printing the status to the command line if and only if
      * the command is being accessed by an 'admin' level user.
      * @param signInDetails access role
-     * @param financeManager access balance sheet
-     * @param meetingManager access meetings
-     * @param storageManager save to storage
+     * @param resourcesManager handles all manager classes and their access rights
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
-                        StorageManager storageManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
-        if (userRole.equals(UserRole.ADMIN)) {
-            if (financeFlag == FinanceCommand.BS) {
-                financeManager.addBalance(amount, isInflow);
-                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
-                Ui.printAddBalanceCommand(amount, isInflow);
-                balanceSheetStage++;
-            } else if (financeFlag == FinanceCommand.CF) {
-                financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
-                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
-                Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
-                CashFlow.cashFlowStage++;
-            }
-        } else {
-            Ui.printEmployeeHelp();
+        FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
+        StorageManager storageManager = resourcesManager.getStorageManager();
+        if (financeManager == null) {
+            Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
+      
+        if (financeFlag == FinanceCommand.BS) {
+            financeManager.addBalance(amount, isInflow);
+            storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
+            Ui.printAddBalanceCommand(amount, isInflow);
+            balanceSheetStage++;
+        } else if (financeFlag == FinanceCommand.CF) {
+            financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
+            storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
+            Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
+            CashFlow.cashFlowStage++;
+        }  
     }
 }
 

@@ -10,6 +10,7 @@ import cooper.finance.FinanceManager;
 import cooper.finance.FinanceCommand;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
+import cooper.resources.ResourcesManager;
 
 /**
  * The child class of Command that handles the 'list' function specifically.
@@ -26,24 +27,22 @@ public class ListCommand extends Command {
      * to the command line if and only if
      * the command is being accessed by an 'admin' level user.
      * @param signInDetails access role
-     * @param financeManager access balance sheet
-     * @param meetingManager access meetings
-     * @param storageManager save to storage
+     * @param resourcesManager handles all manager classes and their access rights
      */
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager,
-                        MeetingManager meetingManager, StorageManager storageManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
-        if (userRole.equals(UserRole.ADMIN)) {
-            if (financeFlag == FinanceCommand.BS) {
-                Ui.printBalanceSheet(BalanceSheet.getBalanceSheet());
-            } else if (financeFlag == FinanceCommand.CF) {
-                Ui.printCashFlowStatement(CashFlow.getCashFlowStatement());
-            }
-        } else {
+        FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
+        if (financeManager == null) {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
+        }
+        
+        if (financeFlag == FinanceCommand.BS) {
+            Ui.printBalanceSheet(BalanceSheet.getBalanceSheet());
+        } else if (financeFlag == FinanceCommand.CF) {
+            Ui.printCashFlowStatement(CashFlow.getCashFlowStatement());
         }
     }
 }
