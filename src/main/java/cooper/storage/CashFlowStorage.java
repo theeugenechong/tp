@@ -2,6 +2,7 @@ package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
 import cooper.finance.BalanceSheet;
+import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
 import cooper.ui.Ui;
 
@@ -11,34 +12,32 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class BalanceSheetStorage extends Storage {
+public class CashFlowStorage extends Storage {
 
-    public BalanceSheetStorage(String filePath) {
-        super(filePath);
-    }
+    public CashFlowStorage(String filePath) { super(filePath); }
 
-    public void loadBalanceSheet(BalanceSheet cooperBalanceSheet) {
-        ArrayList<Integer> balanceSheet = cooperBalanceSheet.getBalanceSheet();
+    public void loadCashFlowStatement(CashFlow cooperCashFlowStatement) {
+        ArrayList<Integer> cashFlowStatement = cooperCashFlowStatement.getCashFlowStatement();
         Scanner fileScanner = getScanner(filePath);
-        readBalanceSheet(fileScanner, balanceSheet);
+        readCashFlowStatement(fileScanner, cashFlowStatement);
     }
 
-    public void saveBalanceSheet(BalanceSheet cooperBalanceSheet) {
+    public void saveCashFlowStatement(CashFlow cooperCashFlowStatement) {
         try {
-            writeBalanceSheet(filePath, cooperBalanceSheet.getBalanceSheet());
+            writeCashFlowStatement(filePath, cooperCashFlowStatement.getCashFlowStatement());
         } catch (IOException e) {
-            Ui.showFileWriteError(e);
+            System.out.println("Error writing to file: " + e.getMessage());
             System.exit(1);
         }
     }
 
-    private static void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
+    private static void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
         if (fileScanner != null) {
             while (fileScanner.hasNext()) {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
-                    balanceSheet.add(decodedExpense);
+                    cashFlowStatement.add(decodedExpense);
                 } catch (InvalidFileDataException e) {
                     Ui.showInvalidFileDataError();
                 }
@@ -55,17 +54,17 @@ public class BalanceSheetStorage extends Storage {
 
     private static boolean isInvalidFileData(String expenseAsString) {
         try {
-            int dummyExpense = Integer.parseInt(expenseAsString);
+            int expense = Integer.parseInt(expenseAsString);
         } catch (NumberFormatException e) {
             return true;
         }
         return false;
     }
 
-    private static void writeBalanceSheet(Path filePath, ArrayList<Integer> balanceSheet) throws IOException {
+    private static void writeCashFlowStatement(Path filePath, ArrayList<Integer> cashFlowStatement) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath.toString(), false);
 
-        for (Integer expense : balanceSheet) {
+        for (Integer expense : cashFlowStatement) {
             String encodedExpense = encodeExpense(expense);
             fileWriter.write(encodedExpense + System.lineSeparator());
         }
