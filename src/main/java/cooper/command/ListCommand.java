@@ -3,8 +3,7 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
-import cooper.meetings.MeetingManager;
-import cooper.storage.StorageManager;
+
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.finance.FinanceCommand;
@@ -22,6 +21,7 @@ public class ListCommand extends Command {
     public ListCommand(FinanceCommand financeFlag) {
         this.financeFlag = financeFlag;
     }
+
     /**
      * The override function for executing the 'list' command. Prints the balance sheet
      * to the command line if and only if
@@ -40,9 +40,9 @@ public class ListCommand extends Command {
         }
         
         if (financeFlag == FinanceCommand.BS) {
-            Ui.printBalanceSheet(BalanceSheet.getBalanceSheet());
+            Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
         } else if (financeFlag == FinanceCommand.CF) {
-            Ui.printCashFlowStatement(CashFlow.getCashFlowStatement());
+            Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
         }
     }
 }

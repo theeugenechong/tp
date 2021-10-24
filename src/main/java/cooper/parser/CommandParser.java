@@ -21,6 +21,7 @@ import cooper.command.Command;
 import cooper.command.ExitCommand;
 import cooper.command.ListCommand;
 import cooper.command.AvailabilityCommand;
+import cooper.command.LogoutCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
 import cooper.command.PostAddCommand;
@@ -93,6 +94,7 @@ public class CommandParser extends ParserBase {
         case "exit":
         case "bs":
         case "cf":
+        case "logout":
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
@@ -115,6 +117,8 @@ public class CommandParser extends ParserBase {
             return new AvailabilityCommand();
         case "meetings":
             return new MeetingsCommand();
+        case "logout":
+            return new LogoutCommand();
         case "exit":
             return new ExitCommand();
         case "cf":

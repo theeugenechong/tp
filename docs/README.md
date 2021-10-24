@@ -12,7 +12,7 @@ your company's cash flow, **scheduling** meetings and more.
 cOOPer  is optimized for use via a **Command Line Interface (CLI)**, so if you are someone who types fast, 
 cOOPer can help you solve these problems efficiently.
 
- #### Useful links:
+#### Useful links:
 * For users, refer to cOOPer's [User Guide](UserGuide.md) 
 * For developers, refer to our [Developer Guide](DeveloperGuide.md)
 * To know more about the team of developers, click [here](AboutUs.md)

@@ -169,7 +169,7 @@ public class HelloCommand extends Command {
 ```
 
 This allows developers to inherit any arbitrary number of different command specialisation with different 
-behaviours using a unified driver. Developers do not need to modify the frontend to accomodate for every new commands.
+behaviours using a unified driver. Developers do not need to modify the frontend to accommodate for every new commands.
 
 ### Forum 
 
@@ -187,11 +187,11 @@ behaviours using a unified driver. Developers do not need to modify the frontend
 
 `ForumManager` grants reference to other manager modules for different `Command` objects to perform their execution functions  by checking the `UserRole`. For example, 
 
-````java
+```java 
 FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-````
+```
 
-will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise a `null` will be returned indicating the use does not have the access right to that module.
+will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
 ## Product scope
 
