@@ -3,6 +3,7 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
+
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.finance.FinanceCommand;
@@ -39,9 +40,9 @@ public class ListCommand extends Command {
         }
         
         if (financeFlag == FinanceCommand.BS) {
-            Ui.printBalanceSheet(BalanceSheet.getBalanceSheet());
+            Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
         } else if (financeFlag == FinanceCommand.CF) {
-            Ui.printCashFlowStatement(CashFlow.getCashFlowStatement());
+            Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
         }
     }
 }

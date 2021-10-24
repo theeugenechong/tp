@@ -51,7 +51,7 @@ public class FinanceManager {
             signedAmount *= -1;
             assert amount * -1 < 0 : "entry should be negative";
         }
-        CashFlow.cashFlowStatement.add(signedAmount);
+        cooperCashFlowStatement.getCashFlowStatement().add(signedAmount);
         if (cashFlowStage <= endOfOA) {
             netOA += signedAmount;
         } else if (cashFlowStage <= endOfIA) {
