@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import cooper.command.Command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.LogoutException;
 import cooper.finance.FinanceManager;
 import cooper.forum.ForumManager;
 import cooper.log.CooperLogger;
@@ -34,10 +35,13 @@ public class Cooper {
         cooper.run();
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
         setUp();
-        SignInDetails signInDetails = verifyUser();
-        runLoopUntilExitCommand(signInDetails);
+        while (true) {
+            SignInDetails signInDetails = verifyUser();
+            runLoopUntilExitCommand(signInDetails);
+        }
     }
 
     private void setUp() {
@@ -61,7 +65,6 @@ public class Cooper {
         return successfulSignInDetails;
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
     private void runLoopUntilExitCommand(SignInDetails signInDetails) {
         while (true) {
             try {
@@ -77,6 +80,9 @@ public class Cooper {
                 Ui.showUnrecognisedCommandError();
             } catch (InvalidAccessException e) {
                 Ui.printNoAccessError();
+            } catch (LogoutException e) {
+                cooperResourcesManager.getVerifier().setSuccessfullySignedIn(false);
+                break;
             }
         }
     }
