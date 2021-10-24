@@ -1,6 +1,7 @@
 package cooper.ui;
 
 import cooper.verification.UserRole;
+import cooper.forum.ForumPost;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.logging.Logger;
+
 
 @SuppressWarnings("checkstyle:LineLength")
 public class Ui {
@@ -60,8 +62,8 @@ public class Ui {
         } else {
             show(LINE);
         }
-        show("To login, enter \"login  [yourUsername] as [yourRole]\"");
-        show("To register, enter \"register [yourUsername] as [yourRole]\"");
+        show("To login, enter \"login  [yourUsername] pw [password] as [yourRole]\"");
+        show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
         show(LINE);
     }
 
@@ -273,6 +275,40 @@ public class Ui {
         show(LINE);
     }
 
+    public static void printForumPosts(ArrayList<ForumPost> forumPosts) {
+        show(LINE);
+        show("Here is the list of forum posts:");
+        show(TABLE_TOP);
+        Integer cntPost = 1;
+        for (var post : forumPosts) {
+            show("|  " + cntPost.toString() + ". " + post.toString());
+            Integer cntComment = 1;
+            for (var comment : post.getComments()) {
+                show("|    ∟  " + cntComment.toString() + ". " + comment.toString());
+                cntComment++;
+            }
+            cntPost++;
+        }
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printForumPost(ArrayList<ForumPost> forumPosts, int postId) {
+        show(LINE);
+        show("Here is the forum post:");
+        show(TABLE_TOP);
+        show("|  " + forumPosts.get(postId).toString());
+
+        Integer cntComment = 1;
+        for (var comment : forumPosts.get(postId).getComments()) {
+            show("|    ∟  " + cntComment.toString() + "." + comment.toString());
+            cntComment++;
+        }
+
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
     public static String listOfAvailabilities(ArrayList<String> availabilities) {
         StringBuilder listOfAvailabilities = new StringBuilder();
         for (String a : availabilities) {
@@ -293,6 +329,34 @@ public class Ui {
         show(TABLE_TOP);
     }
 
+    public static void printNewPostCommand(String username, String content) {
+        show(LINE);
+        show(username + " has just posted to forum:");
+        show(TABLE_TOP);
+        show("|  " + content);
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printDeletePostCommand(String username, String content) {
+        show(LINE);
+        show(username + " has just deleted a  post from forum:");
+        show(TABLE_TOP);
+        show("|  " + content);
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
+    public static void printCommentPostCommand(String username, String content, String comment) {
+        show(LINE);
+        show(username + " has just commented on a  post from forum:");
+        show(TABLE_TOP);
+        show("|  " + content);
+        show("|    ∟  " + comment);
+        show(TABLE_BOT);
+        show(LINE);
+    }
+
     public static void printAdminHelp() {
         show(LINE);
         show("Here are the commands available to an admin along with their formats:");
@@ -307,6 +371,10 @@ public class Ui {
     }
 
     public static void printGeneralHelp() {
+        show("post add      | post add [postContent]");
+        show("post delete   | post delete [postId]");
+        show("post comment  | post comment [commentContent] on [postId]");
+        show("post list all | post list all/[postId]");
         show("available     | available [availableTime]");
         show("availability  | availability");
         show("meetings      | meetings");
@@ -315,5 +383,13 @@ public class Ui {
 
     public static void printNoAccessError() {
         show("You do not have access to this command.");
+    }
+
+    public static void printInvalidForumPostIndexError() {
+        show("The forum index you just keyed in is outside the valid range.");
+    }
+
+    public static void printInvalidForumDeleteByNonOwnerError() {
+        show("You cannot delete a forum post that is not owned by you!.");
     }
 }
