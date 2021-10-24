@@ -1,4 +1,4 @@
-# John Doe - Project Portfolio Page
+# Eugene Chong - Project Portfolio Page
 
 ## Overview
 

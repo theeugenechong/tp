@@ -26,7 +26,7 @@ public class BalanceSheetStorage extends Storage {
         try {
             writeBalanceSheet(filePath, cooperFinanceManager.getBalanceSheet());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            Ui.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -54,7 +54,7 @@ public class BalanceSheetStorage extends Storage {
 
     private static boolean isInvalidFileData(String expenseAsString) {
         try {
-            int expense = Integer.parseInt(expenseAsString);
+            int dummyExpense = Integer.parseInt(expenseAsString);
         } catch (NumberFormatException e) {
             return true;
         }
