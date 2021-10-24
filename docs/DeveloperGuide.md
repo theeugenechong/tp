@@ -131,7 +131,7 @@ login = login ${username-hint} pw ${password-hint} as ${role-hint}
 Parser library will then automatically parse the place-holders defined with `$` leaders to strings. For example `login Yvonne pw 12345 as admin` will be parsed 
 into the following fields:
 
-```json
+```python
 { "username-hint" : Yvonne,
   "password-hint" : 12345,
   "role-hint" : admin }
