@@ -3,6 +3,7 @@ package cooper.ui;
 import cooper.verification.UserRole;
 import cooper.forum.ForumPost;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ public class Ui {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final PrintStream printStream = System.out;
-
-    private static boolean isOutputSuppressed = false;
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -115,12 +114,20 @@ public class Ui {
         show(text);
     }
 
+    public static void showFileWriteError(IOException e) {
+        show(LINE);
+        show("Error writing to file ", false);
+        show(e.getMessage(), true);
+        show(LINE);
+    }
+
     /**
      * Exception message to show file path error.
      **/
-    public static void showInvalidFilePathError() {
+    public static void showFileCreationError(IOException e) {
         show(LINE);
-        show("Parser/StorageManager received invalid input file path!");
+        show("Error creating storage file: ", false);
+        show(e.getMessage(), true);
         show(LINE);
     }
 
@@ -160,6 +167,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showInvalidScheduleCommandException() {
+        show(LINE);
+        show("Oops, please enter more than one username!");
+        show(LINE);
+    }
+
     public static void showInvalidTimeException() {
         show(LINE);
         show("The time format you entered is not accepted! Please enter again.");
@@ -172,15 +185,21 @@ public class Ui {
         show(LINE);
     }
 
-    public static void showBye() {
+    public static void showCannotScheduleMeetingException() {
         show(LINE);
-        show("Bye, see you next time! :D");
+        show("Oops, no meeting can be scheduled!");
         show(LINE);
     }
 
-    public static void showNoStorage() {
+    public static void showDuplicateMeetingException() {
         show(LINE);
-        show("No storage file detected!");
+        show("You have already scheduled a meeting at that time!");
+        show(LINE);
+    }
+
+    public static void showBye() {
+        show(LINE);
+        show("Bye, see you next time! :D");
         show(LINE);
     }
 
@@ -197,15 +216,12 @@ public class Ui {
     }
 
     private static void show(String printMessage) {
-        if (!isOutputSuppressed) {
-            printStream.println(printMessage);
-        }
+        printStream.println(printMessage);
     }
 
     private static void show(String printMessage, boolean newline) {
-        if (!isOutputSuppressed) {
-            printStream.print(printMessage);
-        }
+        printStream.print(printMessage);
+
         if (newline) {
             printStream.println();
         }
@@ -242,10 +258,18 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
-        printMeetingTableHeader();
-        for (LocalTime timing: meetings.keySet()) {
-            Ui.showText("│ " + timing + " │ " + listOfAvailabilities(meetings.get(timing)));
+    public static void printSuccessfulScheduleCommand(String meetingName, String time, ArrayList<String> usernames) {
+        show(LINE);
+        show("Success!");
+        show("You have scheduled a <<" + meetingName + ">> meeting at " + time + " with "
+                + listOfAvailabilities(usernames));
+        show(LINE);
+    }
+
+    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> availability) {
+        printAvailabilityTableHeader();
+        for (LocalTime timing: availability.keySet()) {
+            Ui.showText("│ " + timing + " │ " + listOfAvailabilities(availability.get(timing)));
         }
         show(TABLE_BOT);
         show(LINE);
@@ -299,7 +323,7 @@ public class Ui {
         return String.valueOf(listOfAvailabilities);
     }
 
-    public static void printMeetingTableHeader() {
+    public static void printAvailabilityTableHeader() {
         show(LINE);
         show("These are the availabilities:");
         show(TABLE_TOP);
@@ -338,6 +362,7 @@ public class Ui {
         show("Here are the commands available to an admin along with their formats:");
         show("add       | add [amount]");
         show("list      | list");
+        show("schedule  | schedule [username1], [username2] at [meetingTime]");
     }
 
     public static void printEmployeeHelp() {
@@ -346,12 +371,13 @@ public class Ui {
     }
 
     public static void printGeneralHelp() {
-        show("available | available [yourUsername] at [availableTime]");
-        show("meetings  | meetings");
-        show("post add  | post add [postContent]");
+        show("post add      | post add [postContent]");
         show("post delete   | post delete [postId]");
         show("post comment  | post comment [commentContent] on [postId]");
         show("post list all | post list all/[postId]");
+        show("available     | available [availableTime]");
+        show("availability  | availability");
+        show("meetings      | meetings");
         show(LINE);
     }
 
@@ -365,17 +391,5 @@ public class Ui {
 
     public static void printInvalidForumDeleteByNonOwnerError() {
         show("You cannot delete a forum post that is not owned by you!.");
-    }
-
-    /**
-     * StorageManager "replays" saved commands to recover internal data structure.
-     * Suppress these outputs during these replays
-     */
-    public static void suppressOutput() {
-        isOutputSuppressed = true;
-    }
-
-    public static void unSuppressOutput() {
-        isOutputSuppressed = false;
     }
 }

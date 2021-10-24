@@ -12,12 +12,10 @@ import cooper.resources.ResourcesManager;
 
 public class AvailableCommand extends Command {
     private final String time;
-    private final String username;
 
-    public AvailableCommand(String time, String username) {
+    public AvailableCommand(String time) {
         super();
         this.time = time;
-        this.username = username;
     }
 
     @Override

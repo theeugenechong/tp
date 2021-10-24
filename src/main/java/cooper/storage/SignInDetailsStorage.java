@@ -29,7 +29,7 @@ public class SignInDetailsStorage extends Storage {
         try {
             writeSignInDetails(filePath, cooperVerifier.getRegisteredUsers());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            Ui.showFileWriteError(e);
             System.exit(1);
         }
     }

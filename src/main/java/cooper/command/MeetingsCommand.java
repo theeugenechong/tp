@@ -10,13 +10,10 @@ import cooper.resources.ResourcesManager;
 public class MeetingsCommand extends Command {
 
     @Override
-    public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
-        if (meetingManager != null) {
-            Ui.printAvailabilities(meetingManager.getMeetings());
-        } else {
+        if (meetingManager == null) {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();
             Ui.printAdminHelp();
@@ -24,5 +21,3 @@ public class MeetingsCommand extends Command {
         }
     }
 }
-
-

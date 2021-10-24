@@ -1,7 +1,10 @@
 package cooper.meetings;
 
+import cooper.exceptions.CannotScheduleMeetingException;
+import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.InvalidTimeException;
+import cooper.ui.Ui;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -13,10 +16,12 @@ import java.util.logging.Logger;
 public class MeetingManager {
     private static final String TIME_FORMAT = "HH:mm";
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private final TreeMap<LocalTime, ArrayList<String>> meetings;
+    private final TreeMap<LocalTime, ArrayList<String>> availability;
+    private final ArrayList<Meeting> meetingsList;
 
     public MeetingManager() {
-        meetings = new TreeMap<>();
+        availability = new TreeMap<>();
+        meetingsList = new ArrayList<>();
     }
 
     private boolean isValidTimeFormat(String value) {
@@ -30,8 +35,12 @@ public class MeetingManager {
         }
     }
 
-    public TreeMap<LocalTime, ArrayList<String>> getMeetings() {
-        return meetings;
+    public TreeMap<LocalTime, ArrayList<String>> getAvailability() {
+        return availability;
+    }
+
+    public ArrayList<Meeting> getMeetingsList() {
+        return meetingsList;
     }
 
     public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeException {
@@ -43,19 +52,69 @@ public class MeetingManager {
         }
 
         // if there is no time yet, create new timing
-        if (!meetings.containsKey(localTime)) {
-            assert !meetings.containsKey(localTime) : "there is no localTime object in meetings yet";
-            meetings.put(localTime, new ArrayList<>());
+        if (!availability.containsKey(localTime)) {
+            assert !availability.containsKey(localTime) : "there is no localTime object in availability yet";
+            availability.put(localTime, new ArrayList<>());
             LOGGER.info("A new time is created: " + time);
         }
 
         // check if the value is a duplicate
-        if (!meetings.get(localTime).contains(name)) {
-            assert !meetings.get(localTime).contains(name) : "there is no " + name + " in meetings yet";
-            meetings.get(localTime).add(name);
+        if (!availability.get(localTime).contains(name)) {
+            assert !availability.get(localTime).contains(name) : "there is no " + name + " in availability yet";
+            availability.get(localTime).add(name);
             LOGGER.info(name + " has been added to " + time);
         } else {
             throw new DuplicateUsernameException();
+        }
+    }
+
+    private void addMeeting(String meetingName, ArrayList<String> usernames, LocalTime timing)
+            throws DuplicateMeetingException {
+        Meeting meeting = new Meeting(meetingName, timing, usernames);
+        for (Meeting value : meetingsList) {
+            if (value.getTime().equals(meeting.getTime())) {
+                throw new DuplicateMeetingException();
+            }
+        }
+        meetingsList.add(meeting);
+        Ui.printSuccessfulScheduleCommand(meetingName, timing.toString(), usernames);
+    }
+
+    private boolean isMeetingTimeFull(LocalTime timing) {
+        for (Meeting value : meetingsList) {
+            if (value.getTime().equals(timing)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void autoScheduleMeeting(String meetingName, ArrayList<String> usernames)
+            throws CannotScheduleMeetingException,
+            DuplicateMeetingException {
+        for (LocalTime timing: availability.keySet()) {
+            if (availability.get(timing).containsAll(usernames) && !isMeetingTimeFull(timing)) {
+                addMeeting(meetingName, usernames, timing);
+                return;
+            }
+        }
+        throw new CannotScheduleMeetingException();
+    }
+
+    public void manualScheduleMeeting(String meetingName, ArrayList<String> usernames, String time)
+            throws InvalidTimeException,
+            CannotScheduleMeetingException, DuplicateMeetingException {
+        LocalTime localTime;
+        if (isValidTimeFormat(time)) {
+            localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
+        } else {
+            throw new InvalidTimeException();
+        }
+
+        if (availability.get(localTime).containsAll(usernames)) {
+            addMeeting(meetingName, usernames, localTime);
+        } else {
+            throw new CannotScheduleMeetingException();
         }
     }
 }
