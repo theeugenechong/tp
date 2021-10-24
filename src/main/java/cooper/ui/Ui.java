@@ -165,6 +165,12 @@ public class Ui {
         show(LINE);
     }
 
+    public static void showInvalidScheduleCommandException() {
+        show(LINE);
+        show("Oops, please enter more than one username!");
+        show(LINE);
+    }
+
     public static void showInvalidTimeException() {
         show(LINE);
         show("The time format you entered is not accepted! Please enter again.");
@@ -174,6 +180,18 @@ public class Ui {
     public static void showDuplicateUsernameException() {
         show(LINE);
         show("The username has already been entered under that timeslot.");
+        show(LINE);
+    }
+
+    public static void showCannotScheduleMeetingException() {
+        show(LINE);
+        show("Oops, no meeting can be scheduled!");
+        show(LINE);
+    }
+
+    public static void showDuplicateMeetingException() {
+        show(LINE);
+        show("You have already scheduled a meeting at that time!");
         show(LINE);
     }
 
@@ -238,10 +256,18 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> meetings) {
-        printMeetingTableHeader();
-        for (LocalTime timing: meetings.keySet()) {
-            Ui.showText("│ " + timing + " │ " + listOfAvailabilities(meetings.get(timing)));
+    public static void printSuccessfulScheduleCommand(String meetingName, String time, ArrayList<String> usernames) {
+        show(LINE);
+        show("Success!");
+        show("You have scheduled a <<" + meetingName + ">> meeting at " + time + " with "
+                + listOfAvailabilities(usernames));
+        show(LINE);
+    }
+
+    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> availability) {
+        printAvailabilityTableHeader();
+        for (LocalTime timing: availability.keySet()) {
+            Ui.showText("│ " + timing + " │ " + listOfAvailabilities(availability.get(timing)));
         }
         show(TABLE_BOT);
         show(LINE);
@@ -261,7 +287,7 @@ public class Ui {
         return String.valueOf(listOfAvailabilities);
     }
 
-    public static void printMeetingTableHeader() {
+    public static void printAvailabilityTableHeader() {
         show(LINE);
         show("These are the availabilities:");
         show(TABLE_TOP);
@@ -272,6 +298,7 @@ public class Ui {
         show("Here are the commands available to an admin along with their formats:");
         show("add       | add [amount]");
         show("list      | list");
+        show("schedule  | schedule [username1], [username2] at [meetingTime]");
     }
 
     public static void printEmployeeHelp() {
@@ -280,8 +307,9 @@ public class Ui {
     }
 
     public static void printGeneralHelp() {
-        show("available | available [yourUsername] at [availableTime]");
-        show("meetings  | meetings");
+        show("available     | available [availableTime]");
+        show("availability  | availability");
+        show("meetings      | meetings");
         show(LINE);
     }
 
