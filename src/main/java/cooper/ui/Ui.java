@@ -1,6 +1,5 @@
 package cooper.ui;
 
-import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
 import cooper.verification.UserRole;
 
@@ -244,20 +243,20 @@ public class Ui {
         show(FinanceUI.statementDescription);
         show(FinanceUI.headersUI[0]);
         for (i = 0; i < cashFlowStatement.size(); i++) {
-            switch(i) {
-                case FinanceManager.endOfOA:
-                    show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
-                    show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
-                    show(FinanceUI.headersUI[1]);
-                    break;
-                case FinanceManager.endOfIA:
-                    show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
-                    show(FinanceUI.netAmountsUI[1] + " " + FinanceManager.netIA);
-                    show(FinanceUI.headersUI[2]);
-                    break;
-                default:
-                    show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
-                    break;
+            switch (i) {
+            case FinanceManager.endOfOA:
+                show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
+                show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
+                show(FinanceUI.headersUI[1]);
+                break;
+            case FinanceManager.endOfIA:
+                show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
+                show(FinanceUI.netAmountsUI[1] + " " + FinanceManager.netIA);
+                show(FinanceUI.headersUI[2]);
+                break;
+            default:
+                show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
+                break;
             }
         }
         if (i == cashFlowStatement.size()) {
@@ -282,7 +281,7 @@ public class Ui {
         int i = cashFlowStage;
         show("Success!");
         show((isInflow ? "+" : "-") + amount + " has been added as " + FinanceUI.cashFlowUI[i]);
-        switch(i) {
+        switch (i) {
         case FinanceManager.endOfOA:
             show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
             break;
