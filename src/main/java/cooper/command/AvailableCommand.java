@@ -19,15 +19,15 @@ public class AvailableCommand extends Command {
     }
 
     @Override
-    public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
+        String username = signInDetails.getUsername();
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
         StorageManager storageManager = resourcesManager.getStorageManager();
         if (meetingManager != null) {
             try {
                 meetingManager.addAvailability(time, username);
-                storageManager.saveMeetings(meetingManager);
+                storageManager.saveAvailability(meetingManager);
                 Ui.printAvailableCommand(time, username);
             } catch (InvalidTimeException e1) {
                 Ui.showInvalidTimeException();

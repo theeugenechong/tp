@@ -4,8 +4,8 @@ import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidTimeException;
-import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
+import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
@@ -25,9 +25,11 @@ public class ScheduleCommand extends Command {
     }
 
     @Override
-    public void execute(SignInDetails signInDetails, FinanceManager financeManager, MeetingManager meetingManager,
-                        StorageManager storageManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
+        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
+        StorageManager storageManager = resourcesManager.getStorageManager();
+
         if (userRole.equals(UserRole.ADMIN)) {
             // if time field is not entered, proceed to auto schedule a meeting at the earliest time
             if (time == null) {

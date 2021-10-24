@@ -23,3 +23,6 @@ cooperLogs.log
 tmp/balanceSheet.txt
 tmp/meetings.txt
 tmp/signInDetails.txt
+tmp/availability.txt
+cooperLogs.log.lck
+tmp/cashFlowStatement.txt

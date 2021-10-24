@@ -8,8 +8,7 @@ import cooper.resources.ResourcesManager;
 public class HelpCommand extends Command {
 
     @Override
-    public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager) {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) {
         UserRole userRole = signInDetails.getUserRole();
         if (userRole.equals(UserRole.ADMIN)) {
             Ui.printAdminHelp();
