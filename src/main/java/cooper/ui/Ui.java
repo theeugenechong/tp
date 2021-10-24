@@ -141,10 +141,17 @@ public class Ui {
     /**
      * Exception message to show invalid command error.
      **/
-    public static void showUnrecognisedCommandError() {
+    public static void showUnrecognisedCommandError(boolean isSignIn) {
         show(LINE);
         show("I don't recognise the command you entered.");
-        show("Enter 'help' to view the format of each command.");
+
+        if (isSignIn) {
+            show("To login, enter \"login  [yourUsername] pw [password] as [yourRole]\"");
+            show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
+        } else {
+            show("Enter 'help' to view the format of each command.");
+        }
+
         show(LINE);
     }
 
@@ -257,9 +264,9 @@ public class Ui {
 
     public static void printCashFlowStatement(ArrayList<Integer> cashFlowStatement) {
         show(LINE);
-        int i = 0;
         show(FinanceUI.statementDescription);
         show(FinanceUI.headersUI[0]);
+        int i;
         for (i = 0; i < cashFlowStatement.size(); i++) {
             switch (i) {
             case FinanceManager.endOfOA:
@@ -296,10 +303,9 @@ public class Ui {
 
     public static void printAddCashFlowCommand(int amount, boolean isInflow, int cashFlowStage) {
         show(LINE);
-        int i = cashFlowStage;
         show("Success!");
-        show((isInflow ? "+" : "-") + amount + " has been added as " + FinanceUI.cashFlowUI[i]);
-        switch (i) {
+        show((isInflow ? "+" : "-") + amount + " has been added as " + FinanceUI.cashFlowUI[cashFlowStage]);
+        switch (cashFlowStage) {
         case FinanceManager.endOfOA:
             show(FinanceUI.netAmountsUI[0] + " " + FinanceManager.netOA);
             break;
@@ -310,7 +316,7 @@ public class Ui {
             show(FinanceUI.netAmountsUI[2] + " " + FinanceManager.netFA);
             break;
         default:
-            show("\n" + "next, please enter " + FinanceUI.cashFlowUI[i + 1]);
+            show("\n" + "next, please enter " + FinanceUI.cashFlowUI[cashFlowStage + 1]);
             break;
         }
 
@@ -348,12 +354,12 @@ public class Ui {
         show(LINE);
         show("Here is the list of forum posts:");
         show(TABLE_TOP);
-        Integer cntPost = 1;
+        int cntPost = 1;
         for (var post : forumPosts) {
-            show("|  " + cntPost.toString() + ". " + post.toString());
-            Integer cntComment = 1;
+            show("|  " + cntPost + ". " + post.toString());
+            int cntComment = 1;
             for (var comment : post.getComments()) {
-                show("|    ∟  " + cntComment.toString() + ". " + comment.toString());
+                show("|    ∟  " + cntComment + ". " + comment.toString());
                 cntComment++;
             }
             cntPost++;
@@ -368,9 +374,9 @@ public class Ui {
         show(TABLE_TOP);
         show("|  " + forumPosts.get(postId).toString());
 
-        Integer cntComment = 1;
+        int cntComment = 1;
         for (var comment : forumPosts.get(postId).getComments()) {
-            show("|    ∟  " + cntComment.toString() + "." + comment.toString());
+            show("|    ∟  " + cntComment + "." + comment.toString());
             cntComment++;
         }
 

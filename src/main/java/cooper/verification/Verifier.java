@@ -53,7 +53,7 @@ public class Verifier {
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
             isSuccessfullySignedIn = false;
-            Ui.showLoginRegisterMessage(false);
+            Ui.showUnrecognisedCommandError(true);
         } catch (NoSuchElementException | InvalidCommandFormatException e) {
             isSuccessfullySignedIn = false;
             Ui.showInvalidCommandFormatError();

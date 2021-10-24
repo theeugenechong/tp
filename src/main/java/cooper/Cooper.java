@@ -6,10 +6,7 @@ import cooper.command.Command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.LogoutException;
-import cooper.finance.FinanceManager;
-import cooper.forum.ForumManager;
 import cooper.log.CooperLogger;
-import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -77,11 +74,12 @@ public class Cooper {
             } catch (NumberFormatException e) {
                 Ui.showInvalidNumberError();
             } catch (UnrecognisedCommandException e) {
-                Ui.showUnrecognisedCommandError();
+                Ui.showUnrecognisedCommandError(false);
             } catch (InvalidAccessException e) {
                 Ui.printNoAccessError();
             } catch (LogoutException e) {
                 cooperResourcesManager.getVerifier().setSuccessfullySignedIn(false);
+                Ui.showLoginRegisterMessage(false);
                 break;
             }
         }
