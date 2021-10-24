@@ -15,6 +15,8 @@ import com.dopsun.chatbot.cli.Parser;
 
 import cooper.command.AddCommand;
 import cooper.command.AvailableCommand;
+import cooper.command.BsCommand;
+import cooper.command.CfCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
 import cooper.command.ListCommand;
@@ -31,12 +33,6 @@ import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
 import cooper.finance.FinanceCommand;
-import cooper.verification.PasswordHasher;
-import cooper.verification.SignInProtocol;
-import cooper.verification.Login;
-import cooper.verification.Registration;
-import cooper.verification.SignInDetails;
-import cooper.verification.UserRole;
 
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -122,12 +118,13 @@ public class CommandParser extends ParserBase {
         case "exit":
             return new ExitCommand();
         case "cf":
-            return new CFCommand();
+            return new CfCommand();
         case "bs":
             financeFlag = FinanceCommand.BS;
-            return new BSCommand();
+            return new BsCommand();
         case "proj":
             financeFlag = FinanceCommand.PROJ;
+            return null;
         default:
             throw new UnrecognisedCommandException();
         }

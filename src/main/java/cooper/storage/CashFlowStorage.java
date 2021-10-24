@@ -14,7 +14,9 @@ import java.util.Scanner;
 
 public class CashFlowStorage extends Storage {
 
-    public CashFlowStorage(String filePath) { super(filePath); }
+    public CashFlowStorage(String filePath) {
+        super(filePath);
+    }
 
     public void loadCashFlowStatement(CashFlow cooperCashFlowStatement) {
         ArrayList<Integer> cashFlowStatement = cooperCashFlowStatement.getCashFlowStatement();

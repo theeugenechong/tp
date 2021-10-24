@@ -26,7 +26,6 @@ public class Cooper {
         CooperLogger.setupLogger();
     }
 
-
     /**
      * Main entry-point for the java.duke.Duke application.
      */

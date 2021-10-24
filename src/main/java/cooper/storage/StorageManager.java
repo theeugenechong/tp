@@ -26,6 +26,7 @@ public class StorageManager {
     public void loadAllData(Verifier cooperVerifier, FinanceManager cooperFinanceManager,
                             MeetingManager cooperMeetingManager) {
         signInDetailsStorage.loadSignInDetails(cooperVerifier);
+        cashFlowStorage.loadCashFlowStatement(cooperFinanceManager.cooperCashFlowStatement);
         balanceSheetStorage.loadBalanceSheet(cooperFinanceManager.cooperBalanceSheet);
         availabilityStorage.loadAvailability(cooperMeetingManager);
         meetingsStorage.loadMeetings(cooperMeetingManager);

@@ -7,8 +7,7 @@ import cooper.resources.ResourcesManager;
 public class ExitCommand extends Command {
 
     @Override
-    public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager) {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) {
         Ui.showBye();
         Ui.closeStreams();
         System.exit(0);

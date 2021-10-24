@@ -10,8 +10,8 @@ import java.util.logging.Logger;
  * Handles all actions and operations pertaining to financial assistance functions of the application.
  */
 public class FinanceManager {
-    public static BalanceSheet cooperBalanceSheet;
-    public static CashFlow cooperCashFlowStatement;
+    public BalanceSheet cooperBalanceSheet;
+    public CashFlow cooperCashFlowStatement;
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final int endOfOA = 4; //INDEX
     public static final int endOfIA = 6; //INDEX
