@@ -1,7 +1,6 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
-import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
@@ -20,11 +19,10 @@ public class ListCommand extends Command {
      * the command is being accessed by an 'admin' level user.
      * @param signInDetails access role
      * @param resourcesManager handles all manager classes and their access rights
-     * @param storageManager save to storage
      */
     @Override
     public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager, StorageManager storageManager) throws InvalidAccessException {
+            ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
         if (financeManager != null) {

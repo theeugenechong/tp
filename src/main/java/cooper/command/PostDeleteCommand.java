@@ -3,7 +3,6 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidForumDeleteByNonOwnerException;
 import cooper.exceptions.InvalidForumPostIdException;
-import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
@@ -27,11 +26,10 @@ public class PostDeleteCommand extends Command {
      * the command is being accessed by 'employee' and 'admin' level users.
      * @param signInDetails access role
      * @param resourcesManager handles all manager classes and their access rights
-     * @param storageManager save to storage
      */
     @Override
     public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager, StorageManager storageManager) throws InvalidAccessException {
+            ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
         if (forumManager != null) {

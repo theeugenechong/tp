@@ -3,19 +3,31 @@ package cooper.resources;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.forum.ForumManager;
+import cooper.storage.StorageManager;
 import cooper.verification.UserRole;
+import cooper.verification.Verifier;
 
 public class ResourcesManager {
 
+    private final Verifier cooperVerifier;
     private final FinanceManager cooperFinanceManager;
     private final MeetingManager cooperMeetingManager;
     private final ForumManager cooperForumManager;
+    private final StorageManager cooperStorageManager;
 
-    public ResourcesManager(FinanceManager financeManager, MeetingManager meetingManager,
-            ForumManager forumManager) {
-        cooperFinanceManager = financeManager;
-        cooperMeetingManager = meetingManager;
-        cooperForumManager = forumManager;
+    public ResourcesManager() {
+        cooperStorageManager = new StorageManager();
+        cooperFinanceManager = new FinanceManager();
+        cooperMeetingManager = new MeetingManager();
+        cooperForumManager = new ForumManager();
+        cooperVerifier = new Verifier();
+        // load storage 
+        cooperStorageManager.loadAllData(
+                cooperVerifier,
+                cooperFinanceManager,
+                cooperMeetingManager);
+
+
     }
 
     public FinanceManager getFinanceManager(UserRole userRole) {
@@ -33,4 +45,15 @@ public class ResourcesManager {
     public ForumManager getForumManager(UserRole userRole) {
         return cooperForumManager;
     }
+
+    public StorageManager getStorageManager() {
+        return cooperStorageManager;
+
+    }
+
+    public Verifier getVerifier() {
+        return cooperVerifier;
+    }
+
+
 }

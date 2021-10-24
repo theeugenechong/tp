@@ -19,23 +19,10 @@ import cooper.resources.ResourcesManager;
 
 public class Cooper {
 
-    private final FinanceManager cooperFinanceManager;
-    private final ForumManager cooperForumManager;
-    private final MeetingManager cooperMeetingManager;
-    private final Verifier cooperVerifier;
-    private final StorageManager cooperStorageManager;
     private final ResourcesManager cooperResourcesManager;
 
     public Cooper() {
-        cooperVerifier = new Verifier();
-        cooperStorageManager = new StorageManager();
-        cooperFinanceManager = new FinanceManager();
-        cooperMeetingManager = new MeetingManager();
-        cooperForumManager = new ForumManager();
-        cooperResourcesManager = new ResourcesManager(
-                cooperFinanceManager,
-                cooperMeetingManager,
-                cooperForumManager);
+        cooperResourcesManager = new ResourcesManager();
         CooperLogger.setupLogger();
     }
 
@@ -57,22 +44,20 @@ public class Cooper {
     private void setUp() {
         Ui.showLogo();
         Ui.showIntroduction();
-        cooperStorageManager.loadAllData(cooperVerifier,
-                cooperFinanceManager,
-                cooperMeetingManager);
     }
 
     private SignInDetails verifyUser() {
+        Verifier cooperVerifier = cooperResourcesManager.getVerifier();
+        StorageManager cooperStorageManager = cooperResourcesManager.getStorageManager();
+        assert cooperVerifier != null;
+        assert cooperStorageManager != null;
         SignInDetails successfulSignInDetails = null;
         String input;
-
         while (!cooperVerifier.isSuccessfullySignedIn()) {
             input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
-
         assert successfulSignInDetails != null;
-
         cooperStorageManager.saveSignInDetails(cooperVerifier);
         return successfulSignInDetails;
     }
@@ -84,7 +69,7 @@ public class Cooper {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
                 assert command != null;
-                command.execute(signInDetails, cooperResourcesManager, cooperStorageManager);
+                command.execute(signInDetails, cooperResourcesManager);
             } catch (NoSuchElementException | InvalidCommandFormatException e) {
                 Ui.showInvalidCommandFormatError();
             } catch (NumberFormatException e) {

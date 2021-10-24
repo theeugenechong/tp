@@ -22,9 +22,10 @@ public class AvailableCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, 
-            ResourcesManager resourcesManager, StorageManager storageManager) throws InvalidAccessException {
+            ResourcesManager resourcesManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
+        StorageManager storageManager = resourcesManager.getStorageManager();
         if (meetingManager != null) {
             try {
                 meetingManager.addAvailability(time, username);
