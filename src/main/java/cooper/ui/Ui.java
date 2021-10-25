@@ -181,30 +181,6 @@ public class Ui {
         show(LINE);
     }
 
-    public static void showInvalidTimeException() {
-        show(LINE);
-        show("The time format you entered is not accepted! Please enter again.");
-        show(LINE);
-    }
-
-    public static void showDuplicateUsernameException() {
-        show(LINE);
-        show("The username has already been entered under that timeslot.");
-        show(LINE);
-    }
-
-    public static void showCannotScheduleMeetingException() {
-        show(LINE);
-        show("Oops, no meeting can be scheduled!");
-        show(LINE);
-    }
-
-    public static void showDuplicateMeetingException() {
-        show(LINE);
-        show("You have already scheduled a meeting at that time!");
-        show(LINE);
-    }
-
     public static void showBye() {
         show(LINE);
         show("Bye, see you next time! :D");
@@ -223,7 +199,7 @@ public class Ui {
         printStream.close();
     }
 
-    private static void show(String printMessage) {
+    public static void show(String printMessage) {
         printStream.println(printMessage);
     }
 
@@ -379,30 +355,6 @@ public class Ui {
         show(LINE);
     }
 
-    public static void printAvailableCommand(String time, String username) {
-        show(LINE);
-        show("Success!");
-        show(username + "'s availability has been added to " + time);
-        show(LINE);
-    }
-
-    public static void printSuccessfulScheduleCommand(String meetingName, String time, ArrayList<String> usernames) {
-        show(LINE);
-        show("Success!");
-        show("You have scheduled a <<" + meetingName + ">> meeting at " + time + " with "
-                + listOfAvailabilities(usernames));
-        show(LINE);
-    }
-
-    public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> availability) {
-        printAvailabilityTableHeader();
-        for (LocalTime timing: availability.keySet()) {
-            Ui.showText("│ " + timing + " │ " + listOfAvailabilities(availability.get(timing)));
-        }
-        show(TABLE_BOT);
-        show(LINE);
-    }
-
     public static void printForumPosts(ArrayList<ForumPost> forumPosts) {
         show(LINE);
         show("Here is the list of forum posts:");
@@ -437,26 +389,6 @@ public class Ui {
         show(LINE);
     }
 
-    public static String listOfAvailabilities(ArrayList<String> availabilities) {
-        StringBuilder listOfAvailabilities = new StringBuilder();
-        for (String a : availabilities) {
-            /* don't need comma for last attendee */
-            int indexOfLastAttendee = availabilities.size() - 1;
-            if (a.equals(availabilities.get(indexOfLastAttendee))) {
-                listOfAvailabilities.append(a);
-            } else {
-                listOfAvailabilities.append(a).append(", ");
-            }
-        }
-        return String.valueOf(listOfAvailabilities);
-    }
-
-    public static void printAvailabilityTableHeader() {
-        show(LINE);
-        show("These are the availabilities:");
-        show(TABLE_TOP);
-    }
-
     public static void printNewPostCommand(String username, String content) {
         show(LINE);
         show(username + " has just posted to forum:");
@@ -488,9 +420,9 @@ public class Ui {
     public static void printAdminHelp() {
         show(LINE);
         show("Here are the commands available to an admin along with their formats:");
-        show("add       | add [amount]");
-        show("list      | list");
-        show("schedule  | schedule [username1], [username2] at [meetingTime]");
+        show("add           | add [amount]");
+        show("list          | list");
+        show("schedule      | schedule [meetingName] with [username1], [username2] /at [meetingTime]");
     }
 
     public static void printEmployeeHelp() {

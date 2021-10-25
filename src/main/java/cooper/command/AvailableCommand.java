@@ -5,6 +5,7 @@ import cooper.exceptions.InvalidTimeException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
+import cooper.ui.MeetingsUi;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -24,21 +25,21 @@ public class AvailableCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
         StorageManager storageManager = resourcesManager.getStorageManager();
-        if (meetingManager != null) {
-            try {
-                meetingManager.addAvailability(time, username);
-                storageManager.saveAvailability(meetingManager);
-                Ui.printAvailableCommand(time, username);
-            } catch (InvalidTimeException e1) {
-                Ui.showInvalidTimeException();
-            } catch (DuplicateUsernameException e2) {
-                Ui.showDuplicateUsernameException();
-            }
-        } else {
+        if (meetingManager == null) {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();
             Ui.printAdminHelp();
             throw new InvalidAccessException();
+        } else {
+            try {
+                meetingManager.addAvailability(time, username);
+                storageManager.saveAvailability(meetingManager);
+                MeetingsUi.printAvailableCommand(time, username);
+            } catch (InvalidTimeException e1) {
+                MeetingsUi.showInvalidTimeException();
+            } catch (DuplicateUsernameException e2) {
+                MeetingsUi.showDuplicateUsernameException();
+            }
         }
     }
 }

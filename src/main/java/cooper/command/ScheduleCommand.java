@@ -7,6 +7,7 @@ import cooper.exceptions.InvalidTimeException;
 import cooper.meetings.MeetingManager;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
+import cooper.ui.MeetingsUi;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -37,20 +38,20 @@ public class ScheduleCommand extends Command {
                     meetingManager.autoScheduleMeeting(meetingName, usernames);
                     storageManager.saveMeetings(meetingManager);
                 } catch (CannotScheduleMeetingException e1) {
-                    Ui.showCannotScheduleMeetingException();
+                    MeetingsUi.showCannotScheduleMeetingException();
                 } catch (DuplicateMeetingException e2) {
-                    Ui.showDuplicateMeetingException();
+                    MeetingsUi.showDuplicateMeetingException();
                 }
             } else {
                 try {
                     meetingManager.manualScheduleMeeting(meetingName, usernames, time);
                     storageManager.saveMeetings(meetingManager);
                 } catch (InvalidTimeException e1) {
-                    Ui.showInvalidTimeException();
+                    MeetingsUi.showInvalidTimeException();
                 } catch (CannotScheduleMeetingException e2) {
-                    Ui.showCannotScheduleMeetingException();
+                    MeetingsUi.showCannotScheduleMeetingException();
                 } catch (DuplicateMeetingException e3) {
-                    Ui.showDuplicateMeetingException();
+                    MeetingsUi.showDuplicateMeetingException();
                 }
             }
         } else {
