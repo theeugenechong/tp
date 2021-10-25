@@ -1,0 +1,147 @@
+\documentclass{letter}
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks]{hyperref}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry} % Document margins
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{ltablex}
+\usepackage[OT1]{fontenc}
+\renewcommand*\familydefault{\sfdefault}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\vspace{1 cm}
+
+\centering\Large\textbf{CASH FLOW STATEMENT}\normalsize
+
+% Cash Flow Statement
+\begin{tabularx}{\linewidth}{l X X r r}
+
+% {header}
+& & & &\\[0.25ex]
+\centering\Large\bf
+Operating Activities
+& \centering{\bf{}} & \centering{\bf{}} & \centering{\bf{}} & \Large\bf \$
+\\[2.5ex]\hline
+& & & &\\
+% {entry}
+\centering
+Net Income
+& \centering
+& \centering
+& \centering
+& 123
+\\[3ex]
+% {entry}
+\centering
+Depreciation and Amortisation
+& \centering
+& \centering
+& \centering
+& 456
+\\[3ex]
+% {entry}
+\centering
+Increase in Accounts Receivable
+& \centering
+& \centering
+& \centering
+& 12312
+\\[3ex]
+% {entry}
+\centering
+Decrease in Accounts Payable
+& \centering
+& \centering
+& \centering
+& 2323
+\\[3ex]
+% {entry}
+\centering
+Decrease in Inventory
+& \centering
+& \centering
+& \centering
+& 12345
+\\[3ex]
+% {summary}
+\hline
+& & & &\\[0.25ex]
+& & & \Large\bf Net Cash from
+Operating Activities
+& \Large
+27559
+\\[2.5ex]
+& & & &\\[5ex]
+% {header}
+& & & &\\[0.25ex]
+\centering\Large\bf
+Investing Activities
+& \centering{\bf{}} & \centering{\bf{}} & \centering{\bf{}} & \Large\bf \$
+\\[2.5ex]\hline
+& & & &\\
+% {entry}
+\centering
+Capital Expenditures
+& \centering
+& \centering
+& \centering
+& -45467
+\\[3ex]
+% {entry}
+\centering
+Proceeds from sale of equipment
+& \centering
+& \centering
+& \centering
+& 5456
+\\[3ex]
+% {summary}
+\hline
+& & & &\\[0.25ex]
+& & & \Large\bf Net Cash from
+Investing Activities
+& \Large
+-40011
+\\[2.5ex]
+& & & &\\[5ex]
+% {header}
+& & & &\\[0.25ex]
+\centering\Large\bf
+Financing Activities
+& \centering{\bf{}} & \centering{\bf{}} & \centering{\bf{}} & \Large\bf \$
+\\[2.5ex]\hline
+& & & &\\
+% {entry}
+\centering
+Proceeds from Issuing Debt
+& \centering
+& \centering
+& \centering
+& 23
+\\[3ex]
+% {entry}
+\centering
+Dividends Paid
+& \centering
+& \centering
+& \centering
+& 12345
+\\[3ex]
+% {summary}
+\hline
+& & & &\\[0.25ex]
+& & & \Large\bf Net Cash from
+Financing Activities
+& \Large
+12368
+\\[2.5ex]
+& & & &\\[5ex]
+
+
+\end{tabularx}
+
+\vspace{1 cm}
+\end{document}
