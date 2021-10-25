@@ -49,15 +49,23 @@ public class AddCommand extends Command {
         }
       
         if (financeFlag == FinanceCommand.BS) {
-            financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
-            storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
-            Ui.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
-            BalanceSheet.balanceSheetStage++;
+            if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfSE) {
+                financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
+                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
+                Ui.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
+                BalanceSheet.balanceSheetStage++;
+            } else {
+                System.out.println("The balance sheet is complete.");
+            }
         } else if (financeFlag == FinanceCommand.CF) {
-            financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
-            storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
-            Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
-            CashFlow.cashFlowStage++;
+            if (CashFlow.cashFlowStage <= FinanceManager.endOfFA) {
+                financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
+                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
+                Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
+                CashFlow.cashFlowStage++;
+            } else {
+                System.out.println("The cash flow statement is complete.");
+            }
         }
     }
 }
