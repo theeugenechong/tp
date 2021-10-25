@@ -17,10 +17,14 @@ import cooper.resources.ResourcesManager;
 
 public class Cooper {
 
+    private final Verifier cooperVerifier;
     private final ResourcesManager cooperResourcesManager;
+    private final StorageManager cooperStorageManager;
 
     public Cooper() {
+        cooperVerifier = new Verifier();
         cooperResourcesManager = new ResourcesManager();
+        cooperStorageManager = new StorageManager();
         CooperLogger.setupLogger();
     }
 
@@ -44,17 +48,16 @@ public class Cooper {
     private void setUp() {
         Ui.showLogo();
         Ui.showIntroduction();
+
+        // Load data from storage
+        cooperStorageManager.loadAllData(cooperVerifier, cooperResourcesManager.getFinanceManager(),
+                cooperResourcesManager.getMeetingManager());
     }
 
     private SignInDetails verifyUser() {
-        Verifier cooperVerifier = cooperResourcesManager.getVerifier();
-        StorageManager cooperStorageManager = cooperResourcesManager.getStorageManager();
-        assert cooperVerifier != null;
-        assert cooperStorageManager != null;
         SignInDetails successfulSignInDetails = null;
-        String input;
         while (!cooperVerifier.isSuccessfullySignedIn()) {
-            input = Ui.getInput();
+            String input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
         assert successfulSignInDetails != null;
@@ -68,7 +71,7 @@ public class Cooper {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
                 assert command != null;
-                command.execute(signInDetails, cooperResourcesManager);
+                command.execute(signInDetails, cooperResourcesManager, cooperStorageManager);
             } catch (NoSuchElementException | InvalidCommandFormatException e) {
                 Ui.showInvalidCommandFormatError();
             } catch (NumberFormatException e) {
@@ -78,7 +81,7 @@ public class Cooper {
             } catch (InvalidAccessException e) {
                 Ui.printNoAccessError();
             } catch (LogoutException e) {
-                cooperResourcesManager.getVerifier().setSuccessfullySignedIn(false);
+                cooperVerifier.setSuccessfullySignedIn(false);
                 Ui.showLoginRegisterMessage(false);
                 break;
             }
