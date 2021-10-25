@@ -28,7 +28,8 @@ public class AvailableCommand extends Command {
      * @param storageManager Stores data which has just been added
      */
     @Override
-    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
+            throws InvalidAccessException {
         String username = signInDetails.getUsername();
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
