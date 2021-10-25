@@ -4,6 +4,7 @@ import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.InvalidTimeException;
+import cooper.ui.MeetingsUi;
 import cooper.ui.Ui;
 
 import java.time.LocalTime;
@@ -43,6 +44,17 @@ public class MeetingManager {
         return meetingsList;
     }
 
+    public ArrayList<Meeting> getUserSpecificMeetings(String username) {
+        ArrayList<Meeting> allMeetings = getMeetingsList();
+        ArrayList<Meeting> userSpecificMeetings = new ArrayList<>();
+        for (Meeting meeting : allMeetings) {
+            if (meeting.getListOfAttendees().contains(username)) {
+                userSpecificMeetings.add(meeting);
+            }
+        }
+        return userSpecificMeetings;
+    }
+
     public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeException {
         LocalTime localTime;
         if (isValidTimeFormat(time)) {
@@ -77,7 +89,7 @@ public class MeetingManager {
             }
         }
         meetingsList.add(meeting);
-        Ui.printSuccessfulScheduleCommand(meetingName, timing.toString(), usernames);
+        MeetingsUi.printSuccessfulScheduleCommand(meetingName, timing.toString(), usernames);
     }
 
     private boolean isMeetingTimeFull(LocalTime timing) {
