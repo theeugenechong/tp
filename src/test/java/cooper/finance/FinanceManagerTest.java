@@ -21,8 +21,9 @@ public class FinanceManagerTest {
     @Order(1)
     void test_properFirstAdditionToBalanceSheet() {
         int amount = 4000;
+        int balanceSheetStage = 0;
         boolean isInflow = true;
-        financeManager.addBalance(amount,isInflow);
+        financeManager.addBalance(amount,isInflow, balanceSheetStage);
 
         Integer expected = 4000;
         // ArrayList<Integer> actualList = financeManager.getBalanceSheet();
@@ -34,8 +35,9 @@ public class FinanceManagerTest {
     @Order(2)
     void test_properSecondAdditionToBalanceSheet() {
         int amount = 5000;
+        int balanceSheetStage = 1;
         boolean isInflow = false;
-        financeManager.addBalance(amount,isInflow);
+        financeManager.addBalance(amount,isInflow, balanceSheetStage);
 
         Integer expected = -5000;
         // ArrayList<Integer> actualList = financeManager.getBalanceSheet();
