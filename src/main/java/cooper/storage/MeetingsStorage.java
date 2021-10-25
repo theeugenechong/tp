@@ -31,7 +31,7 @@ public class MeetingsStorage extends Storage {
         try {
             writeMeetings(filePath, cooperMeetingManager.getMeetingsList());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            Ui.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -76,7 +76,7 @@ public class MeetingsStorage extends Storage {
 
         try {
             DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime meetingTime = LocalTime.parse(meeting[0].trim(), timeFormat);
+            LocalTime dummyMeetingTime = LocalTime.parse(meeting[0].trim(), timeFormat);
         } catch (DateTimeParseException e) {
             return true;
         }

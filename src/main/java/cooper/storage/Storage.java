@@ -1,5 +1,7 @@
 package cooper.storage;
 
+import cooper.ui.Ui;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +27,7 @@ public class Storage {
             try {
                 createFileInDirectory(filePath.toString());
             } catch (IOException ioException) {
-                System.out.println("Error creating storage file: " + ioException.getMessage());
+                Ui.showFileCreationError(ioException);
             }
         }
         return fileScanner;

@@ -49,11 +49,11 @@ public class Verifier {
         try {
             SignInProtocol signInProtocol = SignInDetailsParser.parse(input);
             String rawPassword = SignInDetailsParser.parseRawPassword(input);
-            signInProtocol.executeSignIn(this, registeredUsers, rawPassword);
+            signInProtocol.executeSignIn(this, rawPassword);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
             isSuccessfullySignedIn = false;
-            Ui.showLoginRegisterMessage(false);
+            Ui.showUnrecognisedCommandError(true);
         } catch (NoSuchElementException | InvalidCommandFormatException e) {
             isSuccessfullySignedIn = false;
             Ui.showInvalidCommandFormatError();

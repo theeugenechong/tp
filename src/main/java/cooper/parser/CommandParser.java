@@ -15,17 +15,25 @@ import com.dopsun.chatbot.cli.Parser;
 
 import cooper.command.AddCommand;
 import cooper.command.AvailableCommand;
+import cooper.command.BsCommand;
+import cooper.command.CfCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
 import cooper.command.ListCommand;
 import cooper.command.AvailabilityCommand;
+import cooper.command.LogoutCommand;
 import cooper.command.MeetingsCommand;
 import cooper.command.HelpCommand;
+import cooper.command.PostAddCommand;
+import cooper.command.PostCommentCommand;
+import cooper.command.PostListCommand;
+import cooper.command.PostDeleteCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
 import cooper.util.Util;
+import cooper.finance.FinanceCommand;
 
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -33,6 +41,7 @@ public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
     private Parser parser;
+    public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
     /**
      * Constructor. Initialise internal parser.
@@ -83,9 +92,13 @@ public class CommandParser extends ParserBase {
         case "availability":
         case "meetings":
         case "exit":
+        case "bs":
+        case "cf":
+        case "logout":
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
+        case "post":
         case "schedule":
             return parseComplexInput(input);
         default:
@@ -97,15 +110,25 @@ public class CommandParser extends ParserBase {
         assert input != null;
         switch (input) {
         case "list":
-            return new ListCommand();
+            return new ListCommand(financeFlag);
         case "help":
             return new HelpCommand();
         case "availability":
             return new AvailabilityCommand();
         case "meetings":
             return new MeetingsCommand();
+        case "logout":
+            return new LogoutCommand();
         case "exit":
             return new ExitCommand();
+        case "cf":
+            return new CfCommand();
+        case "bs":
+            financeFlag = FinanceCommand.BS;
+            return new BsCommand();
+        case "proj":
+            financeFlag = FinanceCommand.PROJ;
+            return null;
         default:
             throw new UnrecognisedCommandException();
         }
@@ -126,6 +149,14 @@ public class CommandParser extends ParserBase {
                 return parseScheduleArgs(commandArgs);
             case "add":
                 return parseAddArgs(commandArgs);
+            case "postAdd":
+                return parsePostAddArgs(commandArgs);
+            case "postDelete":
+                return parsePostDeleteArgs(commandArgs);
+            case "postComment":
+                return parsePostCommentArgs(commandArgs);
+            case "postList":
+                return parsePostListArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -156,7 +187,8 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new AddCommand(amount, isInflow);
+        return new AddCommand(amount, isInflow, financeFlag);
+
     }
 
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
@@ -231,5 +263,84 @@ public class CommandParser extends ParserBase {
         } else {
             return null;
         }
+    }
+
+    private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
+        String content = "";
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "content-hint":
+                content = argVal;
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostAddCommand(content);
+    }
+
+    private Command parsePostDeleteArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
+        int postId = -1;
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "index-hint":
+                postId = Integer.parseInt(argVal);
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostDeleteCommand(postId);
+    }
+
+    private Command parsePostCommentArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            NumberFormatException, InvalidCommandFormatException {
+        String content = "";
+        int postId = -1;
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "content-hint":
+                content = argVal;
+                break;
+            case "index-hint":
+                postId = Integer.parseInt(argVal);
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostCommentCommand(postId,content);
+    }
+
+    private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
+            NumberFormatException {
+        int postId = -1;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "list-hint":
+                if (argVal.equals("all")) {
+                    postId = -1; // list all
+                } else {
+                    postId = Integer.parseInt(argVal);
+                }
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new PostListCommand(postId);
     }
 }
