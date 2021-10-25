@@ -55,7 +55,7 @@ public class AddCommand extends Command {
                 Ui.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
                 BalanceSheet.balanceSheetStage++;
             } else {
-                System.out.println("The balance sheet is complete.");
+                Ui.showCannotAddToBalanceSheet();
             }
         } else if (financeFlag == FinanceCommand.CF) {
             if (CashFlow.cashFlowStage <= FinanceManager.endOfFA) {
@@ -64,7 +64,7 @@ public class AddCommand extends Command {
                 Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
                 CashFlow.cashFlowStage++;
             } else {
-                System.out.println("The cash flow statement is complete.");
+                Ui.showCannotAddToCashFlow();
             }
         }
     }

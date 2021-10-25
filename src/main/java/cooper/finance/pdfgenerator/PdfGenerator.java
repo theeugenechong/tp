@@ -1,5 +1,6 @@
 package cooper.finance.pdfgenerator;
 
+import cooper.ui.Ui;
 import cooper.util.Util;
 
 import java.io.File;
@@ -125,7 +126,7 @@ public abstract class PdfGenerator {
     //https://www.baeldung.com/httpurlconnection-post
     public abstract void compilePdfAndSend();
 
-    protected void createBackup(String backupFileName) {
+    protected void createBackup(String texFileToCompile, String backupFileName) {
         try {
             File backupFile = new File(GENERATED_FILE_DIR + backupFileName);
             if (!backupFile.exists()) {
@@ -133,13 +134,12 @@ public abstract class PdfGenerator {
                 Files.createFile(Paths.get(GENERATED_FILE_DIR + backupFileName));
             }
 
-            String compiledPdf = formTexFile();
             FileWriter fileWriter = new FileWriter(GENERATED_FILE_DIR + backupFileName, false);
-            fileWriter.write(compiledPdf);
+            fileWriter.write(texFileToCompile);
             fileWriter.close();
-            System.out.println("The backup file has been created successfully.");
+            Ui.showBackupFileSuccessfullyCreated();
         } catch (IOException e) {
-            System.out.println("There was a problem creating the backup file.");
+            Ui.showFileCreationError(e);
         }
     }
 
@@ -155,8 +155,9 @@ public abstract class PdfGenerator {
             FileOutputStream fileOutputStream = new FileOutputStream(GENERATED_FILE_DIR + pdfName);
             fileOutputStream.write(response);
             fileOutputStream.close();
+            Ui.showPdfSuccessfullyGenerated();
         } catch (IOException e) {
-            System.out.println("There was a problem generating the PDF file.");
+            Ui.showFileCreationError(e);
         }
     }
 }

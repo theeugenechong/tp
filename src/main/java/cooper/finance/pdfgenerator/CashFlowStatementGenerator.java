@@ -3,6 +3,7 @@ package cooper.finance.pdfgenerator;
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
 import cooper.ui.FinanceUI;
+import cooper.ui.Ui;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -76,13 +77,13 @@ public class CashFlowStatementGenerator extends PdfGenerator {
                 byte[] buffer = con.getInputStream().readAllBytes();
                 createPdf(buffer, CF_PDF_FILE);
             } else {
-                System.out.println("Error encountered when sending post request! Any fallback plan?");
+                Ui.showPostRequestError();
             }
         } catch (MalformedURLException e) {
-            System.out.println("Incorrect url");
+            Ui.showMalformedUrlError();
         } catch (IOException e) {
-            System.out.println("There was a problem with your connection.");
-            createBackup(CF_BACKUP_FILE);
+            Ui.showConnectionError();
+            createBackup(formTexFile(), CF_BACKUP_FILE);
         } finally {
             pdfContent.clear();
         }
