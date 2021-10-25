@@ -16,7 +16,7 @@ This developer guide will be your reference manual if you are looking to:
 
 ## What's in this Developer Guide
 - [Acknowledgements](#Acknowledgements)
-- [Setting Up andGetting Started](#setting-up-and-getting-started)
+- [Setting Up and Getting Started](#setting-up-and-getting-started)
   - [Setting up cOOPer on your computer](#setting-up-cooper-on-your-computer)
   - [Before you code](#before-you-code)
 - [Design](#design)
@@ -40,26 +40,8 @@ This developer guide will be your reference manual if you are looking to:
 own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to correctly configure the JDK.
 3. Import the project as a Gradle project. You can follow [this guide](https://se-education.org/guides/tutorials/intellijImportGradleProject.html) to find out how to import the project into IntelliJ.
 4. Verify the setup by:
-   1. Running `cooper.Cooper` and entering a few commands. You should be greeted by the following command prompt.
-   
-      ```bash
-                  /$$$$$$   /$$$$$$  /$$$$$$$
-                 /$$__  $$ /$$__  $$| $$__  $$
-        /$$$$$$$| $$  \ $$| $$  \ $$| $$  \ $$ /$$$$$$   /$$$$$$
-       /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$
-      | $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \__/
-      | $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$
-      |  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$
-       \_______/ \______/  \______/ |__/      \_______/|__/
-      ======================================================================
-      Login or register to gain access to my features!
-      To login, enter "login  [yourUsername] pw [password] as [yourRole]"
-      To register, enter "register [yourUsername] pw [password] as [yourRole]"
-      =========================================================================
-      >>
-      ```
-   
-   2. Running `junit` tests to ensure they all pass.
+   1. Running `cooper.Cooper`, logging in and entering a few commands.   
+   2. Running `JUnit` tests in `src/test` to ensure they all pass.
 
 ### Before you code
 - **Configure coding style**
@@ -70,13 +52,31 @@ own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
 
-## Design 
+## Design
+
+> #### 💡 Tip:
+> The diagrams in this document were created using **draw.io**. The `.drawio` templates used to create the diagrams
+> can be found in the `diagrams` folder. To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/),
+> select 'Open Existing Diagram' and open the `.drawio` file.
+
+### Overview
+
+cOOPer consists of two main layers: **verification** layer and **features** layer as shown in the diagram below.
+cOOPer recognizes different sets of inputs at each layer.
+
+![layerDiagram](developerGuideImages/layerDiagram.png)
+
+Upon launching the app, the user starts at the **verification**
+layer where they can only [log in](UserGuide.md#3-login) or [register](UserGuide.md#22-user-registration). Entering valid
+sign in details will then grant the user access to the **features** layer where they can input commands like `cf` and
+`available` to use cOOPer's features. At this layer, entering the `logout` command will bring the user back to the
+verification layer.
 
 ### Architecture
 
 ![architectureDiagram](developerGuideImages/architectureDiagram.png)
 
-The **Architecture Diagram** above shows the high-level design of cOOPer.
+The **Architecture Diagram** above shows the high-level design of cOOPer and how cOOPer's components are connected.
 
 `Cooper` contains the *main* method of the program. `Cooper`'s responsibilities are as such:
 - Upon **launching the app**, `Cooper` initializes the components and loads stored user data into the components. 
@@ -84,16 +84,13 @@ The **Architecture Diagram** above shows the high-level design of cOOPer.
 a result.
 - Upon **shutting down the app**, `Cooper` saves any unsaved user data to the hard disk and shuts down the components. 
 
-Apart from `Cooper` the rest of the app consists of these nine components:
-- `Ui`: Handles the reading of user input and printing of messages to the terminal.
-- `Parser`: Interprets and validates user input.
-- `Verification`: Verifies that the user is signing in to the system with the correct credentials.
-- `Command`: Executes commands which are parsed from user input.
-- `Finance`: Handles finance-related data and operations of the app.
-- `Meetings`: Handles data and operations of the app needed for scheduling meetings among users.
-- `Forum`: Handles posts and comments created by users in the forum.
-- `Resources`: Managers all resources such as `FinanceManager`, `MeetingsManager` and `ForumManager` and their related access rights based on user roles.
-- `Storage`: Loads data from, and saves data to storage files in the computer hard disk.
+Apart from `Cooper`, the rest of the app consists of these six components:
+- [`Ui`](#ui-component): Handles the reading of user input and printing of messages to the terminal.
+- [`Parser`](#parser-component): Interprets and validates user input.
+- [`Verification`](#verification-component): Verifies that the user is signing in to the system with the correct credentials.
+- [`Command`](#command-component): Executes commands which are parsed from user input.
+- [`Resources`](#resources-component): Manages cOOPer's resources which store data for cOOPer's finance, meetings and forum features.
+- [`Storage`](#storage-component): Loads data from, and saves data to storage files in the computer hard disk.
 
 #### Interaction of the architecture components to process user input
 1. The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in 
@@ -112,6 +109,20 @@ successfully logging in.
 > `userInput` represents a command input by the user. For example, `meetings`.
 
 ![commandSequenceDiagram](developerGuideImages/commandSequenceDiagram.png)
+
+### Ui Component
+
+### Parser Component
+
+### Verification Component
+
+![verificationClassDiagram](developerGuideImages/verificationClassDiagram.png)
+
+### Command Component
+
+### Resources Component
+
+### Storage Component
 
 ## Implementation
 
