@@ -1,9 +1,5 @@
 package cooper.finance;
 
-import cooper.ui.FinanceUI;
-import cooper.ui.Ui;
-
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
