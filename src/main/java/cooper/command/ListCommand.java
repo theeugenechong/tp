@@ -1,9 +1,6 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
-import cooper.exceptions.ListNotFoundException;
-import cooper.finance.BalanceSheet;
-import cooper.finance.CashFlow;
 
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;

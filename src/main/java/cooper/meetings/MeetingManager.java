@@ -5,7 +5,6 @@ import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.InvalidTimeException;
 import cooper.ui.MeetingsUi;
-import cooper.ui.Ui;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
