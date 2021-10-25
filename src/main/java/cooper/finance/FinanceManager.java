@@ -15,6 +15,12 @@ public class FinanceManager {
     public static int netOA = 0;
     public static int netIA = 0;
     public static int netFA = 0;
+    public static final int endOfAssets = 5;
+    public static final int endOfLiabilities = 9;
+    public static final int endOfSE = 11;
+    public static int netAssets = 0;
+    public static int netLiabilities = 0;
+    public static int netSE = 0;
 
     public FinanceManager() {
         this.cooperBalanceSheet = new BalanceSheet();
@@ -26,15 +32,21 @@ public class FinanceManager {
      * @param amount amount inout by user
      * @param isInflow boolean which specifies if {@code amount} is inflow or outflow
      */
-    public void addBalance(int amount, boolean isInflow) {
+    public void addBalance(int amount, boolean isInflow, int balanceSheetStage) {
         int signedAmount = amount;
         if (isInflow) {
-            cooperBalanceSheet.balanceSheet.add(signedAmount);
             assert amount >= 0 : "entry should be positive";
         } else {
             signedAmount *= -1;
-            cooperBalanceSheet.balanceSheet.add(signedAmount);
             assert amount * -1 < 0 : "entry should be negative";
+        }
+        cooperBalanceSheet.getBalanceSheet().add(signedAmount);
+        if (balanceSheetStage <= endOfAssets) {
+            netAssets += signedAmount;
+        } else if (balanceSheetStage <= endOfLiabilities) {
+            netLiabilities += signedAmount;
+        } else if (balanceSheetStage <= endOfSE) {
+            netSE += signedAmount;
         }
         LOGGER.info("An entry to the balance sheet is created: " + amount);
     }
@@ -57,4 +69,5 @@ public class FinanceManager {
         }
         LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }
+
 }

@@ -1,7 +1,6 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
-
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
@@ -35,16 +34,18 @@ public class ListCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-        if (financeManager == null) {
-            Ui.printEmployeeHelp();
+        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
+            Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
         
-        if (financeFlag == FinanceCommand.BS) {
+        if (financeFlag == FinanceCommand.BS && financeManager.cooperBalanceSheet != null) {
             Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
-        } else if (financeFlag == FinanceCommand.CF) {
+        } else if (financeFlag == FinanceCommand.CF && financeManager.cooperCashFlowStatement != null) {
             Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+        } else {
+            Ui.showListNotFoundException();
         }
     }
 }

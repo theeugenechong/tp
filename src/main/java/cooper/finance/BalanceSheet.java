@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 public class BalanceSheet {
     public ArrayList<Integer> balanceSheet;
-    public ArrayList<String> sheetDescriptions;
+    public static int balanceSheetStage = 0;
 
     public BalanceSheet() {
         this.balanceSheet = new ArrayList<>();
-        this. sheetDescriptions = new ArrayList<>();
     }
 
     public ArrayList<Integer> getBalanceSheet() {
