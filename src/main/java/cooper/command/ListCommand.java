@@ -39,13 +39,16 @@ public class ListCommand extends Command {
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
-        
-        if (financeFlag == FinanceCommand.BS && financeManager.cooperBalanceSheet != null) {
-            Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
-        } else if (financeFlag == FinanceCommand.CF && financeManager.cooperCashFlowStatement != null) {
-            Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
-        } else {
-            Ui.showListNotFoundException();
+
+        boolean areNonEmptyLists = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
+                && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
+
+        if (areNonEmptyLists) {
+            if (financeFlag == FinanceCommand.BS) {
+                Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
+            } else if (financeFlag == FinanceCommand.CF) {
+                Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+            }
         }
     }
 }
