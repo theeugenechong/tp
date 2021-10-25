@@ -1,23 +1,24 @@
-package cooper.finance.pdfbuilder;
+package cooper.finance.pdfgenerator;
 
 import cooper.util.Util;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class PdfBuilder {
+public abstract class PdfGenerator {
 
     protected static final String TEX_LIVE_URL = "https://texlive.net/cgi-bin/latexcgi";
     protected static final String LINE_FEED = "\r\n";
+    protected static final String GENERATED_FILE_DIR = System.getProperty("user.dir") + "/output/";
 
     protected final ArrayList<String> pdfContent;
     protected String template;
@@ -25,7 +26,7 @@ public class PdfBuilder {
     protected String entryTemplate;
     protected String summaryTemplate;
 
-    public PdfBuilder() {
+    public PdfGenerator() {
         pdfContent = new ArrayList<>();
     }
 
@@ -71,25 +72,28 @@ public class PdfBuilder {
     protected void createSummary(String type, Integer total) {
         String sectionSummary = summaryTemplate;
         sectionSummary = sectionSummary.replace("% {Type}", type);
-        sectionSummary = sectionSummary.replace()
+        sectionSummary = sectionSummary.replace("% {Total}", total.toString());
+
+        pdfContent.add(sectionSummary);
     }
 
-    protected String compilePdf() {
+    protected String formTexFile() {
         StringBuilder compiledContent = new StringBuilder();
         for (String content : pdfContent) {
-            compiledContent.append(content).append("\n");
+            compiledContent.append(content).append(System.lineSeparator());
         }
-        return template.replace("% {content}", compiledContent.toString());
+        return template.replace("% {Content}", compiledContent.toString());
     }
 
-
-    private void sendPdf(HttpURLConnection con, String invoiceCompiled) {
-        /*The following code mimic this curl command
-        curl -v -L -X POST -o document.pdf -F return=pdf -F engine=pdflatex
-        -F 'filecontents[]=' -F 'filename[]=document.tex' 'https://texlive.net/cgi-bin/latexcgi'
-        1. there is extra 2 -- at every boundary
-        2. there is extra 2 -- at last boundary
-        **/
+    /**
+     * Sends the tex file formed to be compiled at the URL.
+     * The following code mimic this curl command:
+     * {@code curl -v -L -X POST -o document.pdf -F return=pdf -F engine=pdflatex}
+     * -F 'filecontents[]=' -F 'filename[]=document.tex' 'https://texlive.net/cgi-bin/latexcgi'
+     * 1. there is extra 2 -- at every boundary
+     * 2. there is extra 2 -- at last boundary
+     */
+    protected void sendPdf(HttpURLConnection con, String texFileToCompile) throws IOException {
 
         try {
             con.setRequestMethod("POST");
@@ -99,7 +103,7 @@ public class PdfBuilder {
             // +"Content-Type: multipart/form-data" + lineFeed
             byte[] input = ("----12345678" + LINE_FEED
                     + "Content-Disposition: form-data; name=\"filecontents[]\"" + LINE_FEED + LINE_FEED
-                    + invoiceCompiled + LINE_FEED
+                    + texFileToCompile + LINE_FEED
                     + "----12345678" + LINE_FEED
                     + "Content-Disposition: form-data; name=\"filename[]\"" + LINE_FEED + LINE_FEED
                     + "document.tex" + LINE_FEED
@@ -113,49 +117,46 @@ public class PdfBuilder {
                     + "--").getBytes(StandardCharsets.UTF_8);
             OutputStream connectionOutput = con.getOutputStream();
             connectionOutput.write(input, 0, input.length);
-        } catch (ProtocolException e) {
-            System.out.println("Protocol exception occurred");
-        } catch (UnsupportedEncodingException e) {
-            System.out.println("UnsupportedEncoding exception");
         } catch (IOException e) {
-            System.out.println("Cannot write to http connection output stream");
+            throw new IOException();
         }
     }
 
     //https://www.baeldung.com/httpurlconnection-post
-    public void compileInvoiceAndSend() {
-        String compiledPdf = compilePdf();
+    public abstract void compilePdfAndSend();
 
+    protected void createBackup(String backupFileName) {
         try {
-            URL url = new URL(TEX_LIVE_URL);
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            sendPdf(con, compiledPdf);
-
-            // TODO: This is the perfect place to add logging
-            String reply = con.getResponseMessage();
-            int replyCode = con.getResponseCode();
-            if (replyCode == 200) {
-                // send success
-                byte[] buffer = con.getInputStream().readAllBytes();
-                processPostResponse(buffer);
-            } else {
-                System.out.println("Error encountered when sending post request! Any fallback plan?");
+            File backupFile = new File(GENERATED_FILE_DIR + backupFileName);
+            if (!backupFile.exists()) {
+                Files.createDirectories(Paths.get(GENERATED_FILE_DIR));
+                Files.createFile(Paths.get(GENERATED_FILE_DIR + backupFileName));
             }
-        } catch (MalformedURLException e) {
-            System.out.println("Incorrect url");
+
+            String compiledPdf = formTexFile();
+            FileWriter fileWriter = new FileWriter(GENERATED_FILE_DIR + backupFileName, false);
+            fileWriter.write(compiledPdf);
+            fileWriter.close();
+            System.out.println("The backup file has been created successfully.");
         } catch (IOException e) {
-            System.out.println("Unable to open connection");
+            System.out.println("There was a problem creating the backup file.");
         }
     }
 
     // https://www.baeldung.com/java-download-file
-    private void processPostResponse(byte[] response) {
+    protected void createPdf(byte[] response, String pdfName) {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + "/output.pdf");
+            File generatedPdf = new File(GENERATED_FILE_DIR + pdfName);
+            if (!generatedPdf.exists()) {
+                Files.createDirectories(Paths.get(GENERATED_FILE_DIR));
+                Files.createFile(Paths.get(GENERATED_FILE_DIR + pdfName));
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(GENERATED_FILE_DIR + pdfName);
             fileOutputStream.write(response);
             fileOutputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("There was a problem generating the PDF file.");
         }
     }
 }

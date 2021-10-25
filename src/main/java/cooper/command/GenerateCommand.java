@@ -28,11 +28,17 @@ public class GenerateCommand extends Command {
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
+        boolean areNonEmptyLists = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
+                                   && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
 
-        if (documentToGenerate.equals("bs")) {
-            financeManager.generateBalanceSheetAsPdf();
-        } else if (documentToGenerate.equals("cf")) {
-            int i;
+        if (areNonEmptyLists) {
+            if (documentToGenerate.equals("bs")) {
+                financeManager.generateBalanceSheetAsPdf();
+            } else if (documentToGenerate.equals("cf")) {
+                financeManager.generateCashFlowStatementAsPdf();
+            }
+        } else {
+            Ui.showListNotFoundException();
         }
     }
 }

@@ -1,5 +1,8 @@
 package cooper.finance;
 
+import cooper.finance.pdfgenerator.BalanceSheetGenerator;
+import cooper.finance.pdfgenerator.CashFlowStatementGenerator;
+
 import java.util.logging.Logger;
 
 /**
@@ -22,9 +25,14 @@ public class FinanceManager {
     public static int netLiabilities = 0;
     public static int netSE = 0;
 
+    private final BalanceSheetGenerator balanceSheetGenerator;
+    private final CashFlowStatementGenerator cashFlowStatementGenerator;
+
     public FinanceManager() {
         this.cooperBalanceSheet = new BalanceSheet();
         this.cooperCashFlowStatement = new CashFlow();
+        this.balanceSheetGenerator = new BalanceSheetGenerator();
+        this.cashFlowStatementGenerator = new CashFlowStatementGenerator();
     }
 
     /**
@@ -70,4 +78,19 @@ public class FinanceManager {
         LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }
 
+    public void generateBalanceSheetAsPdf() {
+        balanceSheetGenerator.addAssets(cooperBalanceSheet);
+        balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
+        balanceSheetGenerator.addShareholderEquity(cooperBalanceSheet);
+        balanceSheetGenerator.addBalance();
+        balanceSheetGenerator.compilePdfAndSend();
+    }
+
+    public void generateCashFlowStatementAsPdf() {
+        cashFlowStatementGenerator.addCfFromOperatingActivities(cooperCashFlowStatement);
+        cashFlowStatementGenerator.addCfFromInvestingActivities(cooperCashFlowStatement);
+        cashFlowStatementGenerator.addCfFromFinancingActivities(cooperCashFlowStatement);
+
+        cashFlowStatementGenerator.compilePdfAndSend();
+    }
 }

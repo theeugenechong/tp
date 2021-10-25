@@ -14,6 +14,7 @@ import cooper.command.BsCommand;
 import cooper.command.CfCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
+import cooper.command.GenerateCommand;
 import cooper.command.ListCommand;
 import cooper.command.AvailabilityCommand;
 import cooper.command.LogoutCommand;
@@ -72,17 +73,18 @@ public class CommandParser extends ParserBase {
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
-        case "post":
         case "schedule":
+        case "post":
+        case "generate":
             return parseComplexInput(input);
         default:
             throw new UnrecognisedCommandException();
         }
     }
 
-    private Command parseSimpleInput(String input) throws UnrecognisedCommandException {
-        assert input != null;
-        switch (input) {
+    private Command parseSimpleInput(String commandWord) throws UnrecognisedCommandException {
+        assert commandWord != null;
+        switch (commandWord) {
         case "list":
             return new ListCommand(financeFlag);
         case "help":
@@ -117,12 +119,12 @@ public class CommandParser extends ParserBase {
             // String template = res.allCommands().get(0).template();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
+            case "add":
+                return parseAddArgs(commandArgs);
             case "available":
                 return parseAvailableArgs(commandArgs);
             case "schedule":
                 return parseScheduleArgs(commandArgs);
-            case "add":
-                return parseAddArgs(commandArgs);
             case "postAdd":
                 return parsePostAddArgs(commandArgs);
             case "postDelete":
@@ -131,6 +133,8 @@ public class CommandParser extends ParserBase {
                 return parsePostCommentArgs(commandArgs);
             case "postList":
                 return parsePostListArgs(commandArgs);
+            case "generate":
+                return parseGenerateArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -316,5 +320,30 @@ public class CommandParser extends ParserBase {
             }
         }
         return new PostListCommand(postId);
+    }
+
+    private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            InvalidCommandFormatException {
+        String documentToGenerate = null;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "document-hint":
+                if (isValidDocToGenerate(argVal)) {
+                    documentToGenerate = argVal.trim().toLowerCase();
+                } else {
+                    throw new InvalidCommandFormatException();
+                }
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new GenerateCommand(documentToGenerate);
+    }
+
+    private boolean isValidDocToGenerate(String doc) {
+        return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
     }
 }
