@@ -1,9 +1,5 @@
 package cooper.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,7 +7,6 @@ import java.util.Optional;
 
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
-import com.dopsun.chatbot.cli.Parser;
 
 import cooper.command.AddCommand;
 import cooper.command.AvailableCommand;
@@ -31,8 +26,6 @@ import cooper.command.PostDeleteCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.ui.Ui;
-import cooper.util.Util;
 import cooper.finance.FinanceCommand;
 
 
@@ -40,7 +33,6 @@ import cooper.finance.FinanceCommand;
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
-    private Parser parser;
     public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
     /**
@@ -48,24 +40,6 @@ public class CommandParser extends ParserBase {
      */
     private CommandParser()  {
         super();
-
-        try {
-            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
-
-            File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
-
-            InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
-            File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_training.txt");
-
-            parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
-
-        } catch (IOException | URISyntaxException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
-        }
     }
 
     /**
