@@ -1,7 +1,6 @@
 package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
-import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
 import cooper.ui.Ui;
@@ -35,15 +34,28 @@ public class CashFlowStorage extends Storage {
 
     private static void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
         if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
+            int cfEntryIndex = 0;
+            while (fileScanner.hasNext() && cfEntryIndex <= FinanceManager.endOfFA) {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
                     cashFlowStatement.add(decodedExpense);
+                    addNetValues(cfEntryIndex, decodedExpense);
+                    cfEntryIndex++;
                 } catch (InvalidFileDataException e) {
                     Ui.showInvalidFileDataError();
                 }
             }
+        }
+    }
+
+    private static void addNetValues(int cfEntryIndex, int decodedExpense) {
+        if (cfEntryIndex <= FinanceManager.endOfOA) {
+            FinanceManager.netOA += decodedExpense;
+        } else if (cfEntryIndex <= FinanceManager.endOfIA) {
+            FinanceManager.netIA += decodedExpense;
+        } else {
+            FinanceManager.netFA += decodedExpense;
         }
     }
 
