@@ -13,5 +13,6 @@ public abstract class Command {
      * Executes the command specified.
      */
     public abstract void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                                 StorageManager storageManager) throws InvalidAccessException, LogoutException, EmptyFinancialStatementException;
+                                 StorageManager storageManager) throws InvalidAccessException, LogoutException,
+                                 EmptyFinancialStatementException;
 }
