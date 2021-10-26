@@ -34,15 +34,28 @@ public class BalanceSheetStorage extends Storage {
 
     private static void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
         if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
+            int bsEntryIndex = 0;
+            while (fileScanner.hasNext() && bsEntryIndex <= FinanceManager.endOfSE) {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
                     balanceSheet.add(decodedExpense);
+                    addNetValues(bsEntryIndex, decodedExpense);
+                    bsEntryIndex++;
                 } catch (InvalidFileDataException e) {
                     Ui.showInvalidFileDataError();
                 }
             }
+        }
+    }
+
+    private static void addNetValues(int bsEntryIndex, int decodedExpense) {
+        if (bsEntryIndex <= FinanceManager.endOfAssets) {
+            FinanceManager.netAssets += decodedExpense;
+        } else if (bsEntryIndex <= FinanceManager.endOfLiabilities) {
+            FinanceManager.netLiabilities += decodedExpense;
+        } else {
+            FinanceManager.netSE += decodedExpense;
         }
     }
 

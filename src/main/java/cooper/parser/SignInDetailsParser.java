@@ -2,23 +2,15 @@ package cooper.parser;
 
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
-import com.dopsun.chatbot.cli.Parser;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.ui.Ui;
-import cooper.util.Util;
 import cooper.verification.Login;
 import cooper.verification.PasswordHasher;
 import cooper.verification.Registration;
 import cooper.verification.SignInDetails;
 import cooper.verification.SignInProtocol;
 import cooper.verification.UserRole;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -27,31 +19,12 @@ import java.util.Optional;
 public class SignInDetailsParser extends  ParserBase {
 
     private static SignInDetailsParser signInDetailsParserImpl = null;
-    private Parser parser;
 
     /**
      * Constructor. Initialise internal parser.
      */
     private SignInDetailsParser()  {
         super();
-
-        try {
-            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
-
-            File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
-
-            InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
-            File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_training.txt");
-
-            parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
-
-        } catch (IOException | URISyntaxException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
-        }
     }
 
     /**

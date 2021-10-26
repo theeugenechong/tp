@@ -35,13 +35,13 @@ public class Verifier {
     }
 
     /**
-     * Verifies that the sign in details provided by the user is valid. A user must log in with the same
-     * role with which he was registered with. Prints error messages for the user if the sign in details provided are
-     * of the wrong format or are lacking arguments. A message will also be printed if the user tries to log in
-     * with the wrong role.
+     * Verifies that the sign in details provided by the user is valid. A user must log in with the same username,
+     * password and role with which they were registered with. Prints error messages for the user if the sign in details
+     * provided are of the wrong format or are lacking arguments. A message will also be printed if the user tries to
+     * log in with the wrong credentials.
      *
      * @param input A string representing the sign in details input by the user
-     * @return a {@code SignInDetails} object representing the sign in details of {@code input} if it
+     * @return A {@code SignInDetails} object representing the sign in details of {@code input} if it
      *         was successfully parsed. Returns {@code null} if parsing was unsuccessful.
      */
     public SignInDetails verify(String input) {

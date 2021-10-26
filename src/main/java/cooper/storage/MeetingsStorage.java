@@ -70,7 +70,7 @@ public class MeetingsStorage extends Storage {
     }
 
     private static boolean isInvalidFileData(String[] meeting) {
-        if (meeting.length != 2) {
+        if (meeting.length != 3) {
             return true;
         }
 

@@ -1,9 +1,5 @@
 package cooper.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,7 +7,6 @@ import java.util.Optional;
 
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
-import com.dopsun.chatbot.cli.Parser;
 
 import cooper.command.AddCommand;
 import cooper.command.AvailableCommand;
@@ -19,6 +14,7 @@ import cooper.command.BsCommand;
 import cooper.command.CfCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
+import cooper.command.GenerateCommand;
 import cooper.command.ListCommand;
 import cooper.command.AvailabilityCommand;
 import cooper.command.LogoutCommand;
@@ -31,8 +27,6 @@ import cooper.command.PostDeleteCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.ui.Ui;
-import cooper.util.Util;
 import cooper.finance.FinanceCommand;
 
 
@@ -40,7 +34,6 @@ import cooper.finance.FinanceCommand;
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
-    private Parser parser;
     public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
     /**
@@ -48,24 +41,6 @@ public class CommandParser extends ParserBase {
      */
     private CommandParser()  {
         super();
-
-        try {
-            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
-
-            File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
-
-            InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
-            File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_training.txt");
-
-            parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
-
-        } catch (IOException | URISyntaxException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
-        }
     }
 
     /**
@@ -98,17 +73,18 @@ public class CommandParser extends ParserBase {
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
-        case "post":
         case "schedule":
+        case "post":
+        case "generate":
             return parseComplexInput(input);
         default:
             throw new UnrecognisedCommandException();
         }
     }
 
-    private Command parseSimpleInput(String input) throws UnrecognisedCommandException {
-        assert input != null;
-        switch (input) {
+    private Command parseSimpleInput(String commandWord) throws UnrecognisedCommandException {
+        assert commandWord != null;
+        switch (commandWord) {
         case "list":
             return new ListCommand(financeFlag);
         case "help":
@@ -143,12 +119,12 @@ public class CommandParser extends ParserBase {
             // String template = res.allCommands().get(0).template();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
+            case "add":
+                return parseAddArgs(commandArgs);
             case "available":
                 return parseAvailableArgs(commandArgs);
             case "schedule":
                 return parseScheduleArgs(commandArgs);
-            case "add":
-                return parseAddArgs(commandArgs);
             case "postAdd":
                 return parsePostAddArgs(commandArgs);
             case "postDelete":
@@ -157,6 +133,8 @@ public class CommandParser extends ParserBase {
                 return parsePostCommentArgs(commandArgs);
             case "postList":
                 return parsePostListArgs(commandArgs);
+            case "generate":
+                return parseGenerateArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -342,5 +320,30 @@ public class CommandParser extends ParserBase {
             }
         }
         return new PostListCommand(postId);
+    }
+
+    private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            InvalidCommandFormatException {
+        String documentToGenerate = null;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "document-hint":
+                if (isValidDocToGenerate(argVal)) {
+                    documentToGenerate = argVal.trim().toLowerCase();
+                } else {
+                    throw new InvalidCommandFormatException();
+                }
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new GenerateCommand(documentToGenerate);
+    }
+
+    private boolean isValidDocToGenerate(String doc) {
+        return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
     }
 }

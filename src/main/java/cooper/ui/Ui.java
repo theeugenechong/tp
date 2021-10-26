@@ -274,13 +274,17 @@ public class Ui {
     }
 
     public static void initiateCashFlowStatement() {
+        show(LINE);
         show(FinanceUI.initiateCashFlow);
         show(FinanceUI.firstEntryCashFlow);
+        show(LINE);
     }
 
     public static void initiateBalanceSheet() {
+        show(LINE);
         show(FinanceUI.initiateBalanceSheet);
         show(FinanceUI.firstEntryBalanceSheet);
+        show(LINE);
     }
 
     public static void printCashFlowStatement(ArrayList<Integer> cashFlowStatement) {
@@ -317,6 +321,18 @@ public class Ui {
 
     public static void printBalanceSheetComplete() {
         show(FinanceUI.balanceSheetComplete);
+    }
+
+    public static void showCannotAddToBalanceSheet() {
+        show(LINE);
+        show("The Balance Sheet has been completed! You can no longer add anything.");
+        show(LINE);
+    }
+
+    public static void showCannotAddToCashFlow() {
+        show(LINE);
+        show("The Cash Flow Statement has been completed! You can no longer add anything.");
+        show(LINE);
     }
 
     public static void printAddBalanceCommand(int amount, boolean isInflow, int balanceSheetStage) {
@@ -370,6 +386,37 @@ public class Ui {
         if (cashFlowStage == 8) {
             printCashFlowComplete();
         }
+        show(LINE);
+    }
+
+    public static void showPdfSuccessfullyGenerated() {
+        show(LINE);
+        show("The pdf file has been successfully generated!");
+        show(LINE);
+    }
+
+    public static void showBackupFileSuccessfullyCreated() {
+        show(LINE);
+        show("The backup file has been successfully created!");
+        show(LINE);
+    }
+
+    public static void showPostRequestError() {
+        show(LINE);
+        show("Error encountered when sending post request!");
+        show(LINE);
+    }
+
+    public static void showConnectionError() {
+        show(LINE);
+        show("There was a problem with your connection.");
+        show("Creating backup file now...");
+        show(LINE);
+    }
+
+    public static void showMalformedUrlError() {
+        show(LINE);
+        show("The URL provided for LaTex compilation is incorrect!");
         show(LINE);
     }
 
