@@ -43,7 +43,7 @@ public class AvailabilityStorage extends Storage {
                 try {
                     decodeAvailability(availabilityRow, availability);
                 } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
@@ -54,7 +54,7 @@ public class AvailabilityStorage extends Storage {
             throws InvalidFileDataException {
         String[] availabilityRowAsArray = availabilityRowAsString.split("\\|");
         if (isInvalidFileData(availabilityRowAsArray)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("availability.txt");
         }
         assert !isInvalidFileData(availabilityRowAsArray);
 

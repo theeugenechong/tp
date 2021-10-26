@@ -1,5 +1,7 @@
 package cooper.ui;
 
+import cooper.exceptions.InvalidFileDataException;
+
 import java.io.IOException;
 
 public class FileIoUi extends Ui {
@@ -21,9 +23,10 @@ public class FileIoUi extends Ui {
         show(LINE);
     }
 
-    public static void showInvalidFileDataError() {
+    public static void showInvalidFileDataError(InvalidFileDataException e) {
         show(LINE);
-        show("Invalid file data in storage files!");
+        show("Invalid file data in storage file: ", false);
+        show (e.getMessage(), true);
         show(LINE);
     }
 

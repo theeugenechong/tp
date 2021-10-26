@@ -42,7 +42,7 @@ public class CashFlowStorage extends Storage {
                     addNetValues(cfEntryIndex, decodedExpense);
                     cfEntryIndex++;
                 } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
@@ -60,7 +60,7 @@ public class CashFlowStorage extends Storage {
 
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("cashFlowStatement.txt");
         }
         return Integer.parseInt(expense);
     }
