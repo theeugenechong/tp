@@ -39,7 +39,7 @@ public class BalanceSheetStorage extends Storage {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
-                    balanceSheet.add(decodedExpense);
+                    balanceSheet.set(bsEntryIndex, decodedExpense);
                     addNetValues(bsEntryIndex, decodedExpense);
                     bsEntryIndex++;
                 } catch (InvalidFileDataException e) {

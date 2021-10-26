@@ -39,7 +39,7 @@ public class CashFlowStorage extends Storage {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
-                    cashFlowStatement.add(decodedExpense);
+                    cashFlowStatement.set(cfEntryIndex, decodedExpense);
                     addNetValues(cfEntryIndex, decodedExpense);
                     cfEntryIndex++;
                 } catch (InvalidFileDataException e) {
