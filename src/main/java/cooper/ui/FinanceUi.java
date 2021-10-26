@@ -22,7 +22,7 @@ public class FinanceUi extends Ui {
 
     private static final String ADD_SUCCESS = "Success!";
     private static final String NEXT_PLEASE_ENTER = "Next, please enter ";
-    protected static final String CANT_ADD_TO_BS = "The Balance Sheet is complete! You can no longer add anything.";
+    private static final String CANT_ADD_TO_BS = "The Balance Sheet is complete! You can no longer add anything.";
     private static final String CANT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";

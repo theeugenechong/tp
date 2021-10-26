@@ -65,9 +65,5 @@ public abstract class ParserBase {
         parserBuilder.addCommandSet(commandSet);
         parserBuilder.addTrainingSet(trainingSet);
         return parserBuilder.build();
-
     }
-
-
-
 }
