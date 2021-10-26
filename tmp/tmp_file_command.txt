@@ -24,3 +24,6 @@ postList = post list ${list-hint}
 
 # schedule
 schedule = schedule ${meeting-hint} with ${usernames-hint}
+
+# generate pdf
+generate = generate ${document-hint}

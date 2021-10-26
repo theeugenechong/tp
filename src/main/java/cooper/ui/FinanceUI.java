@@ -13,7 +13,7 @@ public class FinanceUI {
     public static final String initiateCashFlow = "You are now using the Cash Flow function.";
     public static final String firstEntryCashFlow = "Please enter Net Income:";
     public static final String statementOpening = "This is the company's current Cash Flow Statement:";
-    public static final String cashFlowComplete = "The Cash Flow Statement has been completed! enter 'list' to view.";
+    public static final String cashFlowComplete = "The Cash Flow Statement has been completed! Enter 'list' to view.";
     public static final String[] cashFlowUI = new String[] {
         "Net Income  ",
         "Depreciation and Amortisation  ",
@@ -27,11 +27,11 @@ public class FinanceUI {
     };
 
     public static final String[] balanceSheetUI = new String[] {
-        "Cash & Cash Equivalents  ",
+        "Cash and Cash Equivalents  ",
         "Accounts Receivable  ",
         "Prepaid Expenses  ",
         "Inventory  ",
-        "Property & Equipment  ",
+        "Property and Equipment  ",
         "Goodwill  ",
         "Accounts Payable  ",
         "Accrued Expenses  ",
