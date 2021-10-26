@@ -4,7 +4,6 @@ import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
 import cooper.ui.FileIoUi;
 import cooper.ui.FinanceUi;
-import cooper.ui.Ui;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -38,7 +37,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(ASSETS);
         for (int i = 0; i <= FinanceManager.endOfAssets; i++) {
-            createEntry(FinanceUi.balanceSheetUI[i].trim(), bs.get(i));
+            createEntry(FinanceUi.BALANCE_SHEET_UI[i].trim(), bs.get(i));
         }
         createSummary(ASSETS, FinanceManager.netAssets);
     }
@@ -47,7 +46,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(LIABILITIES);
         for (int i = 6; i <= FinanceManager.endOfLiabilities; i++) {
-            createEntry(FinanceUi.balanceSheetUI[i].trim(), bs.get(i));
+            createEntry(FinanceUi.BALANCE_SHEET_UI[i].trim(), bs.get(i));
         }
         createSummary(LIABILITIES, FinanceManager.netLiabilities);
     }
@@ -56,7 +55,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(SHAREHOLDERS_EQUITY);
         for (int i = 10; i <= FinanceManager.endOfSE; i++) {
-            createEntry(FinanceUi.balanceSheetUI[i].trim(), bs.get(i));
+            createEntry(FinanceUi.BALANCE_SHEET_UI[i].trim(), bs.get(i));
         }
         createSummary(SHAREHOLDERS_EQUITY, FinanceManager.netSE);
     }

@@ -4,7 +4,6 @@ import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
 import cooper.ui.FileIoUi;
 import cooper.ui.FinanceUi;
-import cooper.ui.Ui;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -38,7 +37,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(OPERATING_ACTIVITIES);
         for (int i = 0; i <= FinanceManager.endOfOA; i++) {
-            createEntry(FinanceUi.cashFlowUI[i].trim(), cf.get(i));
+            createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(OPERATING_ACTIVITIES, FinanceManager.netOA);
     }
@@ -47,7 +46,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(INVESTING_ACTIVITIES);
         for (int i = 5; i <= FinanceManager.endOfIA; i++) {
-            createEntry(FinanceUi.cashFlowUI[i].trim(), cf.get(i));
+            createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(INVESTING_ACTIVITIES, FinanceManager.netIA);
     }
@@ -56,7 +55,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(FINANCING_ACTIVITIES);
         for (int i = 7; i <= FinanceManager.endOfFA; i++) {
-            createEntry(FinanceUi.cashFlowUI[i].trim(), cf.get(i));
+            createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(FINANCING_ACTIVITIES, FinanceManager.netFA);
     }

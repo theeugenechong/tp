@@ -3,9 +3,7 @@ package cooper.resources;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.forum.ForumManager;
-import cooper.storage.StorageManager;
 import cooper.verification.UserRole;
-import cooper.verification.Verifier;
 
 public class ResourcesManager {
 

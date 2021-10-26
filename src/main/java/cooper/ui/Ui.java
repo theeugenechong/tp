@@ -60,7 +60,7 @@ public class Ui {
 
     public static void showBye() {
         show(LINE);
-        show("Bye, see you next time! :D");
+        show("Bye, see you next time!");
         show(LINE);
     }
 
