@@ -26,7 +26,7 @@ public class FileIoUi extends Ui {
     public static void showInvalidFileDataError(InvalidFileDataException e) {
         show(LINE);
         show("Invalid file data in storage file: ", false);
-        show (e.getMessage(), true);
+        show(e.getMessage(), true);
         show(LINE);
     }
 
