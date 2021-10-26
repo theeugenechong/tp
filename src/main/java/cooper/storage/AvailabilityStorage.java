@@ -88,9 +88,9 @@ public class AvailabilityStorage extends Storage {
         return false;
     }
 
-    private static void writeAvailability(Path filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
+    private static void writeAvailability(String filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
             throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Map.Entry<LocalTime, ArrayList<String>> e : meetings.entrySet()) {
             String encodeAvailability = encodeAvailability(e);

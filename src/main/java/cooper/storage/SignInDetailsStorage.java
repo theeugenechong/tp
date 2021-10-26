@@ -80,9 +80,9 @@ public class SignInDetailsStorage extends Storage {
         return false;
     }
 
-    private static void writeSignInDetails(Path filePath, HashMap<String, SignInDetails> registeredUsers)
+    private static void writeSignInDetails(String filePath, HashMap<String, SignInDetails> registeredUsers)
             throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Map.Entry<String, SignInDetails> e : registeredUsers.entrySet()) {
             String encodedSignInDetails = encodeSignInDetails(e);

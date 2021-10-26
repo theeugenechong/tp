@@ -75,8 +75,8 @@ public class BalanceSheetStorage extends Storage {
         return false;
     }
 
-    private static void writeBalanceSheet(Path filePath, ArrayList<Integer> balanceSheet) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+    private static void writeBalanceSheet(String filePath, ArrayList<Integer> balanceSheet) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : balanceSheet) {
             String encodedExpense = encodeExpense(expense);

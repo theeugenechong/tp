@@ -89,12 +89,12 @@ public class MeetingsStorage extends Storage {
         return false;
     }
 
-    private static void writeMeetings(Path filePath, ArrayList<Meeting> meetingsList)
+    private static void writeMeetings(String filePath, ArrayList<Meeting> meetingsList)
             throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
-        for (int i = 0; i < meetingsList.size(); i++) {
-            String encodedMeeting = encodeMeeting(meetingsList.get(i));
+        for (Meeting meeting : meetingsList) {
+            String encodedMeeting = encodeMeeting(meeting);
             fileWriter.write(encodedMeeting + System.lineSeparator());
         }
         fileWriter.close();

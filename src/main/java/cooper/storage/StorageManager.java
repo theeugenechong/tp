@@ -8,7 +8,7 @@ import cooper.verification.Verifier;
 
 public class StorageManager {
 
-    private static final String BASE_DIRECTORY = System.getProperty("user.dir") + "/tmp";
+    private static final String BASE_DIRECTORY = "cooperData";
     private final SignInDetailsStorage signInDetailsStorage;
     private final BalanceSheetStorage balanceSheetStorage;
     private final CashFlowStorage cashFlowStorage;

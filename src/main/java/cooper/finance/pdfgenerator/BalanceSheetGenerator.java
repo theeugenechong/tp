@@ -22,8 +22,8 @@ public class BalanceSheetGenerator extends PdfGenerator {
     private static final String LIABILITIES = "Liabilities";
     private static final String SHAREHOLDERS_EQUITY = "Shareholder's Equity";
 
-    private static final String BS_PDF_FILE = "BalanceSheet.pdf";
-    private static final String BS_BACKUP_FILE = "backupBs.txt";
+    private static final String BS_PDF_FILE = "/BalanceSheet.pdf";
+    private static final String BS_BACKUP_FILE = "/backupBs.txt";
 
     public BalanceSheetGenerator() {
         super();

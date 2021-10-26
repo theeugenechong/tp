@@ -22,8 +22,8 @@ public class CashFlowStatementGenerator extends PdfGenerator {
     private static final String INVESTING_ACTIVITIES = "Investing Activities";
     private static final String FINANCING_ACTIVITIES = "Financing Activities";
 
-    private static final String CF_PDF_FILE = "CashFlowStatement.pdf";
-    private static final String CF_BACKUP_FILE = "backupCf.txt";
+    private static final String CF_PDF_FILE = "/CashFlowStatement.pdf";
+    private static final String CF_BACKUP_FILE = "/backupCf.txt";
 
     public CashFlowStatementGenerator() {
         super();

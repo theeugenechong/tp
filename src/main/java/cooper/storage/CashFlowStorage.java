@@ -75,8 +75,8 @@ public class CashFlowStorage extends Storage {
         return false;
     }
 
-    private static void writeCashFlowStatement(Path filePath, ArrayList<Integer> cashFlowStatement) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+    private static void writeCashFlowStatement(String filePath, ArrayList<Integer> cashFlowStatement) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : cashFlowStatement) {
             String encodedExpense = encodeExpense(expense);
