@@ -48,6 +48,8 @@ public class VerificationUi extends Ui {
     }
 
     public static void printNoAccessError() {
+        show(LINE);
         show("You do not have access to this command.");
+        show(LINE);
     }
 }

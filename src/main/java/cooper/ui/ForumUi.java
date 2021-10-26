@@ -20,6 +20,7 @@ public class ForumUi extends Ui {
             }
             cntPost++;
         }
+
         show(TABLE_BOT);
         show(LINE);
     }
@@ -69,10 +70,14 @@ public class ForumUi extends Ui {
     }
 
     public static void printInvalidForumPostIndexError() {
+        show(LINE);
         show("The forum index you just keyed in is outside the valid range.");
+        show(LINE);
     }
 
     public static void printInvalidForumDeleteByNonOwnerError() {
+        show(LINE);
         show("You cannot delete a forum post that is not owned by you!.");
+        show(LINE);
     }
 }
