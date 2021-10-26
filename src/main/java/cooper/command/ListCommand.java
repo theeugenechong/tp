@@ -1,7 +1,9 @@
 package cooper.command;
 
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.finance.FinanceCommand;
@@ -31,24 +33,32 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws InvalidAccessException {
+                        StorageManager storageManager) throws InvalidAccessException, EmptyFinancialStatementException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
+        if (financeManager == null) {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
 
-        boolean areNonEmptyLists = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
-                && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
+        if (financeFlag == FinanceCommand.IDLE) {
+            FinanceUi.showPleaseSpecifyFinancialStatement();
+        }
 
-        if (areNonEmptyLists) {
-            if (financeFlag == FinanceCommand.BS) {
-                Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
-            } else if (financeFlag == FinanceCommand.CF) {
-                Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+        boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());
+        boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+
+        if (financeFlag == FinanceCommand.BS) {
+            if (isEmptyBs) {
+                throw new EmptyFinancialStatementException();
             }
+            FinanceUi.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
+        } else if (financeFlag == FinanceCommand.CF) {
+            if (isEmptyCf) {
+                throw new EmptyFinancialStatementException();
+            }
+            FinanceUi.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
         }
     }
 }

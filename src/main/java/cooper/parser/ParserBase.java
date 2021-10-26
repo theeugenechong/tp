@@ -16,7 +16,7 @@ import com.dopsun.chatbot.cli.input.TrainingSet;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.ui.Ui;
+import cooper.ui.ParserUi;
 import cooper.util.Util;
 
 public abstract class ParserBase {
@@ -40,9 +40,7 @@ public abstract class ParserBase {
             parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
 
         } catch (IOException | URISyntaxException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
+            ParserUi.showTmpFileCreationError();
         }
     }
 
@@ -66,11 +64,6 @@ public abstract class ParserBase {
         ParserBuilder parserBuilder = Parser.newBuilder();
         parserBuilder.addCommandSet(commandSet);
         parserBuilder.addTrainingSet(trainingSet);
-        // parserBuilder.setTracer(System.out::println);
         return parserBuilder.build();
-
     }
-
-
-
 }

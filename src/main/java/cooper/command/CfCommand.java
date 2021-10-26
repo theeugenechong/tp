@@ -7,6 +7,7 @@ import cooper.finance.FinanceManager;
 import cooper.parser.CommandParser;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -29,12 +30,10 @@ public class CfCommand extends Command {
             throw new InvalidAccessException();
         }
         resetCashFlowStatement(financeManager);
-        Ui.initiateCashFlowStatement();
+        FinanceUi.initiateCashFlowStatement();
     }
 
     private void resetCashFlowStatement(FinanceManager financeManager) {
-        CashFlow cashFlow = financeManager.cooperCashFlowStatement;
         CashFlow.cashFlowStage = 0;
-        cashFlow.getCashFlowStatement().clear();
     }
 }

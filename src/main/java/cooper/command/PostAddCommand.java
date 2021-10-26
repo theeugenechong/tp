@@ -2,6 +2,7 @@ package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
 import cooper.storage.StorageManager;
+import cooper.ui.ForumUi;
 import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
@@ -36,7 +37,7 @@ public class PostAddCommand extends Command {
         if (forumManager != null) {
             String username = signInDetails.getUsername();
             forumManager.addPost(username, content);
-            Ui.printNewPostCommand(username, content);
+            ForumUi.printNewPostCommand(username, content);
         } else {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();

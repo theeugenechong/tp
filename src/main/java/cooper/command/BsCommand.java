@@ -6,6 +6,8 @@ import cooper.finance.FinanceCommand;
 import cooper.finance.FinanceManager;
 import cooper.parser.CommandParser;
 import cooper.resources.ResourcesManager;
+import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -28,12 +30,10 @@ public class BsCommand extends Command {
             throw new InvalidAccessException();
         }
         resetBalanceSheet(financeManager);
-        Ui.initiateBalanceSheet();
+        FinanceUi.initiateBalanceSheet();
     }
 
     private void resetBalanceSheet(FinanceManager financeManager) {
-        BalanceSheet balanceSheet = financeManager.cooperBalanceSheet;
         BalanceSheet.balanceSheetStage = 0;
-        balanceSheet.getBalanceSheet().clear();
     }
 }

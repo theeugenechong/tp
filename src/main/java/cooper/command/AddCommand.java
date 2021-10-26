@@ -4,6 +4,7 @@ import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
@@ -42,29 +43,31 @@ public class AddCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
-        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
+        if (financeManager == null) {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
+        }
+
+        if (financeFlag == FinanceCommand.IDLE) {
+            FinanceUi.showPleaseSpecifyFinancialStatement();
         }
       
         if (financeFlag == FinanceCommand.BS) {
             if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfSE) {
                 financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
-                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
-                Ui.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
+                FinanceUi.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
                 BalanceSheet.balanceSheetStage++;
             } else {
-                Ui.showCannotAddToBalanceSheet();
+                FinanceUi.showCannotAddToBalanceSheet();
             }
         } else if (financeFlag == FinanceCommand.CF) {
             if (CashFlow.cashFlowStage <= FinanceManager.endOfFA) {
                 financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
-                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
-                Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
+                FinanceUi.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
                 CashFlow.cashFlowStage++;
             } else {
-                Ui.showCannotAddToCashFlow();
+                FinanceUi.showCannotAddToCashFlow();
             }
         }
     }

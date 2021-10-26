@@ -48,7 +48,8 @@ public class FinanceManager {
             signedAmount *= -1;
             assert amount * -1 < 0 : "entry should be negative";
         }
-        cooperBalanceSheet.getBalanceSheet().add(signedAmount);
+
+        cooperBalanceSheet.getBalanceSheet().set(balanceSheetStage, signedAmount);
         if (balanceSheetStage <= endOfAssets) {
             netAssets += signedAmount;
         } else if (balanceSheetStage <= endOfLiabilities) {
@@ -56,6 +57,7 @@ public class FinanceManager {
         } else if (balanceSheetStage <= endOfSE) {
             netSE += signedAmount;
         }
+
         LOGGER.info("An entry to the balance sheet is created: " + amount);
     }
 
@@ -67,7 +69,7 @@ public class FinanceManager {
             signedAmount *= -1;
             assert amount * -1 < 0 : "entry should be negative";
         }
-        cooperCashFlowStatement.getCashFlowStatement().add(signedAmount);
+        cooperCashFlowStatement.getCashFlowStatement().set(cashFlowStage, signedAmount);
         if (cashFlowStage <= endOfOA) {
             netOA += signedAmount;
         } else if (cashFlowStage <= endOfIA) {

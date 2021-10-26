@@ -1,5 +1,6 @@
 package cooper.command;
 
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.FinanceManager;
 import cooper.resources.ResourcesManager;
@@ -7,7 +8,6 @@ import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
-
 
 public class GenerateCommand extends Command {
 
@@ -19,7 +19,7 @@ public class GenerateCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
-            throws InvalidAccessException {
+            throws InvalidAccessException, EmptyFinancialStatementException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
@@ -28,17 +28,20 @@ public class GenerateCommand extends Command {
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
-        boolean areNonEmptyLists = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
-                                   && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
 
-        if (areNonEmptyLists) {
-            if (documentToGenerate.equals("bs")) {
-                financeManager.generateBalanceSheetAsPdf();
-            } else if (documentToGenerate.equals("cf")) {
-                financeManager.generateCashFlowStatementAsPdf();
+        boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());
+        boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+
+        if (documentToGenerate.equals("bs")) {
+            if (isEmptyBs) {
+                throw new EmptyFinancialStatementException();
             }
-        } else {
-            Ui.showListNotFoundException();
+            financeManager.generateBalanceSheetAsPdf();
+        } else if (documentToGenerate.equals("cf")) {
+            if (isEmptyCf) {
+                throw new EmptyFinancialStatementException();
+            }
+            financeManager.generateCashFlowStatementAsPdf();
         }
     }
 }

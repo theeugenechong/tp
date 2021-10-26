@@ -1,6 +1,6 @@
 package cooper.finance.pdfgenerator;
 
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 import cooper.util.Util;
 
 import java.io.File;
@@ -11,15 +11,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public abstract class PdfGenerator {
 
     protected static final String TEX_LIVE_URL = "https://texlive.net/cgi-bin/latexcgi";
     protected static final String LINE_FEED = "\r\n";
-    protected static final String GENERATED_FILE_DIR = System.getProperty("user.dir") + "/output/";
+    protected static final String GENERATED_FILE_DIR = "output";
 
     protected final ArrayList<String> pdfContent;
     protected String template;
@@ -126,38 +124,42 @@ public abstract class PdfGenerator {
     //https://www.baeldung.com/httpurlconnection-post
     public abstract void compilePdfAndSend();
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     protected void createBackup(String texFileToCompile, String backupFileName) {
         try {
             File backupFile = new File(GENERATED_FILE_DIR + backupFileName);
             if (!backupFile.exists()) {
-                Files.createDirectories(Paths.get(GENERATED_FILE_DIR));
-                Files.createFile(Paths.get(GENERATED_FILE_DIR + backupFileName));
+                File pdfDir = new File(GENERATED_FILE_DIR);
+                pdfDir.mkdir();
+                backupFile.createNewFile();
             }
 
             FileWriter fileWriter = new FileWriter(GENERATED_FILE_DIR + backupFileName, false);
             fileWriter.write(texFileToCompile);
             fileWriter.close();
-            Ui.showBackupFileSuccessfullyCreated();
+            FileIoUi.showBackupFileSuccessfullyCreated();
         } catch (IOException e) {
-            Ui.showFileCreationError(e);
+            FileIoUi.showFileCreationError(e);
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     // https://www.baeldung.com/java-download-file
     protected void createPdf(byte[] response, String pdfName) {
         try {
             File generatedPdf = new File(GENERATED_FILE_DIR + pdfName);
             if (!generatedPdf.exists()) {
-                Files.createDirectories(Paths.get(GENERATED_FILE_DIR));
-                Files.createFile(Paths.get(GENERATED_FILE_DIR + pdfName));
+                File pdfDir = new File(GENERATED_FILE_DIR);
+                pdfDir.mkdir();
+                generatedPdf.createNewFile();
             }
 
             FileOutputStream fileOutputStream = new FileOutputStream(GENERATED_FILE_DIR + pdfName);
             fileOutputStream.write(response);
             fileOutputStream.close();
-            Ui.showPdfSuccessfullyGenerated();
+            FileIoUi.showPdfSuccessfullyGenerated();
         } catch (IOException e) {
-            Ui.showFileCreationError(e);
+            FileIoUi.showFileCreationError(e);
         }
     }
 }

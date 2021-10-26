@@ -3,6 +3,7 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.storage.StorageManager;
+import cooper.ui.ForumUi;
 import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
@@ -40,9 +41,9 @@ public class PostCommentCommand extends Command {
             try {
                 String username = signInDetails.getUsername();
                 String postContent = forumManager.commentPost(username, content, postId - 1);
-                Ui.printCommentPostCommand(username, postContent, content);
+                ForumUi.printCommentPostCommand(username, postContent, content);
             } catch (InvalidForumPostIdException e) {
-                Ui.printInvalidForumPostIndexError();
+                ForumUi.printInvalidForumPostIndexError();
             }
         } else {
             Ui.printEmployeeHelp();

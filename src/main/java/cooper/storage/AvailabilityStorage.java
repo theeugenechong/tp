@@ -2,11 +2,10 @@ package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
 import cooper.meetings.MeetingManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -32,7 +31,7 @@ public class AvailabilityStorage extends Storage {
         try {
             writeAvailability(filePath, cooperMeetingManager.getAvailability());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -44,7 +43,7 @@ public class AvailabilityStorage extends Storage {
                 try {
                     decodeAvailability(availabilityRow, availability);
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError();
                 }
             }
         }
@@ -88,9 +87,9 @@ public class AvailabilityStorage extends Storage {
         return false;
     }
 
-    private static void writeAvailability(Path filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
+    private static void writeAvailability(String filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
             throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Map.Entry<LocalTime, ArrayList<String>> e : meetings.entrySet()) {
             String encodeAvailability = encodeAvailability(e);

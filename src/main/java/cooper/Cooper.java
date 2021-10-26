@@ -3,14 +3,18 @@ package cooper;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.LogoutException;
 import cooper.log.CooperLogger;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
+import cooper.ui.ParserUi;
 import cooper.ui.Ui;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.CommandParser;
+import cooper.ui.VerificationUi;
 import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
 import cooper.resources.ResourcesManager;
@@ -36,13 +40,10 @@ public class Cooper {
         cooper.run();
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
+
     public void run() {
         setUp();
-        while (true) {
-            SignInDetails signInDetails = verifyUser();
-            runLoopUntilExitCommand(signInDetails);
-        }
+        runLoopUntilExitCommand();
     }
 
     private void setUp() {
@@ -52,6 +53,14 @@ public class Cooper {
         // Load data from storage
         cooperStorageManager.loadAllData(cooperVerifier, cooperResourcesManager.getFinanceManager(),
                 cooperResourcesManager.getMeetingManager());
+    }
+
+    @SuppressWarnings("InfiniteLoopStatement")
+    private void runLoopUntilExitCommand() {
+        while (true) {
+            SignInDetails signInDetails = verifyUser();
+            runLoopUntilLogoutCommand(signInDetails);
+        }
     }
 
     private SignInDetails verifyUser() {
@@ -65,7 +74,7 @@ public class Cooper {
         return successfulSignInDetails;
     }
 
-    private void runLoopUntilExitCommand(SignInDetails signInDetails) {
+    private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
             try {
                 String input = Ui.getInput();
@@ -73,13 +82,15 @@ public class Cooper {
                 assert command != null;
                 command.execute(signInDetails, cooperResourcesManager, cooperStorageManager);
             } catch (NoSuchElementException | InvalidCommandFormatException e) {
-                Ui.showInvalidCommandFormatError();
+                ParserUi.showInvalidCommandFormatError();
             } catch (NumberFormatException e) {
-                Ui.showInvalidNumberError();
+                ParserUi.showInvalidNumberError();
             } catch (UnrecognisedCommandException e) {
-                Ui.showUnrecognisedCommandError(false);
+                ParserUi.showUnrecognisedCommandError(false);
             } catch (InvalidAccessException e) {
-                Ui.printNoAccessError();
+                VerificationUi.printNoAccessError();
+            } catch (EmptyFinancialStatementException e) {
+                FinanceUi.showEmptyFinancialStatementException();
             } catch (LogoutException e) {
                 cooperVerifier.setSuccessfullySignedIn(false);
                 Ui.showLoginRegisterMessage(false);
