@@ -58,4 +58,10 @@ public class ForumManager {
             throw new InvalidForumPostIdException();
         }
     }
+
+    public ArrayList<ForumPost> getForumPosts() {
+        return forumPosts;
+    }
+
+
 }
