@@ -7,7 +7,6 @@ import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -75,7 +74,8 @@ public class CashFlowStorage extends Storage {
         return false;
     }
 
-    private static void writeCashFlowStatement(String filePath, ArrayList<Integer> cashFlowStatement) throws IOException {
+    private static void writeCashFlowStatement(String filePath, ArrayList<Integer> cashFlowStatement)
+            throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : cashFlowStatement) {

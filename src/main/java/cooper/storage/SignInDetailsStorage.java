@@ -8,7 +8,6 @@ import cooper.verification.Verifier;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;

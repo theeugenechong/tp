@@ -7,7 +7,6 @@ import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
