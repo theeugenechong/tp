@@ -1,6 +1,7 @@
 package cooper.command;
 
 import cooper.finance.FinanceManager;
+import cooper.forum.ForumManager;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
@@ -11,6 +12,8 @@ public class ExitCommand extends Command {
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager) {
         FinanceManager financeManager = resourcesManager.getFinanceManager();
+        ForumManager forumManager = resourcesManager.getForumManager();
+        storageManager.saveForum(forumManager);
 
         saveBsAndCfDataAccordingly(storageManager, financeManager);
         Ui.showBye();

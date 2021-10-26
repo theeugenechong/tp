@@ -21,7 +21,7 @@ public class ResourcesManager {
     public FinanceManager getFinanceManager() {
         return cooperFinanceManager;
     }
-
+    
     public FinanceManager getFinanceManager(UserRole userRole) {
         if (userRole.equals(UserRole.ADMIN)) {
             return cooperFinanceManager;
@@ -36,6 +36,12 @@ public class ResourcesManager {
 
     public MeetingManager getMeetingManager(UserRole userRole) {
         return cooperMeetingManager;
+    }
+
+    // FIXME: These three APIs should not be accessed without user roles,
+    // access right management is done in V2.1
+    public ForumManager getForumManager() {
+        return cooperForumManager;
     }
 
     public ForumManager getForumManager(UserRole userRole) {
