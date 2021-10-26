@@ -5,24 +5,24 @@
 ## Introducing cOOPer
 cOOPer is a **Command Line Interface (CLI) desktop** application developed as a virtual assistant to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 
-This developer guide is for software designers, developers, and software testers of cOOPer.
-
-This developer guide will be your reference manual if you are looking to:
+This developer guide is for software designers, developers, and software testers of cOOPer. It will be your reference manual if you are looking to:
 - Know more about cOOPer's internal software design
 - Improve cOOPer's internal software design
-- Extend features provided by cOOPer
+- Add more features to cOOPer
 - Enhance cOOPer's existing features
 - Perform software testing on cOOPer
 
 ## What's in this Developer Guide
-- [Acknowledgements](#Acknowledgements)
+- [Acknowledgements](#acknowledgements)
 - [Setting Up and Getting Started](#setting-up-and-getting-started)
   - [Setting up cOOPer on your computer](#setting-up-cooper-on-your-computer)
   - [Before you code](#before-you-code)
 - [Design](#design)
 
 ## Acknowledgements
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
+2. [@theeugenechong's implementation of `Storage` for CS2113T's Individual Project (iP)](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
+3. 
 
 ## Setting Up and Getting Started
 
@@ -55,26 +55,26 @@ own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk
 ## Design
 
 > #### 💡 Tip:
-> The diagrams in this document were created using **draw.io**. The `.drawio` templates used to create the diagrams
-> can be found in the `diagrams` folder. To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/),
-> select 'Open Existing Diagram' and open the `.drawio` file.
+> The diagrams in this document were created using **draw.io**. The `.png` templates used to create the diagrams
+> can be found in the [`developerGuideDiagrams`](developerGuideDiagrams) folder. To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/),
+> select 'Open Existing Diagram' and open the desired `.png` file.
 
 ### Overview
 
 cOOPer consists of two main layers: **verification** layer and **features** layer as shown in the diagram below.
 cOOPer recognizes different sets of inputs at each layer.
 
-![layerDiagram](developerGuideImages/layerDiagram.png)
+![layerDiagram](developerGuideDiagrams/layerDiagram.png)
 
 Upon launching the app, the user starts at the **verification**
-layer where they can only [log in](UserGuide.md#3-login) or [register](UserGuide.md#22-user-registration). Entering valid
+layer where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). Entering valid
 sign in details will then grant the user access to the **features** layer where they can input commands like `cf` and
 `available` to use cOOPer's features. At this layer, entering the `logout` command will bring the user back to the
 verification layer.
 
 ### Architecture
 
-![architectureDiagram](developerGuideImages/architectureDiagram.png)
+![architectureDiagram](developerGuideDiagrams/architectureDiagram.png)
 
 The **Architecture Diagram** above shows the high-level design of cOOPer and how cOOPer's components are connected.
 
@@ -84,39 +84,78 @@ The **Architecture Diagram** above shows the high-level design of cOOPer and how
 a result.
 - Upon **shutting down the app**, `Cooper` saves any unsaved user data to the hard disk and shuts down the components. 
 
-Apart from `Cooper`, the rest of the app consists of these six components:
+Apart from `Cooper`, the rest of the app consists of these seven components:
 - [`Ui`](#ui-component): Handles the reading of user input and printing of messages to the terminal.
 - [`Parser`](#parser-component): Interprets and validates user input.
 - [`Verification`](#verification-component): Verifies that the user is signing in to the system with the correct credentials.
 - [`Command`](#command-component): Executes commands which are parsed from user input.
-- [`Resources`](#resources-component): Manages cOOPer's resources which store data for cOOPer's finance, meetings and forum features.
+- [`Resources`](#resources-component): Manages cOOPer's data for finance, meetings and forum features while the app is running.
 - [`Storage`](#storage-component): Loads data from, and saves data to storage files in the computer hard disk.
+- [`Util`](#util-component): Unrelated utility methods which help with some of cOOPer's features.
 
 #### Interaction of the architecture components to process user input
-1. The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in 
+- The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in 
 details** for verification.
 
 > #### 📝 Note:
 > `userInput` represents the sign in details input by the user for verification. For example, `register 
 > John pw 12345 as admin`.
 
-![signInSequenceDiagram](developerGuideImages/signInSequenceDiagram.png)
+![signInSequenceDiagram](developerGuideDiagrams/signInSequenceDiagram.png)
 
-2. The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** after
+- The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** after
 successfully logging in.
 
 > #### 📝 Note:
-> `userInput` represents a command input by the user. For example, `meetings`.
+> - `userInput` represents a command input by the user. For example, `meetings`.
+> - `XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
-![commandSequenceDiagram](developerGuideImages/commandSequenceDiagram.png)
+![commandSequenceDiagram](developerGuideDiagrams/commandSequenceDiagram.png)
 
 ### Ui Component
 
+**API**: [`Ui.java`](../src/main/java/cooper/ui)
+
+![uiComponent](developerGuideDiagrams/uiComponent.png)
+
+- The `Ui` component consists of a parent `Ui` class and its subclasses. Each subclass is responsible for user interaction in different components of cOOPer.
+- The reason for creating subclasses which inherit from `Ui` is solely to make the code neater and easier to understand. All the print methods related to a 
+certain component wil be found in that component's `Ui` class. For example, `VerificationUi` contains the methods `showInvalidUserRoleError()` and `showIncorrectPasswordError()` 
+which improves readability around the codebase.
+- The classes in Ui have *static* methods so there is no need to create a `Ui` object in `Cooper`. The reason for this is
+that `Cooper` should only have references to objects related to its features (finance, meetings, etc.). The `Ui` class is seen
+as a *helper* class which has the sole responsibility of helping cOOPer interact with its user.
+
+The `Ui` component:
+- Reads in user input from the terminal
+- Prints status messages, error messages and messages prompting the user for input
+- Is used by `Verification` and `Cooper` mainly for reading input, while it is used by `Resources` mainly for printing output messages
+
 ### Parser Component
+
+**API**: [`ParserBase.java`](../src/main/java/cooper/parser)
+
+![parserComponent](developerGuideDiagrams/parserComponent.png)
+
+- The `Parser` component consists of an abstract `ParserBase` class with its children classes, `CommandParser` and `SignInDetailsParser`. 
+To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different objects are parsed from user input at each layer.
+- User input at the verification layer will be parsed to construct a `SignInProtocol` object while user input at the features layer 
+will be parsed to construct a `Command` object. The `SignInProtocol` object executes the signing in of the user with the details provided in the user input 
+while the `Command` object executes the command input by the user.
+- `ParserBase` contains a reference to a `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library
+used by cOOPer. More information about how cOOPer implements the library can be found [here](#parser).
+
+The `Parser`component:
+- Constructs and returns a new `SignInProtocol`/`Command` object with the correct parsed attributes
+- Determines if user input corresponds to any of the commands recognised by cOOPer
+- Validates user input by checking for erroneous command arguments. For example, empty command arguments or entering alphabets where an integer 
+is expected
+- Does not perform any printing of error messages, but instead throws `InvalidCommandFormatException`, `UnrecognisedCommandException` etc.
+to signal erroneous input 
 
 ### Verification Component
 
-![verificationClassDiagram](developerGuideImages/verificationClassDiagram.png)
+![verificationClassDiagram](developerGuideDiagrams/verificationClassDiagram.png)
 
 ### Command Component
 
@@ -124,6 +163,17 @@ successfully logging in.
 
 ### Storage Component
 
+### Util Component
+
+**API**: [`Util.java`](../src/main/java/cooper/util/Util.java)
+
+- The `Util` component is a component unrelated to cOOPer and serves mainly as a helper component to make some of cOOPer's
+features possible.
+- There are only two methods in the `Util` class, namely `inputStreamToTmpFile()` and `inputStreamToString()`. 
+- `inputStreamToTmpFile()` is used to create the dopsun chatbot-cli's training files for correct parsing.
+- `inputStreamToString()` is used for cOOPer's `generate` feature which allows the user to generate a PDF file from data in cOOPer's Balance Sheet or
+Cash Flow Statement. This method is used to convert the `.tex` template files into a `String` object which can then be handled easily 
+in the code. More details of implementation can be found [here]().
 ## Implementation
 
 ### Parser
@@ -208,7 +258,7 @@ will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwis
 
 ### Target user profile
 
-{Describe the target user profile} The target user profile of cOOPer consists of all levels of administration in a tech startup. Namely - from the employee level of Secretary up to the management level of CEO.
+The target user profile of cOOPer consists of all levels of administration in a tech startup. Namely - from the employee level of Secretary up to the management level of CEO.
 
 ### Value proposition
 
