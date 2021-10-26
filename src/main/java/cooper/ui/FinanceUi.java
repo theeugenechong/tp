@@ -4,7 +4,6 @@ import cooper.finance.FinanceManager;
 
 import java.util.ArrayList;
 
-@SuppressWarnings({"checkstyle:LineLength", "CheckStyle"})
 public class FinanceUi extends Ui {
 
     private static final String INITIATE_BALANCE_SHEET = "You are now using the Balance Sheet function.";
@@ -23,11 +22,11 @@ public class FinanceUi extends Ui {
 
     private static final String ADD_SUCCESS = "Success!";
     private static final String NEXT_PLEASE_ENTER = "Next, please enter ";
-    protected static final String CANNOT_ADD_TO_BS = "The Balance Sheet is complete! You can no longer add anything.";
-    protected static final String CANNOT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
-    protected static final String FINANCIAL_STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
-    protected static final String SPECIFY_STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
-    protected static final String ADDED_AS = " has been added as ";
+    protected static final String CANT_ADD_TO_BS = "The Balance Sheet is complete! You can no longer add anything.";
+    private static final String CANT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
+    private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
+    private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
+    private static final String ADDED_AS = " has been added as ";
 
     public static final String[] BALANCE_SHEET_UI = new String[] {
         "Cash and Cash Equivalents  ",
@@ -169,13 +168,13 @@ public class FinanceUi extends Ui {
 
     public static void showCannotAddToBalanceSheet() {
         show(LINE);
-        show(CANNOT_ADD_TO_BS);
+        show(CANT_ADD_TO_BS);
         show(LINE);
     }
 
     public static void showCannotAddToCashFlow() {
         show(LINE);
-        show(CANNOT_ADD_TO_CF);
+        show(CANT_ADD_TO_CF);
         show(LINE);
     }
 
@@ -235,13 +234,13 @@ public class FinanceUi extends Ui {
 
     public static void showEmptyFinancialStatementException() {
         show(LINE);
-        show(FINANCIAL_STATEMENT_EMPTY);
+        show(STATEMENT_EMPTY);
         show(LINE);
     }
 
     public static void showPleaseSpecifyFinancialStatement() {
         show(LINE);
-        show(SPECIFY_STATEMENT_TO_VIEW);
+        show(STATEMENT_TO_VIEW);
         show(LINE);
     }
 }
