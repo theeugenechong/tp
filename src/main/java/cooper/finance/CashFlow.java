@@ -3,7 +3,7 @@ package cooper.finance;
 import java.util.ArrayList;
 
 public class CashFlow {
-    private static final int CF_SIZE = 9;
+    private static final int CF_SIZE = 10;
     public ArrayList<Integer> cashFlowStatement;
     public static int cashFlowStage = 0;
 

@@ -93,6 +93,7 @@ public class Ui {
         show("Here are the commands available to an admin along with their formats:");
         show("bs            | bs");
         show("cf            | cf");
+        show("proj          | proj [years]");
         show("add           | add [amount]");
         show("list          | list");
         show("generate      | generate [financialStatement]");

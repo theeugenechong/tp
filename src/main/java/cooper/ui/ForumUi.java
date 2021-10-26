@@ -52,7 +52,7 @@ public class ForumUi extends Ui {
 
     public static void printDeletePostCommand(String username, String content) {
         show(LINE);
-        show(username + " has just deleted a  post from forum:");
+        show(username + " has just deleted a post from forum:");
         show(TABLE_TOP);
         show("|  " + content);
         show(TABLE_BOT);

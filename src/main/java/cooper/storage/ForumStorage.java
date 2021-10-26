@@ -42,7 +42,6 @@ public class ForumStorage extends Storage {
     public void saveForum(ForumManager forumManager) { 
         try {
             FileWriter fileWriter = new FileWriter(filePath, false);
-            System.out.println(filePath);
             var forumPosts = forumManager.getForumPosts();
             for (var post : forumPosts) {
                 fileWriter.write("P|" + post.getUsername() + "|" + post.getContent() + "\n");
