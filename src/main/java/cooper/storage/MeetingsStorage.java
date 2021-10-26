@@ -42,7 +42,7 @@ public class MeetingsStorage extends Storage {
                 try {
                     decodeMeetings(meetingsRow, meetings);
                 } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
@@ -52,14 +52,14 @@ public class MeetingsStorage extends Storage {
             throws InvalidFileDataException {
         String[] attendees = meetingAsString.split("\\|");
         if (isInvalidFileData(attendees)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("meetings.txt");
         }
         assert !isInvalidFileData(attendees);
 
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime meetingTime = LocalTime.parse(attendees[0].trim(), timeFormat);
 
-        String meetingName = attendees[1];
+        String meetingName = attendees[1].trim();
 
         String[] attendeesAsArray = attendees[2].trim().split(",");
         ArrayList<String> attendeesArrayList = new ArrayList<>(Arrays.asList(attendeesAsArray));

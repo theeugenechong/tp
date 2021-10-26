@@ -1,4 +1,10 @@
 package cooper.exceptions;
 
-public class InvalidFileDataException extends Exception{
+import java.io.IOException;
+
+public class InvalidFileDataException extends IOException {
+
+    public InvalidFileDataException(String fileName) {
+        super(fileName);
+    }
 }

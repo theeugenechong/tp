@@ -41,7 +41,7 @@ public class SignInDetailsStorage extends Storage {
                     SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
                     registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
                 } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
@@ -50,7 +50,7 @@ public class SignInDetailsStorage extends Storage {
     private static SignInDetails decodeSignInDetails(String signInDetailsAsString) throws InvalidFileDataException {
         String[] signInDetails = signInDetailsAsString.split("\\|");
         if (isInvalidFileData(signInDetails)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("signInDetails.txt");
         }
         assert !isInvalidFileData(signInDetails);
 
@@ -67,7 +67,7 @@ public class SignInDetailsStorage extends Storage {
             return true;
         }
 
-        if (!signInDetails[3].trim().equals("A") && !signInDetails[3].equals("E")) {
+        if (!signInDetails[3].trim().equals("A") && !signInDetails[3].trim().equals("E")) {
             return true;
         }
 

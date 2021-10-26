@@ -42,7 +42,7 @@ public class BalanceSheetStorage extends Storage {
                     addNetValues(bsEntryIndex, decodedExpense);
                     bsEntryIndex++;
                 } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
@@ -60,7 +60,7 @@ public class BalanceSheetStorage extends Storage {
 
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("balanceSheet.txt");
         }
         return Integer.parseInt(expense);
     }
