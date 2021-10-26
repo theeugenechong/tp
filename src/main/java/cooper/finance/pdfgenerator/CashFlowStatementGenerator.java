@@ -2,7 +2,8 @@ package cooper.finance.pdfgenerator;
 
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
-import cooper.ui.FinanceUI;
+import cooper.ui.FileIoUi;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(OPERATING_ACTIVITIES);
         for (int i = 0; i <= FinanceManager.endOfOA; i++) {
-            createEntry(FinanceUI.cashFlowUI[i].trim(), cf.get(i));
+            createEntry(FinanceUi.cashFlowUI[i].trim(), cf.get(i));
         }
         createSummary(OPERATING_ACTIVITIES, FinanceManager.netOA);
     }
@@ -46,7 +47,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(INVESTING_ACTIVITIES);
         for (int i = 5; i <= FinanceManager.endOfIA; i++) {
-            createEntry(FinanceUI.cashFlowUI[i].trim(), cf.get(i));
+            createEntry(FinanceUi.cashFlowUI[i].trim(), cf.get(i));
         }
         createSummary(INVESTING_ACTIVITIES, FinanceManager.netIA);
     }
@@ -55,7 +56,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(FINANCING_ACTIVITIES);
         for (int i = 7; i <= FinanceManager.endOfFA; i++) {
-            createEntry(FinanceUI.cashFlowUI[i].trim(), cf.get(i));
+            createEntry(FinanceUi.cashFlowUI[i].trim(), cf.get(i));
         }
         createSummary(FINANCING_ACTIVITIES, FinanceManager.netFA);
     }
@@ -77,12 +78,12 @@ public class CashFlowStatementGenerator extends PdfGenerator {
                 byte[] buffer = con.getInputStream().readAllBytes();
                 createPdf(buffer, CF_PDF_FILE);
             } else {
-                Ui.showPostRequestError();
+                FileIoUi.showPostRequestError();
             }
         } catch (MalformedURLException e) {
-            Ui.showMalformedUrlError();
+            FileIoUi.showMalformedUrlError();
         } catch (IOException e) {
-            Ui.showConnectionError();
+            FileIoUi.showConnectionError();
             createBackup(formTexFile(), CF_BACKUP_FILE);
         } finally {
             pdfContent.clear();

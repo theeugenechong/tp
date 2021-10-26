@@ -3,6 +3,7 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.storage.StorageManager;
+import cooper.ui.ForumUi;
 import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
@@ -41,7 +42,7 @@ public class PostListCommand extends Command {
                 try {
                     forumManager.listPost(postId - 1);
                 } catch (InvalidForumPostIdException e) {
-                    Ui.printInvalidForumPostIndexError();
+                    ForumUi.printInvalidForumPostIndexError();
                 }
             }
         } else {

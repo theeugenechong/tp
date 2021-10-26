@@ -32,6 +32,4 @@ public class SignInDetails {
     public UserRole getUserRole() {
         return userRole;
     }
-
-
 }

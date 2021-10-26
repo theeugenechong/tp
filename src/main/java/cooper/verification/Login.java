@@ -1,6 +1,6 @@
 package cooper.verification;
 
-import cooper.ui.Ui;
+import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
 
@@ -37,7 +37,7 @@ public class Login extends SignInProtocol {
         assert isRegisteredUser(registeredUsers);
 
         if (!hasCorrectRole(registeredUsers)) {
-            Ui.showIncorrectRoleMessage();
+            VerificationUi.showIncorrectRoleMessage();
             verifier.setSuccessfullySignedIn(false);
             LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect role.");
             return;
@@ -45,14 +45,14 @@ public class Login extends SignInProtocol {
         assert (isRegisteredUser(registeredUsers) && hasCorrectRole(registeredUsers));
 
         if (!hasCorrectPassword(registeredUsers, rawPassword)) {
-            Ui.showIncorrectPasswordError();
+            VerificationUi.showIncorrectPasswordError();
             verifier.setSuccessfullySignedIn(false);
             LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect password.");
             return;
         }
 
         verifier.setSuccessfullySignedIn(true);
-        Ui.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
+        VerificationUi.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
         LOGGER.info("User with username " + signInDetails.getUsername() + " successfully signed in.");
     }
 
@@ -83,6 +83,6 @@ public class Login extends SignInProtocol {
      * user to register instead.
      */
     private void askUserToRegister() {
-        Ui.showPleaseRegisterMessage();
+        VerificationUi.showPleaseRegisterMessage();
     }
 }

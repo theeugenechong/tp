@@ -1,5 +1,6 @@
 package cooper.command;
 
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.FinanceManager;
 import cooper.resources.ResourcesManager;
@@ -19,7 +20,7 @@ public class GenerateCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
-            throws InvalidAccessException {
+            throws InvalidAccessException, EmptyFinancialStatementException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
@@ -38,7 +39,7 @@ public class GenerateCommand extends Command {
                 financeManager.generateCashFlowStatementAsPdf();
             }
         } else {
-            Ui.showListNotFoundException();
+            throw new EmptyFinancialStatementException();
         }
     }
 }

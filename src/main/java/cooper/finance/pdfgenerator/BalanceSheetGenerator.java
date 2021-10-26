@@ -2,7 +2,8 @@ package cooper.finance.pdfgenerator;
 
 import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
-import cooper.ui.FinanceUI;
+import cooper.ui.FileIoUi;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(ASSETS);
         for (int i = 0; i <= FinanceManager.endOfAssets; i++) {
-            createEntry(FinanceUI.balanceSheetUI[i].trim(), bs.get(i));
+            createEntry(FinanceUi.balanceSheetUI[i].trim(), bs.get(i));
         }
         createSummary(ASSETS, FinanceManager.netAssets);
     }
@@ -46,7 +47,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(LIABILITIES);
         for (int i = 6; i <= FinanceManager.endOfLiabilities; i++) {
-            createEntry(FinanceUI.balanceSheetUI[i].trim(), bs.get(i));
+            createEntry(FinanceUi.balanceSheetUI[i].trim(), bs.get(i));
         }
         createSummary(LIABILITIES, FinanceManager.netLiabilities);
     }
@@ -55,7 +56,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(SHAREHOLDERS_EQUITY);
         for (int i = 10; i <= FinanceManager.endOfSE; i++) {
-            createEntry(FinanceUI.balanceSheetUI[i].trim(), bs.get(i));
+            createEntry(FinanceUi.balanceSheetUI[i].trim(), bs.get(i));
         }
         createSummary(SHAREHOLDERS_EQUITY, FinanceManager.netSE);
     }
@@ -83,12 +84,12 @@ public class BalanceSheetGenerator extends PdfGenerator {
                 byte[] buffer = con.getInputStream().readAllBytes();
                 createPdf(buffer, BS_PDF_FILE);
             } else {
-                Ui.showPostRequestError();
+                FileIoUi.showPostRequestError();
             }
         } catch (MalformedURLException e) {
-            Ui.showMalformedUrlError();
+            FileIoUi.showMalformedUrlError();
         } catch (IOException e) {
-            Ui.showConnectionError();
+            FileIoUi.showConnectionError();
             createBackup(formTexFile(), BS_BACKUP_FILE);
         } finally {
             pdfContent.clear();

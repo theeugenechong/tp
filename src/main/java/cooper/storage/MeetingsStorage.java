@@ -3,7 +3,7 @@ package cooper.storage;
 import cooper.exceptions.InvalidFileDataException;
 import cooper.meetings.Meeting;
 import cooper.meetings.MeetingManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class MeetingsStorage extends Storage {
         try {
             writeMeetings(filePath, cooperMeetingManager.getMeetingsList());
         } catch (IOException e) {
-            Ui.showFileWriteError(e);
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -43,7 +43,7 @@ public class MeetingsStorage extends Storage {
                 try {
                     decodeMeetings(meetingsRow, meetings);
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError();
                 }
             }
         }

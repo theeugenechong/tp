@@ -2,7 +2,7 @@ package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
 import cooper.meetings.MeetingManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class AvailabilityStorage extends Storage {
         try {
             writeAvailability(filePath, cooperMeetingManager.getAvailability());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -44,7 +44,7 @@ public class AvailabilityStorage extends Storage {
                 try {
                     decodeAvailability(availabilityRow, availability);
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError();
                 }
             }
         }

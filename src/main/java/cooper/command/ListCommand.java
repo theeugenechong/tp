@@ -1,7 +1,9 @@
 package cooper.command;
 
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.finance.FinanceCommand;
@@ -31,7 +33,7 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws InvalidAccessException {
+                        StorageManager storageManager) throws InvalidAccessException, EmptyFinancialStatementException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
         if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
@@ -40,15 +42,17 @@ public class ListCommand extends Command {
             throw new InvalidAccessException();
         }
 
-        boolean areNonEmptyLists = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
+        boolean areNonEmptyFinancialStatements = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
                 && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
 
-        if (areNonEmptyLists) {
+        if (areNonEmptyFinancialStatements) {
             if (financeFlag == FinanceCommand.BS) {
-                Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
+                FinanceUi.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
             } else if (financeFlag == FinanceCommand.CF) {
-                Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+                FinanceUi.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
             }
+        } else {
+            throw new EmptyFinancialStatementException();
         }
     }
 }

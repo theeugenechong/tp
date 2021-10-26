@@ -3,7 +3,7 @@ package cooper.storage;
 import cooper.exceptions.InvalidFileDataException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class BalanceSheetStorage extends Storage {
         try {
             writeBalanceSheet(filePath, cooperBalanceSheet.getBalanceSheet());
         } catch (IOException e) {
-            Ui.showFileWriteError(e);
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -43,7 +43,7 @@ public class BalanceSheetStorage extends Storage {
                     addNetValues(bsEntryIndex, decodedExpense);
                     bsEntryIndex++;
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError();
                 }
             }
         }

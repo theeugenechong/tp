@@ -30,7 +30,7 @@ import cooper.exceptions.UnrecognisedCommandException;
 import cooper.finance.FinanceCommand;
 
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
+@SuppressWarnings({"OptionalGetWithoutIsPresent", "SwitchStatementWithTooFewBranches"})
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;

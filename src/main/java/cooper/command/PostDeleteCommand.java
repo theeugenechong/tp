@@ -4,6 +4,7 @@ import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidForumDeleteByNonOwnerException;
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.storage.StorageManager;
+import cooper.ui.ForumUi;
 import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
@@ -39,11 +40,11 @@ public class PostDeleteCommand extends Command {
             try {
                 String username = signInDetails.getUsername();
                 String contentDeleted = forumManager.deletePost(username, postId - 1);
-                Ui.printDeletePostCommand(username, contentDeleted);
+                ForumUi.printDeletePostCommand(username, contentDeleted);
             } catch (InvalidForumPostIdException e) {
-                Ui.printInvalidForumPostIndexError();
+                ForumUi.printInvalidForumPostIndexError();
             } catch (InvalidForumDeleteByNonOwnerException e) {
-                Ui.printInvalidForumDeleteByNonOwnerError();
+                ForumUi.printInvalidForumDeleteByNonOwnerError();
             }
         } else {
             Ui.printEmployeeHelp();

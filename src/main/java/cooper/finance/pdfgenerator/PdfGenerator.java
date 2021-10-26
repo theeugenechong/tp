@@ -1,6 +1,6 @@
 package cooper.finance.pdfgenerator;
 
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 import cooper.util.Util;
 
 import java.io.File;
@@ -137,9 +137,9 @@ public abstract class PdfGenerator {
             FileWriter fileWriter = new FileWriter(GENERATED_FILE_DIR + backupFileName, false);
             fileWriter.write(texFileToCompile);
             fileWriter.close();
-            Ui.showBackupFileSuccessfullyCreated();
+            FileIoUi.showBackupFileSuccessfullyCreated();
         } catch (IOException e) {
-            Ui.showFileCreationError(e);
+            FileIoUi.showFileCreationError(e);
         }
     }
 
@@ -155,9 +155,9 @@ public abstract class PdfGenerator {
             FileOutputStream fileOutputStream = new FileOutputStream(GENERATED_FILE_DIR + pdfName);
             fileOutputStream.write(response);
             fileOutputStream.close();
-            Ui.showPdfSuccessfullyGenerated();
+            FileIoUi.showPdfSuccessfullyGenerated();
         } catch (IOException e) {
-            Ui.showFileCreationError(e);
+            FileIoUi.showFileCreationError(e);
         }
     }
 }

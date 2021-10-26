@@ -4,7 +4,9 @@ import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.SignInDetailsParser;
+import cooper.ui.ParserUi;
 import cooper.ui.Ui;
+import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -53,13 +55,13 @@ public class Verifier {
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
             isSuccessfullySignedIn = false;
-            Ui.showUnrecognisedCommandError(true);
+            ParserUi.showUnrecognisedCommandError(true);
         } catch (NoSuchElementException | InvalidCommandFormatException e) {
             isSuccessfullySignedIn = false;
-            Ui.showInvalidCommandFormatError();
+            ParserUi.showInvalidCommandFormatError();
         } catch (InvalidUserRoleException e) {
             isSuccessfullySignedIn = false;
-            Ui.showInvalidUserRoleError();
+            VerificationUi.showInvalidUserRoleError();
         }
         return signInDetails;
     }

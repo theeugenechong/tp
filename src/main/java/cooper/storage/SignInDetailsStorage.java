@@ -1,7 +1,7 @@
 package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.verification.Verifier;
@@ -29,7 +29,7 @@ public class SignInDetailsStorage extends Storage {
         try {
             writeSignInDetails(filePath, cooperVerifier.getRegisteredUsers());
         } catch (IOException e) {
-            Ui.showFileWriteError(e);
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -42,7 +42,7 @@ public class SignInDetailsStorage extends Storage {
                     SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
                     registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError();
                 }
             }
         }

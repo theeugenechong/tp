@@ -3,7 +3,7 @@ package cooper.storage;
 import cooper.exceptions.InvalidFileDataException;
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class CashFlowStorage extends Storage {
         try {
             writeCashFlowStatement(filePath, cooperCashFlowStatement.getCashFlowStatement());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -43,7 +43,7 @@ public class CashFlowStorage extends Storage {
                     addNetValues(cfEntryIndex, decodedExpense);
                     cfEntryIndex++;
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError();
                 }
             }
         }
