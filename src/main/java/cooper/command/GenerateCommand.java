@@ -9,7 +9,6 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
-
 public class GenerateCommand extends Command {
 
     private final String documentToGenerate;
@@ -29,17 +28,20 @@ public class GenerateCommand extends Command {
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
-        boolean areNonEmptyLists = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
-                                   && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
 
-        if (areNonEmptyLists) {
-            if (documentToGenerate.equals("bs")) {
-                financeManager.generateBalanceSheetAsPdf();
-            } else if (documentToGenerate.equals("cf")) {
-                financeManager.generateCashFlowStatementAsPdf();
+        boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());
+        boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+
+        if (documentToGenerate.equals("bs")) {
+            if (isEmptyBs) {
+                throw new EmptyFinancialStatementException();
             }
-        } else {
-            throw new EmptyFinancialStatementException();
+            financeManager.generateBalanceSheetAsPdf();
+        } else if (documentToGenerate.equals("cf")) {
+            if (isEmptyCf) {
+                throw new EmptyFinancialStatementException();
+            }
+            financeManager.generateCashFlowStatementAsPdf();
         }
     }
 }
