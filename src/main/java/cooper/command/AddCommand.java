@@ -62,7 +62,7 @@ public class AddCommand extends Command {
                 FinanceUi.showCannotAddToBalanceSheet();
             }
         } else if (financeFlag == FinanceCommand.CF) {
-            if (CashFlow.cashFlowStage <= FinanceManager.endOfFA) {
+            if (CashFlow.cashFlowStage <= FinanceManager.freeCashFlow) {
                 financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
                 FinanceUi.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
                 CashFlow.cashFlowStage++;

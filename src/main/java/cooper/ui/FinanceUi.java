@@ -52,7 +52,8 @@ public class FinanceUi extends Ui {
         "Capital Expenditures  ",
         "Proceeds from sale of equipment  ",
         "Proceeds from Issuing Debt  ",
-        "Dividends Paid  "
+        "Dividends Paid  ",
+        "Free Cash Flow  "
     };
 
     public static final String[] HEADERS_UI = new String[] {
@@ -61,7 +62,8 @@ public class FinanceUi extends Ui {
         "-----CASH FLOW FROM FINANCING ACTIVITIES-----",
         "-----ASSETS-----",
         "-----LIABILITIES-----",
-        "-----SHAREHOLDER'S EQUITY-----"
+        "-----SHAREHOLDER'S EQUITY-----",
+        "-----FREE CASH FLOW-----"
     };
 
     public static final String[] NET_AMOUNTS_UI = new String[] {
@@ -135,17 +137,20 @@ public class FinanceUi extends Ui {
         show(FinanceUi.STATEMENT_OPENING);
         show(FinanceUi.HEADERS_UI[0]);
         int i;
+        FinanceManager.runNetAmountsCheck(cashFlowStatement);
         for (i = 0; i < cashFlowStatement.size(); i++) {
             switch (i) {
             case FinanceManager.endOfOA:
-                show(FinanceUi.CASH_FLOW_UI[i] + cashFlowStatement.get(i));
-                show(FinanceUi.NET_AMOUNTS_UI[0] + FinanceManager.netOA);
-                show(FinanceUi.HEADERS_UI[1]);
+                show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
+                show(NET_AMOUNTS_UI[0] + " " + FinanceManager.netOA);
+                show(HEADERS_UI[1]);
                 break;
             case FinanceManager.endOfIA:
                 show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
-                show(NET_AMOUNTS_UI[1] + FinanceManager.netIA);
+                show(NET_AMOUNTS_UI[1] + " " + FinanceManager.netIA);
                 show(HEADERS_UI[2]);
+                break;
+            case FinanceManager.freeCashFlow:
                 break;
             default:
                 show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
@@ -153,7 +158,9 @@ public class FinanceUi extends Ui {
             }
         }
         if (i == cashFlowStatement.size()) {
-            show(NET_AMOUNTS_UI[2] + FinanceManager.netFA);
+            show(NET_AMOUNTS_UI[2] + " " + FinanceManager.netFA);
+            show(HEADERS_UI[6]);
+            show(CASH_FLOW_UI[9] + " " + cashFlowStatement.get(9));
         }
         show(LINE);
     }
@@ -220,15 +227,32 @@ public class FinanceUi extends Ui {
             break;
         case FinanceManager.endOfFA:
             show(NET_AMOUNTS_UI[2] + FinanceManager.netFA);
+            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
+            break;
+        case FinanceManager.freeCashFlow:
+            show("");
             break;
         default:
             show("\n" + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         }
 
-        if (cashFlowStage == FinanceManager.endOfFA) {
+        if (cashFlowStage == FinanceManager.freeCashFlow) {
             printCashFlowComplete();
         }
+        show(LINE);
+    }
+
+    public static void printProjections(double finalGrowthValue, ArrayList<Double> cooperProjections) {
+        show(LINE);
+        show("At your current rate of profitability growth in Free Cash Flow,"
+                + " these are future year's projections:");
+        int yearCount = 1;
+        for (Double cooperProjection : cooperProjections) {
+            show(yearCount + " year: " + cooperProjection.intValue());
+            yearCount++;
+        }
+        show("After " + (yearCount - 1) + " years you can expect Free Cash Flow of " + (int)finalGrowthValue);
         show(LINE);
     }
 

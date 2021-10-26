@@ -29,3 +29,10 @@ output/backupBs.txt
 output/backupCf.txt
 output/BalanceSheet.pdf
 output/CashFlowStatement.pdf
+cooperData/forum.txt
+tmp/availability.txt
+tmp/balanceSheet.txt
+tmp/cashFlowStatement.txt
+tmp/meetings.txt
+tmp/signInDetails.txt
+tmp/storage.txt

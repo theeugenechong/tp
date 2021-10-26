@@ -34,7 +34,7 @@ public class CashFlowStorage extends Storage {
     private static void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
         if (fileScanner != null) {
             int cfEntryIndex = 0;
-            while (fileScanner.hasNext() && cfEntryIndex <= FinanceManager.endOfFA) {
+            while (fileScanner.hasNext() && cfEntryIndex <= FinanceManager.freeCashFlow) {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);

@@ -1,9 +1,11 @@
 package cooper.finance;
 
+
 import cooper.finance.pdfgenerator.BalanceSheetGenerator;
 import cooper.finance.pdfgenerator.CashFlowStatementGenerator;
-
+import java.util.ArrayList;
 import java.util.logging.Logger;
+
 
 /**
  * Handles all actions and operations pertaining to financial assistance functions of the application.
@@ -11,10 +13,12 @@ import java.util.logging.Logger;
 public class FinanceManager {
     public BalanceSheet cooperBalanceSheet;
     public CashFlow cooperCashFlowStatement;
+    public Projection cooperProjection;
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static final int endOfOA = 4; //INDEX
     public static final int endOfIA = 6; //INDEX
     public static final int endOfFA = 8; //INDEX
+    public static final int freeCashFlow = 9; //INDEX
     public static int netOA = 0;
     public static int netIA = 0;
     public static int netFA = 0;
@@ -24,6 +28,8 @@ public class FinanceManager {
     public static int netAssets = 0;
     public static int netLiabilities = 0;
     public static int netSE = 0;
+    public static int pastFCF = 0;
+    public static int capExIndex = 5;
 
     private final BalanceSheetGenerator balanceSheetGenerator;
     private final CashFlowStatementGenerator cashFlowStatementGenerator;
@@ -33,6 +39,8 @@ public class FinanceManager {
         this.cooperCashFlowStatement = new CashFlow();
         this.balanceSheetGenerator = new BalanceSheetGenerator();
         this.cashFlowStatementGenerator = new CashFlowStatementGenerator();
+        this.cooperProjection = new Projection();
+
     }
 
     /**
@@ -76,6 +84,8 @@ public class FinanceManager {
             netIA += signedAmount;
         } else if (cashFlowStage <= endOfFA) {
             netFA += signedAmount;
+        } else {
+            pastFCF += signedAmount;
         }
         LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }
@@ -94,5 +104,36 @@ public class FinanceManager {
         cashFlowStatementGenerator.addCfFromFinancingActivities(cooperCashFlowStatement);
 
         cashFlowStatementGenerator.compilePdfAndSend();
+    }
+
+    public int calculateFreeCashFlow(ArrayList<Integer> cashFlowStatement) {
+        int freeCashFlow = netOA - cashFlowStatement.get(capExIndex);
+        return freeCashFlow;
+    }
+
+
+    public double createProjection(double principal, double rate, int years) {
+        if (years > 0) {
+            double growth = (principal * Math.pow(1 + (rate / 100), years));
+            cooperProjection.getProjection().add(growth);
+            return createProjection(growth, rate, years - 1);
+        }
+        return principal;
+    }
+
+    public static void runNetAmountsCheck(ArrayList<Integer> cashFlowStatement) {
+        if (netOA == 0) {
+            for (int i = 0; i < cashFlowStatement.size(); i++) {
+                if (i <= endOfOA) {
+                    netOA += cashFlowStatement.get(i);
+                } else if (i <= endOfIA) {
+                    netIA += cashFlowStatement.get(i);
+                } else if (i <= endOfFA) {
+                    netFA += cashFlowStatement.get(i);
+                } else {
+                    pastFCF += cashFlowStatement.get(i);
+                }
+            }
+        }
     }
 }
