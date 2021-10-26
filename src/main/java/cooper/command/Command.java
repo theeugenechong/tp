@@ -7,6 +7,8 @@ import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
 import cooper.resources.ResourcesManager;
 
+import java.util.ArrayList;
+
 public abstract class Command {
 
     /**
@@ -15,4 +17,8 @@ public abstract class Command {
     public abstract void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
                                  StorageManager storageManager) throws InvalidAccessException, LogoutException,
                                  EmptyFinancialStatementException;
+
+    protected boolean isEmptyFinancialStatement(ArrayList<Integer> financialStatement) {
+        return financialStatement.stream().allMatch(i -> i == 0);
+    }
 }
