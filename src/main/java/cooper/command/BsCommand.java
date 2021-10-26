@@ -34,8 +34,6 @@ public class BsCommand extends Command {
     }
 
     private void resetBalanceSheet(FinanceManager financeManager) {
-        BalanceSheet balanceSheet = financeManager.cooperBalanceSheet;
         BalanceSheet.balanceSheetStage = 0;
-        balanceSheet.getBalanceSheet().clear();
     }
 }

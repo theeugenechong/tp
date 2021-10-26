@@ -34,8 +34,6 @@ public class CfCommand extends Command {
     }
 
     private void resetCashFlowStatement(FinanceManager financeManager) {
-        CashFlow cashFlow = financeManager.cooperCashFlowStatement;
         CashFlow.cashFlowStage = 0;
-        cashFlow.getCashFlowStatement().clear();
     }
 }

@@ -43,16 +43,19 @@ public class AddCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
-        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
+        if (financeManager == null) {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
+        }
+
+        if (financeFlag == FinanceCommand.IDLE) {
+            FinanceUi.showPleaseSpecifyFinancialStatement();
         }
       
         if (financeFlag == FinanceCommand.BS) {
             if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfSE) {
                 financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
-                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
                 FinanceUi.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
                 BalanceSheet.balanceSheetStage++;
             } else {
@@ -61,7 +64,6 @@ public class AddCommand extends Command {
         } else if (financeFlag == FinanceCommand.CF) {
             if (CashFlow.cashFlowStage <= FinanceManager.endOfFA) {
                 financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
-                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
                 FinanceUi.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
                 CashFlow.cashFlowStage++;
             } else {

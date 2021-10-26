@@ -36,14 +36,15 @@ public class ListCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException, EmptyFinancialStatementException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
+        if (financeManager == null) {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
 
-        boolean areNonEmptyFinancialStatements = !financeManager.cooperBalanceSheet.getBalanceSheet().isEmpty()
-                && !financeManager.cooperCashFlowStatement.getCashFlowStatement().isEmpty();
+        if (financeFlag == FinanceCommand.IDLE) {
+            FinanceUi.showPleaseSpecifyFinancialStatement();
+        }
 
         if (areNonEmptyFinancialStatements) {
             if (financeFlag == FinanceCommand.BS) {
