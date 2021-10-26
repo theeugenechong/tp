@@ -2,6 +2,7 @@ package cooper.command;
 
 import cooper.exceptions.InvalidAccessException;
 import cooper.meetings.MeetingManager;
+import cooper.ui.MeetingsUi;
 import cooper.storage.StorageManager;
 import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
@@ -19,9 +20,10 @@ public class MeetingsCommand extends Command {
      *                         {@code MeetingsManager} and {@code ForumManager}
      * @param storageManager Stores data which has just been added
      */
-    @Override
+    @Override        
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
                         StorageManager storageManager) throws InvalidAccessException {
+        String username = signInDetails.getUsername();
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
         if (meetingManager == null) {
@@ -29,6 +31,8 @@ public class MeetingsCommand extends Command {
             Ui.printGeneralHelp();
             Ui.printAdminHelp();
             throw new InvalidAccessException();
+        } else {
+            MeetingsUi.printMeetings(meetingManager.getUserSpecificMeetings(username));
         }
     }
 }
