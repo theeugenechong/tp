@@ -322,7 +322,7 @@ will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwis
 
 #### Target user profile
 
-The target user profile of cOOPer consists of all levels of administration in a tech startup. Namely - from the employee level of Secretary up to the management level of CEO.
+The target user profile of cOOPer consists of all levels of administration in a tech startup, namely from the employee level of Secretary up to the management level of CEO.
 
 Example Users:
 * has a need to schedule company meetings in timely manner
@@ -333,8 +333,8 @@ Example Users:
 
 #### Value proposition
 
-**cOOper's value proposition:** Manage company financials _faster_ than typical human accounting means
-& manage company communication _more reliably_ than a typical GUI driven app.
+**cOOper's value proposition:** Manage company financials **faster** than typical human accounting means
+& manage company communication **more reliably** than a typical GUI driven app.
 
 ### User Stories
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
@@ -354,9 +354,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-* Should work on any _mainstream OS_ with Java 11 installed.
+* Should work on any _mainstream OS_ with Java 11 or above installed.
 * Should be able to store up to 1000 meetings, forum posts, and financial statements without observing any noticeable sluggishness in performance.
-* Should login and enter user-specific roles faster than traditional web-applications
+* Should log in and enter user-specific roles faster than traditional web-applications
 * A user with average typing speed should be able to accomplish meeting scheduling and forum posting faster and more reliably using commands than using a mouse interaction GUI driven app.
 * A user with average typing speed should also be able to accomplish financial statement creation faster than by human means or a mouse interaction GUI driven app. 
 
