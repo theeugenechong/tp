@@ -2,6 +2,8 @@ package cooper.forum;
 
 import java.util.ArrayList;
 
+//@@author Rrraaaeee
+
 public class ForumPost extends ForumPostBase {
     private ArrayList<ForumComment> forumComments;
 

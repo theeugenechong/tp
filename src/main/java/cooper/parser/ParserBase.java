@@ -19,6 +19,8 @@ import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.ParserUi;
 import cooper.util.Util;
 
+//@@author Rrraaaeee
+
 public abstract class ParserBase {
 
     protected Parser parser;

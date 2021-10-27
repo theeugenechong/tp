@@ -4,6 +4,8 @@ import cooper.forum.ForumPost;
 
 import java.util.ArrayList;
 
+//@@author Rrraaaeee
+
 public class ForumUi extends Ui {
 
     public static void printForumPosts(ArrayList<ForumPost> forumPosts) {

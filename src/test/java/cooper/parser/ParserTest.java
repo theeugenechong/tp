@@ -8,7 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cooper.exceptions.UnrecognisedCommandException;
 
+import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
+
+//@@author Rrraaaeee
 
 public class ParserTest {
 
@@ -22,14 +25,13 @@ public class ParserTest {
                 CommandParser.parse("$%^&&"));
     }
 
-    /*
     @Test
     void parse_unnaturalInput_exceptionThrown() {
         assertThrows(NumberFormatException.class, () ->
                 CommandParser.parse("add $%^&"));
 
-        assertThrows(NoSuchElementException.class, () ->
-                CommandParser.parse("available at 22:53"));
+        assertThrows(InvalidCommandFormatException.class, () ->
+                CommandParser.parse("proj"));
     }
 
     @Test
@@ -40,11 +42,9 @@ public class ParserTest {
         assertThrows(InvalidCommandFormatException.class, () ->
                 SignInDetailsParser.parse("login Topias as"));
 
-
         assertThrows(InvalidCommandFormatException.class, () ->
-                CommandParser.parse("available Eugene at"));
+                CommandParser.parse("available"));
     }
-    */
 
     @Test
     void parseSignInDetails_invalidRole_throwsInvalidUserRoleException() {

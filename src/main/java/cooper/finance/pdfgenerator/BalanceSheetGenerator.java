@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+//@@author theeugenechong
+
 public class BalanceSheetGenerator extends PdfGenerator {
 
     private static final String BS_TEMPLATE_PATH = "/pdf/bs/bsTemplate.tex";

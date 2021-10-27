@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+//@@author theeugenechong
+
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class SignInDetailsParser extends  ParserBase {
 

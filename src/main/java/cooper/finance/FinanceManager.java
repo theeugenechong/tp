@@ -1,12 +1,11 @@
 package cooper.finance;
 
-
 import cooper.finance.pdfgenerator.BalanceSheetGenerator;
 import cooper.finance.pdfgenerator.CashFlowStatementGenerator;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-
+//@@author ChrisLangton
 /**
  * Handles all actions and operations pertaining to financial assistance functions of the application.
  */
@@ -90,6 +89,7 @@ public class FinanceManager {
         LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }
 
+    //@@author theeugenechong
     public void generateBalanceSheetAsPdf() {
         balanceSheetGenerator.addAssets(cooperBalanceSheet);
         balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
@@ -106,6 +106,7 @@ public class FinanceManager {
         cashFlowStatementGenerator.compilePdfAndSend();
     }
 
+    //@@author ChrisLangton
     public int calculateFreeCashFlow(ArrayList<Integer> cashFlowStatement) {
         int freeCashFlow = netOA - cashFlowStatement.get(capExIndex);
         return freeCashFlow;

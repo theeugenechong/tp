@@ -8,6 +8,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
+//@@author
 /**
  * This class generates a hash for user passwords using the PBKDF2 hash algorithm.
  * To ensure higher security, a salt text is added to the password before hashing it.

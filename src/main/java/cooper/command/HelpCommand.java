@@ -6,6 +6,8 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author theeugenechong
+
 public class HelpCommand extends Command {
 
     @Override

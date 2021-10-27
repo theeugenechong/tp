@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+//@@author fansxx
+
 public class MeetingsStorage extends Storage {
 
     public MeetingsStorage(String filePath) {

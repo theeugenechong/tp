@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+//@@author fansxx
+
 public class MeetingManagerTest {
     static MeetingManager meetingManager;
 

@@ -12,6 +12,8 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+//@@author ChrisLangton
+
 public class BsCommand extends Command {
 
     public BsCommand() {

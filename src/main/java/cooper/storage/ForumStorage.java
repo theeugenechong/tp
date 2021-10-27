@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//@@author Rrraaaeee
+
 public class ForumStorage extends Storage {
 
     public ForumStorage(String filePath) {

@@ -7,6 +7,8 @@ import cooper.meetings.MeetingManager;
 import cooper.forum.ForumManager;
 import cooper.verification.Verifier;
 
+//@@author theeugenechong
+
 public class StorageManager {
 
     private static final String BASE_DIRECTORY = "cooperData";

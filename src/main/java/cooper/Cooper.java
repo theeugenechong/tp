@@ -19,6 +19,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
 import cooper.resources.ResourcesManager;
 
+//@@author Rrraaaeee
 public class Cooper {
 
     private final Verifier cooperVerifier;
@@ -40,7 +41,7 @@ public class Cooper {
         cooper.run();
     }
 
-
+    //@@author fansxx
     public void run() {
         setUp();
         runLoopUntilExitCommand();
@@ -65,6 +66,7 @@ public class Cooper {
         }
     }
 
+    //@@author theeugenechong
     private SignInDetails verifyUser() {
         SignInDetails successfulSignInDetails = null;
         while (!cooperVerifier.isSuccessfullySignedIn()) {
@@ -76,6 +78,7 @@ public class Cooper {
         return successfulSignInDetails;
     }
 
+    //@@author ChrisLangton
     private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
             try {

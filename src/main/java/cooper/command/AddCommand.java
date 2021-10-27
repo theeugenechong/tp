@@ -12,6 +12,8 @@ import cooper.verification.UserRole;
 import cooper.finance.FinanceCommand;
 import cooper.resources.ResourcesManager;
 
+//@@author ChrisLangton
+
 /**
  * The child class of Command that handles the 'add' command specifically.
  */

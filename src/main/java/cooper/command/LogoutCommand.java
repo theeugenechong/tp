@@ -5,6 +5,8 @@ import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
 
+//@@author Rrraaaeee
+
 public class LogoutCommand extends Command {
 
     @Override

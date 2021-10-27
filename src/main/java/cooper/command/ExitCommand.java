@@ -7,6 +7,8 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.resources.ResourcesManager;
 
+//@@author theeugenechong
+
 public class ExitCommand extends Command {
 
     @Override

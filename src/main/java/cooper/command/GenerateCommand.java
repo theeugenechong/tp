@@ -9,6 +9,8 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+//@@author theeugenechong
+
 public class GenerateCommand extends Command {
 
     private final String documentToGenerate;

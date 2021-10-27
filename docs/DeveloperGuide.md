@@ -216,7 +216,7 @@ to signal erroneous input
 
 ### Util Component
 
-**API**: [`Util.java`](.https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
+**API**: [`Util.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
 
 - The `Util` component is a component unrelated to cOOPer and serves mainly as a helper component to make some of cOOPer's
 features possible.

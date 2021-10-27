@@ -9,6 +9,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author Rrraaaeee
 /**
  * The child class of Command that handles the 'post add' command specifically.
  */

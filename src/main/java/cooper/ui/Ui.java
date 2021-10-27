@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+//@@author Rrraaaeee
+
 public class Ui {
 
     private static final String LOGO = "            /$$$$$$   /$$$$$$  /$$$$$$$\n"
@@ -88,6 +90,7 @@ public class Ui {
         }
     }
 
+    //@@author ChrisLangton
     public static void printAdminHelp() {
         show(LINE);
         show("Here are the commands available to an admin along with their formats:");
@@ -105,6 +108,7 @@ public class Ui {
         show("Here are the commands available to an employee along with their formats:");
     }
 
+    //@@author fansxx
     public static void printGeneralHelp() {
         show("post add      | post add [postContent]");
         show("post delete   | post delete [postId]");
