@@ -21,7 +21,7 @@ This developer guide is for software designers, developers, and software testers
 
 ## Acknowledgements
 1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
-2. [@theeugenechong's implementation of `Storage` for CS2113T's Individual Project (iP)](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
+2. [theeugenechong's implementation of `Storage` for CS2113T's Individual Project (iP)](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
 3. 
 
 ## Setting Up and Getting Started
@@ -39,9 +39,36 @@ This developer guide is for software designers, developers, and software testers
 2. If you are using IntelliJ IDEA, ensure that IntelliJ is configured to use **JDK 11**. You can refer to IntelliJ's
 own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to correctly configure the JDK.
 3. Import the project as a Gradle project. You can follow [this guide](https://se-education.org/guides/tutorials/intellijImportGradleProject.html) to find out how to import the project into IntelliJ.
-4. Verify the setup by:
-   1. Running `cooper.Cooper`, logging in and entering a few commands.   
-   2. Running `JUnit` tests in `src/test` to ensure they all pass.
+4. Verify the setup:
+   1. Running `cooper.Cooper`
+      1. Navigate to `src/main/java/cooper/Cooper.java`
+      2. Right click on `Cooper.java` and select "Run Cooper.main()".
+      3. You should see the following output if the setup was done correctly:
+      
+```
+            /$$$$$$   /$$$$$$  /$$$$$$$
+           /$$__  $$ /$$__  $$| $$__  $$
+  /$$$$$$$| $$  \ $$| $$  \ $$| $$  \ $$ /$$$$$$   /$$$$$$
+ /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$
+| $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \__/
+| $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$
+|  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$
+ \_______/ \______/  \______/ |__/      \_______/|__/
+=========================================================================
+Hello I'm cOOPer! Nice to meet you!
+=========================================================================
+Login or register to gain access to my features!
+To login, enter "login  [yourUsername] pw [password] as [yourRole]"
+To register, enter "register [yourUsername] pw [password] as [yourRole]"
+=========================================================================
+>> 
+```
+
+   2. Running `JUnit` tests (optional):
+      1. Navigate to `src/test`.
+      2. Right click on `test` and select "Run all tests".
+      3. All the tests should pass and you should see the following:
+      ![img.png](developerGuideDiagrams/junitPassed.png)
 
 ### Before you code
 - **Configure coding style**
@@ -118,13 +145,13 @@ successfully logging in.
 
 ![uiComponent](developerGuideDiagrams/uiComponent.png)
 
-- The `Ui` component consists of a parent `Ui` class and its subclasses. Each subclass is responsible for user interaction in different components of cOOPer.
-- The reason for creating subclasses which inherit from `Ui` is solely to make the code neater and easier to understand. All the print methods related to a 
-certain component wil be found in that component's `Ui` class. For example, `VerificationUi` contains the methods `showInvalidUserRoleError()` and `showIncorrectPasswordError()` 
-which improves readability around the codebase.
-- The classes in Ui have *static* methods so there is no need to create a `Ui` object in `Cooper`. The reason for this is
-that `Cooper` should only have references to objects related to its features (finance, meetings, etc.). The `Ui` class is seen
-as a *helper* class which has the sole responsibility of helping cOOPer interact with its user.
+- The `Ui` component consists of a parent `Ui` class and its subclasses as shown by the class diagram above.
+- The parent `Ui` class contains general constants and methods used across cOOPer's components which read user input and 
+print recurring messages.
+- On the other hand, the subclasses for the different components in cOOPer (`ABCUi`) contain constants and methods specific to
+the function of that component. For example, `FinanceUi` contains a method `printBalanceSheet()` which prints a balance sheet
+formatted with headers containing the entries input by the user.
+- The classes in Ui have *static* methods so there is no need to create a `Ui` object in `Cooper`.
 
 The `Ui` component:
 - Reads in user input from the terminal
@@ -140,10 +167,10 @@ The `Ui` component:
 - The `Parser` component consists of an abstract `ParserBase` class with its children classes, `CommandParser` and `SignInDetailsParser`. 
 To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different objects are parsed from user input at each layer.
 - User input at the verification layer will be parsed to construct a `SignInProtocol` object while user input at the features layer 
-will be parsed to construct a `Command` object. The `SignInProtocol` object executes the signing in of the user with the details provided in the user input 
+will be parsed to construct a `Command` object. The `SignInProtocol` object executes the signing in of the user using the details provided in the user input 
 while the `Command` object executes the command input by the user.
-- `ParserBase` contains a reference to a `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library
-used by cOOPer. More information about how cOOPer implements the library can be found [here](#parser).
+- `ParserBase` contains a reference to the `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library
+used by cOOPer. More information about cOOPer's implementation of the library can be found [here](#parsing-user-input).
 
 The `Parser`component:
 - Constructs and returns a new `SignInProtocol`/`Command` object with the correct parsed attributes
@@ -170,26 +197,29 @@ to signal erroneous input
 - The `Util` component is a component unrelated to cOOPer and serves mainly as a helper component to make some of cOOPer's
 features possible.
 - There are only two methods in the `Util` class, namely `inputStreamToTmpFile()` and `inputStreamToString()`. 
-- `inputStreamToTmpFile()` is used to create the dopsun chatbot-cli's training files for correct parsing.
+- `inputStreamToTmpFile()` is used to recreate the dopsun chatbot-cli's training files (originally located in `src/main/resources`). In the
+process of packaging cOOPer into a JAR application, these training files are converted to bytes which are unable to be read in by the chatbot API. Hence,
+there is a need to recreate these files for the chatbot to work.
 - `inputStreamToString()` is used for cOOPer's `generate` feature which allows the user to generate a PDF file from data in cOOPer's Balance Sheet or
 Cash Flow Statement. This method is used to convert the `.tex` template files into a `String` object which can then be handled easily 
 in the code. More details of implementation can be found [here]().
+
 ## Implementation
 
-### Parser
+### Parsing user input
 
-`Parser` interprets and validate user inputs and construct objects for various actions such as `Command` and `SignInProtocol` objects.
+`Parser` interprets and validates user input and then constructs `SignInProtocol` and `Command` objects which .
 
 #### Dopsun chatbot-cli
 
-cOOPer's uses the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library as its frontend parser that allows developer to define any arbitrary input schema under `src/main/resources/parser/command-data.properties` 
+cOOPer's uses the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library as its frontend parser that allows you to define any arbitrary *input schema* under `src/main/resources/parser/command-data.properties` 
 such as 
 
 ```
 login = login ${username-hint} pw ${password-hint} as ${role-hint}
 ```
 
-Parser library will then automatically parse the place-holders defined with `$` leaders to strings. For example `login Yvonne pw 12345 as admin` will be parsed 
+The `Parser` library automatically parses the place-holders defined with `$` leaders to strings. For example, `login Yvonne pw 12345 as admin` will be parsed 
 into the following fields:
 
 ```python
@@ -198,25 +228,14 @@ into the following fields:
   "role-hint" : admin }
 ```
 
-This gives us great flexibility and extensibility to the parser module as developers do not need to worry about writing new parsing scheme for every instruction and adding new instructions to frontend become trivial.
-
-#### Parser module descriptions
-
-cOOPer has two main parsers. `CommandParser` and `SignInDetailsParser` which are both inherited from `ParserBase` abstract class and are required to override abstract base function `parseInput(String input)`. 
-
-##### CommandParser Class
-
-`CommandParser` class will return a `Command` polymorphic base object which implements the `execute()` function. The details about the `Command` family classes are described in the next section.
-
-##### SignInDetails Class
-
-`SignInDetails` class will return a `SignInProtocol` polymorphic base object. `Login` and `Registration` classes are inherited from the `SignInProtocol` base class.
+This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command 
+and adding new commands to cOOPer for new features become trivial.
 
 ### Command
 
 `Command` are action objects that implement the `execute()` methods for interacting with different resources such as the `FianceManager`and `MeetingsManager`.
 
-#### Command module descriptions
+#### Command component descriptions
 
 As mentioned above, `CommandParser` returns a `Command` polymorphic base object. Any specialisation of the `Command` base object must implement the`execute()` abstract base method. For example, Developer can add a new command like `HelloCommand` by inheriting from the `Command` base class and implements the `execute()` function to print out `Hello world` as shown below.
 
@@ -243,10 +262,6 @@ behaviours using a unified driver. Developers do not need to modify the frontend
 ### Resources
 
 `Resources` manages other manager modules like the `FinanceManager`, `MeetingsManager` and `ForumManager`.
-
-#### Forum module descriptions
-
-`ForumManager` grants reference to other manager modules for different `Command` objects to perform their execution functions  by checking the `UserRole`. For example, 
 
 ```java 
 FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);

@@ -22,14 +22,14 @@ public class Ui {
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final PrintStream printStream = System.out;
+    private static final Scanner IN = new Scanner(System.in);
+    private static final PrintStream OUT = System.out;
 
     protected static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String getInput() {
         showPrompt();
-        return scanner.nextLine();
+        return IN.nextLine();
     }
 
     public static void showLogo() {
@@ -72,19 +72,19 @@ public class Ui {
      * Close streams properly.
      */
     public static void closeStreams() {
-        scanner.close();
-        printStream.close();
+        IN.close();
+        OUT.close();
     }
 
     protected static void show(String printMessage) {
-        printStream.println(printMessage);
+        OUT.println(printMessage);
     }
 
     protected static void show(String printMessage, boolean newline) {
-        printStream.print(printMessage);
+        OUT.print(printMessage);
 
         if (newline) {
-            printStream.println();
+            OUT.println();
         }
     }
 
