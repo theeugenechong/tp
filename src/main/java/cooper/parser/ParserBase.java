@@ -54,7 +54,7 @@ public abstract class ParserBase {
     /**
      * A parser takes in a schema. Every child class needs to have its own schema.
      */
-    protected Parser prepareParser(String commandSetPath, String trainingPath) throws URISyntaxException {
+    private Parser prepareParser(String commandSetPath, String trainingPath) throws URISyntaxException {
         // File.separator
         Path csPath = Paths.get(new File(commandSetPath).toURI());
         CommandSet commandSet = new FileCommandSet(csPath);
