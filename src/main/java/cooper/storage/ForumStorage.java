@@ -21,6 +21,9 @@ public class ForumStorage extends Storage {
     public void loadForum(ForumManager forumManager) {
         int currentPost = 0;
         Scanner fileScanner = getScanner(filePath);
+        if (fileScanner == null) {
+            return;
+        }
         while (fileScanner.hasNext()) {
             String[] post = fileScanner.nextLine().split("[|]");
             if (post[0].equals("P")) {
