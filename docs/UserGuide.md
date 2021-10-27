@@ -25,15 +25,26 @@ cOOPer can help you manage your startup efficiently.
   - [Signing in](#user-registration)
 - [Log in](#login)
 - [Features for all users](#features-for-all-users)
-  - [Declaring available timings for meetings: `available`](#declaring-available-timings-for-meetings-available)
-  - [Viewing meetings: `meetings`](#viewing-meetings-meetings)
+  - [Adding a forum post: `post add`](#adding-a-forum-post-post-add)
+  - [Viewing a post / posts in the forum: `post list`](#viewing-a-post--posts-in-the-forum-post-list)
+  - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
+  - [Deleting a forum post: `post delete`](#deleting-a-forum-post-post-delete)
+  - [Declaring available timings for meetings: `available`](#declaring-available-timing-for-meetings-available)
+  - [Viewing users available at different timings: `availability`](#viewing-users-available-at-different-timings-availabillity)
+  - [Viewing scheduled meetings: `meetings`](#viewing-scheduled-meetings-meetings)
+  - [Logging out: `logout`](#logging-out-logout)
 - [Admin Features](#admin-features)
-  - [Adding expenses: `add`](#adding-expenses-add)
-  - [Generating balance sheet: `list`](#generating-balance-sheet-list)
+  - [Creating the balance sheet: `bs`](#creating-the-balance-sheet-bs)
+  - [Creating the cash flow statement: `cf`](#creating-the-cash-flow-statement-cf)
+  - [Adding entries to the financial statement: `add`](#adding-entries-to-the-financial-statement-add)
+  - [Projecting cash flow: `proj`](#projecting-cash-flow-proj)
+  - [Viewing the financial statement: `list`](#viewing-the-financial-statement-list)
 - [Employee Features](#employee-features)
 - [Exiting the program](#exiting-the-program)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
+  - [Admin commands](#admin-commands)
+  - [Employee commands](#employee-commands)
   
 
 ## Quick Start
@@ -142,21 +153,28 @@ You are now logged in successfully as Sebastian!
 
 ## Features for all users
 
-### Declaring available timings for meetings: `available`
+### Adding a forum post: `post add`
+
+### Viewing a post / posts in the forum: `post list`
+
+### Commenting on a forum post: `post comment`
+
+### Deleting a forum post: `post delete`
+
+### Declaring available timing for meetings: `available`
 - For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
 - How to input your availability:
-  1. After [logging in](#login) to the system, enter `available [username] at [time]`.
+  1. After [logging in](#login) to the system, enter `available [time]`.
   2. You will now have your name stored under the specified time in the system.
 
 > #### 📝Note:
-> - `[username]` is the name you wish to enter the availability for. It is preferably your own username.
 > - `[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.
 > - Duplicate `[username]` in one timeslot will **not** be accepted.
 
 - Example input:
 
 ```
->> available Sebastian at 14:00
+>> available 14:00
 ```
 
 - Expected output:
@@ -167,8 +185,9 @@ Success!
 Sebastian's availability has been added to 14:00
 =========================================================================
 ```
+### Viewing users available at different timings: `availabillity`
 
-### Viewing meetings: `meetings`
+### Viewing scheduled meetings: `meetings`
 - To view the table of availabilities after inputting [availabilities](#declaring-available-timings-for-meetings-available), cOOPer generates a table to help you visualise the availabilities.
 - How to view available timings:
   1. After [logging in](#login) to the system, enter `meetings`.
@@ -192,9 +211,15 @@ These are the availabilities:
 =========================================================================
 ```
 
+### Logging out: `logout`
+
 ## Admin Features 
 
-### Adding expenses: `add`
+### Creating the balance sheet: `bs`
+
+### Creating the cash flow statement: `cf`
+
+### Adding entries to the financial statement: `add`
 - Adds your company's expenses to a balance sheet.
 - How to add an expense:
   1. After [logging in](#login) to the system, enter `add [amount]`.
@@ -214,10 +239,6 @@ These are the availabilities:
 - Expected output:
 
 ```
-=========================================================================
-Success!
-Amount: +5000 has been added to the Balance Sheet.
-=========================================================================
 ```
 
 - Example input for outflow:
@@ -229,15 +250,11 @@ Amount: +5000 has been added to the Balance Sheet.
 - Expected output:
 
 ```
-=========================================================================
-Success!
-Amount: -5000 has been added to the Balance Sheet.
-=========================================================================
 ```
 
-### Generating balance sheet: `list`
-- Prints your company's current balance sheet along with details of each expense and your current balance.
+### Projecting cash flow: `proj`
 
+### Viewing the financial statement: `list`
 - Example input:
 
 ```
@@ -247,17 +264,14 @@ Amount: -5000 has been added to the Balance Sheet.
 - Expected output:
 
 ```
-=========================================================================
-This is the company's current Balance Sheet:
-1. inflow of: 5000
-2. outflow of: -5000
-
-Current balance: 0
-=========================================================================
 ```
 
+
+
+
+
 ## Employee Features
-- As of v1.0, cOOPer does not have features exclusive to employees yet, there will be more to come in future versions!
+- As of v2.0, cOOPer does not have features exclusive to employees yet 😥, there will be more to come in future versions!
 
 ## Exiting the program
 Exits the program.
@@ -275,6 +289,10 @@ Bye, see you next time! :D
 =========================================================================
 ```
 
+### Generating a PDF for the financial statement : `generate`
+
+### Scheduling meetings with different users: `schedule`
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
@@ -288,10 +306,41 @@ know what the *home folder* is.
 
 ## Command Summary
 
+### Admin Commands
+
 **Command** | **Format**                          | **Example**
 ------------|-------------------------------------|------------
-add         |`add [amount]`                       | `add 5000` or `add (5000)`
-list        |`list`                               | `list`
-available   |`available [username] at [time]`     |`available Sebastian at 10:00`
+register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
+login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
+post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
+post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
+post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
+post delete |`post delete [postId]`               |`post delete 1`
+bs          |`bs`                                 |`bs`
+cf          |`cf`                                 |`cf`
+add         |`add [amount]`                       |`add 5000` or `add (5000)`
+proj        |`proj`                               |`proj`
+list        |`list`                               |`list`
+generate    |`generate [financialStatement]`      |`generate bs`
+available   |`available [username] at [time]`     |`available 14:00`
+availability|`availability`                       |`availability`
+schedule    |`schedule [meetingName] with [username1], [username2] /at [time]`|`schedule Progress Meeting with Sebastian, Eugene /at 14:00`
 meetings    |`meetings`                           |`meetings`
+logout      |`logout`                             |`logout`
+exit        |`exit`                               |`exit`
 
+### Employee Commands
+
+**Command** | **Format**                          | **Example**
+------------|-------------------------------------|------------
+register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
+login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
+post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
+post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
+post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
+post delete |`post delete [postId]`               |`post delete 1`
+available   |`available [username] at [time]`     |`available 14:00`
+availability|`availability`                       |`availability`
+meetings    |`meetings`                           |`meetings`
+logout      |`logout`                             |`logout`
+exit        |`exit`                               |`exit`
