@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
+//@@author fansxx
+
 public class MeetingManager {
     private static final String TIME_FORMAT = "HH:mm";
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);

@@ -5,8 +5,9 @@ import cooper.meetings.MeetingManager;
 import cooper.forum.ForumManager;
 import cooper.verification.UserRole;
 
-public class ResourcesManager {
+//@@author Rrraaaeee
 
+public class ResourcesManager {
 
     private final FinanceManager cooperFinanceManager;
     private final MeetingManager cooperMeetingManager;

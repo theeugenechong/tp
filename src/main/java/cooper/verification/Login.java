@@ -4,6 +4,7 @@ import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
 
+//@@author theeugenechong
 /**
  * Represents the sign in protocol for user already registered in cOOPer's system.
  * <p></p>

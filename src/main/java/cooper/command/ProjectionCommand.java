@@ -11,6 +11,8 @@ import cooper.ui.FinanceUi;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+//@@author ChrisLangton
+
 public class ProjectionCommand extends Command {
 
     public int years;

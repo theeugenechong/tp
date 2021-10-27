@@ -1,5 +1,6 @@
 package cooper.verification;
 
+//@@author theeugenechong
 /**
  * Class representing the sign in details of a user.
  */

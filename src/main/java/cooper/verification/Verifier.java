@@ -10,6 +10,7 @@ import cooper.ui.VerificationUi;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+//@@author theeugenechong
 /**
  * Class which verifies the sign in details of a user upon entry to the program.
  */

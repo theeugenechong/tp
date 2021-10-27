@@ -2,6 +2,8 @@ package cooper.finance;
 
 import java.util.ArrayList;
 
+//@@author ChrisLangton
+
 public class Projection {
     public int rate;
     public int years;

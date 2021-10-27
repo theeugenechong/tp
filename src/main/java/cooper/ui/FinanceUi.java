@@ -4,6 +4,8 @@ import cooper.finance.FinanceManager;
 
 import java.util.ArrayList;
 
+//@@author ChrisLangton
+
 public class FinanceUi extends Ui {
 
     private static final String INITIATE_BALANCE_SHEET = "You are now using the Balance Sheet function.";

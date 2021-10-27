@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+//@@author fansxx
+
 public class AvailabilityStorage extends Storage {
 
     public AvailabilityStorage(String filePath) {
