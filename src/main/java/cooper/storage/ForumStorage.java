@@ -1,10 +1,9 @@
 package cooper.storage;
 
-import cooper.exceptions.InvalidFileDataException;
 import cooper.exceptions.InvalidForumPostIdException;
-import cooper.finance.CashFlow;
-import cooper.finance.FinanceManager;
+import cooper.forum.ForumComment;
 import cooper.forum.ForumManager;
+import cooper.forum.ForumPost;
 import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
@@ -25,7 +24,7 @@ public class ForumStorage extends Storage {
             return;
         }
         while (fileScanner.hasNext()) {
-            String[] post = fileScanner.nextLine().split("[|]");
+            String[] post = fileScanner.nextLine().split("\\|");
             if (post[0].equals("P")) {
                 currentPost++;
                 forumManager.addPost(post[1],post[2]);
@@ -41,24 +40,21 @@ public class ForumStorage extends Storage {
         }
     }
 
-
     public void saveForum(ForumManager forumManager) { 
         try {
             FileWriter fileWriter = new FileWriter(filePath, false);
-            var forumPosts = forumManager.getForumPosts();
-            for (var post : forumPosts) {
+            ArrayList<ForumPost> forumPosts = forumManager.getForumPosts();
+            for (ForumPost post : forumPosts) {
+
                 fileWriter.write("P|" + post.getUsername() + "|" + post.getContent() + "\n");
-                for (var comment : post.getComments()) {
+                for (ForumComment comment : post.getComments()) {
                     fileWriter.write("C|" + comment.getUsername() + "|" + comment.getContent() + "\n");
                 }
             }
-
             fileWriter.close();
         } catch (IOException e) {
             FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
-
     }
-
 }

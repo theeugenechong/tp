@@ -5,7 +5,6 @@ import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.SignInDetailsParser;
 import cooper.ui.ParserUi;
-import cooper.ui.Ui;
 import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
