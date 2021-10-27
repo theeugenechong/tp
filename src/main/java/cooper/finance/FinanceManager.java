@@ -39,7 +39,6 @@ public class FinanceManager {
         this.balanceSheetGenerator = new BalanceSheetGenerator();
         this.cashFlowStatementGenerator = new CashFlowStatementGenerator();
         this.cooperProjection = new Projection();
-
     }
 
     /**
@@ -95,6 +94,7 @@ public class FinanceManager {
         balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
         balanceSheetGenerator.addShareholderEquity(cooperBalanceSheet);
         balanceSheetGenerator.addBalance();
+
         balanceSheetGenerator.compilePdfAndSend();
     }
 
@@ -111,7 +111,6 @@ public class FinanceManager {
         int freeCashFlow = netOA - cashFlowStatement.get(capExIndex);
         return freeCashFlow;
     }
-
 
     public double createProjection(double principal, double rate, int years) {
         if (years > 0) {

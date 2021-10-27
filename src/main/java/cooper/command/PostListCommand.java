@@ -15,9 +15,9 @@ import cooper.resources.ResourcesManager;
  * The child class of Command that handles the 'post list' command specifically.
  */
 public class PostListCommand extends Command {
-    private final int postId;
+    private final Integer postId;
 
-    public PostListCommand(int postId) {
+    public PostListCommand(Integer postId) {
         super();
         this.postId = postId;
     }
@@ -36,21 +36,21 @@ public class PostListCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
-        if (forumManager != null) {
-            if (postId == -1) {
-                forumManager.listPosts();
-            } else {
-                try {
-                    forumManager.listPost(postId - 1);
-                } catch (InvalidForumPostIdException e) {
-                    ForumUi.printInvalidForumPostIndexError();
-                }
-            }
-        } else {
+        if (forumManager == null) {
             Ui.printEmployeeHelp();
             Ui.printGeneralHelp();
             Ui.printAdminHelp();
             throw new InvalidAccessException();
+        }
+
+        if (postId == null) {
+            forumManager.listPosts();
+        } else {
+            try {
+                forumManager.listPost(postId - 1);
+            } catch (InvalidForumPostIdException e) {
+                ForumUi.printInvalidForumPostIndexError();
+            }
         }
     }
 }

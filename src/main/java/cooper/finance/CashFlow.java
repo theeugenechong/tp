@@ -20,5 +20,4 @@ public class CashFlow {
     public ArrayList<Integer> getCashFlowStatement() {
         return cashFlowStatement;
     }
-
 }

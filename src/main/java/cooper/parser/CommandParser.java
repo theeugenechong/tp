@@ -309,14 +309,14 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
-        int postId = -1;
+        Integer postId = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
             case "list-hint":
                 if (argVal.equals("all")) {
-                    postId = -1; // list all
+                    postId = null; // list all
                 } else {
                     postId = Integer.parseInt(argVal);
                 }
