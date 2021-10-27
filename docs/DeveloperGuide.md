@@ -18,12 +18,31 @@ This developer guide is for software designers, developers, and software testers
   - [Setting up cOOPer on your computer](#setting-up-cooper-on-your-computer)
   - [Before you code](#before-you-code)
 - [Design](#design)
+  - [Overview](#overview)
+  - [Architecture](#architecture)
+  - [Ui component](#ui-component)
+  - [Parser component](#parser-component)
+  - [Verification component](#verification-component)
+  - [Command component](#command-component)
+  - [Resources component](#resources-component)
+  - [Storage component](#storage-component)
+  - [Util component](#util-component)
 - [Implementation](#Implementation)
+- [Appendix: Requirements](#appendix-requirements)
+  - [Product Scope](#product-scope)
+    - [Target user profile](#target-user-profile)
+    - [Value proposition](#value-proposition)
+  - [User Stories](#user-stories)
+  - [Non-functional requirements](#non-functional-requirements)
+  - [Glossary](#glossary)
+- [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
 
 ## Acknowledgements
 1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
-2. [theeugenechong's implementation of `Storage` for CS2113T's Individual Project (iP)](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
-3. 
+2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
+3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
+4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
+5. [Making a JSON Post Request for LaTex PDF Generation](https://www.baeldung.com/httpurlconnection-post)
 
 ## Setting Up and Getting Started
 
@@ -65,10 +84,11 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
 >> 
 ```
 
-   2. Running `JUnit` tests (optional):
+5. Running `JUnit` tests (optional):
       1. Navigate to `src/test`.
       2. Right click on `test` and select "Run all tests".
-      3. All the tests should pass and you should see the following:
+      3. All the tests should pass, and you should see the following:
+   
       ![img.png](developerGuideDiagrams/junitPassed.png)
 
 ### Before you code
@@ -84,7 +104,7 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
 
 > #### 💡 Tip:
 > The diagrams in this document were created using **draw.io**. The `.png` templates used to create the diagrams
-> can be found in the [`developerGuideDiagrams`](developerGuideDiagrams) folder. To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/),
+> can be found in the [`developerGuideDiagrams`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/docs/developerGuideDiagrams) folder. To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/),
 > select 'Open Existing Diagram' and open the desired `.png` file.
 
 ### Overview
@@ -96,7 +116,7 @@ cOOPer recognizes different sets of inputs at each layer.
 
 Upon launching the app, the user starts at the **verification**
 layer where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). Entering valid
-sign in details will then grant the user access to the **features** layer where they can input commands like `cf` and
+credentials will then grant the user access to the **features** layer where they can input commands like `cf` and
 `available` to use cOOPer's features. At this layer, entering the `logout` command will bring the user back to the
 verification layer.
 
@@ -142,7 +162,7 @@ successfully logging in.
 
 ### Ui Component
 
-**API**: [`Ui.java`](../src/main/java/cooper/ui)
+**API**: [`Ui.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/ui)
 
 ![uiComponent](developerGuideDiagrams/uiComponent.png)
 
@@ -161,7 +181,7 @@ The `Ui` component:
 
 ### Parser Component
 
-**API**: [`ParserBase.java`](../src/main/java/cooper/parser)
+**API**: [`ParserBase.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/parser)
 
 ![parserComponent](developerGuideDiagrams/parserComponent.png)
 
@@ -183,6 +203,9 @@ to signal erroneous input
 
 ### Verification Component
 
+**API**: [`Verifier.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
+
+
 ![verificationClassDiagram](developerGuideDiagrams/verificationClassDiagram.png)
 
 ### Command Component
@@ -193,7 +216,7 @@ to signal erroneous input
 
 ### Util Component
 
-**API**: [`Util.java`](../src/main/java/cooper/util/Util.java)
+**API**: [`Util.java`](.https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
 
 - The `Util` component is a component unrelated to cOOPer and serves mainly as a helper component to make some of cOOPer's
 features possible.
@@ -293,25 +316,27 @@ FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
 will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
-## Product scope
+## Appendix: Requirements
 
-### Target user profile
+### Product scope
+
+#### Target user profile
 
 The target user profile of cOOPer consists of all levels of administration in a tech startup. Namely - from the employee level of Secretary up to the management level of CEO.
 
-**Example Users:**
+Example Users:
 * has a need to schedule company meetings in timely manner
 * has a need to generate and store financial statements
 * has a need to raise timely concerns to management
 * has a need to perform reliable company growth projections
 * comfortable with typing interactions on a CLI
 
-### Value proposition
+#### Value proposition
 
 **cOOper's value proposition:** Manage company financials _faster_ than typical human accounting means
 & manage company communication _more reliably_ than a typical GUI driven app.
 
-## User Stories
+### User Stories
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a ... | I want to ...             | So that I can ...                                           |
@@ -327,7 +352,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `**`    | secretary employee     | automatically schedule a meeting without having to know other person's availability| save time on finding an appropriate time to meet  |
 | `*`    | user in a hurry     | customise shortcut keys in the app| save time on retrieving the data I desire  |
 
-## Non-Functional Requirements
+### Non-Functional Requirements
 
 * Should work on any _mainstream OS_ with Java 11 installed.
 * Should be able to store up to 1000 meetings, forum posts, and financial statements without observing any noticeable sluggishness in performance.
@@ -335,10 +360,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * A user with average typing speed should be able to accomplish meeting scheduling and forum posting faster and more reliably using commands than using a mouse interaction GUI driven app.
 * A user with average typing speed should also be able to accomplish financial statement creation faster than by human means or a mouse interaction GUI driven app. 
 
-## Glossary
+### Glossary
 
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
-## Instructions for manual testing
+## Appendix: Instructions for manual testing
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing} 
