@@ -55,7 +55,7 @@ public class Ui {
         } else {
             show(LINE);
         }
-        show("To login, enter \"login  [yourUsername] pw [password] as [yourRole]\"");
+        show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\"");
         show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
         show(LINE);
     }
