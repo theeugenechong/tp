@@ -320,7 +320,7 @@ will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwis
 
 ### Product scope
 
-#### Target user profile
+#### Target user profile:
 
 The target user profile of cOOPer consists of all levels of administration in a tech startup. Namely - from the employee level of Secretary up to the management level of CEO.
 
