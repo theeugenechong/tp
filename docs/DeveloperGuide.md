@@ -299,24 +299,45 @@ will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwis
 
 The target user profile of cOOPer consists of all levels of administration in a tech startup. Namely - from the employee level of Secretary up to the management level of CEO.
 
+**Example Users:**
+* has a need to schedule company meetings in timely manner
+* has a need to generate and store financial statements
+* has a need to raise timely concerns to management
+* has a need to perform reliable company growth projections
+* comfortable with typing interactions on a CLI
+
 ### Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+**cOOper's value proposition:** Manage company financials _faster_ than typical human accounting means
+& manage company communication _more reliably_ than a typical GUI driven app.
 
 ## User Stories
+Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Version | As a ... | I want to ...             | So that I can ...                                           |
+| Priority | As a ... | I want to ...             | So that I can ...                                           |
 | ------- | -------- | ------------------------- | ----------------------------------------------------------- |
-| v1.0    | new user | see usage instructions    | refer to them when I forget how to use the application      |
-| v2.0    | user     | find a to-do item by name | locate a to-do without having to go through the entire list |
+| `***`    | new user | see usage 'help' instructions    | refer to them when I forget how to use the application      |
+| `***`    | new user     | register an account | login and return to my saved work at any point later on |
+| `***`    | user     | see a list of roles at login | login to the specific role I need to carry out a task |
+| `***`    | user     | have a password encrypted login | have my saved work be protected from any external tampering |
+| `***`    | finance admin     | automatically generate the company's financial statements | assess the company's current financial health accurately and quickly |
+| `***`    | secretary employee     | see all company personnel's weekly availability | schedule meetings between all available members easily |
+| `**`    | finance admin     | automatically generate projections on the company's yearly profitability | assess the company's potential future growth|
+| `**`    | employee     | make posts on a company forum | discuss difficulties or interesting developments in the company |
+| `**`    | secretary employee     | automatically schedule a meeting without having to know other person's availability| save time on finding an appropriate time to meet  |
+| `*`    | user in a hurry     | customise shortcut keys in the app| save time on retrieving the data I desire  |
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+* Should work on any _mainstream OS_ with Java 11 installed.
+* Should be able to store up to 1000 meetings, forum posts, and financial statements without observing any noticeable sluggishness in performance.
+* Should login and enter user-specific roles faster than traditional web-applications
+* A user with average typing speed should be able to accomplish meeting scheduling and forum posting faster and more reliably using commands than using a mouse interaction GUI driven app.
+* A user with average typing speed should also be able to accomplish financial statement creation faster than by human means or a mouse interaction GUI driven app. 
 
 ## Glossary
 
-* *glossary item* - Definition
+* *mainstream OS* - Windows, OS-X, Linux, Unix
 
 ## Instructions for manual testing
 
