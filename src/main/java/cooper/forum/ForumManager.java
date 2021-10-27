@@ -64,6 +64,4 @@ public class ForumManager {
     public ArrayList<ForumPost> getForumPosts() {
         return forumPosts;
     }
-
-
 }

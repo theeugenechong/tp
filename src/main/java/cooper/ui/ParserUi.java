@@ -45,7 +45,7 @@ public class ParserUi extends Ui {
      **/
     public static void showInvalidNumberError() {
         show(LINE);
-        show("Please enter a number for the amount.");
+        show("Please enter a number for the argument.");
         show(LINE);
     }
 }
