@@ -18,6 +18,7 @@ This developer guide is for software designers, developers, and software testers
   - [Setting up cOOPer on your computer](#setting-up-cooper-on-your-computer)
   - [Before you code](#before-you-code)
 - [Design](#design)
+- [Implementation](#Implementation)
 
 ## Acknowledgements
 1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
@@ -251,6 +252,25 @@ public class HelloCommand extends Command {
 This allows developers to inherit any arbitrary number of different command specialisation with different 
 behaviours using a unified driver. Developers do not need to modify the frontend to accommodate for every new commands.
 
+### Meetings
+`Meetings` provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
+
+#### Meeting module descriptions
+`MeetingManger` stores **2** attributes:
+1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
+2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
+
+The `ArrayList<Meeting>` object stores 0 or more `Meeting` objects
+
+Meeting object stores 3 attributes:
+1. the `meetingName`, which is a `String` object,
+2. the `time`, which is a `LocalTime` object,
+3. the `listOfAttendees`, which is an `ArrayList<String>` object
+
+When the user wants to enter an availability, `MeetingManager` will check if the time entered is in the **correct format** and if the user has **not already entered their availability to that time**. Addition of availability is successful only if those two requirements are satisfied.
+
+When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
+
 ### Forum 
 
 `Forum` provides features like posting a forum thread, commenting on a post, listing posts. 
@@ -262,6 +282,10 @@ behaviours using a unified driver. Developers do not need to modify the frontend
 ### Resources
 
 `Resources` manages other manager modules like the `FinanceManager`, `MeetingsManager` and `ForumManager`.
+
+#### Resources module descriptions
+
+`ResourcesManager` grants reference to other manager modules for different `Command` objects to perform their execution functions  by checking the `UserRole`. For example, 
 
 ```java 
 FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
