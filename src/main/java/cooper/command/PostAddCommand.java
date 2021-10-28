@@ -38,6 +38,7 @@ public class PostAddCommand extends Command {
         if (forumManager != null) {
             String username = signInDetails.getUsername();
             forumManager.addPost(username, content);
+            storageManager.saveForum(forumManager);
             ForumUi.printNewPostCommand(username, content);
         } else {
             Ui.printEmployeeHelp();
