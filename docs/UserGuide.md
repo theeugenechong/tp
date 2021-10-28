@@ -30,7 +30,7 @@ cOOPer can help you manage your startup efficiently.
   - [4.1 Declaring available timings for meetings: `available`](#41-declaring-available-timings-for-meetings-available)
   - [4.2 Viewing meetings: `meetings`](#42-viewing-meetings-meetings)
   - [4.3 Posting to forum: `post add`](#43-posting-to-forum-post-add)
-  - [4.4 Commenting on a post: `post comment`](#44-commenting-on-a-post)
+  - [4.4 Commenting on a post: `post comment`](#44-commenting-on-a-post-post-comment)
   - [4.5 Listing forum posts: `post list all`](#45-listing-forum-posts-post-list-all)
 - [5. Admin Features](#5-admin-features)
   - [5.1 Adding expenses: `add`](#51-adding-expenses-add)
