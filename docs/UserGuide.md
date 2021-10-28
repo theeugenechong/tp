@@ -63,7 +63,7 @@ The table below explains the formatting and symbols in this user guide.
 `command` |Text highlighted in grey represent a command that can be entered in the Command Prompt/Terminal. 
 `[argument]`|Text highlighted in grey wrapped in square brackets represent a command argument that needs to be present when a command is entered. You are free to decide the argument entered. 
 `>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands.
- ℹ️ |The info symbol indicates useful information about cOOPer's features.
+ℹ️  |The info symbol indicates useful information about cOOPer's features.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
 
@@ -125,7 +125,7 @@ ensuring all members of the startup are registered with the correct role. (Each 
   3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to
   find out more about logging in.
 
-> ℹ️  `[username]` refers to the user's name, `[password]` refers to the user's password, while `[role]` refers to the user's role as determined [here](#roles).
+> ℹ️`[username]` refers to the user's name, `[password]` refers to the user's password, while `[role]` refers to the user's role as determined [here](#roles).
 
 - Example input:
 
@@ -141,11 +141,11 @@ Sebastian is now successfully registered as an admin!
 =========================================================================
 ```
 
-> ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
+> ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
 
 ### How cOOPer is to be Used
 - The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
-> ⚠️ cOOPer's features related to scheduling meetings and posting to the forum **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
+> ⚠️cOOPer's features related to scheduling meetings and posting to the forum **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
@@ -154,9 +154,9 @@ Sebastian is now successfully registered as an admin!
   enter `login [username] pw [password] as [role]`.
   2. You now have access to cOOPer's features specific to your role.
 
-> ℹ️ `[username]`, `[password]` and `[role]` refer to the user's name and role as registered in cOOPer's system.
+> ℹ️`[username]`, `[password]` and `[role]` refer to the user's name and role as registered in cOOPer's system.
 > 
-> ⚠️ The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian`
+> ⚠️The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian`
 > is not the same as logging in with `Sebastian`.
 
 - Example input:
@@ -175,7 +175,7 @@ You are now logged in successfully as Sebastian!
 
 > ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
 > 
-> 💡    Remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
+> 💡 Remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
 
 ## Features for all users
 
@@ -192,10 +192,12 @@ You are now logged in successfully as Sebastian!
 - How to input your availability:
   1. After [logging in](#login) to the system, enter `available [time]`.
   2. You will now have your name stored under the specified time in the system.
-
-> #### 📝Note:
-> - `[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.
-> - Duplicate `[username]` in one timeslot will **not** be accepted.
+  
+> ℹ️`[time]` refers to the **start of the hour** that you are available at. For example, `available 14:00` means that you are available from **14:00** to **14:59**.
+> 
+> ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.
+> 
+> ⚠️Duplicate `[username]` in one timeslot will **not** be accepted.
 
 - Example input:
 
@@ -212,13 +214,37 @@ Sebastian's availability has been added to 14:00
 =========================================================================
 ```
 
-### Viewing users available at different timings: `availabillity`
+### Viewing users available at different timings: `availability`
+- To view all the availabilities after inputting [availabilities](#declaring-available-timing-for-meetings-available), cOOPer will generate a table for easier visualisation.
+- How to view available timings:
+  1. After [logging in](#login) to the system, enter `availability`.
+  2. You will now see a table with the availabilities entered.
+
+- Example input:
+
+```
+>> availability
+```
+
+- Expected output:
+
+```
+=========================================================================
+Here are the availabilities:
+┌────────────────────────────────────────────────────────────────────┐
+│ time  │ names
+├────────────────────────────────────────────────────────────────────
+│ 10:00 │ Eugene
+│ 14:00 │ Sebastian
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
 
 ### Viewing scheduled meetings: `meetings`
-- To view the table of availabilities after inputting [availabilities](#viewing-users-available-at-different-timings-availabillity), cOOPer generates a table to help you visualise the availabilities.
-- How to view available timings:
+- Generates a user-specific table of meetings (for the day) for easier visualisation.
+- How to view meetings:
   1. After [logging in](#login) to the system, enter `meetings`.
-  2. You will now obtain a table with the availabilities entered.
+  2. You will now see a table with all your meetings for the day.
 
 - Example input:
 
@@ -230,10 +256,11 @@ Sebastian's availability has been added to 14:00
 
 ```
 =========================================================================
-These are the availabilities:
+Here are your meetings for today:
 ┌────────────────────────────────────────────────────────────────────┐
-│ 10:00 │ Eugene
-│ 14:00 │ Sebastian
+│ meeting              │ time  │ attendees
+├────────────────────────────────────────────────────────────────────
+│ <<Progress Meeting>> │ 10:00 │ Sebastian, Eugene
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
@@ -332,13 +359,46 @@ The pdf file has been successfully generated!
 
 
 ### Scheduling meetings with different users: `schedule`
+- cOOPer helps you to schedule meetings easily by either an **auto** or **manual** way. 
+- **Auto** schedule meeting means cOOPer picks the earliest timing all specified users are available at and schedule a meeting then. 
+- How to **auto** schedule a meeting:
+  1. After [logging in](#login) to the system, enter `schedule [meetingName] with [username1], [username2]`.
+  2. cOOPer will find the **earliest timing** when all specified users are available.
+  3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with the specified users.
 
+- **Manual** schedule meeting means cOOPer refers to the timing you specified and checks if all specified users are available then, and schedules a meeting if they are.
+- How to **manual** schedule a meeting:
+1. After [logging in](#login) to the system, enter `schedule [meetingName] with [username1], [username2] /at [time]`.
+2. cOOPer will check if the users are all available at the time specified.
+3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with all the users at that specified time.
+
+> ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.
+>
+> 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates. 
+> 
+> ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
+
+- Example input for **auto** schedule meeting:
+
+```
+>> schedule Progress Meeting with Sebastian, Eugene
+```
+
+- Expected output for **auto** schedule meeting:
+
+```
+=========================================================================
+Success!
+You have scheduled a <<Progress Meeting>> meeting at 10:00 with Sebastian, Eugene
+=========================================================================
+```
 
 ## Employee Features
 - As of v2.0, cOOPer does not have features exclusive to employees yet 😥, there will be more to come in future versions!
 
 ## Exiting the program: `exit`
 Exits the program.
+
 - Example input:
 
 ```
@@ -386,9 +446,9 @@ add         |`add [amount]`                       |`add 5000` or `add (5000)`
 proj        |`proj [years]`                       |`proj 5`
 list        |`list`                               |`list`
 generate    |`generate [financialStatement]`      |`generate bs`
-available   |`available [username] at [time]`     |`available 14:00`
+available   |`available [time]`                   |`available 14:00`
 availability|`availability`                       |`availability`
-schedule    |`schedule [meetingName] with [username1], [username2] /at [time]`|`schedule Progress Meeting with Sebastian, Eugene /at 14:00`
+schedule    |`schedule [meetingName] with [username1], [username2]` or `schedule [meetingName] with [username1], [username2] /at [time]`|`schedule Progress Meeting with Sebastian, Eugene` or `schedule Progress Meeting with Sebastian, Eugene /at 14:00`
 meetings    |`meetings`                           |`meetings`
 logout      |`logout`                             |`logout`
 exit        |`exit`                               |`exit`
@@ -403,7 +463,7 @@ post add    |`post add [postContent]`             |`post add Who's up for dinner
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
 post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
 post delete |`post delete [postId]`               |`post delete 1`
-available   |`available [username] at [time]`     |`available 14:00`
+available   |`available at [time]`                |`available 14:00`
 availability|`availability`                       |`availability`
 meetings    |`meetings`                           |`meetings`
 logout      |`logout`                             |`logout`
