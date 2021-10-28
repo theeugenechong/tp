@@ -144,8 +144,9 @@ Sebastian is now successfully registered as an admin!
 > ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
 
 ### How cOOPer is to be Used
-- The **ideal** way of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
+- The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
 > ⚠️ cOOPer's features related to scheduling meetings and posting to the forum **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
+
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
 - How to log in:
@@ -173,6 +174,8 @@ You are now logged in successfully as Sebastian!
 ```
 
 > ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
+> 
+> 💡    Remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
 
 ## Features for all users
 
@@ -208,6 +211,7 @@ Success!
 Sebastian's availability has been added to 14:00
 =========================================================================
 ```
+
 ### Viewing users available at different timings: `availabillity`
 
 ### Viewing scheduled meetings: `meetings`
@@ -296,10 +300,10 @@ These are the availabilities:
   1. Enter `generate [financialStatement]` where `[financialStatement]` is one of `bs` or `cf`.
   2. If **successful**, the PDF file is created in a folder 'output' in the home folder with the name 'FinancialStatementSpecified.pdf'.
   
-- Example input for successful generation of the PDF:
+- Example input for successful generation of the Balance Sheet PDF:
 
 ```
->> generate bs
+>> generate cf
 ```
 
 - Expected output:
@@ -311,18 +315,19 @@ The pdf file has been successfully generated!
 ```
 
 - The diagram below shows where you can find the generated PDF file.
+
 ![output](userGuideImages/generateBs.png) 
 
 > 💡   Always [add](#adding-entries-to-the-financial-statement-add) entries to your financial statement first before it is generated as a PDF.
 > 
 > ⚠️The PDF file will not be created if the specified financial statement is empty.
 
-⚠️ **Important:** 
-- The creation of the PDF file requires an **active internet connection**. 
-- In the event that there is no internet connection, a backup '.txt' file will be 
-created in the same 'output' folder in which the PDF was supposed to be created.
-- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an online LaTeX Editor. 
-
+> ⚠️ **Important:** 
+>- The creation of the PDF file requires an **active internet connection**. 
+>- In the event that there is no internet connection, a backup '.txt' file will be 
+>created in the same 'output' folder in which the PDF was supposed to be created.
+>- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an online LaTeX Editor. 
+>
 > 💡 **Always** ensure that you have an active internet connection before running `generate`. 
 
 
@@ -350,15 +355,18 @@ Bye, see you next time! :D
 
 
 ## FAQ
+This section contains some frequently asked questions you may have when using cOOPer.
 
-**Q**: How do I transfer my data to another computer? 
-
-**A**: Follow the steps below:
+**Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
+**A**: Follow the steps below:<br>
 1. [Download](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) cOOPer in the other computer. 
-2. In the old computer, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Quick Start](#quick-start) if you do not 
+2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Quick Start](#quick-start) if you do not 
 know what the *home folder* is.
-3. Copy `cooperData` over to cOOPer's home folder in the other computer. 
-4. Running cOOPer should load your saved data.
+3. Copy `cooperData` over to cOOPer's home folder in the other desktop. 
+4. Running cOOPer on the other desktop should load your saved data.
+
+**Q**: Another person using cOOPer on their desktop stated their availability / posted to the forum. However, I am unable to see their availability / post when I run cOOPer on my desktop. Why does this occur?<br>
+**A**: Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section.
 
 ## Command Summary
 
@@ -375,7 +383,7 @@ post delete |`post delete [postId]`               |`post delete 1`
 bs          |`bs`                                 |`bs`
 cf          |`cf`                                 |`cf`
 add         |`add [amount]`                       |`add 5000` or `add (5000)`
-proj        |`proj`                               |`proj`
+proj        |`proj [years]`                       |`proj 5`
 list        |`list`                               |`list`
 generate    |`generate [financialStatement]`      |`generate bs`
 available   |`available [username] at [time]`     |`available 14:00`
