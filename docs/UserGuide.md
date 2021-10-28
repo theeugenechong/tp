@@ -19,7 +19,7 @@ If you are running a tech startup, cOOPer can help you with **accounting** and *
 cOOPer  is optimized for use via a [**Command Line Interface (CLI)**](https://simple.wikipedia.org/wiki/Command-line_interface), so if you are someone who types fast,
 cOOPer can help you manage your startup efficiently.
 
-## What's in This User Guide
+# What's in This User Guide
 
 - [How this User Guide Works](#how-this-user-guide-works)
 - [Setup](#setup)
@@ -30,7 +30,7 @@ cOOPer can help you manage your startup efficiently.
 - [Log in](#login)
 - [Features for all users](#features-for-all-users)
   - [Adding a forum post: `post add`](#adding-a-forum-post-post-add)
-  - [Viewing a post / posts in the forum: `post list`](#viewing-a-post--posts-in-the-forum-post-list)
+  - [Viewing a post / posts in the forum: `post list all`](#viewing-a-post--posts-in-the-forum-post-list-all)
   - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
   - [Deleting a forum post: `post delete`](#deleting-a-forum-post-post-delete)
   - [Declaring available timings for meetings: `available`](#declaring-available-timing-for-meetings-available)
@@ -116,7 +116,7 @@ Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
 - On the other hand, you hold the employee role if you are a basic employee at the startup.
 
 - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of
-administrative access within the company throughout cOOPer's usage.
+  administrative access within the company throughout cOOPer's usage.
 
 ### User Registration
 - Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of 
@@ -183,9 +183,75 @@ You are now logged in successfully as Sebastian!
 
 ### Adding a forum post: `post add`
 
-### Viewing a post / posts in the forum: `post list`
++ User can post message to forum for everyone to discuss on certain topics.
++ How to post message to forum:
+  1. For example, if you want to post "hello world!" to forum, you can do that after [logging in](#3-login) to the system and enter `post add hello world!`.
+  2. You will get a confirmation message indicating if a post is successfully posted or not
++ Example input:
+
+```
+>> post add hello world!
+```
+
++ Expected output:
+
+```
+=========================================================================
+me has just posted to forum:
+┌────────────────────────────────────────────────────────────────────┐
+|  hello world
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
+
+### Viewing a post / posts in the forum: `post list all`
+
++ Users are able to list all forum posts currently available using `post list all`. Cooper will list all posts and comments in a hierarchical way.
++ Example input:
+
+```
+>> post list all
+```
+
++ Expected output:
+
+```
+=========================================================================
+Here is the list of forum posts:
+┌────────────────────────────────────────────────────────────────────┐
+|  1. @me: hello world
+|    ∟  1. @me: welcome
+|    ∟  2. @he: welcome to CS2113T!
+|  2. @me: how do you do?
+|    ∟  1. @he: how do you do?
+|  3. @he: Hey how are you??
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
 
 ### Commenting on a forum post: `post comment`
+
++ When other users see a post is posted on the forum. They can comment on the post using `post comment <comments> on <post id>`
++ How to post message to forum:
+  1. For example, if we want to comment on the previous post in 4.2, we can do `post comment welcome on 1`
+  2. You will get a confirmation message indicating if a comment is successful posted or not
++ Example input:
+
+```
+>> post comment welcome on 1
+```
+
++ Expected output:
+
+```
+=========================================================================
+me has just commented on a  post from forum:
+┌────────────────────────────────────────────────────────────────────┐
+|  hello world
+|    ∟  welcome
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
 
 ### Deleting a forum post: `post delete`
 
