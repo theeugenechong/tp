@@ -9,6 +9,8 @@ import cooper.resources.ResourcesManager;
 
 import java.util.ArrayList;
 
+//@@author Rrraaaeee
+
 public abstract class Command {
 
     /**
@@ -18,6 +20,7 @@ public abstract class Command {
                                  StorageManager storageManager) throws InvalidAccessException, LogoutException,
                                  EmptyFinancialStatementException;
 
+    //@@author ChrisLangton
     protected boolean isEmptyFinancialStatement(ArrayList<Integer> financialStatement) {
         return financialStatement.stream().allMatch(i -> i == 0);
     }

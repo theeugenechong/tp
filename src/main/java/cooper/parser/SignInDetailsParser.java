@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+//@@author theeugenechong
+
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class SignInDetailsParser extends  ParserBase {
 
@@ -56,13 +58,13 @@ public class SignInDetailsParser extends  ParserBase {
         switch (signInProtocol) {
         case "login":
         case "register":
-            return parseSignInDetailsInternal(input);
+            return parseSignInDetails(input);
         default:
             throw new UnrecognisedCommandException();
         }
     }
 
-    private SignInProtocol parseSignInDetailsInternal(String input) throws UnrecognisedCommandException,
+    private SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
             InvalidUserRoleException, NoSuchElementException, InvalidCommandFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {

@@ -2,6 +2,8 @@ package cooper.finance;
 
 import java.util.ArrayList;
 
+//@@author ChrisLangton
+
 public class CashFlow {
     private static final int CF_SIZE = 10;
     public ArrayList<Integer> cashFlowStatement;
@@ -18,5 +20,4 @@ public class CashFlow {
     public ArrayList<Integer> getCashFlowStatement() {
         return cashFlowStatement;
     }
-
 }

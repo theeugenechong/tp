@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+//@@author Rrraaaeee
+
 public class Ui {
 
     private static final String LOGO = "            /$$$$$$   /$$$$$$  /$$$$$$$\n"
@@ -22,14 +24,14 @@ public class Ui {
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final PrintStream printStream = System.out;
+    private static final Scanner IN = new Scanner(System.in);
+    private static final PrintStream OUT = System.out;
 
     protected static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String getInput() {
         showPrompt();
-        return scanner.nextLine();
+        return IN.nextLine();
     }
 
     public static void showLogo() {
@@ -53,7 +55,7 @@ public class Ui {
         } else {
             show(LINE);
         }
-        show("To login, enter \"login  [yourUsername] pw [password] as [yourRole]\"");
+        show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\"");
         show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
         show(LINE);
     }
@@ -72,22 +74,23 @@ public class Ui {
      * Close streams properly.
      */
     public static void closeStreams() {
-        scanner.close();
-        printStream.close();
+        IN.close();
+        OUT.close();
     }
 
     protected static void show(String printMessage) {
-        printStream.println(printMessage);
+        OUT.println(printMessage);
     }
 
     protected static void show(String printMessage, boolean newline) {
-        printStream.print(printMessage);
+        OUT.print(printMessage);
 
         if (newline) {
-            printStream.println();
+            OUT.println();
         }
     }
 
+    //@@author ChrisLangton
     public static void printAdminHelp() {
         show(LINE);
         show("Here are the commands available to an admin along with their formats:");
@@ -105,6 +108,7 @@ public class Ui {
         show("Here are the commands available to an employee along with their formats:");
     }
 
+    //@@author fansxx
     public static void printGeneralHelp() {
         show("post add      | post add [postContent]");
         show("post delete   | post delete [postId]");

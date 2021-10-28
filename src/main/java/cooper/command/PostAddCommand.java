@@ -9,6 +9,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author Rrraaaeee
 /**
  * The child class of Command that handles the 'post add' command specifically.
  */
@@ -37,6 +38,7 @@ public class PostAddCommand extends Command {
         if (forumManager != null) {
             String username = signInDetails.getUsername();
             forumManager.addPost(username, content);
+            storageManager.saveForum(forumManager);
             ForumUi.printNewPostCommand(username, content);
         } else {
             Ui.printEmployeeHelp();

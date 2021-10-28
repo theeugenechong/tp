@@ -1,5 +1,7 @@
 package cooper.ui;
 
+//@@author theeugenechong
+
 public class ParserUi extends Ui {
 
     /**
@@ -10,7 +12,7 @@ public class ParserUi extends Ui {
         show("I don't recognise the command you entered.");
 
         if (isSignIn) {
-            show("To login, enter \"login  [yourUsername] pw [password] as [yourRole]\"");
+            show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\"");
             show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
         } else {
             show("Enter 'help' to view the format of each command.");
@@ -43,7 +45,7 @@ public class ParserUi extends Ui {
      **/
     public static void showInvalidNumberError() {
         show(LINE);
-        show("Please enter a number for the amount.");
+        show("Please enter a number for the argument.");
         show(LINE);
     }
 }

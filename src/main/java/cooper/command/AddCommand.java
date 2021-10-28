@@ -12,6 +12,8 @@ import cooper.verification.UserRole;
 import cooper.finance.FinanceCommand;
 import cooper.resources.ResourcesManager;
 
+//@@author ChrisLangton
+
 /**
  * The child class of Command that handles the 'add' command specifically.
  */
@@ -56,6 +58,7 @@ public class AddCommand extends Command {
         if (financeFlag == FinanceCommand.BS) {
             if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfSE) {
                 financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
+                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
                 FinanceUi.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
                 BalanceSheet.balanceSheetStage++;
             } else {
@@ -64,6 +67,7 @@ public class AddCommand extends Command {
         } else if (financeFlag == FinanceCommand.CF) {
             if (CashFlow.cashFlowStage <= FinanceManager.freeCashFlow) {
                 financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
+                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
                 FinanceUi.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
                 CashFlow.cashFlowStage++;
             } else {

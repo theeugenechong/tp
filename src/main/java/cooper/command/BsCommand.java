@@ -12,6 +12,8 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+//@@author ChrisLangton
+
 public class BsCommand extends Command {
 
     public BsCommand() {
@@ -29,11 +31,14 @@ public class BsCommand extends Command {
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
-        resetBalanceSheet(financeManager);
+        resetBalanceSheet();
         FinanceUi.initiateBalanceSheet();
     }
 
-    private void resetBalanceSheet(FinanceManager financeManager) {
+    private void resetBalanceSheet() {
         BalanceSheet.balanceSheetStage = 0;
+        FinanceManager.netAssets = 0;
+        FinanceManager.netLiabilities = 0;
+        FinanceManager.netSE = 0;
     }
 }

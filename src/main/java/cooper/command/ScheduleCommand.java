@@ -14,6 +14,8 @@ import cooper.verification.UserRole;
 
 import java.util.ArrayList;
 
+//@@author fansxx
+
 public class ScheduleCommand extends Command {
     private final String meetingName;
     private final String time;

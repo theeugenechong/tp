@@ -2,6 +2,8 @@ package cooper.finance;
 
 import java.util.ArrayList;
 
+//@@author ChrisLangton
+
 public class BalanceSheet {
     private static final int BS_SIZE = 12;
     public ArrayList<Integer> balanceSheet;

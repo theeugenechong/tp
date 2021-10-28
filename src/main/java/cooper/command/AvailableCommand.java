@@ -11,6 +11,8 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author fansxx
+
 public class AvailableCommand extends Command {
     private final String time;
 

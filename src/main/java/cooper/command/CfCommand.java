@@ -12,6 +12,8 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+//@@author ChrisLangton
+
 public class CfCommand extends Command {
 
     public CfCommand() {
@@ -29,11 +31,14 @@ public class CfCommand extends Command {
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
-        resetCashFlowStatement(financeManager);
+        resetCashFlowStatement();
         FinanceUi.initiateCashFlowStatement();
     }
 
-    private void resetCashFlowStatement(FinanceManager financeManager) {
+    private void resetCashFlowStatement() {
         CashFlow.cashFlowStage = 0;
+        FinanceManager.netOA = 0;
+        FinanceManager.netIA = 0;
+        FinanceManager.netFA = 0;
     }
 }

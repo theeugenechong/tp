@@ -6,6 +6,8 @@ import cooper.exceptions.InvalidForumPostIdException;
 import cooper.exceptions.InvalidForumDeleteByNonOwnerException;
 import cooper.ui.ForumUi;
 
+//@@author Rrraaaeee
+
 public class ForumManager {
     private final ArrayList<ForumPost> forumPosts;
 
@@ -62,6 +64,4 @@ public class ForumManager {
     public ArrayList<ForumPost> getForumPosts() {
         return forumPosts;
     }
-
-
 }

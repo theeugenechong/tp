@@ -30,6 +30,7 @@ import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.finance.FinanceCommand;
 
+//@@author Rrraaaeee
 
 @SuppressWarnings({"OptionalGetWithoutIsPresent", "SwitchStatementWithTooFewBranches"})
 public class CommandParser extends ParserBase {
@@ -145,6 +146,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    //@@author ChrisLangton
     private Command parseAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
         String amountAsString;
@@ -171,6 +173,7 @@ public class CommandParser extends ParserBase {
 
     }
 
+    //@@author fansxx
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
         String time = "";
@@ -245,6 +248,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    //@@author Rrraaaeee
     private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
         String content = "";
@@ -305,14 +309,14 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
-        int postId = -1;
+        Integer postId = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
             case "list-hint":
                 if (argVal.equals("all")) {
-                    postId = -1; // list all
+                    postId = null; // list all
                 } else {
                     postId = Integer.parseInt(argVal);
                 }
@@ -324,6 +328,7 @@ public class CommandParser extends ParserBase {
         return new PostListCommand(postId);
     }
 
+    //@@author theeugenechong
     private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
         String documentToGenerate = null;
@@ -349,6 +354,7 @@ public class CommandParser extends ParserBase {
         return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
     }
 
+    //@@author ChrisLangton
     private Command parseProjectionArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
         int years = 0;

@@ -2,6 +2,8 @@ package cooper.ui;
 
 import cooper.verification.UserRole;
 
+//@@author theeugenechong
+
 public class VerificationUi extends Ui {
 
     public static void showPleaseRegisterMessage() {

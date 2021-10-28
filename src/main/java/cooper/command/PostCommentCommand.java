@@ -10,6 +10,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author Rrraaaeee
 /**
  * The child class of Command that handles the 'post comment' command specifically.
  */
@@ -41,6 +42,7 @@ public class PostCommentCommand extends Command {
             try {
                 String username = signInDetails.getUsername();
                 String postContent = forumManager.commentPost(username, content, postId - 1);
+                storageManager.saveForum(forumManager);
                 ForumUi.printCommentPostCommand(username, postContent, content);
             } catch (InvalidForumPostIdException e) {
                 ForumUi.printInvalidForumPostIndexError();

@@ -13,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+//@@author theeugenechong
+
 public abstract class PdfGenerator {
 
     protected static final String TEX_LIVE_URL = "https://texlive.net/cgi-bin/latexcgi";
@@ -84,6 +86,7 @@ public abstract class PdfGenerator {
         return template.replace("% {Content}", compiledContent.toString());
     }
 
+    //@@author Rrraaaeee
     /**
      * Sends the tex file formed to be compiled at the URL.
      * The following code mimic this curl command:
@@ -121,6 +124,7 @@ public abstract class PdfGenerator {
         }
     }
 
+    //@@author theeugenechong
     //https://www.baeldung.com/httpurlconnection-post
     public abstract void compilePdfAndSend();
 

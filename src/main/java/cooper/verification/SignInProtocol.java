@@ -3,6 +3,7 @@ package cooper.verification;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+//@@author theeugenechong
 /**
  * Class representing protocols which allow a user to gain access to cOOPer's features, namely
  * login and registration.

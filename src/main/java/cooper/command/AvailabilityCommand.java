@@ -9,6 +9,8 @@ import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+//@@author fansxx
+
 public class AvailabilityCommand extends Command {
 
     /**

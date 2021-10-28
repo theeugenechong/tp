@@ -11,6 +11,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author ChrisLangton
 /**
  * The child class of Command that handles the 'list' function specifically.
  */

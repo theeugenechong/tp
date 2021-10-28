@@ -3,10 +3,12 @@ package cooper.meetings;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+//@@author fansxx
+
 public class Meeting {
-    private String meetingName;
-    private LocalTime time;
-    private ArrayList<String> listOfAttendees;
+    private final String meetingName;
+    private final LocalTime time;
+    private final ArrayList<String> listOfAttendees;
 
     public Meeting(String meetingName, LocalTime time, ArrayList<String> listOfAttendees) {
         this.meetingName = meetingName;

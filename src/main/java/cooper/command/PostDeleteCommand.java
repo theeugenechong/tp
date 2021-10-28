@@ -11,6 +11,7 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author Rrraaaeee
 /**
  * The child class of Command that handles the 'post delete' command specifically.
  */
@@ -40,6 +41,7 @@ public class PostDeleteCommand extends Command {
             try {
                 String username = signInDetails.getUsername();
                 String contentDeleted = forumManager.deletePost(username, postId - 1);
+                storageManager.saveForum(forumManager);
                 ForumUi.printDeletePostCommand(username, contentDeleted);
             } catch (InvalidForumPostIdException e) {
                 ForumUi.printInvalidForumPostIndexError();

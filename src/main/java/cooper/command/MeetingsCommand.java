@@ -9,6 +9,8 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+//@@author fansxx
+
 public class MeetingsCommand extends Command {
 
     /**
