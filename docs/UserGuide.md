@@ -268,7 +268,32 @@ You can enter 'list' to view the current Cash Flow Statement or
 start off by entering Net Income:
 =========================================================================
 ```
-this confirms your initiation of this function. From here, simply follow cOOPer's instruction.
+this confirms your initiation of this function. From here, use the [add](#adding-entries-to-the-financial-statement-add) command to begin creating
+a new Cash Flow Statement, or use the [list](#viewing-the-financial-statement-list) command to view the existing statement.
+An example of the final Cash Flow Statement expected output is shown below:
+```
+=========================================================================
+This is the company's current Cash Flow Statement:
+-----CASH FLOW FROM OPERATING ACTIVITIES-----
+Net Income  1000
+Depreciation and Amortisation  900
+Increase in Accounts Receivable  800
+Decrease in Accounts Payable  700
+Decrease in Inventory  600
+Net Cash from Operating Activities:  4000
+-----CASH FLOW FROM INVESTING ACTIVITIES-----
+Capital Expenditures  500
+Proceeds from Sale of Equipment  400
+Net Cash from Investing Activities:  900
+-----CASH FLOW FROM FINANCING ACTIVITIES-----
+Proceeds from Issuing Debt  300
+Dividends Paid  200
+Net Cash from Financing Activities:  500
+-----FREE CASH FLOW-----
+Free Cash Flow   3000
+=========================================================================
+```
+
 
 
 ### Adding entries to the financial statement: `add`
@@ -319,7 +344,26 @@ Next, please enter Increase in Accounts Receivable
 ```
 
 ### Projecting cash flow: `proj`
-
+* Command to do projections on company's Free Cash Flow (FCF)
+* How to do a projection:
+  1. After [logging in](#login) to the system as an admin (see [Roles](#roles)),
+  and subsequently [filling up your cash flow statement](#adding-entries-to-the-financial-statement-add)
+  including last year's FCF, you can then enter `proj [years]` to project your
+  company's FCF marginal growth Year-Over-Year (YoY) by the number of `[years]` specified.
+* Example input: 
+```
+>> proj 3
+```
+* Example output:
+```
+=========================================================================
+At your current rate of profitability growth in Free Cash Flow, these are future year's projections:
+1 year: 5557
+2 year: 7564
+3 year: 8825
+After 3 years you can expect Free Cash Flow of 8825
+=========================================================================
+```
 ### Viewing the financial statement: `list`
 - Example input:
 
