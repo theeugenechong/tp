@@ -34,7 +34,7 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "cooper"
+    archiveBaseName = "cOOPer"
     archiveClassifier = null
 }
 
@@ -44,5 +44,5 @@ checkstyle {
 
 run{
     standardInput = System.in
-    enableAssertions = true;
+    enableAssertions = true
 }

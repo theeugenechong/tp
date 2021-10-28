@@ -1,14 +1,17 @@
 package cooper.parser;
 
+import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import cooper.exceptions.InvalidArgumentException;
 import cooper.exceptions.UnrecognisedCommandException;
 
+import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
+
+//@@author Rrraaaeee
 
 public class ParserTest {
 
@@ -20,12 +23,6 @@ public class ParserTest {
 
         assertThrows(UnrecognisedCommandException.class, () ->
                 CommandParser.parse("$%^&&"));
-
-        assertThrows(UnrecognisedCommandException.class, () ->
-                CommandParser.parse("available Eugene at"));
-
-        assertThrows(UnrecognisedCommandException.class, () ->
-                CommandParser.parse("meetings $%^&"));
     }
 
     @Test
@@ -33,25 +30,28 @@ public class ParserTest {
         assertThrows(NumberFormatException.class, () ->
                 CommandParser.parse("add $%^&"));
 
-        assertThrows(NoSuchElementException.class, () ->
-                CommandParser.parse("available at 22:53"));
+        assertThrows(InvalidCommandFormatException.class, () ->
+                CommandParser.parse("proj"));
     }
 
     @Test
     void parseSignInDetails_emptyArguments_exceptionThrown() {
-        assertThrows(NoSuchElementException.class, () ->
-                CommandParser.parseSignInDetails("login as admin"));
+        assertThrows(InvalidCommandFormatException.class, () ->
+                SignInDetailsParser.parse("login as admin"));
 
-        assertThrows(InvalidArgumentException.class, () ->
-                CommandParser.parseSignInDetails("login Topias as"));
+        assertThrows(InvalidCommandFormatException.class, () ->
+                SignInDetailsParser.parse("login Topias as"));
+
+        assertThrows(InvalidCommandFormatException.class, () ->
+                CommandParser.parse("available"));
     }
 
     @Test
     void parseSignInDetails_invalidRole_throwsInvalidUserRoleException() {
         assertThrows(InvalidUserRoleException.class, () ->
-                CommandParser.parseSignInDetails("login Topias as abc"));
+                SignInDetailsParser.parse("login Topias pw 1111 as abc"));
 
         assertThrows(InvalidUserRoleException.class, () ->
-                CommandParser.parseSignInDetails("register Martin as boss"));
+                SignInDetailsParser.parse("register Martin pw 1111 as boss"));
     }
 }

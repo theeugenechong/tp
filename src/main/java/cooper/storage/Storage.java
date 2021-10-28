@@ -1,111 +1,69 @@
 package cooper.storage;
 
-import java.io.BufferedWriter;
+import cooper.ui.FileIoUi;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import cooper.exceptions.InvalidAccessException;
-import cooper.ui.Ui;
-import cooper.parser.CommandParser;
-import cooper.command.Command;
-import cooper.verification.SignInDetails;
-import cooper.finance.FinanceManager;
-import cooper.meetings.MeetingManager;
-import cooper.exceptions.InvalidArgumentException;
-import cooper.exceptions.UnrecognisedCommandException;
-import cooper.verification.Verifier;
+//@@author theeugenechong
 
 public class Storage {
 
-    private final File storageFile;
-    private final ArrayList<String> historyInputs;
+    protected final String filePath;
 
-    public Storage() {
-        historyInputs = new ArrayList<>();
-        String baseDir = System.getProperty("user.dir") + "/tmp";
-        String fileName = "/storage.txt";
-        Path folderDir = Paths.get(baseDir);
-        Path fileDir = Paths.get(baseDir + fileName);
-        try {
-            if (Files.notExists(folderDir)) {
-                Files.createDirectories(folderDir);
-            }
-        } catch (IOException e) {
-            Ui.showInvalidFilePathError();
-            // Wrong URI, no storage file is created
-            storageFile = null;
-            return;
-        }
-        // load storage file
-        storageFile = new File(fileDir.toString());
+    public Storage(String filePath) {
+        this.filePath = filePath;
     }
 
-    public void loadLoginDetails(Verifier cooperVerifier) {
-        Ui.suppressOutput();
+    protected static Scanner getScanner(String filePath) {
+        File storageFile = new File(filePath);
+        Scanner fileScanner = null;
         try {
-            Scanner sc = new Scanner(storageFile);
-            while (sc.hasNextLine()) {
-                String input = sc.nextLine();
-                if (input.split(" ")[0].equals("register")) {
-                    cooperVerifier.verify(input);
-                }
-            }
-            sc.close();
+            fileScanner = new Scanner(storageFile);
         } catch (FileNotFoundException e) {
-            Ui.showNoStorage();
-        }
-        Ui.unSuppressOutput();
-    }
-
-    public void loadResources(SignInDetails signInDetails, FinanceManager cooperFinanceManager, 
-            MeetingManager cooperMeetingManager) {
-        Ui.suppressOutput();
-        try {
-            Scanner sc = new Scanner(storageFile);
-            while (sc.hasNextLine()) {
-                String input = sc.nextLine();
-                if (!input.split(" ")[0].equals("register")) { // do not load register instructions
-                    Command command = CommandParser.parse(input);
-                    command.execute(signInDetails, cooperFinanceManager, cooperMeetingManager);
-                }
+            try {
+                createFileInDirectory(filePath);
+            } catch (IOException ioe) {
+                FileIoUi.showFileCreationError(ioe);
             }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            Ui.showNoStorage();
-        } catch (InvalidArgumentException e) {
-            Ui.showInvalidCommandArgumentError();
-        } catch (NumberFormatException e) {
-            Ui.showInvalidNumberError();
-        } catch (UnrecognisedCommandException e) {
-            Ui.showUnrecognisedCommandError();
-        } catch (InvalidAccessException e) {
-            Ui.printNoAccessError();
         }
-        Ui.unSuppressOutput();
+        return fileScanner;
     }
 
-    public void saveCommand(String input) {
-        historyInputs.add(input);
+    /**
+     * Creates a file with the path specified by {@code filePath}.
+     *
+     * @param filePath string representing the file path
+     * @throws IOException if there is an error creating the file
+     */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static void createFileInDirectory(String filePath) throws IOException {
+        String directoryName = getDirectoryPath(filePath);
+        File storageDir = new File(directoryName);
+        storageDir.mkdir();
+
+        File storageFile = new File(filePath);
+        storageFile.createNewFile();
     }
 
-    public void saveStorage() {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(storageFile, true));
-            for (String input : historyInputs) {
-                writer.write(input);
-                writer.newLine();
-            }
-            writer.close();
-            historyInputs.clear();
-        } catch (IOException e) {
-            Ui.showInvalidFilePathError();
+    /**
+     * Helper function which returns the full directory path of {@code filePath}. The purpose of this method
+     * is so that the directory for the storage file can be created first before the file is created in the
+     * {@code createFileInDirectory} method.
+     *
+     * @param filePath string representing the file path
+     * @return a string representing the full directory path of {@code filePath}
+     */
+    private static String getDirectoryPath(String filePath) {
+        String[] directoryPathAsArray = filePath.split("/");
+        StringBuilder directoryPath = new StringBuilder();
+
+        /* Iterate up to length - 1 because the last argument in a file path is usually the file type */
+        for (int i = 0; i < (directoryPathAsArray.length - 1); i++) {
+            directoryPath.append(directoryPathAsArray[i]);
         }
+        return String.valueOf(directoryPath);
     }
 }
