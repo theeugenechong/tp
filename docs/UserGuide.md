@@ -175,7 +175,7 @@ You are now logged in successfully as Sebastian!
 
 > ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
 > 
-> 💡 Remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
+> 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
 
 ## Features for all users
 
@@ -200,7 +200,7 @@ You are now logged in successfully as Sebastian!
 =========================================================================
 Sebastian has just posted to forum:
 ┌────────────────────────────────────────────────────────────────────┐
-|  hello world
+|  hello world!
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
@@ -286,7 +286,7 @@ Here is the forum post:
   1. Enter `post delete [postId]`.
   2. The post will be deleted from the forum.
 
-> ℹ️ [postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** and must be in the list of posts.
+> ℹ️ `[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** and must be in the list of posts.
 > 
 > 💡 Use the [`post list`](#viewing-a-post--posts-in-the-forum-post-list) command before `post delete` to know the index of the post you want to delete.
 
@@ -302,7 +302,7 @@ Here is the forum post:
 =========================================================================
 Sebastian has just deleted a post from forum:
 ┌────────────────────────────────────────────────────────────────────┐
-|  hello world
+|  hello world!
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
@@ -647,16 +647,18 @@ The pdf file has been successfully generated!
 
 - The diagram below shows where you can find the generated PDF file.
 
-![output](userGuideImages/generateCfOutput.png) 
+<p align="center">
+    <img width="500" src="userGuideImages/generateCfOutput.png" alt="CfOutputPdf"><br>
+</p> 
 
-> 💡   Always [fill up your balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.
+> 💡   Always [fill up the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.
 > 
 > ⚠️The PDF file will not be created if the specified financial statement has not been filled.
 
 > ⚠️ **Important:** 
 >- The creation of the PDF file requires an **active internet connection**. 
 >- In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
->- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an online LaTeX Editor. 
+>- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). 
 >
 > 💡 **Always** ensure that you have an active internet connection before running `generate`. 
 
@@ -719,6 +721,7 @@ Bye, see you next time! :D
 > ℹ️You can only `exit` the program while you are **logged in**.
 
 ### cOOPer's Data Storage
+This section explains how cOOPer stores data input by the user throughout cOOPer's usage.
 
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
