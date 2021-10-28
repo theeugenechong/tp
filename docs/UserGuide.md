@@ -29,6 +29,9 @@ cOOPer can help you manage your startup efficiently.
 - [4. Features for all users](#4-features-for-all-users)
   - [4.1 Declaring available timings for meetings: `available`](#41-declaring-available-timings-for-meetings-available)
   - [4.2 Viewing meetings: `meetings`](#42-viewing-meetings-meetings)
+  - [4.3 Posting to forum: `post add`](#43-posting-to-forum-post-add)
+  - [4.4 Commenting on a post: `post comment`](#44-commenting-on-a-post)
+  - [4.5 Listing forum posts: `post list all`](#45-listing-forum-posts-post-list-all)
 - [5. Admin Features](#5-admin-features)
   - [5.1 Adding expenses: `add`](#51-adding-expenses-add)
   - [5.2 Generating balance sheet: `list`](#52-generating-balance-sheet-list)
@@ -227,7 +230,7 @@ me has just posted to forum:
 =========================================================================
 ```
 
-### 4.3 Commenting on a post: `post comment`
+### 4.4 Commenting on a post: `post comment`
 
 + When other users see a post is posted on the forum. They can comment on the post using `post comment <comments> on <post id>`
 + How to post message to forum:
@@ -252,8 +255,7 @@ me has just commented on a  post from forum:
 ```
 
 
-
-### 4.3 Listing  forum posts: `post list all`
+### 4.5 Listing forum posts: `post list all`
 
 + Users are able to list all forum posts currently available using `post list all`. Cooper will list all posts and comments in a hierarchical way.
 + Example input:
