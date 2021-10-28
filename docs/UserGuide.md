@@ -22,8 +22,9 @@ cOOPer can help you manage your startup efficiently.
 ## What's in This User Guide
 
 - [How this User Guide Works](#how-this-user-guide-works)
-- [Quick Start](#quick-start)
 - [Setup](#setup)
+- [Getting Started](#getting-started)
+  - [How cOOPer is to be Used](#how-cooper-is-to-be-used)
   - [Roles](#roles) 
   - [Signing in](#user-registration)
 - [Log in](#login)
@@ -33,19 +34,20 @@ cOOPer can help you manage your startup efficiently.
   - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
   - [Deleting a forum post: `post delete`](#deleting-a-forum-post-post-delete)
   - [Declaring available timings for meetings: `available`](#declaring-available-timing-for-meetings-available)
-  - [Viewing users available at different timings: `availability`](#viewing-users-available-at-different-timings-availabillity)
+  - [Viewing users available at different timings: `availability`](#viewing-users-available-at-different-timings-availability)
   - [Viewing scheduled meetings: `meetings`](#viewing-scheduled-meetings-meetings)
   - [Logging out: `logout`](#logging-out-logout)
 - [Admin Features](#admin-features)
-  - [Creating the balance sheet: `bs`](#creating-the-balance-sheet-bs)
-  - [Creating the cash flow statement: `cf`](#creating-the-cash-flow-statement-cf)
-  - [Adding entries to the financial statement: `add`](#adding-entries-to-the-financial-statement-add)
+  - [Creating the balance sheet: `bs` → `add`](#creating-the-balance-sheet-bs--add)
+  - [Creating the cash flow statement: `cf` → `add`](#creating-the-cash-flow-statement-cf--add)
+  - [Accessing the balance sheet: `bs` → `list`](#accessing-the-balance-sheet-bs--list)
+  - [Accessing the cash flow statement: `cf` → `list`](#accessing-the-cash-flow-statement-cf--list)
   - [Projecting cash flow: `proj`](#projecting-cash-flow-proj)
-  - [Viewing the financial statement: `list`](#viewing-the-financial-statement-list)
   - [Generating a PDF from the financial statement: `generate`](#generating-a-pdf-from-the-financial-statement--generate)
   - [Scheduling meetings with different users: `schedule`](#scheduling-meetings-with-different-users-schedule)
 - [Employee Features](#employee-features)
 - [Exiting the program](#exiting-the-program-exit)
+- [cOOPer's Data Storage](#coopers-data-storage)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
   - [Admin commands](#admin-commands)
@@ -67,7 +69,7 @@ The table below explains the formatting and symbols in this user guide.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
 
-## Quick Start
+## Setup
 
 1. Ensure that you have Java 11 or above installed on your desktop.
 2. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
@@ -99,7 +101,11 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
 
 7. Refer to the [Setup](#setup) section for information on how to set up the app upon first-time use.
 
-## Setup
+## Getting Started
+
+### How cOOPer is to be Used
+- The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
+> ⚠️cOOPer's features related to scheduling meetings and posting to the forum **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ### Roles
 - There are two main roles you can hold as a user of cOOPer, namely the _**admin**_ role or the _**employee**_ role.
@@ -119,7 +125,7 @@ ensuring all members of the startup are registered with the correct role. (Each 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
 - How to register a user:
-  1. When you see the greeting message as shown in the [Quick Start](#quick-start) section, enter `register [username] pw [password]
+  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `register [username] pw [password]
   as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
   3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to
@@ -143,14 +149,10 @@ Sebastian is now successfully registered as an admin!
 
 > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.
 
-### How cOOPer is to be Used
-- The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
-> ⚠️cOOPer's features related to scheduling meetings and posting to the forum **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
-
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
 - How to log in:
-  1. When you see the greeting message as shown in the [Quick Start](#quick-start) section, 
+  1. When you see the greeting message as shown in the [Setup](#setup) section, 
   enter `login [username] pw [password] as [role]`.
   2. You now have access to cOOPer's features specific to your role.
 
@@ -269,65 +271,233 @@ Here are your meetings for today:
 
 ## Admin Features 
 
-### Creating the balance sheet: `bs`
+### Creating the balance sheet: `bs` → `add`
+- Fills up the different fields of cOOPer's balance sheet like 'Cash and Cash Equivalents', 'Inventory', 'Accounts Payable', 'Equity Capital', etc.
+- How to create the balance sheet:
+  1. After [logging in](#login) to the system, enter `bs`.
+  2. cOOPer initiates the balance sheet function and prompts you to enter the first entry, 'Cash and Cash Equivalents'.
+  3. Enter `add [amount]`.
+  4. `[amount]` will be added as 'Cash and Cash Equivalents'.
+  5. cOOPer then continues prompting you for the rest of the balance sheet fields.
+  6. When the balance sheet is complete, cOOPer prompts the user to enter [`list`](#accessing-the-balance-sheet-bs--list) to view the complete balance sheet.
 
-### Creating the cash flow statement: `cf`
+> ℹ️ By default, cOOPer treats `[amount]` as a positive number. To specify a negative number, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
+>
+> ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the balance sheet field.
+> 
+> 💡    Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.
+> 
+> ⚠️Running `bs` and `add` after the balance sheet is complete will overwrite the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**.
 
-### Adding entries to the financial statement: `add`
-- Adds your company's expenses to a balance sheet.
-- How to add an expense:
-  1. After [logging in](#login) to the system, enter `add [amount]`.
-  2. The expense will be added to the balance sheet.
-
-> #### 📝Note:
-> - By default, cOOPer treats `[amount]` as an inflow. To specify an outflow, a pair of parentheses should
-> be added around `[amount]`. *e.g.* `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
-> - `[amount]` should be a **positive integer** representing the amount of inflow/outflow added to the balance sheet.
-
-- Example input for inflow:
-
-```
->> add 5000
-```
-
-- Expected output:
+- Example input for initiating the balance sheet function:
 
 ```
+>> bs
 ```
 
-- Example input for outflow:
+- Example output:
 
 ```
->> add (5000)
+=========================================================================
+You are now using the Balance Sheet function.
+You can enter 'list' to view the current Balance Sheet or
+start off by entering Cash & Cash Equivalents:
+=========================================================================
 ```
 
-- Expected output:
+- Example input for adding to 'Cash and Cash Equivalents':
 
 ```
+>> add 1500
 ```
 
-### Projecting cash flow: `proj`
+- Example output: 
 
-### Viewing the financial statement: `list`
+```
+=========================================================================
+Success!
++1500 has been added as Cash and Cash Equivalents
+
+Next, please enter Accounts Receivable
+=========================================================================
+```
+
+### Creating the cash flow statement: `cf` → `add`
+- Fills up the different fields of cOOPer's cash flow statement like 'Net Income', 'Depreciation and Amortisation', 'Capital Expenditures', 'Dividends Paid', etc.
+- How to create the cash flow statement:
+  1. After [logging in](#login) to the system, enter `cf`.
+  2. cOOPer initiates the cash flow statement function and prompts you to enter the first entry, 'Net Income'.
+  3. Enter `add [amount]`.
+  4. `[amount]` will be added as 'Net Income'.
+  5. cOOPer then continues prompting you for the rest of the cash flow statement fields.
+  6. When the cash flow statement is complete, cOOPer prompts the user to enter [`list`](#accessing-the-cash-flow-statement-cf--list) to view the complete cash flow statement.
+
+> ℹ️ By default, cOOPer treats `[amount]` as a positive number. To specify a negative number, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
+>
+> ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the cash flow statement field.
+> 
+> 💡    Remember to enter `cf` before entering `add` or cOOPer will not know which financial statement to add to.
+> 
+> ⚠️Running `cf` and `add` after the cash flow statement is complete will overwrite the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**.
+
+- Example input for initiating the cash flow statement function:
+
+```
+>> cf
+```
+
+- Example output:
+
+```
+=========================================================================
+You are now using the Cash Flow function.
+You can enter 'list' to view the current Cash Flow Statement or
+start off by entering Net Income:
+=========================================================================
+```
+
+- Example input for adding to 'Net Income':
+
+
+```
+>> add 1500
+```
+
+- Example output:
+
+```
+=========================================================================
+Success!
++1500 has been added as Net Income
+
+Next, please enter Depreciation and Amortisation
+=========================================================================
+```
+
+### Accessing the balance sheet: `bs` → `list`
+- Displays the complete balance sheet with extra fields like 'Total Assets', 'Total Liabilities' and 'Total Shareholder's Equity'.
+- Informs you if the balance sheet does not tally correctly.
+- How to view the balance sheet:
+  1. After [creating the balance sheet](#creating-the-balance-sheet-bs--add), cOOPer would have prompted you to enter `list` to view the balance sheet.
+  2. Enter `list`.
+
+> 💡 Remember to fill up the fields of the balance sheet with `add` before entering `list`.
+> 
+> ℹ️`list` displays the *latest version* of the balance sheet. Refer to [this](#creating-the-balance-sheet-bs--add) section to know what *latest version* means.
+> 
+> ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.
+
 - Example input:
 
 ```
 >> list
 ```
 
-- Expected output:
+- Example output:
 
 ```
+=========================================================================
+This is the company's current Balance Sheet:
+-----ASSETS-----
+Cash and Cash Equivalents  1500
+Accounts Receivable  1500
+Prepaid Expenses  1500
+Inventory  1500
+Property and Equipment  1500
+Goodwill  1500
+Total Assets: 9000
+-----LIABILITIES-----
+Accounts Payable  1500
+Accrued Expenses  1500
+Unearned Revenue  1500
+Long-term debt  1500
+Total Liabilities: 6000
+-----SHAREHOLDER'S EQUITY-----
+Equity Capital  1500
+Retained Earnings  1500
+Total Shareholder's Equity: 3000
+Balance Sheet is perfectly balanced, as all things should be.
+Check: 0
+=========================================================================
 ```
 
+### Accessing the cash flow statement: `cf` → `list`
+- Displays the complete cash flow statement with extra fields like 'Net Cash from Operating Activities', Net Cash from Investing Activities' and 'Net Financing Activities'.
+- How to view the cash flow statement:
+  1. After [creating the cash flow statement](#creating-the-cash-flow-statement-cf--add), cOOPer would have prompted you to enter `list` to view the balance sheet.
+  2. Enter `list`.
+
+> 💡 Remember to fill up the fields of the cash flow statement with `add` before entering `list`.
+>
+> ℹ️`list` displays the *latest version* of the cash flow statement. Refer to [this](#creating-the-cash-flow-statement-cf--add) section to know what *latest version* means.
+>
+> ℹ️Entering `list` while the cash flow statement is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.
+
+- Example input:
+
+```
+>> list
+```
+
+- Example output:
+
+```
+=========================================================================
+This is the company's current Cash Flow Statement:
+-----CASH FLOW FROM OPERATING ACTIVITIES-----
+Net Income  1000
+Depreciation and Amortisation  900
+Increase in Accounts Receivable  800
+Decrease in Accounts Payable  700
+Decrease in Inventory  600
+Net Cash from Operating Activities:  4000
+-----CASH FLOW FROM INVESTING ACTIVITIES-----
+Capital Expenditures  500
+Proceeds from Sale of Equipment  400
+Net Cash from Investing Activities:  900
+-----CASH FLOW FROM FINANCING ACTIVITIES-----
+Proceeds from Issuing Debt  300
+Dividends Paid  200
+Net Cash from Financing Activities:  500
+-----FREE CASH FLOW-----
+Free Cash Flow   3000
+=========================================================================
+```
+
+
+### Projecting cash flow: `proj`
+- Generate projections on your company's 'Free Cash Flow' (FCF).
+- How to generate a projection:
+  1. [Fill up the cash flow statement](#creating-the-cash-flow-statement-cf--add) with last year's FCF.
+  2. Enter `proj [years]` to project your company's FCF marginal growth Year-Over-Year (YoY) by the number of `[years]` specified. 
+
+>ℹ️FCF is the last field of the cash flow statement.
+
+- Example input based on a FCF of 3000:
+
+```
+>> proj 3
+```
+
+- Example output:
+
+```
+=========================================================================
+At your current rate of profitability growth in Free Cash Flow, these are future year's projections:
+1 year: 5557
+2 year: 7564
+3 year: 8825
+After 3 years you can expect Free Cash Flow of 8825
+=========================================================================
+```
 
 ### Generating a PDF from the financial statement : `generate`
 - Creates a Portable Document Format (PDF) file from the *latest version* of the financial statement specified (Balance Sheet or Cash Flow Statement).
 - How to generate the PDF file:
   1. Enter `generate [financialStatement]` where `[financialStatement]` is one of `bs` or `cf`.
-  2. If **successful**, the PDF file is created in a folder 'output' in the home folder with the name 'FinancialStatementSpecified.pdf'.
+  2. If **successful**, the PDF file is created in a folder named 'output' in the home folder with the name of the financial statement you generated. For example, `generate cf` will create a PDF named 'CashFlowStatement'.
   
-- Example input for successful generation of the Balance Sheet PDF:
+- Example input for successful generation of the Cash Flow Statement PDF:
 
 ```
 >> generate cf
@@ -345,9 +515,9 @@ The pdf file has been successfully generated!
 
 ![output](userGuideImages/generateBs.png) 
 
-> 💡   Always [add](#adding-entries-to-the-financial-statement-add) entries to your financial statement first before it is generated as a PDF.
+> 💡   Always [fill up your balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.
 > 
-> ⚠️The PDF file will not be created if the specified financial statement is empty.
+> ⚠️The PDF file will not be created if the specified financial statement has not been filled.
 
 > ⚠️ **Important:** 
 >- The creation of the PDF file requires an **active internet connection**. 
@@ -413,6 +583,7 @@ Bye, see you next time! :D
 =========================================================================
 ```
 
+### cOOPer's Data Storage
 
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
@@ -420,7 +591,7 @@ This section contains some frequently asked questions you may have when using cO
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 **A**: Follow the steps below:<br>
 1. [Download](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) cOOPer in the other computer. 
-2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Quick Start](#quick-start) if you do not 
+2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Setup](#setup) if you do not 
 know what the *home folder* is.
 3. Copy `cooperData` over to cOOPer's home folder in the other desktop. 
 4. Running cOOPer on the other desktop should load your saved data.
