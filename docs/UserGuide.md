@@ -30,7 +30,7 @@ cOOPer can help you manage your startup efficiently.
 - [Log in](#login)
 - [Features for all users](#features-for-all-users)
   - [Adding a forum post: `post add`](#adding-a-forum-post-post-add)
-  - [Viewing a post / posts in the forum: `post list all`](#viewing-a-post--posts-in-the-forum-post-list-all)
+  - [Viewing a post / posts in the forum: `post list`](#viewing-a-post--posts-in-the-forum-post-list)
   - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
   - [Deleting a forum post: `post delete`](#deleting-a-forum-post-post-delete)
   - [Declaring available timings for meetings: `available`](#declaring-available-timing-for-meetings-available)
@@ -152,14 +152,12 @@ Sebastian is now successfully registered as an admin!
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
 - How to log in:
-  1. When you see the greeting message as shown in the [Setup](#setup) section, 
-  enter `login [username] pw [password] as [role]`.
+  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `login [username] pw [password] as [role]`.
   2. You now have access to cOOPer's features specific to your role.
 
 > ℹ️`[username]`, `[password]` and `[role]` refer to the user's name and role as registered in cOOPer's system.
 > 
-> ⚠️The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian`
-> is not the same as logging in with `Sebastian`.
+> ⚠️The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian` is not the same as logging in with `Sebastian`.
 
 - Example input:
 
@@ -183,10 +181,13 @@ You are now logged in successfully as Sebastian!
 
 ### Adding a forum post: `post add`
 
-+ User can post message to forum for everyone to discuss on certain topics.
-+ How to post message to forum:
-  1. For example, if you want to post "hello world!" to forum, you can do that after [logging in](#3-login) to the system and enter `post add hello world!`.
-  2. You will get a confirmation message indicating if a post is successfully posted or not
++ You can post a message to forum for cOOPer's users to discuss certain topics.
++ How to post a message to the forum:
+  1. After [logging in](#login), enter `post [postContent]`.
+  2. Your post will be added to the forum, and you will see a confirmation message indicating that the post was successful.
+
+>ℹ️`[postContent]` refers to the content of your post.
+
 + Example input:
 
 ```
@@ -197,17 +198,48 @@ You are now logged in successfully as Sebastian!
 
 ```
 =========================================================================
-me has just posted to forum:
+Sebastian has just posted to forum:
 ┌────────────────────────────────────────────────────────────────────┐
 |  hello world
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
 
-### Viewing a post / posts in the forum: `post list all`
+### Commenting on a forum post: `post comment`
++ Adds a comment on a post in the forum.
++ How to comment on a post:
+  1. When other users see a post on the forum, they can comment on the post using `post comment [commentContent] on [postId]`.
+  2. A comment [commentContent] will be added to the post with `[postId]`.
 
-+ Users are able to list all forum posts currently available using `post list all`. Cooper will list all posts and comments in a hierarchical way.
 + Example input:
+
+```
+>> post comment welcome on 1
+```
+
++ Expected output:
+
+```
+=========================================================================
+Sebastian has just commented on a post from forum:
+┌────────────────────────────────────────────────────────────────────┐
+|  hello world
+|    ∟  welcome
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
+
+### Viewing a post / posts in the forum: `post list`
++ Shows you the currently active forum posts along with any comments on the posts.
++ You can specify if you want to view all the posts or a specific post.
++ How to view a specific post / posts in the forum:
+  1. Enter `post list all` to view all the active forum posts.
+  2. cOOPer lists all posts along with their comments in a hierarchical manner.
+  3. Enter `post list [postId]` to view the single post with `[postId]`.
+
+> ℹ️`[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** and must be in the list of posts.
+
++ Example input for viewing all the forum posts:
 
 ```
 >> post list all
@@ -219,41 +251,61 @@ me has just posted to forum:
 =========================================================================
 Here is the list of forum posts:
 ┌────────────────────────────────────────────────────────────────────┐
-|  1. @me: hello world
-|    ∟  1. @me: welcome
-|    ∟  2. @he: welcome to CS2113T!
-|  2. @me: how do you do?
-|    ∟  1. @he: how do you do?
-|  3. @he: Hey how are you??
+|  1. @Sebastian: hello world
+|    ∟  1. @Eugene: welcome
+|    ∟  2. @Eugene: welcome to CS2113T!
+|  2. @Sebastian: how do you do?
+|    ∟  1. @Eugene: how do you do?
+|  3. @Eugene: Hey how are you??
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
 
-### Commenting on a forum post: `post comment`
-
-+ When other users see a post is posted on the forum. They can comment on the post using `post comment <comments> on <post id>`
-+ How to post message to forum:
-  1. For example, if we want to comment on the previous post in 4.2, we can do `post comment welcome on 1`
-  2. You will get a confirmation message indicating if a comment is successful posted or not
-+ Example input:
++ Example input for viewing a specific forum post:
 
 ```
->> post comment welcome on 1
+>> post list 1
 ```
 
-+ Expected output:
++ Example output:
 
 ```
 =========================================================================
-me has just commented on a  post from forum:
+Here is the forum post:
 ┌────────────────────────────────────────────────────────────────────┐
-|  hello world
-|    ∟  welcome
+|  @Sebastian: hello world
+|    ∟  1.@Eugene: welcome
+|    ∟  2.@Eugene: welcome to CS2113T!
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
 
 ### Deleting a forum post: `post delete`
+- Deletes an active post on the forum along with its comments.
+- How to delete a post:
+  1. Enter `post delete [postId]`.
+  2. The post will be deleted from the forum.
+
+> ℹ️ [postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** and must be in the list of posts.
+> 
+> 💡 Use the [`post list`](#viewing-a-post--posts-in-the-forum-post-list) command before `post delete` to know the index of the post you want to delete.
+
+- Example input:
+
+```
+>> post delete 1
+```
+
+- Example output:
+
+```
+=========================================================================
+Sebastian has just deleted a post from forum:
+┌────────────────────────────────────────────────────────────────────┐
+|  hello world
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
 
 ### Declaring available timing for meetings: `available`
 - For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
@@ -334,6 +386,22 @@ Here are your meetings for today:
 ```
 
 ### Logging out: `logout`
+- Logs you out of your account and brings you back to the part of the app where you can either [log in](#login) or [register](#user-registration).
+
+- Example input:
+
+```
+>> logout
+```
+
+- Example output:
+
+```
+=========================================================================
+To login, enter "login [yourUsername] pw [password] as [yourRole]"
+To register, enter "register [yourUsername] pw [password] as [yourRole]"
+=========================================================================
+```
 
 ## Admin Features 
 
@@ -561,7 +629,7 @@ After 3 years you can expect Free Cash Flow of 8825
 - Creates a Portable Document Format (PDF) file from the *latest version* of the financial statement specified (Balance Sheet or Cash Flow Statement).
 - How to generate the PDF file:
   1. Enter `generate [financialStatement]` where `[financialStatement]` is one of `bs` or `cf`.
-  2. If **successful**, the PDF file is created in a folder named 'output' in the home folder with the name of the financial statement you generated. For example, `generate cf` will create a PDF named 'CashFlowStatement'.
+  2. If **successful**, the PDF file is created in a folder named 'output' in the _home folder_ with the name of the financial statement you generated. For example, `generate cf` will create a PDF named 'CashFlowStatement'.
   
 - Example input for successful generation of the Cash Flow Statement PDF:
 
@@ -579,7 +647,7 @@ The pdf file has been successfully generated!
 
 - The diagram below shows where you can find the generated PDF file.
 
-![output](userGuideImages/generateBs.png) 
+![output](userGuideImages/generateCfOutput.png) 
 
 > 💡   Always [fill up your balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.
 > 
@@ -587,8 +655,7 @@ The pdf file has been successfully generated!
 
 > ⚠️ **Important:** 
 >- The creation of the PDF file requires an **active internet connection**. 
->- In the event that there is no internet connection, a backup '.txt' file will be 
->created in the same 'output' folder in which the PDF was supposed to be created.
+>- In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
 >- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an online LaTeX Editor. 
 >
 > 💡 **Always** ensure that you have an active internet connection before running `generate`. 
@@ -648,6 +715,8 @@ Exits the program.
 Bye, see you next time! :D
 =========================================================================
 ```
+
+> ℹ️You can only `exit` the program while you are **logged in**.
 
 ### cOOPer's Data Storage
 
