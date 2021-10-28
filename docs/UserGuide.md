@@ -242,19 +242,46 @@ These are the availabilities:
 
 ## Admin Features 
 
-### Creating the balance sheet: `bs`
+### Accessing the balance sheet: `bs`
 
-### Creating the cash flow statement: `cf`
+* Command to initialise the Balance Sheet function of cOOPer.
+  1. After [logging in](#login) to the system as an admin (see [Roles](#roles)), enter the `bs` command and the following output will show:
+
+```
+=========================================================================
+You are now using the Balance Sheet function.
+You can enter 'list' to view the current Balance Sheet or 
+start off by entering Cash & Cash Equivalents:
+=========================================================================
+```
+this confirms your initiation of this function. From here, simply follow cOOPer's instruction.
+
+### Accessing the cash flow statement: `cf`
+
+* Command to initialise the Cash Flow Statement function of cOOPer.
+  1. After [logging in](#login) to the system as an admin (see [Roles](#roles)), enter the `cf` command and the following output will show:
+
+```
+=========================================================================
+You are now using the Cash Flow function.
+You can enter 'list' to view the current Cash Flow Statement or 
+start off by entering Net Income:
+=========================================================================
+```
+this confirms your initiation of this function. From here, simply follow cOOPer's instruction.
+
 
 ### Adding entries to the financial statement: `add`
-- Adds your company's expenses to a balance sheet.
-- How to add an expense:
-  1. After [logging in](#login) to the system, enter `add [amount]`.
-  2. The expense will be added to the balance sheet.
+- Command to add your company's entries to either the Balance Sheet, or the Cash Flow Statement.
+- How to add an entry:
+  1. After [logging in](#login) to the system as an admin (see [Roles](#roles)),
+     and [creating](#creating-the-balance-sheet-bs) either Financial Statement,
+     follow cOOPer's on-screen instructions and enter `add [amount]` for each field,
+     until the Financial Statement is completed.
 
 > #### 📝Note:
-> - By default, cOOPer treats `[amount]` as an inflow. To specify an outflow, a pair of parentheses should
-> be added around `[amount]`. *e.g.* `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
+> - By default, cOOPer treats `[amount]` as a positive number. To specify a negative number, a pair of parentheses should
+    > be added around `[amount]`. *e.g.* When adding cash flows,`add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.
 > - `[amount]` should be a **positive integer** representing the amount of inflow/outflow added to the balance sheet.
 
 - Example input for inflow:
@@ -266,6 +293,12 @@ These are the availabilities:
 - Expected output:
 
 ```
+=========================================================================
+Success!
++5000 has been added as Net Income  
+
+Next, please enter Depreciation and Amortisation  
+=========================================================================
 ```
 
 - Example input for outflow:
@@ -277,6 +310,12 @@ These are the availabilities:
 - Expected output:
 
 ```
+=========================================================================
+Success!
+-5000 has been added as Depreciation and Amortisation  
+
+Next, please enter Increase in Accounts Receivable  
+=========================================================================
 ```
 
 ### Projecting cash flow: `proj`
