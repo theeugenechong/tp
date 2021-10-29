@@ -99,7 +99,7 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
 >> 
 ```
 
-7. Refer to the [Setup](#setup) section for information on how to set up the app upon first-time use.
+Refer to the [Getting Started](#getting-started) section for information on how to start using cOOPer.
 
 ## Getting Started
 
@@ -209,7 +209,7 @@ Sebastian has just posted to forum:
 + Adds a comment on a post in the forum.
 + How to comment on a post:
   1. When other users see a post on the forum, they can comment on the post using `post comment [commentContent] on [postId]`.
-  2. A comment [commentContent] will be added to the post with `[postId]`.
+  2. A comment `[commentContent]` will be added to the post with `[postId]`.
 
 + Example input:
 
@@ -237,7 +237,7 @@ Sebastian has just commented on a post from forum:
   2. cOOPer lists all posts along with their comments in a hierarchical manner.
   3. Enter `post list [postId]` to view the single post with `[postId]`.
 
-> ℹ️`[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** and must be in the list of posts.
+> ℹ️`[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** in the list of posts.
 
 + Example input for viewing all the forum posts:
 
@@ -286,7 +286,7 @@ Here is the forum post:
   1. Enter `post delete [postId]`.
   2. The post will be deleted from the forum.
 
-> ℹ️ `[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** and must be in the list of posts.<br>
+> ℹ️ `[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** in the list of posts.<br>
 > 💡 Use the [`post list`](#viewing-a-post--posts-in-the-forum-post-list) command before `post delete` to know the index of the post you want to delete.
 
 - Example input:
@@ -739,7 +739,7 @@ The contents of the folder is as shown in the diagram below.
 
 #### signInDetails.txt
 - What it stores: The username, an encrypted hash of the user's password, the salt used to generate the password hash, and the user's role.
-- When is it stored: Only after a user has [logged in](#login) at least once. Hence, only registering without logging in will not save your credentials to cOOPer's storage.
+- When is the data stored: Only after a user has [logged in](#login) at least once. Hence, only registering without logging in will not save your credentials to cOOPer's storage.
 
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
