@@ -108,7 +108,7 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 ### How cOOPer is to be Used
 - The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
-> ⚠️cOOPer's features related to scheduling meetings and posting to the forum **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
+> ⚠️cOOPer's features related to [scheduling meetings](#declaring-available-timing-for-meetings-available) and [posting to the forum](#adding-a-forum-post-post-add) **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ### Roles
 - There are two main roles you can hold as a user of cOOPer, namely the _**admin**_ role or the _**employee**_ role.
@@ -151,6 +151,7 @@ Sebastian is now successfully registered as an admin!
 ```
 
 > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
+> 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
 > ⚠️In order to be recorded as cOOPer's registered users, you are required to [log in](#login) after you register. Refer to [this](#signindetailstxt) section to find out more about how your credentials are stored.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
@@ -178,8 +179,6 @@ You are now logged in successfully as Sebastian!
 =========================================================================
 ```
 
-> ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
-> 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -678,6 +677,7 @@ The pdf file has been successfully generated!
 >- The creation of the PDF file requires an **active internet connection**. 
 >- In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
 >- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). <br>
+>
 > 💡 **Always** ensure that you have an active internet connection before running `generate`. 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
