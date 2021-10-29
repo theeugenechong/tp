@@ -83,6 +83,9 @@ public class Cooper {
         while (true) {
             try {
                 String input = Ui.getInput();
+                if (input.length() == 0) {
+                    continue;
+                }
                 Command command = CommandParser.parse(input);
                 assert command != null;
                 command.execute(signInDetails, cooperResourcesManager, cooperStorageManager);
