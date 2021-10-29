@@ -26,7 +26,7 @@ cOOPer can help you manage your startup efficiently.
 - [Getting Started](#getting-started)
   - [How cOOPer is to be Used](#how-cooper-is-to-be-used)
   - [Roles](#roles) 
-  - [Signing in](#user-registration)
+  - [User Registration](#user-registration)
 - [Log in](#login)
 - [Features for all users](#features-for-all-users)
   - [Adding a forum post: `post add`](#adding-a-forum-post-post-add)
@@ -69,6 +69,8 @@ The table below explains the formatting and symbols in this user guide.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ## Setup
 
 1. Ensure that you have Java 11 or above installed on your desktop.
@@ -100,6 +102,8 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
 ```
 
 Refer to the [Getting Started](#getting-started) section for information on how to start using cOOPer.
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Getting Started
 
@@ -150,6 +154,8 @@ Sebastian is now successfully registered as an admin!
 > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
 > ⚠️In order to be recorded as cOOPer's registered users, you are required to [log in](#login) after you register. Refer to [this](#signindetailstxt) section to find out more about how your credentials are stored.
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
 - How to log in:
@@ -175,6 +181,8 @@ You are now logged in successfully as Sebastian!
 
 > ℹ️ A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
 > 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Features for all users
 
@@ -205,6 +213,8 @@ Sebastian has just posted to forum:
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Commenting on a forum post: `post comment`
 + Adds a comment on a post in the forum.
 + How to comment on a post:
@@ -221,13 +231,15 @@ Sebastian has just posted to forum:
 
 ```
 =========================================================================
-Sebastian has just commented on a post from forum:
+Eugene has just commented on a post from forum:
 ┌────────────────────────────────────────────────────────────────────┐
 |  hello world
 |    ∟  welcome
 └────────────────────────────────────────────────────────────────────┘
 =========================================================================
 ```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing a post / posts in the forum: `post list`
 + Shows you the currently active forum posts along with any comments on the posts.
@@ -280,6 +292,8 @@ Here is the forum post:
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Deleting a forum post: `post delete`
 - Deletes an active post on the forum along with its comments.
 - How to delete a post:
@@ -306,6 +320,8 @@ Sebastian has just deleted a post from forum:
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Declaring available timing for meetings: `available`
 - For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
 - How to input your availability:
@@ -330,6 +346,8 @@ Success!
 Sebastian's availability has been added to 14:00
 =========================================================================
 ```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing users available at different timings: `availability`
 - To view all the availabilities after inputting [availabilities](#declaring-available-timing-for-meetings-available), cOOPer will generate a table for easier visualisation.
@@ -357,6 +375,8 @@ Here are the availabilities:
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Viewing scheduled meetings: `meetings`
 - Generates a user-specific table of meetings (for the day) for easier visualisation.
 - How to view meetings:
@@ -382,6 +402,8 @@ Here are your meetings for today:
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Logging out: `logout`
 - Logs you out of your account and brings you back to the part of the app where you can either [log in](#login) or [register](#user-registration).
 
@@ -399,6 +421,8 @@ To login, enter "login [yourUsername] pw [password] as [yourRole]"
 To register, enter "register [yourUsername] pw [password] as [yourRole]"
 =========================================================================
 ```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Admin Features 
 This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny** users without the admin role access to these features.
@@ -451,6 +475,8 @@ Next, please enter Accounts Receivable
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Creating the cash flow statement: `cf` → `add`
 - Fills up the different fields of cOOPer's cash flow statement like 'Net Income', 'Depreciation and Amortisation', 'Capital Expenditures', 'Dividends Paid', etc.
 - How to create the cash flow statement:
@@ -500,6 +526,8 @@ Next, please enter Depreciation and Amortisation
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Accessing the balance sheet: `bs` → `list`
 - Displays the complete balance sheet with extra fields like 'Total Assets', 'Total Liabilities' and 'Total Shareholder's Equity'.
 - Informs you if the balance sheet does not tally correctly.
@@ -545,6 +573,8 @@ Check: 0
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Accessing the cash flow statement: `cf` → `list`
 - Displays the complete cash flow statement with extra fields like 'Net Cash from Operating Activities', Net Cash from Investing Activities' and 'Net Financing Activities'.
 - How to view the cash flow statement:
@@ -586,6 +616,7 @@ Free Cash Flow   3000
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Projecting cash flow: `proj`
 - Generate projections on your company's 'Free Cash Flow' (FCF).
@@ -612,6 +643,8 @@ At your current rate of profitability growth in Free Cash Flow, these are future
 After 3 years you can expect Free Cash Flow of 8825
 =========================================================================
 ```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Generating a PDF from the financial statement : `generate`
 - Creates a Portable Document Format (PDF) file from the *latest version* of the financial statement specified (Balance Sheet or Cash Flow Statement).
@@ -648,6 +681,7 @@ The pdf file has been successfully generated!
 >- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). <br>
 > 💡 **Always** ensure that you have an active internet connection before running `generate`. 
 
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Scheduling meetings with different users: `schedule`
 - cOOPer helps you to schedule meetings easily by either an **auto** or **manual** way. 
@@ -682,8 +716,12 @@ You have scheduled a <<Progress Meeting>> meeting at 10:00 with Sebastian, Eugen
 =========================================================================
 ```
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ## Employee Features
 - As of v2.0, cOOPer does not have features exclusive to employees yet 😥, there will be more to come in future versions!
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Exiting the program: `exit`
 Exits the program.
@@ -704,11 +742,12 @@ Bye, see you next time! :D
 
 > ℹ️You can only `exit` the program while you are **logged in**.
 
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### cOOPer's Data Storage
 This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData' which is created in the *home folder* upon starting up cOOPer for the first time.
 
 The contents of the folder is as shown in the diagram below.
-
 
 <p align="center">
     <img width="500" src="userGuideImages/cooperStorage.png" alt="cooperStorage"><br>
@@ -731,7 +770,7 @@ The contents of the folder is as shown in the diagram below.
 
 #### forum.txt
 - What it stores: The posts created in the forum along with its comments.
-- When is the data stored: Immediately after a new forum post / comment is created or when a post is deleted.
+- When is the data stored: Immediately after a new forum [post](#adding-a-forum-post-post-add) / [comment](#commenting-on-a-forum-post-post-comment) is created or when a post is [deleted](#deleting-a-forum-post-post-delete).
 
 #### meetings.txt
 - What it stores: The meetings which have been successfully scheduled, the meeting time and the users associated with the meeting.
@@ -739,7 +778,9 @@ The contents of the folder is as shown in the diagram below.
 
 #### signInDetails.txt
 - What it stores: The username, an encrypted hash of the user's password, the salt used to generate the password hash, and the user's role.
-- When is the data stored: Only after a user has [logged in](#login) at least once. Hence, only registering without logging in will not save your credentials to cOOPer's storage.
+- When is the data stored: Only after a user has [logged in](#login) **at least once**. Hence, only **registering without logging in** will **not** save your credentials to cOOPer's storage.
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
@@ -757,6 +798,8 @@ This section contains some frequently asked questions you may have when using cO
 
 **Q**: Another person using cOOPer on their desktop stated their availability / posted to the forum. However, I am unable to see their availability / post when I run cOOPer on my desktop. Why does this occur?<br>
 > Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section.
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Command Summary
 
@@ -798,3 +841,5 @@ availability|`availability`                       |`availability`
 meetings    |`meetings`                           |`meetings`
 logout      |`logout`                             |`logout`
 exit        |`exit`                               |`exit`
+
+[⬆️ Back to top](#whats-in-this-user-guide)
