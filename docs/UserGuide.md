@@ -10,9 +10,8 @@ cOOPer is a **desktop application** developed to simplify administrative process
 such as **communication** and **finance management**.
 
 If you are running a tech startup, cOOPer can help you with **accounting** and **communicative** tasks like:
-- **Generating** your company's **balance sheet**
+- **Generating** your company's **financial statements**
 - **Forecasting** your company's **cash flow**
-- **Managing** and **generating** your company's **invoices**
 - **Scheduling meetings** with your employees
 - Having **discussions** with your employees
 
