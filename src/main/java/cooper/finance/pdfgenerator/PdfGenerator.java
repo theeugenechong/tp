@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 //@@author theeugenechong
 
+/**
+ * Generates the pdf file for balance sheet / cash flow statement.
+ */
 public abstract class PdfGenerator {
 
     protected static final String TEX_LIVE_URL = "https://texlive.net/cgi-bin/latexcgi";
@@ -31,30 +34,50 @@ public abstract class PdfGenerator {
         pdfContent = new ArrayList<>();
     }
 
+    /**
+     * Loads the file template from {@code resourcePath} and converts it to a string.
+     * @param resourcePath Path of the file template
+     */
     protected void loadTemplate(String resourcePath) {
-        // load invoice template
         InputStream invoiceTemplateStream = this.getClass().getResourceAsStream(resourcePath);
         template = Util.inputStreamToString(invoiceTemplateStream);
     }
 
+    /**
+     * Loads the section header template from {@code resourcePath} and converts it to a string.
+     * @param resourcePath Path of the section header template
+     */
     protected void loadHeaderTemplate(String resourcePath) {
-        // load entry template
+        // load header template
         InputStream headerTemplateStream = this.getClass().getResourceAsStream(resourcePath);
         headerTemplate = Util.inputStreamToString(headerTemplateStream);
     }
 
+    /**
+     * Loads the entry template from {@code resourcePath} and converts it to a string. An entry refers to an entry in
+     * the actual balance sheet.
+     * @param resourcePath Path of the entry template
+     */
     protected void loadEntryTemplate(String resourcePath) {
         // load entry template
         InputStream entryTemplateStream = this.getClass().getResourceAsStream(resourcePath);
         entryTemplate = Util.inputStreamToString(entryTemplateStream);
     }
 
+    /**
+     * Loads the summary template from {@code resourcePath} and converts it to a string. Summary is the section of
+     * the pdf which shows Net and Total values.
+     * @param resourcePath Path of the summary template
+     */
     protected void loadSummaryTemplate(String resourcePath) {
-        // load entry template
+        // load summary template
         InputStream summaryTemplateStream = this.getClass().getResourceAsStream(resourcePath);
         summaryTemplate = Util.inputStreamToString(summaryTemplateStream);
     }
 
+    /**
+     * Creates the section header by replacing the identifiers from the template with {@code type}.
+     */
     protected void createHeader(String type) {
         String sectionHeader = headerTemplate;
         sectionHeader = sectionHeader.replace("% {Type}", type);
@@ -62,6 +85,10 @@ public abstract class PdfGenerator {
         pdfContent.add(sectionHeader);
     }
 
+    /**
+     * Creates an entry by replacing the identifiers from the template with {@code description} and {@code amount} as
+     * a string.
+     */
     protected void createEntry(String description, Integer amount) {
         String sectionEntry = entryTemplate;
         sectionEntry = sectionEntry.replace("% {Description}", description);
@@ -70,6 +97,10 @@ public abstract class PdfGenerator {
         pdfContent.add(sectionEntry);
     }
 
+    /**
+     * Creates the summary by replacing the identifiers from the template with {@code type} and {@code total} as a
+     * string.
+     */
     protected void createSummary(String type, Integer total) {
         String sectionSummary = summaryTemplate;
         sectionSummary = sectionSummary.replace("% {Type}", type);
@@ -78,6 +109,10 @@ public abstract class PdfGenerator {
         pdfContent.add(sectionSummary);
     }
 
+    /**
+     * Combines all the strings in {@code pdfContent} into a continuous string to be sent to a LaTeX editor.
+     * @return a string representing the {@code .tex} file to be compiled.
+     */
     protected String formTexFile() {
         StringBuilder compiledContent = new StringBuilder();
         for (String content : pdfContent) {
@@ -128,6 +163,13 @@ public abstract class PdfGenerator {
     //https://www.baeldung.com/httpurlconnection-post
     public abstract void compilePdfAndSend();
 
+
+    /**
+     * Creates the backup file in the event that the creation of the pdf file which requires an internet connection
+     * fails.
+     * @param texFileToCompile a string representing the contents of the tex file to be compiled
+     * @param backupFileName name of the backup file
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     protected void createBackup(String texFileToCompile, String backupFileName) {
         try {
@@ -147,6 +189,11 @@ public abstract class PdfGenerator {
         }
     }
 
+    /**
+     * Creates the pdf file.
+     * @param response JSON response received from the online LaTeX editor
+     * @param pdfName name of the pdf file created
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     // https://www.baeldung.com/java-download-file
     protected void createPdf(byte[] response, String pdfName) {

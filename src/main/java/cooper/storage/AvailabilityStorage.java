@@ -19,6 +19,10 @@ import java.util.TreeMap;
 
 public class AvailabilityStorage extends Storage {
 
+    protected static final String AVAILABILITY_TXT = "availability.txt";
+    protected static final String TIME_FORMAT = "HH:mm";
+    protected static final String COMMA = ",";
+
     public AvailabilityStorage(String filePath) {
         super(filePath);
     }
@@ -54,16 +58,16 @@ public class AvailabilityStorage extends Storage {
     private static void decodeAvailability(String availabilityRowAsString, TreeMap<LocalTime,
             ArrayList<String>> availability)
             throws InvalidFileDataException {
-        String[] availabilityRowAsArray = availabilityRowAsString.split("\\|");
+        String[] availabilityRowAsArray = availabilityRowAsString.split(SEPARATOR_REGEX);
         if (isInvalidFileData(availabilityRowAsArray)) {
-            throw new InvalidFileDataException("availability.txt");
+            throw new InvalidFileDataException(AVAILABILITY_TXT);
         }
         assert !isInvalidFileData(availabilityRowAsArray);
 
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_FORMAT);
         LocalTime availableTime = LocalTime.parse(availabilityRowAsArray[0].trim(), timeFormat);
 
-        String[] attendeesAsArray = availabilityRowAsArray[1].trim().split(",");
+        String[] attendeesAsArray = availabilityRowAsArray[1].trim().split(COMMA);
         ArrayList<String> attendees = new ArrayList<>(Arrays.asList(attendeesAsArray));
 
         availability.put(availableTime, attendees);
@@ -75,7 +79,7 @@ public class AvailabilityStorage extends Storage {
         }
 
         try {
-            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_FORMAT);
             LocalTime meetingTime = LocalTime.parse(meeting[0].trim(), timeFormat);
         } catch (DateTimeParseException e) {
             return true;
@@ -104,7 +108,7 @@ public class AvailabilityStorage extends Storage {
         StringBuilder encodedAvailability = new StringBuilder();
 
         String availableTime = meeting.getKey().toString();
-        encodedAvailability.append(availableTime).append(" | ");
+        encodedAvailability.append(availableTime).append(SEPARATOR);
 
         String availabilities = getAttendeesAsString(meeting.getValue());
         encodedAvailability.append(availabilities);
@@ -120,7 +124,7 @@ public class AvailabilityStorage extends Storage {
             if (a.equals(attendees.get(indexOfLastAttendee))) {
                 attendeesAsString.append(a);
             } else {
-                attendeesAsString.append(a).append(",");
+                attendeesAsString.append(a).append(COMMA);
             }
         }
         return String.valueOf(attendeesAsString);

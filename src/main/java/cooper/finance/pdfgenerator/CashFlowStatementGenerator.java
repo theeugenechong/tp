@@ -13,20 +13,29 @@ import java.util.ArrayList;
 
 //@@author theeugenechong
 
+/**
+ * Generates the current cash flow statement as a pdf file formatted using LaTeX templates.
+ */
 public class CashFlowStatementGenerator extends PdfGenerator {
 
+    /* Paths of the files containing the LaTeX templates */
     private static final String CF_TEMPLATE_PATH = "/pdf/cf/cfTemplate.tex";
     private static final String CF_HEADER_TEMPLATE_PATH = "/pdf/cf/cfHeaderTemplate.tex";
     private static final String CF_ENTRY_TEMPLATE_PATH = "/pdf/cf/cfEntryTemplate.tex";
     private static final String CF_SUMMARY_TEMPLATE_PATH = "/pdf/cf/cfSummaryTemplate.tex";
 
+    /* Content of the headers to be added to each section of the cash flow statement */
     private static final String OPERATING_ACTIVITIES = "Operating Activities";
     private static final String INVESTING_ACTIVITIES = "Investing Activities";
     private static final String FINANCING_ACTIVITIES = "Financing Activities";
 
+    /* Names of the files created */
     private static final String CF_PDF_FILE = "/CashFlowStatement.pdf";
     private static final String CF_BACKUP_FILE = "/backupCf.txt";
 
+    /**
+     * The constructor loads the templates from the template files.
+     */
     public CashFlowStatementGenerator() {
         super();
         loadTemplate(CF_TEMPLATE_PATH);
@@ -35,6 +44,10 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         loadSummaryTemplate(CF_SUMMARY_TEMPLATE_PATH);
     }
 
+    /**
+     * Add the OA section from {@code cashFlow} into {@code pdfContent}.
+     * @param cashFlow Cash flow statement containing the entries to be added to the pdf file.
+     */
     public void addCfFromOperatingActivities(CashFlow cashFlow) {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(OPERATING_ACTIVITIES);
@@ -44,6 +57,10 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         createSummary(OPERATING_ACTIVITIES, FinanceManager.netOA);
     }
 
+    /**
+     * Add the IA section from {@code cashFlow} into {@code pdfContent}.
+     * @param cashFlow Cash flow statement containing the entries to be added to the pdf file.
+     */
     public void addCfFromInvestingActivities(CashFlow cashFlow) {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(INVESTING_ACTIVITIES);
@@ -53,6 +70,10 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         createSummary(INVESTING_ACTIVITIES, FinanceManager.netIA);
     }
 
+    /**
+     * Add the FA section from {@code cashFlow} into {@code pdfContent}.
+     * @param cashFlow Cash flow statement containing the entries to be added to the pdf file.
+     */
     public void addCfFromFinancingActivities(CashFlow cashFlow) {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(FINANCING_ACTIVITIES);
@@ -62,6 +83,11 @@ public class CashFlowStatementGenerator extends PdfGenerator {
         createSummary(FINANCING_ACTIVITIES, FinanceManager.netFA);
     }
 
+    /**
+     * Sends the LaTeX file representing the cash flow statement to be compiled by an online LaTeX editor by making a
+     * JSON post request. In the event that there is a connection problem, an error message is printed and a backup
+     * {@code .txt} file is created.
+     */
     @Override
     public void compilePdfAndSend() {
         String texFileToCompile = formTexFile();
@@ -71,8 +97,6 @@ public class CashFlowStatementGenerator extends PdfGenerator {
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             sendPdf(con, texFileToCompile);
 
-            // This is the perfect place to add logging
-            String reply = con.getResponseMessage();
             int replyCode = con.getResponseCode();
             if (replyCode == 200) {
                 // send success

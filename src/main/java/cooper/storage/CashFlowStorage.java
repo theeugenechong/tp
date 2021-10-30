@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class CashFlowStorage extends Storage {
 
+    protected static final String CASH_FLOW_STATEMENT_TXT = "cashFlowStatement.txt";
+
     public CashFlowStorage(String filePath) {
         super(filePath);
     }
@@ -62,7 +64,7 @@ public class CashFlowStorage extends Storage {
 
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException("cashFlowStatement.txt");
+            throw new InvalidFileDataException(CASH_FLOW_STATEMENT_TXT);
         }
         return Integer.parseInt(expense);
     }

@@ -18,10 +18,20 @@ import java.util.Optional;
 
 //@@author theeugenechong
 
+/**
+ * Parser to parse sign in details for verification.
+ */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class SignInDetailsParser extends  ParserBase {
 
     private static SignInDetailsParser signInDetailsParserImpl = null;
+
+    protected static final String ADMIN = "admin";
+    protected static final String EMPLOYEE = "employee";
+    protected static final String LOGIN = "login";
+    protected static final String REGISTER = "register";
+    protected static final String EXIT = "exit";
+    protected static final String WHITESPACE_SEQUENCE = "\\s+";
 
     /**
      * Constructor. Initialise internal parser.
@@ -44,6 +54,12 @@ public class SignInDetailsParser extends  ParserBase {
         return signInDetailsParserImpl.parseInput(input);
     }
 
+    /**
+     * Gets the raw password of the user as it is not good to store the raw password in the object itself.
+     *
+     * @param input user input
+     * @return The user's unencrypted password
+     */
     public static String parseRawPassword(String input) throws InvalidCommandFormatException {
         if (signInDetailsParserImpl == null) {
             signInDetailsParserImpl = new SignInDetailsParser();
@@ -51,17 +67,26 @@ public class SignInDetailsParser extends  ParserBase {
         return signInDetailsParserImpl.parsePassword(input);
     }
 
+    /**
+     * Parses the sign in details entered by the user.
+     *
+     * @param input sign in details to be parsed
+     * @return a {@code SignInProtocol} object containing the sign in details of the user signing in
+     * @throws InvalidUserRoleException if the user is not signing in with admin or employee
+     * @throws UnrecognisedCommandException if the user is entering none of login, register or exit
+     * @throws InvalidCommandFormatException if the sign in details are missing some arguments
+     */
     @Override
     public SignInProtocol parseInput(String input) throws InvalidUserRoleException, UnrecognisedCommandException,
             InvalidCommandFormatException {
         assert input != null;
-        String signInProtocol = input.split("\\s+")[0].toLowerCase();
+        String signInProtocol = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
         switch (signInProtocol) {
-        case "login":
-        case "register":
+        case LOGIN:
+        case REGISTER:
             return parseSignInDetails(input);
-        case "exit":
+        case EXIT:
             exitProgram();
             return null;
         default:
@@ -69,12 +94,25 @@ public class SignInDetailsParser extends  ParserBase {
         }
     }
 
+    /**
+     * Shows a bye message and exits the program.
+     */
     private void exitProgram() {
         Ui.showBye();
         Ui.closeStreams();
         System.exit(0);
     }
 
+    /**
+     * Parses the {@code input} and constructs a {@code SignInProtocol} object which represents the sign-in process
+     * of the user.
+     *
+     * @param input user input
+     * @return {@code SignInProtocol} containing the users sign in details
+     * @throws InvalidUserRoleException if the user is not signing in with admin or employee
+     * @throws NoSuchElementException if the arguments are missing from the input
+     * @throws InvalidCommandFormatException if the sign in details are of the wrong format
+     */
     private SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
             InvalidUserRoleException, NoSuchElementException, InvalidCommandFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
@@ -83,10 +121,10 @@ public class SignInDetailsParser extends  ParserBase {
             String command = result.allCommands().get(0).name();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
-            case "login":
+            case LOGIN:
                 SignInDetails signInDetails = parseSignInArgs(commandArgs);
                 return new Login(signInDetails);
-            case "register":
+            case REGISTER:
                 signInDetails = parseSignInArgs(commandArgs);
                 return new Registration(signInDetails);
             default:
@@ -97,6 +135,9 @@ public class SignInDetailsParser extends  ParserBase {
         }
     }
 
+    /**
+     * Similar to {@code parseSignInDetails} but is a helper method.
+     */
     private SignInDetails parseSignInArgs(List<Argument> commandArgs) throws InvalidUserRoleException,
             NoSuchElementException, InvalidCommandFormatException {
         String username = null;
@@ -116,9 +157,9 @@ public class SignInDetailsParser extends  ParserBase {
                 userEncryptedPassword = PasswordHasher.generatePasswordHash(argVal, userSalt);
                 break;
             case "role-hint":
-                if (argVal.equals("admin")) {
+                if (argVal.equals(ADMIN)) {
                     userRole = UserRole.ADMIN;
-                } else if (argVal.equals("employee")) {
+                } else if (argVal.equals(EMPLOYEE)) {
                     userRole = UserRole.EMPLOYEE;
                 } else {
                     throw new InvalidUserRoleException();
@@ -131,6 +172,10 @@ public class SignInDetailsParser extends  ParserBase {
         return new SignInDetails(username, userEncryptedPassword, userSalt, userRole);
     }
 
+    /**
+     * Parses the user input to get the raw password of the user.
+     * @return a string representing the user's raw password
+     */
     private String parsePassword(String input) throws InvalidCommandFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
@@ -142,6 +187,9 @@ public class SignInDetailsParser extends  ParserBase {
         }
     }
 
+    /**
+     * Helper method for {@code parsePassword}.
+     */
     private String getRawPassword(List<Argument> commandArgs) throws InvalidCommandFormatException {
         String userRawPassword = null;
         for (Argument a : commandArgs) {
