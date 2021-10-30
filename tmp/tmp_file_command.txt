@@ -14,16 +14,16 @@ add = add ${amount-hint}
 proj = proj ${years-hint}
 
 # post add
-postAdd = postadd ${content-hint}
+postAdd = post add ${content-hint}
 
 # post delete
-postDelete = postdelete ${index-hint}
+postDelete = post delete ${index-hint}
 
 # post comment
-postComment = postcomment ${content-hint} on ${index-hint}
+postComment = post comment ${content-hint} on ${index-hint}
 
 # post list
-postList = postlist ${list-hint}
+postList = post list ${list-hint}
 
 # schedule
 schedule = schedule ${meeting-hint} with ${usernames-hint}
