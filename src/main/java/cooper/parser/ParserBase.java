@@ -28,12 +28,12 @@ public abstract class ParserBase {
     /**
      * Constructor. Initialise internal parser.
      */
-    public ParserBase() {
+    public ParserBase(String schema) {
         try {
-            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
+            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/" + schema);
 
             File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
+                    System.getProperty("user.dir") + "/tmp", "/tmp_" + schema);
 
             InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
             File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
@@ -66,6 +66,7 @@ public abstract class ParserBase {
         ParserBuilder parserBuilder = Parser.newBuilder();
         parserBuilder.addCommandSet(commandSet);
         parserBuilder.addTrainingSet(trainingSet);
+
         return parserBuilder.build();
     }
 }

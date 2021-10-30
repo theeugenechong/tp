@@ -37,7 +37,7 @@ public class SignInDetailsParser extends  ParserBase {
      * Constructor. Initialise internal parser.
      */
     private SignInDetailsParser()  {
-        super();
+        super("sign-in-data.properties");
     }
 
     /**
