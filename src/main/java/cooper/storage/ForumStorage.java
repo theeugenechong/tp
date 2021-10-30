@@ -15,6 +15,9 @@ import java.util.Scanner;
 
 public class ForumStorage extends Storage {
 
+    protected static final String POST = "P";
+    protected static final String COMMENT = "C";
+
     public ForumStorage(String filePath) {
         super(filePath);
     }
@@ -26,12 +29,12 @@ public class ForumStorage extends Storage {
             return;
         }
         while (fileScanner.hasNext()) {
-            String[] post = fileScanner.nextLine().split("\\|");
-            if (post[0].equals("P")) {
+            String[] post = fileScanner.nextLine().split(SEPARATOR_REGEX);
+            if (post[0].equals(POST)) {
                 currentPost++;
                 forumManager.addPost(post[1],post[2]);
             } else {
-                assert post[0].equals("C");
+                assert post[0].equals(COMMENT);
                 try {
                     forumManager.addComment(post[1],post[2],currentPost - 1);
                 } catch (InvalidForumPostIdException e) {

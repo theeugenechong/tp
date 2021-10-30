@@ -39,8 +39,6 @@ public class ResourcesManager {
         return cooperMeetingManager;
     }
 
-    // FIXME: These three APIs should not be accessed without user roles,
-    // access right management is done in V2.1
     public ForumManager getForumManager() {
         return cooperForumManager;
     }

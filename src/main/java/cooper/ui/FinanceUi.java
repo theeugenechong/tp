@@ -29,6 +29,7 @@ public class FinanceUi extends Ui {
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
     private static final String ADDED_AS = " has been added as ";
+    private static final String NL = System.lineSeparator();
 
     public static final String[] BALANCE_SHEET_UI = new String[] {
         "Cash and Cash Equivalents  ",
@@ -196,17 +197,17 @@ public class FinanceUi extends Ui {
         switch (balanceSheetStage) {
         case FinanceManager.endOfAssets:
             show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
         case FinanceManager.endOfLiabilities:
             show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
         case FinanceManager.endOfSE:
             show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
             break;
         default:
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
         }
 
@@ -223,21 +224,21 @@ public class FinanceUi extends Ui {
         switch (cashFlowStage) {
         case FinanceManager.endOfOA:
             show(NET_AMOUNTS_UI[0] + FinanceManager.netOA);
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfIA:
             show(NET_AMOUNTS_UI[1] + FinanceManager.netIA);
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfFA:
             show(NET_AMOUNTS_UI[2] + FinanceManager.netFA);
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.freeCashFlow:
             show("");
             break;
         default:
-            show("\n" + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
+            show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         }
 

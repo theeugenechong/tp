@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class BalanceSheetStorage extends Storage {
 
+    protected static final String BALANCE_SHEET_TXT = "balanceSheet.txt";
+
     public BalanceSheetStorage(String filePath) {
         super(filePath);
     }
@@ -62,7 +64,7 @@ public class BalanceSheetStorage extends Storage {
 
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException("balanceSheet.txt");
+            throw new InvalidFileDataException(BALANCE_SHEET_TXT);
         }
         return Integer.parseInt(expense);
     }

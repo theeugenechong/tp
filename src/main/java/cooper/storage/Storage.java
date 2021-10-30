@@ -13,10 +13,19 @@ public class Storage {
 
     protected final String filePath;
 
+    protected static final String SLASH = "/";
+    protected static final String SEPARATOR = " | ";
+    protected static final String SEPARATOR_REGEX = "\\|";
+
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Gets a scanner object to read from a file. If the file is not found, the file is created correctly.
+     * @param filePath Path of the file
+     * @return Scanner to read that file
+     */
     protected static Scanner getScanner(String filePath) {
         File storageFile = new File(filePath);
         Scanner fileScanner = null;
@@ -57,7 +66,7 @@ public class Storage {
      * @return a string representing the full directory path of {@code filePath}
      */
     private static String getDirectoryPath(String filePath) {
-        String[] directoryPathAsArray = filePath.split("/");
+        String[] directoryPathAsArray = filePath.split(SLASH);
         StringBuilder directoryPath = new StringBuilder();
 
         /* Iterate up to length - 1 because the last argument in a file path is usually the file type */

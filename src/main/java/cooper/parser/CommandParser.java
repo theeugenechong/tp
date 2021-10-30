@@ -345,6 +345,13 @@ public class CommandParser extends ParserBase {
     }
 
     //@@author theeugenechong
+
+    /**
+     * Parses the {@code generate} command to identify the document to generate as PDF.
+     * @return a {@code GenerateCommand} containing the document the user wants to generate
+     * @throws NoSuchElementException if the command is missing arguments
+     * @throws InvalidCommandFormatException if the command is of the wrong format
+     */
     private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
         String documentToGenerate = null;
@@ -366,6 +373,9 @@ public class CommandParser extends ParserBase {
         return new GenerateCommand(documentToGenerate);
     }
 
+    /**
+     * Helper method to determine is the user argument is one of bs or cf.
+     */
     private boolean isValidDocToGenerate(String doc) {
         return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
     }

@@ -20,12 +20,19 @@ import cooper.verification.Verifier;
 import cooper.resources.ResourcesManager;
 
 //@@author Rrraaaeee
+/**
+ * Entry point of the cOOPer application.
+ */
 public class Cooper {
 
+    /* cOOPer's components */
     private final Verifier cooperVerifier;
     private final ResourcesManager cooperResourcesManager;
     private final StorageManager cooperStorageManager;
 
+    /**
+     * Initializes cOOPer's components.
+     */
     public Cooper() {
         cooperVerifier = new Verifier();
         cooperResourcesManager = new ResourcesManager();
@@ -34,7 +41,7 @@ public class Cooper {
     }
 
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main entry-point of the cOOPer application.
      */
     public static void main(String[] args) {
         Cooper cooper = new Cooper();
@@ -42,11 +49,17 @@ public class Cooper {
     }
 
     //@@author fansxx
+    /**
+     * Runs cOOPer.
+     */
     public void run() {
         setUp();
         runLoopUntilExitCommand();
     }
 
+    /**
+     * Shows the greeting message and loads data from the storage upon launching cOOPer.
+     */
     private void setUp() {
         Ui.showLogo();
         Ui.showIntroduction();
@@ -58,6 +71,9 @@ public class Cooper {
                 cooperResourcesManager.getForumManager());
     }
 
+    /**
+     * Runs cOOPer until the {@code exit} command is entered.
+     */
     @SuppressWarnings("InfiniteLoopStatement")
     private void runLoopUntilExitCommand() {
         while (true) {
@@ -67,6 +83,12 @@ public class Cooper {
     }
 
     //@@author theeugenechong
+    /**
+     * Gets user credentials and verifies them. Will continue looping until the credentials enter are valid.
+     * Saves the user as a registered user only after the user signs in successfully.
+     * @return The sign in details of the user who successfully signed in which is to be used in the execution of
+     *         commands.
+     */
     private SignInDetails verifyUser() {
         SignInDetails successfulSignInDetails = null;
         while (!cooperVerifier.isSuccessfullySignedIn()) {
@@ -79,6 +101,12 @@ public class Cooper {
     }
 
     //@@author ChrisLangton
+    /**
+     * Allows the user to continuously enter commands to use cOOPer's features until the {@code logout} command is
+     * entered.
+     * @param signInDetails The sign in details of the user who successfully signed in which is to be used
+     *                      in the execution of commands.
+     */
     private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
             try {
@@ -93,12 +121,12 @@ public class Cooper {
             } catch (UnrecognisedCommandException e) {
                 ParserUi.showUnrecognisedCommandError(false);
             } catch (InvalidAccessException e) {
-                VerificationUi.printNoAccessError();
+                VerificationUi.showNoAccessError();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
             } catch (LogoutException e) {
                 cooperVerifier.setSuccessfullySignedIn(false);
-                Ui.showLogoutMessage();
+                VerificationUi.showLogoutMessage();
                 break;
             }
         }

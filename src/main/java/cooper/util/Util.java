@@ -14,14 +14,16 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 //@@author Rrraaaeee
-
+/**
+ * Utility class containing helper methods to help in some of cOOPer's features.
+ */
 public class Util {
 
     // https://mkyong.com/java/how-to-convert-inputstream-to-file-in-java/
     // https://github.com/tlylt/ip/blob/master/src/main/java/tlylt/haha/Storage.java
     // https://www.baeldung.com/convert-input-stream-to-a-file
     /**
-     * Convert input stream (resources) to file during deployment.
+     * Converts input stream (resources) to file during deployment.
      */
     public static File inputStreamToTmpFile(InputStream inputStream, String baseDir, String fileName)
             throws IOException {
@@ -42,6 +44,12 @@ public class Util {
         return tmpFile;
     }
 
+    /**
+     * Converts input stream from a file to a string object. Used in converting the LaTeX template files to a string
+     * for easier handling.
+     * @param inputStream File to read from
+     * @return String representing the content of the file.
+     */
     public static String inputStreamToString(InputStream inputStream) {
         return new BufferedReader(
                new InputStreamReader(inputStream, StandardCharsets.UTF_8))
