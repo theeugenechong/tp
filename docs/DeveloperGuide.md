@@ -104,7 +104,7 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
       3. All the tests should pass, and you should see the following:
 
 <p align="center">
-    <img width=150 src="developerGuideDiagrams/junitPassed.png" alt="junitPassed"><br>
+    <img width=350 src="developerGuideDiagrams/junitPassed.png" alt="junitPassed"><br>
 </p> 
 
 ### Before you code
