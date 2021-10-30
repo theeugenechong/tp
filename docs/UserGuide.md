@@ -54,7 +54,7 @@ cOOPer can help you manage your startup efficiently.
   
 ## How this User Guide Works
 
-Throughout this user guide, you will see text formatted differently from normal text, as well as symbols appearing before another line of text is displayed. 
+Throughout this user guide, you will see text formatted differently from normal text, as well as symbols appearing before another line of text. 
 The table below explains the formatting and symbols in this user guide.
 
 **Formatting/Symbol** | **Meaning**              |
@@ -735,11 +735,10 @@ Exits the program.
 
 ```
 =========================================================================
-Bye, see you next time! :D
+Bye, see you next time!
 =========================================================================
 ```
 
-> ℹ️You can only `exit` the program while you are **logged in**.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 

@@ -83,6 +83,7 @@ public class FinanceUi extends Ui {
         show(BALANCE_OPENING);
         show(HEADERS_UI[3]);
         int i;
+        FinanceManager.runTotalAmountsCheck(balanceSheet);
         for (i = 0; i < balanceSheet.size(); i++) {
             switch (i) {
             case FinanceManager.endOfAssets:
@@ -100,6 +101,7 @@ public class FinanceUi extends Ui {
                 break;
             }
         }
+
         if (i == balanceSheet.size()) {
             show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
         }

@@ -36,24 +36,18 @@ public class ProjectionCommand extends Command {
             throw new InvalidAccessException();
         }
 
-        if (financeFlag == FinanceCommand.IDLE) {
-            FinanceUi.showPleaseSpecifyFinancialStatement();
-        }
-
         boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
 
-        if (financeFlag == FinanceCommand.PROJ) {
-            if (isEmptyCf) {
-                throw new EmptyFinancialStatementException();
-            }
-            int newFreeCF = financeManager.calculateFreeCashFlow(
-                    financeManager.cooperCashFlowStatement.getCashFlowStatement());
-            int oldFreeCF = financeManager.cooperCashFlowStatement.cashFlowStatement.get(oldIndex);
-            int differenceFreeCF = newFreeCF - oldFreeCF;
-            double rateOfGrowth = (differenceFreeCF / (double) oldFreeCF) * 100.0;
-            double finalGrowthValue = financeManager.createProjection(newFreeCF, rateOfGrowth, years);
-            FinanceUi.printProjections(finalGrowthValue, financeManager.cooperProjection.getProjection());
-            financeManager.cooperProjection.getProjection().clear();
+        if (isEmptyCf) {
+            throw new EmptyFinancialStatementException();
         }
+        int newFreeCF = financeManager.calculateFreeCashFlow(
+                financeManager.cooperCashFlowStatement.getCashFlowStatement());
+        int oldFreeCF = financeManager.cooperCashFlowStatement.cashFlowStatement.get(oldIndex);
+        int differenceFreeCF = newFreeCF - oldFreeCF;
+        double rateOfGrowth = (differenceFreeCF / (double) oldFreeCF) * 100.0;
+        double finalGrowthValue = financeManager.createProjection(newFreeCF, rateOfGrowth, years);
+        FinanceUi.printProjections(finalGrowthValue, financeManager.cooperProjection.getProjection());
+        financeManager.cooperProjection.getProjection().clear();
     }
 }

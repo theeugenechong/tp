@@ -5,6 +5,7 @@ import com.dopsun.chatbot.cli.ParseResult;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
+import cooper.ui.Ui;
 import cooper.verification.Login;
 import cooper.verification.PasswordHasher;
 import cooper.verification.Registration;
@@ -32,7 +33,7 @@ public class SignInDetailsParser extends  ParserBase {
     /**
      * API to parse a command in string.
      * @param input command to be parsed
-     * @return a command object, to be passed into command handler
+     * @return a SignInProtocol object, to be passed to verifier
      */
     public static SignInProtocol parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidUserRoleException {
@@ -50,6 +51,7 @@ public class SignInDetailsParser extends  ParserBase {
         return signInDetailsParserImpl.parsePassword(input);
     }
 
+    @Override
     public SignInProtocol parseInput(String input) throws InvalidUserRoleException, UnrecognisedCommandException,
             InvalidCommandFormatException {
         assert input != null;
@@ -59,9 +61,18 @@ public class SignInDetailsParser extends  ParserBase {
         case "login":
         case "register":
             return parseSignInDetails(input);
+        case "exit":
+            exitProgram();
+            return null;
         default:
             throw new UnrecognisedCommandException();
         }
+    }
+
+    private void exitProgram() {
+        Ui.showBye();
+        Ui.closeStreams();
+        System.exit(0);
     }
 
     private SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,

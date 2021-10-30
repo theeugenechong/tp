@@ -13,6 +13,7 @@ This developer guide is for software designers, developers, and software testers
 - Perform software testing on cOOPer
 
 ## What's in this Developer Guide
+- [How This Developer Guide Works](#how-this-developer-guide-works)
 - [Acknowledgements](#acknowledgements)
 - [Setting Up and Getting Started](#setting-up-and-getting-started)
   - [Setting up cOOPer on your computer](#setting-up-cooper-on-your-computer)
@@ -36,8 +37,23 @@ This developer guide is for software designers, developers, and software testers
   - [Non-functional requirements](#non-functional-requirements)
   - [Glossary](#glossary)
 - [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+  - [Launch and Shutdown](#launch-and-shutdown)
+
+## How This Developer Guide Works
+
+Throughout this developer guide, you will see text formatted differently from normal text, as well as symbols appearing before another line of text.
+The table below explains the formatting and symbols in this user guide.
+
+**Formatting/Symbol** | **Meaning**              |
+------------|------------------------------------|
+*italics* |Text in italics represent technical terms used by developers or terminology specific to using cOOPer.
+**bold**|Text in bold emphasizes the text's importance and indicates that you should pay more attention to the text.
+`code` |Short lines of text highlighted as such indicate a class, method or component of cOOPer.
+ℹ️  |The info symbol indicates useful information about diagrams / content.
+💡     |The light bulb symbol indicates a useful tip which eases development of cOOPer.
 
 ## Acknowledgements
+This section includes the sources of code, documentation and third-party libraries reused / adapted in developing cOOPer.
 1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
 2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
 3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
@@ -46,8 +62,7 @@ This developer guide is for software designers, developers, and software testers
 
 ## Setting Up and Getting Started
 
-> #### 💡 Tip:
-> Here are the software/tools used in developing cOOPer. You are recommended to use them :
+> 💡 Here are the software / tools used in developing cOOPer. You are recommended to use them :
 > - **IDE**: IntelliJ IDEA (highly recommended)
 > - **JDK**: Java 11 
 > - **Version control**: Git 
@@ -56,13 +71,12 @@ This developer guide is for software designers, developers, and software testers
 
 ### Setting up cOOPer on your computer
 1. Fork [this repo](https://github.com/AY2122S1-CS2113T-W13-4/tp) and clone the fork into your computer.
-2. If you are using IntelliJ IDEA, ensure that IntelliJ is configured to use **JDK 11**. You can refer to IntelliJ's
-own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to correctly configure the JDK.
+2. If you are using IntelliJ IDEA, ensure that IntelliJ is configured to use **JDK 11**. You can refer to IntelliJ's own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to correctly configure the JDK.
 3. Import the project as a Gradle project. You can follow [this guide](https://se-education.org/guides/tutorials/intellijImportGradleProject.html) to find out how to import the project into IntelliJ.
 4. Verify the setup:
-   1. Running `cooper.Cooper`
+   1. Run `cooper.Cooper`
       1. Navigate to `src/main/java/cooper/Cooper.java`
-      2. Right click on `Cooper.java` and select "Run Cooper.main()".
+      2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
       3. You should see the following output if the setup was done correctly:
       
 ```
@@ -84,94 +98,95 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
 >> 
 ```
 
-5. Running `JUnit` tests (optional):
+5. Run `JUnit` tests (optional):
       1. Navigate to `src/test`.
-      2. Right click on `test` and select "Run all tests".
+      2. Right click on `test` and select 'Run 'All tests' '.
       3. All the tests should pass, and you should see the following:
-   
-      ![img.png](developerGuideDiagrams/junitPassed.png)
+
+<p align="center">
+    <img width=150 src="developerGuideDiagrams/junitPassed.png" alt="junitPassed"><br>
+</p> 
 
 ### Before you code
 - **Configure coding style**
-  - If you are using IntelliJ IDEA, follow [this guide](https://se-education.org/guides/tutorials/intellijCodeStyle.html)
-  to set up IntelliJ to match our coding style.
+  - If you are using IntelliJ IDEA, follow [this guide](https://se-education.org/guides/tutorials/intellijCodeStyle.html) to set up IntelliJ to match our coding style.
 - **Set up CI**
-  - GitHub automatically detects the GitHub actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the `master` branch or whenever a pull request is created.
+  - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the `master` branch or whenever a pull request is created.
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
 
 ## Design
 
-> #### 💡 Tip:
-> The diagrams in this document were created using **draw.io**. The `.png` templates used to create the diagrams
-> can be found in the [`developerGuideDiagrams`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/docs/developerGuideDiagrams) folder. To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/),
-> select 'Open Existing Diagram' and open the desired `.png` file.
+> 💡 The diagrams in this document were created using **draw.io**. The `.png` templates used to create the diagrams can be found in the [`developerGuideDiagrams`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/docs/developerGuideDiagrams) folder. 
+> To create and edit diagrams, access the draw.io [website](https://app.diagrams.net/), select 'Open Existing Diagram' and open the desired `.png` file. Any changes to the diagram will be saved automatically.
 
 ### Overview
 
 cOOPer consists of two main layers: **verification** layer and **features** layer as shown in the diagram below.
 cOOPer recognizes different sets of inputs at each layer.
 
-![layerDiagram](developerGuideDiagrams/layerDiagram.png)
+<p align="center">
+    <img src="developerGuideDiagrams/layerDiagram.png" alt="layerDiagram"><br>
+</p> 
 
-Upon launching the app, the user starts at the **verification**
-layer where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). Entering valid
-credentials will then grant the user access to the **features** layer where they can input commands like `cf` and
-`available` to use cOOPer's features. At this layer, entering the `logout` command will bring the user back to the
-verification layer.
+Upon launching the app, the user starts at the **verification** layer where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). 
+Entering valid credentials will then grant the user access to the **features** layer where they can input commands like `cf` and`available` to use cOOPer's features. 
+At this layer, entering the `logout` command will bring the user back to the verification layer.
 
 ### Architecture
 
-![architectureDiagram](developerGuideDiagrams/architectureDiagram.png)
+<p align="center">
+    <img src="developerGuideDiagrams/architectureDiagram.png" alt="architectureDiagram"><br>
+</p> 
 
 The **Architecture Diagram** above shows the high-level design of cOOPer and how cOOPer's components are connected.
 
 `Cooper` contains the *main* method of the program. `Cooper`'s responsibilities are as such:
 - Upon **launching the app**, `Cooper` initializes the components and loads stored user data into the components. 
-- While the **app is running**, `Cooper` reads user input which is then processed by the components to produce 
-a result.
-- Upon **shutting down the app**, `Cooper` saves any unsaved user data to the hard disk and shuts down the components. 
+- While the **app is running**, `Cooper` reads user input which is then processed by the components to produce a result.
+- Upon **shutting down the app**, `Cooper` shuts down the components. 
 
 Apart from `Cooper`, the rest of the app consists of these seven components:
 - [`Ui`](#ui-component): Handles the reading of user input and printing of messages to the terminal.
 - [`Parser`](#parser-component): Interprets and validates user input.
-- [`Verification`](#verification-component): Verifies that the user is signing in to the system with the correct credentials.
+- [`Verification`](#verification-component): Verifies that the user is signing in to cOOPer with valid credentials.
 - [`Command`](#command-component): Executes commands which are parsed from user input.
 - [`Resources`](#resources-component): Manages cOOPer's data for finance, meetings and forum features while the app is running.
 - [`Storage`](#storage-component): Loads data from, and saves data to storage files in the computer hard disk.
-- [`Util`](#util-component): Unrelated utility methods which help with some of cOOPer's features.
+- [`Util`](#util-component): Utility methods which help with some of cOOPer's features.
 
 #### Interaction of the architecture components to process user input
-- The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in 
-details** for verification.
+- The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in details** for verification.
 
-> #### 📝 Note:
-> `userInput` represents the sign in details input by the user for verification. For example, `register 
-> John pw 12345 as admin`.
+> ℹ️`userInput` represents the sign in details input by the user for verification. For example, `register John pw 12345 as admin`.
 
-![signInSequenceDiagram](developerGuideDiagrams/signInSequenceDiagram.png)
+<p align="center">
+    <img src="developerGuideDiagrams/signInSequenceDiagram.png" alt="signInSequenceDiagram"><br>
+</p> 
 
-- The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** after
-successfully logging in.
+- The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** after successfully logging in.
 
-> #### 📝 Note:
-> - `userInput` represents a command input by the user. For example, `meetings`.
-> - `XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
+> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
+> ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
-![commandSequenceDiagram](developerGuideDiagrams/commandSequenceDiagram.png)
+<p align="center">
+    <img src="developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
+</p> 
+
 
 ### Ui Component
 
 **API**: [`Ui.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/ui)
 
-![uiComponent](developerGuideDiagrams/uiComponent.png)
+<p align="center">
+    <img src="developerGuideDiagrams/uiComponent.png" alt="uiComponent"><br>
+</p> 
+
 
 - The `Ui` component consists of a parent `Ui` class and its subclasses as shown by the class diagram above.
-- The parent `Ui` class contains general constants and methods used across cOOPer's components which read user input and 
-print recurring messages.
-- On the other hand, the subclasses for the different components in cOOPer (`ABCUi`) contain constants and methods specific to
-the function of that component. For example, `FinanceUi` contains a method `printBalanceSheet()` which prints a balance sheet
-formatted with headers containing the entries input by the user.
+- The parent `Ui` class contains general constants and methods used across cOOPer's components which read user input and print recurring messages.
+- On the other hand, the subclasses for the different components in cOOPer (`ABCUi`) contain constants and methods specific to the function of that component. 
+For example, `FinanceUi` contains a method `printBalanceSheet()` which prints a balance sheet formatted with headers containing the entries input by the user.
 - The classes in Ui have *static* methods so there is no need to create a `Ui` object in `Cooper`.
 
 The `Ui` component:
@@ -183,32 +198,63 @@ The `Ui` component:
 
 **API**: [`ParserBase.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/parser)
 
-![parserComponent](developerGuideDiagrams/parserComponent.png)
+<p align="center">
+    <img src="developerGuideDiagrams/parserComponent.png" alt="parserComponent"><br>
+</p>
+
 
 - The `Parser` component consists of an abstract `ParserBase` class with its children classes, `CommandParser` and `SignInDetailsParser`. 
-To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different objects are parsed from user input at each layer.
-- User input at the verification layer will be parsed to construct a `SignInProtocol` object while user input at the features layer 
-will be parsed to construct a `Command` object. The `SignInProtocol` object executes the signing in of the user using the details provided in the user input 
-while the `Command` object executes the command input by the user.
-- `ParserBase` contains a reference to the `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library
-used by cOOPer. More information about cOOPer's implementation of the library can be found [here](#parsing-user-input).
+- To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different objects are parsed from user input at different layers. 
+User input at the verification layer will be parsed to construct a `SignInProtocol` object while user input at the features layer will be parsed to construct a `Command` object. 
+- The `SignInProtocol` object executes the signing in of the user with details provided in the input while the `Command` object executes the command input by the user.
+- `ParserBase` contains a reference to the `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library used by cOOPer. 
+More information about cOOPer's implementation of the library can be found [here](#parsing-user-input).
 
 The `Parser`component:
 - Constructs and returns a new `SignInProtocol`/`Command` object with the correct parsed attributes
 - Determines if user input corresponds to any of the commands recognised by cOOPer
-- Validates user input by checking for erroneous command arguments. For example, empty command arguments or entering alphabets where an integer 
-is expected
-- Does not perform any printing of error messages, but instead throws `InvalidCommandFormatException`, `UnrecognisedCommandException` etc.
-to signal erroneous input 
+- Validates user input by checking for erroneous command arguments. For example, empty command arguments or entering alphabets where an integer is expected
+- Does not perform any printing of error messages, but instead throws `InvalidCommandFormatException`, `UnrecognisedCommandException` etc. to signal erroneous input
 
 ### Verification Component
 
 **API**: [`Verifier.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
 
+<p align="center">
+    <img src="developerGuideDiagrams/verificationComponent.png" alt="verificationComponent"><br>
+</p>
 
-![verificationClassDiagram](developerGuideDiagrams/verificationClassDiagram.png)
+- The `Verification` component consists of a `Verifier` class which verifies the user's credentials and performs the necessary action in granting access to the user. More on the verification process can be found [here].
+- `Cooper` contains a reference to a `Verifier` object.
+- The `SignInProtocol` class is an abstract class representing one of the two sign in protocols, `Login` or `Registration`. 
+- The `SignInProtocol` class contains a reference to a `SignInDetails` object which as a whole, represents a sign in attempt by the user using one of the two protocols, with the corresponding `SignInDetails`.
+For example, a `Login` object containing `SignInDetailsX` represents the user's login attempt with the details `SignInDetailsX`.
+- `Login` and `Registration` override `SignInProtocol`'s abstract method, `executeSignIn()` as there are different conditions to check depending on whether the user is trying to log in or register.
+
+The `Verification` component:
+- Verifies that the user is signing in to cOOPer with the correct credentials
+- Grants the user access to the _features layer_ if the user's credentials are valid. A user with valid credentials means the user is logging in to cOOPer with the same username, password and role they registered with
 
 ### Command Component
+
+**API**: [`Command.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/command/Command.java)
+
+<p align="center">
+    <img src="developerGuideDiagrams/commandComponent.png" alt="commandComponent"><br>
+</p>
+
+- The `Command` component consists of an abstract `Command` class and its subclasses as shown in the diagram above.
+- Each subclass (`ABCCommand`) overrides `Command`'s abstract method, `execute()` and has its own unique implementation of the method based on how the command is to be executed.
+- Some subclasses also contain extra attributes which are [parsed](#parser-component) from user input. 
+- These extra attributes aid in the execution of the command.
+For example, the [`schedule`](UserGuide.md#scheduling-meetings-with-different-users-schedule) command contains a `String` representing the meeting name as well as an `ArrayList` representing the users associated with that meeting.
+- The `execute()` method takes in a `SignInDetails` object as a parameter. This object represents the sign in details of a user who has successfully signed in to cOOPer. For some of cOOPer's finance features which are only accessible by an admin, the `UserRole` attribute of this `SignInDetails` object is checked to grant correct access to the feature.
+
+The `Command` component:
+- Executes a command entered by the user.
+- May make changes to the objects in [`Resources`](#resources-component) Component depending on the command.
+- Performs the storage of data using the `StorageManager` if there is any change to the data after the command is executed
+- Prints status messages or error messages to the output using the `Ui` component to inform the user of the status of command execution
 
 ### Resources Component
 
@@ -218,14 +264,12 @@ to signal erroneous input
 
 **API**: [`Util.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
 
-- The `Util` component is a component unrelated to cOOPer and serves mainly as a helper component to make some of cOOPer's
-features possible.
+- The `Util` component is a component unrelated to cOOPer and serves mainly as a helper component to make some of cOOPer's features possible.
 - There are only two methods in the `Util` class, namely `inputStreamToTmpFile()` and `inputStreamToString()`. 
-- `inputStreamToTmpFile()` is used to recreate the dopsun chatbot-cli's training files (originally located in `src/main/resources`). In the
-process of packaging cOOPer into a JAR application, these training files are converted to bytes which are unable to be read in by the chatbot API. Hence,
-there is a need to recreate these files for the chatbot to work.
-- `inputStreamToString()` is used for cOOPer's `generate` feature which allows the user to generate a PDF file from data in cOOPer's Balance Sheet or
-Cash Flow Statement. This method is used to convert the `.tex` template files into a `String` object which can then be handled easily 
+- `inputStreamToTmpFile()` is used to recreate the dopsun chatbot-cli's training files (originally located in `src/main/resources`). 
+In the process of packaging cOOPer into a JAR application, these training files are converted to bytes which are unable to be read in by the chatbot API. Hence, there is a need to recreate these files for the chatbot to work.
+- `inputStreamToString()` is used for cOOPer's [`generate`](UserGuide.md#generating-a-pdf-from-the-financial-statement--generate) feature which allows the user to generate a PDF file from data in cOOPer's balance sheet or
+cash flow Statement. This method is used to convert the `.tex` template files into a `String` object which can then be handled easily 
 in the code. More details of implementation can be found [here]().
 
 ## Implementation
@@ -346,7 +390,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `***`    | user     | see a list of roles at login | login to the specific role I need to carry out a task |
 | `***`    | user     | have a password encrypted login | have my saved work be protected from any external tampering |
 | `***`    | finance admin     | automatically generate the company's financial statements | assess the company's current financial health accurately and quickly |
-| `***`    | secretary employee     | see all company personnel's weekly availability | schedule meetings between all available members easily |
+| `***`    | secretary employee     | see all company personnel's daily availability | schedule meetings between all available members easily |
 | `**`    | finance admin     | automatically generate projections on the company's yearly profitability | assess the company's potential future growth|
 | `**`    | employee     | make posts on a company forum | discuss difficulties or interesting developments in the company |
 | `**`    | secretary employee     | automatically schedule a meeting without having to know other person's availability| save time on finding an appropriate time to meet  |
@@ -366,4 +410,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ## Appendix: Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing} 
+### Launch and Shutdown
+1. Launching cOOPer
+   1. Download cOOPer's latest JAR file [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) and copy the JAR file into an empty folder.
+   2. Launch the Command Prompt / Terminal from the folder.
+   3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
+   4. Run `java -jar cOOPer.jar`. <br>
+Expected output: cOOPer's greeting message is shown.
+2. Exiting cOOPer
+   1. Enter `exit`.<br>
+Expected output: cOOPer's bye message is shown and the program exits successfully.

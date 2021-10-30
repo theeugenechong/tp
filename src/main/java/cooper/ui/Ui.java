@@ -59,8 +59,16 @@ public class Ui {
         } else {
             show(LINE);
         }
-        show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\"");
-        show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
+        show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\".");
+        show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\".");
+        show(LINE);
+    }
+
+    public static void showLogoutMessage() {
+        show(LINE);
+        show("You are now logged out!");
+        show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\".");
+        show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\".");
         show(LINE);
     }
 
