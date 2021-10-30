@@ -98,7 +98,7 @@ public class Cooper {
                 FinanceUi.showEmptyFinancialStatementException();
             } catch (LogoutException e) {
                 cooperVerifier.setSuccessfullySignedIn(false);
-                Ui.showLoginRegisterMessage(false);
+                Ui.showLogoutMessage();
                 break;
             }
         }
