@@ -104,7 +104,7 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]"
       3. All the tests should pass, and you should see the following:
 
 <p align="center">
-    <img width=150 src="developerGuideImages/junitPassed.png" alt="junitPassed"><br>
+    <img width=150 src="developerGuideDiagrams/junitPassed.png" alt="junitPassed"><br>
 </p> 
 
 ### Before you code
@@ -126,7 +126,7 @@ cOOPer consists of two main layers: **verification** layer and **features** laye
 cOOPer recognizes different sets of inputs at each layer.
 
 <p align="center">
-    <img src="developerGuideImages/layerDiagram.png" alt="layerDiagram"><br>
+    <img src="developerGuideDiagrams/layerDiagram.png" alt="layerDiagram"><br>
 </p> 
 
 Upon launching the app, the user starts at the **verification** layer where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). 
