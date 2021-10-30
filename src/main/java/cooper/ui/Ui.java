@@ -29,49 +29,102 @@ public class Ui {
 
     protected static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private static final String EMPTY_STRING = "";
+
+    protected static final String LOGIN_REGISTER_FOR_ACCESS = "Login or register to gain access to my features!";
+    protected static final String LOGIN = "To login, enter \"login [yourUsername] pw [password] as [yourRole]\".";
+    protected static final String REGISTER = "To register, enter \"register [yourUsername] pw [password] as "
+            + "[yourRole]\".";
+
+    private static final String BYE_MESSAGE = "Bye, see you next time!";
+    private static final String PROMPT = ">> ";
+
+    /* Constants used for admin help command */
+    private static final String ADMIN_COMMANDS = "Here are the commands available to an admin along with their "
+            + "formats:";
+    private static final String BS_FORMAT       = "bs            | bs";
+    private static final String CF_FORMAT       = "cf            | cf";
+    private static final String PROJ_FORMAT     = "proj          | proj [years]";
+    private static final String ADD_FORMAT      = "add           | add [amount]";
+    private static final String LIST_FORMAT     = "list          | list";
+    private static final String GENERATE_FORMAT = "generate      | generate [financialStatement]";
+    private static final String SCHEDULE_FORMAT = "schedule      | schedule [meetingName] with [username1], "
+            + "[username2] /at [meetingTime]";
+
+    /* Constants used for employee help command */
+    private static final String EMPLOYEE_COMMANDS = "Here are the commands available to an employee along with their "
+            + "formats:";
+    private static final String POST_ADD_FORMAT     = "post add      | post add [postContent]";
+    private static final String POST_DELETE_FORMAT  = "post delete   | post delete [postId]";
+    private static final String POST_COMMENT_FORMAT = "post comment  | post comment [commentContent] on [postId]";
+    private static final String POST_LIST_FORMAT    = "post list all | post list all / post list [postId]";
+    private static final String AVAILABLE_FORMAT    = "available     | available [availableTime]";
+    private static final String AVAILABILITY_FORMAT = "availability  | availability";
+    private static final String MEETINGS_FORMAT     = "meetings      | meetings";
+    private static final String LOGOUT_FORMAT       = "logout        | logout";
+    private static final String EXIT_FORMAT         = "exit          | exit";
+
+    /**
+     * Reads input from the user. Behaves like a real command line in the sense that an empty string entered is ignored.
+     * @return user input
+     */
     public static String getInput() {
-        String input = "";
-        while (input.length() == 0) {
+        String input = EMPTY_STRING;
+        while (input.trim().length() == 0) {
             showPrompt();
             input = IN.nextLine();
         }
         return input;
     }
 
+    /**
+     * Shows cOOPer's logo.
+     */
     public static void showLogo() {
         show(LOGO);
     }
 
+    /**
+     * Shows the greeting message along with the message asking user to login / register upon entry to the program.
+     */
     public static void showIntroduction() {
         showGreetingMessage();
-        showLoginRegisterMessage(true);
+        showLoginRegisterMessage();
     }
 
+    /**
+     * Show cOOPer's greetings upon entry to the program.
+     */
     private static void showGreetingMessage() {
         show(LINE);
         show(GREETING);
         show(LINE);
     }
 
-    public static void showLoginRegisterMessage(boolean isIntro) {
-        if (isIntro) {
-            show("Login or register to gain access to my features!");
-        } else {
-            show(LINE);
-        }
-        show("To login, enter \"login [yourUsername] pw [password] as [yourRole]\"");
-        show("To register, enter \"register [yourUsername] pw [password] as [yourRole]\"");
+    /**
+     * Shows a message asking user to login / register along with the format.
+     */
+    private static void showLoginRegisterMessage() {
+        show(LOGIN_REGISTER_FOR_ACCESS);
+        show(LOGIN);
+        show(REGISTER);
         show(LINE);
     }
 
+    /**
+     * Shows bye message upon exiting the program.
+     */
     public static void showBye() {
         show(LINE);
-        show("Bye, see you next time!");
+        show(BYE_MESSAGE);
         show(LINE);
     }
 
+    /**
+     * Shows cOOPer's command prompt when reading input.
+     */
     private static void showPrompt() {
-        show(">> ", false); // false: do not print newline
+        show(PROMPT, false); // false: do not print newline
     }
 
     /**
@@ -97,32 +150,32 @@ public class Ui {
     //@@author ChrisLangton
     public static void printAdminHelp() {
         show(LINE);
-        show("Here are the commands available to an admin along with their formats:");
-        show("bs            | bs");
-        show("cf            | cf");
-        show("proj          | proj [years]");
-        show("add           | add [amount]");
-        show("list          | list");
-        show("generate      | generate [financialStatement]");
-        show("schedule      | schedule [meetingName] with [username1], [username2] /at [meetingTime]");
+        show(ADMIN_COMMANDS);
+        show(BS_FORMAT);
+        show(CF_FORMAT);
+        show(PROJ_FORMAT);
+        show(ADD_FORMAT);
+        show(LIST_FORMAT);
+        show(GENERATE_FORMAT);
+        show(SCHEDULE_FORMAT);
     }
 
     public static void printEmployeeHelp() {
         show(LINE);
-        show("Here are the commands available to an employee along with their formats:");
+        show(EMPLOYEE_COMMANDS);
     }
 
     //@@author fansxx
     public static void printGeneralHelp() {
-        show("post add      | post add [postContent]");
-        show("post delete   | post delete [postId]");
-        show("post comment  | post comment [commentContent] on [postId]");
-        show("post list all | post list all / post list [postId]");
-        show("available     | available [availableTime]");
-        show("availability  | availability");
-        show("meetings      | meetings");
-        show("logout        | logout");
-        show("exit          | exit");
+        show(POST_ADD_FORMAT);
+        show(POST_DELETE_FORMAT);
+        show(POST_COMMENT_FORMAT);
+        show(POST_LIST_FORMAT);
+        show(AVAILABLE_FORMAT);
+        show(AVAILABILITY_FORMAT);
+        show(MEETINGS_FORMAT);
+        show(LOGOUT_FORMAT);
+        show(EXIT_FORMAT);
         show(LINE);
     }
 }

@@ -58,6 +58,7 @@ public class CommandParser extends ParserBase {
         return commandParserImpl.parseInput(input);
     }
 
+    @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException {
         assert input != null;
@@ -93,14 +94,19 @@ public class CommandParser extends ParserBase {
         case "help":
             return new HelpCommand();
         case "availability":
+            financeFlag = FinanceCommand.IDLE;
             return new AvailabilityCommand();
         case "meetings":
+            financeFlag = FinanceCommand.IDLE;
             return new MeetingsCommand();
         case "logout":
+            financeFlag = FinanceCommand.IDLE;
             return new LogoutCommand();
         case "exit":
+            financeFlag = FinanceCommand.IDLE;
             return new ExitCommand();
         case "cf":
+            financeFlag = FinanceCommand.CF;
             return new CfCommand();
         case "bs":
             financeFlag = FinanceCommand.BS;
@@ -116,7 +122,6 @@ public class CommandParser extends ParserBase {
         if (optResult.isPresent()) {
             var result = optResult.get();
             String command = result.allCommands().get(0).name();
-            // String template = res.allCommands().get(0).template();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
             case "add":
@@ -136,7 +141,6 @@ public class CommandParser extends ParserBase {
             case "generate":
                 return parseGenerateArgs(commandArgs);
             case "proj":
-                financeFlag = FinanceCommand.PROJ;
                 return parseProjectionArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
@@ -176,6 +180,8 @@ public class CommandParser extends ParserBase {
     //@@author fansxx
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         String time = "";
 
         for (Argument a : commandArgs) {
@@ -194,6 +200,8 @@ public class CommandParser extends ParserBase {
 
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NoSuchElementException {
+        financeFlag = FinanceCommand.IDLE;
+
         String meetingName = null;
         ArrayList<String> usernames = new ArrayList<>();
         String time = null;
@@ -251,6 +259,8 @@ public class CommandParser extends ParserBase {
     //@@author Rrraaaeee
     private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         String content = "";
 
         for (Argument a : commandArgs) {
@@ -269,6 +279,8 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostDeleteArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         int postId = -1;
 
         for (Argument a : commandArgs) {
@@ -287,6 +299,8 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostCommentArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         String content = "";
         int postId = -1;
 
@@ -309,6 +323,8 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         Integer postId = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
@@ -329,6 +345,13 @@ public class CommandParser extends ParserBase {
     }
 
     //@@author theeugenechong
+
+    /**
+     * Parses the {@code generate} command to identify the document to generate as PDF.
+     * @return a {@code GenerateCommand} containing the document the user wants to generate
+     * @throws NoSuchElementException if the command is missing arguments
+     * @throws InvalidCommandFormatException if the command is of the wrong format
+     */
     private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
         String documentToGenerate = null;
@@ -350,6 +373,9 @@ public class CommandParser extends ParserBase {
         return new GenerateCommand(documentToGenerate);
     }
 
+    /**
+     * Helper method to determine is the user argument is one of bs or cf.
+     */
     private boolean isValidDocToGenerate(String doc) {
         return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
     }
