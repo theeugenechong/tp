@@ -30,8 +30,12 @@ public class Ui {
     protected static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String getInput() {
-        showPrompt();
-        return IN.nextLine();
+        String input = "";
+        while (input.length() == 0) {
+            showPrompt();
+            input = IN.nextLine();
+        }
+        return input;
     }
 
     public static void showLogo() {
