@@ -52,7 +52,7 @@ public class FinanceUi extends Ui {
         "Decrease in Accounts Payable  ",
         "Decrease in Inventory  ",
         "Capital Expenditures  ",
-        "Proceeds from sale of equipment  ",
+        "Proceeds from Sale of Equipment  ",
         "Proceeds from Issuing Debt  ",
         "Dividends Paid  ",
         "Free Cash Flow  "
