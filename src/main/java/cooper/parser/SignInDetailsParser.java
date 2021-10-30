@@ -26,7 +26,7 @@ public class SignInDetailsParser extends  ParserBase {
      * Constructor. Initialise internal parser.
      */
     private SignInDetailsParser()  {
-        super();
+        super("sign-in-data.properties");
     }
 
     /**
@@ -71,6 +71,8 @@ public class SignInDetailsParser extends  ParserBase {
             var result = optResult.get();
             String command = result.allCommands().get(0).name();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
+            System.out.println(command);
+            System.out.println(commandArgs);
             switch (command) {
             case "login":
                 SignInDetails signInDetails = parseSignInArgs(commandArgs);

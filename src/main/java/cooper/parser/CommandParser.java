@@ -42,7 +42,7 @@ public class CommandParser extends ParserBase {
      * Constructor. Initialise internal parser.
      */
     private CommandParser()  {
-        super();
+        super("command-data.properties");
     }
 
     /**
