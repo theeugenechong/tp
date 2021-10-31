@@ -62,7 +62,7 @@ public class CommandParser extends ParserBase {
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException {
         assert input != null;
-        String commandWord = input.split("\\s+")[0].toLowerCase();
+        String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
         switch (commandWord) {
         case "list":
@@ -345,7 +345,6 @@ public class CommandParser extends ParserBase {
     }
 
     //@@author theeugenechong
-
     /**
      * Parses the {@code generate} command to identify the document to generate as PDF.
      * @return a {@code GenerateCommand} containing the document the user wants to generate
@@ -360,11 +359,7 @@ public class CommandParser extends ParserBase {
             String argVal = a.value().get();
             switch (argName) {
             case "document-hint":
-                if (isValidDocToGenerate(argVal)) {
-                    documentToGenerate = argVal.trim().toLowerCase();
-                } else {
-                    throw new InvalidCommandFormatException();
-                }
+                documentToGenerate = checkDocToGenerate(argVal);
                 break;
             default:
                 throw new InvalidCommandFormatException();
@@ -376,8 +371,14 @@ public class CommandParser extends ParserBase {
     /**
      * Helper method to determine is the user argument is one of bs or cf.
      */
-    private boolean isValidDocToGenerate(String doc) {
-        return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
+    private String checkDocToGenerate(String doc) throws InvalidCommandFormatException {
+        if (doc.trim().equalsIgnoreCase("bs")) {
+            return "bs";
+        } else if (doc.trim().equalsIgnoreCase("cf")) {
+            return "cf";
+        } else {
+            throw new InvalidCommandFormatException();
+        }
     }
 
     //@@author ChrisLangton

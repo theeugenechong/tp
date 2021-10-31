@@ -119,7 +119,7 @@ public class Cooper {
             } catch (NumberFormatException e) {
                 ParserUi.showInvalidNumberError();
             } catch (UnrecognisedCommandException e) {
-                ParserUi.showUnrecognisedCommandError(false);
+                ParserUi.showUnrecognisedCommandError();
             } catch (InvalidAccessException e) {
                 VerificationUi.showNoAccessError();
             } catch (EmptyFinancialStatementException e) {

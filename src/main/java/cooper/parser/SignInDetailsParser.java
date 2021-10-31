@@ -24,6 +24,7 @@ import java.util.Optional;
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class SignInDetailsParser extends  ParserBase {
 
+
     private static SignInDetailsParser signInDetailsParserImpl = null;
 
     protected static final String ADMIN = "admin";
@@ -31,13 +32,19 @@ public class SignInDetailsParser extends  ParserBase {
     protected static final String LOGIN = "login";
     protected static final String REGISTER = "register";
     protected static final String EXIT = "exit";
-    protected static final String WHITESPACE_SEQUENCE = "\\s+";
+
+    /* Constants to help dopsun parser */
+    private static final String SIGN_IN_DATA_PROPERTIES = "sign-in-data.properties";
+    private static final String USERNAME_HINT = "username-hint";
+    private static final String PASSWORD_HINT = "password-hint";
+    private static final String ROLE_HINT = "role-hint";
+
 
     /**
      * Constructor. Initialise internal parser.
      */
     private SignInDetailsParser()  {
-        super("sign-in-data.properties");
+        super(SIGN_IN_DATA_PROPERTIES);
     }
 
     /**
@@ -149,27 +156,33 @@ public class SignInDetailsParser extends  ParserBase {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "username-hint":
+            case USERNAME_HINT:
                 username = argVal;
                 break;
-            case "password-hint":
+            case PASSWORD_HINT:
                 userSalt = PasswordHasher.getNewSalt();
                 userEncryptedPassword = PasswordHasher.generatePasswordHash(argVal, userSalt);
                 break;
-            case "role-hint":
-                if (argVal.equals(ADMIN)) {
-                    userRole = UserRole.ADMIN;
-                } else if (argVal.equals(EMPLOYEE)) {
-                    userRole = UserRole.EMPLOYEE;
-                } else {
-                    throw new InvalidUserRoleException();
-                }
+            case ROLE_HINT:
+                userRole = checkUserRole(argVal);
                 break;
             default:
                 throw new InvalidCommandFormatException();
             }
         }
         return new SignInDetails(username, userEncryptedPassword, userSalt, userRole);
+    }
+
+    private UserRole checkUserRole(String role) throws InvalidUserRoleException {
+        UserRole userRole;
+        if (role.equals(ADMIN)) {
+            userRole = UserRole.ADMIN;
+        } else if (role.equals(EMPLOYEE)) {
+            userRole = UserRole.EMPLOYEE;
+        } else {
+            throw new InvalidUserRoleException();
+        }
+        return userRole;
     }
 
     /**
@@ -196,10 +209,10 @@ public class SignInDetailsParser extends  ParserBase {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "username-hint":
-            case "role-hint":
+            case USERNAME_HINT:
+            case ROLE_HINT:
                 break;
-            case "password-hint":
+            case PASSWORD_HINT:
                 userRawPassword = argVal;
                 break;
             default:

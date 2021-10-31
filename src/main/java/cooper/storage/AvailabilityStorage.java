@@ -43,14 +43,16 @@ public class AvailabilityStorage extends Storage {
     }
 
     private static void readAvailability(Scanner fileScanner, TreeMap<LocalTime, ArrayList<String>> availability) {
-        if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
-                String availabilityRow = fileScanner.nextLine();
-                try {
-                    decodeAvailability(availabilityRow, availability);
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        while (fileScanner.hasNext()) {
+            String availabilityRow = fileScanner.nextLine();
+            try {
+                decodeAvailability(availabilityRow, availability);
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }

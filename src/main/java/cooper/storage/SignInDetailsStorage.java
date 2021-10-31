@@ -40,15 +40,17 @@ public class SignInDetailsStorage extends Storage {
     }
 
     private static void readSignInDetails(Scanner fileScanner, HashMap<String, SignInDetails> registeredUsers) {
-        if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
-                String signInDetails = fileScanner.nextLine();
-                try {
-                    SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
-                    registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        while (fileScanner.hasNext()) {
+            String signInDetails = fileScanner.nextLine();
+            try {
+                SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
+                registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
