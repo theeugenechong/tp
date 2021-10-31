@@ -96,14 +96,12 @@ public class MeetingManager {
             throw new InvalidTimeException();
         }
 
-        /* if there is no time yet, create new timing */
         if (!availability.containsKey(localTime)) {
             assert !availability.containsKey(localTime) : "there is no localTime object in availability yet";
             availability.put(localTime, new ArrayList<>());
             LOGGER.info("A new time is created: " + time);
         }
 
-        /* check if the value is a duplicate */
         if (!availability.get(localTime).contains(name)) {
             assert !availability.get(localTime).contains(name) : "there is no " + name + " in availability yet";
             availability.get(localTime).add(name);
@@ -135,10 +133,8 @@ public class MeetingManager {
      */
     private boolean isMeetingTimeFull(String username, LocalTime timing) {
         for (Meeting meeting : meetingsList) {
-            if (meeting.getTime().equals(timing)) {
-                if (meeting.getListOfAttendees().contains(username)) {
-                    return true;
-                }
+            if (meeting.getTime().equals(timing) && meeting.getListOfAttendees().contains(username)) {
+                return true;
             }
         }
         return false;
@@ -146,12 +142,17 @@ public class MeetingManager {
 
     private boolean isMeetingTimeFullForAll(ArrayList<String> usernames, LocalTime timing) {
         for (Meeting meeting : meetingsList) {
-            if (meeting.getTime().equals(timing)) {
-                for (String username : usernames) {
-                    if (meeting.getListOfAttendees().contains(username)) {
-                        return true;
-                    }
-                }
+            if (meeting.getTime().equals(timing) && isOneUserNotAvailable(usernames, meeting)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isOneUserNotAvailable(ArrayList<String> usernames, Meeting meeting) {
+        for (String username : usernames) {
+            if (meeting.getListOfAttendees().contains(username)) {
+                return true;
             }
         }
         return false;
@@ -168,12 +169,9 @@ public class MeetingManager {
     public void autoScheduleMeeting(String meetingName, ArrayList<String> usernames)
             throws CannotScheduleMeetingException {
         for (LocalTime timing: availability.keySet()) {
-            if (availability.get(timing).containsAll(usernames)) {
-                // check if all the users specified don't have an existing meeting at that time
-                if (!isMeetingTimeFullForAll(usernames, timing)) {
-                    addMeeting(meetingName, usernames, timing);
-                    return;
-                }
+            if (availability.get(timing).containsAll(usernames) && !isMeetingTimeFullForAll(usernames, timing)) {
+                addMeeting(meetingName, usernames, timing);
+                return;
             }
         }
         throw new CannotScheduleMeetingException();

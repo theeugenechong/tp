@@ -1,6 +1,10 @@
 package cooper.command;
 
-import cooper.exceptions.*;
+import cooper.exceptions.InvalidTimeException;
+import cooper.exceptions.InvalidTimeFormatException;
+import cooper.exceptions.DuplicateMeetingException;
+import cooper.exceptions.CannotScheduleMeetingException;
+import cooper.exceptions.InvalidAccessException;
 import cooper.meetings.MeetingManager;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
