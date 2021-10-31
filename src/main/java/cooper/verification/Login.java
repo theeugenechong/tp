@@ -72,6 +72,15 @@ public class Login extends SignInProtocol {
         return userRoleInHashMap.equals(signInDetails.getUserRole());
     }
 
+    /**
+     * Hashes {@code rawPassword} with the registered user salt and compares it with the registered user's
+     * encrypted password. Returns true if the hash obtained is same as the registered user's encrypted password.
+     *
+     * @param registeredUsers A list of users already registered with cOOPer along with their respective
+     *                        roles.
+     * @param rawPassword the raw password (unencrypted) entered for this sign in instance
+     * @return true if the password hash matches the one stored in {@code registeredUsers}
+     */
     private boolean hasCorrectPassword(HashMap<String, SignInDetails> registeredUsers, String rawPassword) {
         SignInDetails user = registeredUsers.get(signInDetails.getUsername());
         String userSalt = user.getUserSalt();

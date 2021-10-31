@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class CashFlowStorage extends Storage {
 
+    protected static final String CASH_FLOW_STATEMENT_TXT = "cashFlowStatement.txt";
+
     public CashFlowStorage(String filePath) {
         super(filePath);
     }
@@ -34,18 +36,20 @@ public class CashFlowStorage extends Storage {
     }
 
     private static void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
-        if (fileScanner != null) {
-            int cfEntryIndex = 0;
-            while (fileScanner.hasNext() && cfEntryIndex <= FinanceManager.freeCashFlow) {
-                String expense = fileScanner.nextLine();
-                try {
-                    int decodedExpense = decodeExpense(expense);
-                    cashFlowStatement.set(cfEntryIndex, decodedExpense);
-                    addNetValues(cfEntryIndex, decodedExpense);
-                    cfEntryIndex++;
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        int cfEntryIndex = 0;
+        while (fileScanner.hasNext() && cfEntryIndex <= FinanceManager.freeCashFlow) {
+            String expense = fileScanner.nextLine();
+            try {
+                int decodedExpense = decodeExpense(expense);
+                cashFlowStatement.set(cfEntryIndex, decodedExpense);
+                addNetValues(cfEntryIndex, decodedExpense);
+                cfEntryIndex++;
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
@@ -62,7 +66,7 @@ public class CashFlowStorage extends Storage {
 
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException("cashFlowStatement.txt");
+            throw new InvalidFileDataException(CASH_FLOW_STATEMENT_TXT);
         }
         return Integer.parseInt(expense);
     }

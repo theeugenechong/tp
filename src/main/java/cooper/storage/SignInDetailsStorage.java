@@ -16,6 +16,10 @@ import java.util.Scanner;
 
 public class SignInDetailsStorage extends Storage {
 
+    protected static final String ADMIN = "A";
+    protected static final String EMPLOYEE = "E";
+    protected static final String SIGN_IN_DETAILS_TXT = "signInDetails.txt";
+
     public SignInDetailsStorage(String filePath) {
         super(filePath);
     }
@@ -36,30 +40,32 @@ public class SignInDetailsStorage extends Storage {
     }
 
     private static void readSignInDetails(Scanner fileScanner, HashMap<String, SignInDetails> registeredUsers) {
-        if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
-                String signInDetails = fileScanner.nextLine();
-                try {
-                    SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
-                    registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        while (fileScanner.hasNext()) {
+            String signInDetails = fileScanner.nextLine();
+            try {
+                SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
+                registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
 
     private static SignInDetails decodeSignInDetails(String signInDetailsAsString) throws InvalidFileDataException {
-        String[] signInDetails = signInDetailsAsString.split("\\|");
+        String[] signInDetails = signInDetailsAsString.split(SEPARATOR_REGEX);
         if (isInvalidFileData(signInDetails)) {
-            throw new InvalidFileDataException("signInDetails.txt");
+            throw new InvalidFileDataException(SIGN_IN_DETAILS_TXT);
         }
         assert !isInvalidFileData(signInDetails);
 
         String username = signInDetails[0].trim();
         String userEncryptedPassword = signInDetails[1].trim();
         String userSalt = signInDetails[2].trim();
-        UserRole userRole = signInDetails[3].trim().equals("A") ? UserRole.ADMIN : UserRole.EMPLOYEE;
+        UserRole userRole = signInDetails[3].trim().equals(ADMIN) ? UserRole.ADMIN : UserRole.EMPLOYEE;
 
         return new SignInDetails(username, userEncryptedPassword, userSalt, userRole);
     }
@@ -69,7 +75,7 @@ public class SignInDetailsStorage extends Storage {
             return true;
         }
 
-        if (!signInDetails[3].trim().equals("A") && !signInDetails[3].trim().equals("E")) {
+        if (!signInDetails[3].trim().equals(ADMIN) && !signInDetails[3].trim().equals(EMPLOYEE)) {
             return true;
         }
 
@@ -96,15 +102,15 @@ public class SignInDetailsStorage extends Storage {
         StringBuilder encodedSignInDetails = new StringBuilder();
 
         String username = registeredUser.getKey();
-        encodedSignInDetails.append(username).append(" | ");
+        encodedSignInDetails.append(username).append(SEPARATOR);
 
         String userEncryptedPassword = registeredUser.getValue().getUserEncryptedPassword();
-        encodedSignInDetails.append(userEncryptedPassword).append(" | ");
+        encodedSignInDetails.append(userEncryptedPassword).append(SEPARATOR);
 
         String userSalt = registeredUser.getValue().getUserSalt();
-        encodedSignInDetails.append(userSalt).append(" | ");
+        encodedSignInDetails.append(userSalt).append(SEPARATOR);
 
-        String userRole = registeredUser.getValue().getUserRole().equals(UserRole.ADMIN) ? "A" : "E";
+        String userRole = registeredUser.getValue().getUserRole().equals(UserRole.ADMIN) ? ADMIN : EMPLOYEE;
         encodedSignInDetails.append(userRole);
 
         return String.valueOf(encodedSignInDetails);

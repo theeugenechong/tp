@@ -13,20 +13,29 @@ import java.util.ArrayList;
 
 //@@author theeugenechong
 
+/**
+ * Generates the current balance sheet as a pdf file formatted using LaTeX templates.
+ */
 public class BalanceSheetGenerator extends PdfGenerator {
 
+    /* Paths of the files containing the LaTeX templates */
     private static final String BS_TEMPLATE_PATH = "/pdf/bs/bsTemplate.tex";
     private static final String BS_HEADER_TEMPLATE_PATH = "/pdf/bs/bsHeaderTemplate.tex";
     private static final String BS_ENTRY_TEMPLATE_PATH = "/pdf/bs/bsEntryTemplate.tex";
     private static final String BS_SUMMARY_TEMPLATE_PATH = "/pdf/bs/bsSummaryTemplate.tex";
 
+    /* Content of the headers to be added to each section of the balance sheet */
     private static final String ASSETS = "Assets";
     private static final String LIABILITIES = "Liabilities";
     private static final String SHAREHOLDERS_EQUITY = "Shareholder's Equity";
 
+    /* Names of the files created */
     private static final String BS_PDF_FILE = "/BalanceSheet.pdf";
     private static final String BS_BACKUP_FILE = "/backupBs.txt";
 
+    /**
+     * The constructor loads the templates from the template files.
+     */
     public BalanceSheetGenerator() {
         super();
         loadTemplate(BS_TEMPLATE_PATH);
@@ -35,6 +44,10 @@ public class BalanceSheetGenerator extends PdfGenerator {
         loadSummaryTemplate(BS_SUMMARY_TEMPLATE_PATH);
     }
 
+    /**
+     * Add the assets section from {@code balanceSheet} into {@code pdfContent}.
+     * @param balanceSheet Balance sheet containing the entries to be added to the pdf file.
+     */
     public void addAssets(BalanceSheet balanceSheet) {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(ASSETS);
@@ -44,6 +57,10 @@ public class BalanceSheetGenerator extends PdfGenerator {
         createSummary(ASSETS, FinanceManager.netAssets);
     }
 
+    /**
+     * Add the liabilities section from {@code balanceSheet} into {@code pdfContent}.
+     * @param balanceSheet Balance sheet containing the entries to be added to the pdf file.
+     */
     public void addLiabilities(BalanceSheet balanceSheet) {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(LIABILITIES);
@@ -53,6 +70,10 @@ public class BalanceSheetGenerator extends PdfGenerator {
         createSummary(LIABILITIES, FinanceManager.netLiabilities);
     }
 
+    /**
+     * Add the shareholder's equity section from {@code balanceSheet} into {@code pdfContent}.
+     * @param balanceSheet Balance sheet containing the entries to be added to the pdf file.
+     */
     public void addShareholderEquity(BalanceSheet balanceSheet) {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(SHAREHOLDERS_EQUITY);
@@ -62,12 +83,20 @@ public class BalanceSheetGenerator extends PdfGenerator {
         createSummary(SHAREHOLDERS_EQUITY, FinanceManager.netSE);
     }
 
+    /**
+     * Computes and adds the balance of the {@code balanceSheet} into {@code pdfContent}.
+     */
     public void addBalance() {
         int balance = FinanceManager.netAssets - FinanceManager.netLiabilities - FinanceManager.netSE;
         String balanceAsString = Integer.valueOf(balance).toString();
         template = template.replace("% {Balance}", balanceAsString);
     }
 
+    /**
+     * Sends the LaTeX file representing the balance sheet to be compiled by an online LaTeX editor by making a
+     * JSON post request. In the event that there is a connection problem, an error message is printed and a backup
+     * {@code .txt} file is created.
+     */
     @Override
     public void compilePdfAndSend() {
         String texFileToCompile = formTexFile();
@@ -77,8 +106,6 @@ public class BalanceSheetGenerator extends PdfGenerator {
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             sendPdf(con, texFileToCompile);
 
-            // This is the perfect place to add logging
-            String reply = con.getResponseMessage();
             int replyCode = con.getResponseCode();
             if (replyCode == 200) {
                 // send success

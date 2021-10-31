@@ -12,6 +12,13 @@ import cooper.verification.Verifier;
 public class StorageManager {
 
     private static final String BASE_DIRECTORY = "cooperData";
+    protected static final String SIGN_IN_DETAILS_FILE = "/signInDetails.txt";
+    protected static final String BALANCE_SHEET_FILE = "/balanceSheet.txt";
+    protected static final String AVAILABILITY_FILE = "/availability.txt";
+    protected static final String MEETINGS_FILE = "/meetings.txt";
+    protected static final String CASH_FLOW_STATEMENT_FILE = "/cashFlowStatement.txt";
+    protected static final String FORUM_FILE = "/forum.txt";
+
     private final SignInDetailsStorage signInDetailsStorage;
     private final BalanceSheetStorage balanceSheetStorage;
     private final CashFlowStorage cashFlowStorage;
@@ -20,12 +27,12 @@ public class StorageManager {
     private final MeetingsStorage meetingsStorage;
 
     public StorageManager() {
-        this.signInDetailsStorage = new SignInDetailsStorage(BASE_DIRECTORY + "/signInDetails.txt");
-        this.balanceSheetStorage = new BalanceSheetStorage(BASE_DIRECTORY + "/balanceSheet.txt");
-        this.availabilityStorage = new AvailabilityStorage(BASE_DIRECTORY + "/availability.txt");
-        this.meetingsStorage = new MeetingsStorage(BASE_DIRECTORY + "/meetings.txt");
-        this.cashFlowStorage = new CashFlowStorage(BASE_DIRECTORY + "/cashFlowStatement.txt");
-        this.forumStorage = new ForumStorage(BASE_DIRECTORY + "/forum.txt");
+        this.signInDetailsStorage = new SignInDetailsStorage(BASE_DIRECTORY + SIGN_IN_DETAILS_FILE);
+        this.balanceSheetStorage = new BalanceSheetStorage(BASE_DIRECTORY + BALANCE_SHEET_FILE);
+        this.availabilityStorage = new AvailabilityStorage(BASE_DIRECTORY + AVAILABILITY_FILE);
+        this.meetingsStorage = new MeetingsStorage(BASE_DIRECTORY + MEETINGS_FILE);
+        this.cashFlowStorage = new CashFlowStorage(BASE_DIRECTORY + CASH_FLOW_STATEMENT_FILE);
+        this.forumStorage = new ForumStorage(BASE_DIRECTORY + FORUM_FILE);
     }
 
     public void loadAllData(Verifier cooperVerifier, FinanceManager cooperFinanceManager,

@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class BalanceSheetStorage extends Storage {
 
+    protected static final String BALANCE_SHEET_TXT = "balanceSheet.txt";
+
     public BalanceSheetStorage(String filePath) {
         super(filePath);
     }
@@ -34,18 +36,20 @@ public class BalanceSheetStorage extends Storage {
     }
 
     private static void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
-        if (fileScanner != null) {
-            int bsEntryIndex = 0;
-            while (fileScanner.hasNext() && bsEntryIndex <= FinanceManager.endOfSE) {
-                String expense = fileScanner.nextLine();
-                try {
-                    int decodedExpense = decodeExpense(expense);
-                    balanceSheet.set(bsEntryIndex, decodedExpense);
-                    addNetValues(bsEntryIndex, decodedExpense);
-                    bsEntryIndex++;
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        int bsEntryIndex = 0;
+        while (fileScanner.hasNext() && bsEntryIndex <= FinanceManager.endOfSE) {
+            String expense = fileScanner.nextLine();
+            try {
+                int decodedExpense = decodeExpense(expense);
+                balanceSheet.set(bsEntryIndex, decodedExpense);
+                addNetValues(bsEntryIndex, decodedExpense);
+                bsEntryIndex++;
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
@@ -62,7 +66,7 @@ public class BalanceSheetStorage extends Storage {
 
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException("balanceSheet.txt");
+            throw new InvalidFileDataException(BALANCE_SHEET_TXT);
         }
         return Integer.parseInt(expense);
     }

@@ -18,6 +18,10 @@ import java.util.Scanner;
 
 public class MeetingsStorage extends Storage {
 
+    protected static final String TIME_FORMAT = "HH:mm";
+    protected static final String COMMA = ",";
+    protected static final String MEETINGS_TXT = "meetings.txt";
+
     public MeetingsStorage(String filePath) {
         super(filePath);
     }
@@ -38,32 +42,34 @@ public class MeetingsStorage extends Storage {
     }
 
     private static void readMeetings(Scanner fileScanner, ArrayList<Meeting> meetings) {
-        if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
-                String meetingsRow = fileScanner.nextLine();
-                try {
-                    decodeMeetings(meetingsRow, meetings);
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        while (fileScanner.hasNext()) {
+            String meetingsRow = fileScanner.nextLine();
+            try {
+                decodeMeetings(meetingsRow, meetings);
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
 
     private static void decodeMeetings(String meetingAsString, ArrayList<Meeting> meetings)
             throws InvalidFileDataException {
-        String[] attendees = meetingAsString.split("\\|");
+        String[] attendees = meetingAsString.split(SEPARATOR_REGEX);
         if (isInvalidFileData(attendees)) {
-            throw new InvalidFileDataException("meetings.txt");
+            throw new InvalidFileDataException(MEETINGS_TXT);
         }
         assert !isInvalidFileData(attendees);
 
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_FORMAT);
         LocalTime meetingTime = LocalTime.parse(attendees[0].trim(), timeFormat);
 
         String meetingName = attendees[1].trim();
 
-        String[] attendeesAsArray = attendees[2].trim().split(",");
+        String[] attendeesAsArray = attendees[2].trim().split(COMMA);
         ArrayList<String> attendeesArrayList = new ArrayList<>(Arrays.asList(attendeesAsArray));
         Meeting meeting = new Meeting(meetingName, meetingTime, attendeesArrayList);
 
@@ -76,7 +82,7 @@ public class MeetingsStorage extends Storage {
         }
 
         try {
-            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_FORMAT);
             LocalTime dummyMeetingTime = LocalTime.parse(meeting[0].trim(), timeFormat);
         } catch (DateTimeParseException e) {
             return true;
@@ -105,10 +111,10 @@ public class MeetingsStorage extends Storage {
         StringBuilder encodedMeeting = new StringBuilder();
 
         String meetingTime = meeting.getTime().toString();
-        encodedMeeting.append(meetingTime).append(" | ");
+        encodedMeeting.append(meetingTime).append(SEPARATOR);
 
         String meetingName = meeting.getMeetingName();
-        encodedMeeting.append(meetingName).append(" | ");
+        encodedMeeting.append(meetingName).append(SEPARATOR);
 
         String attendees = getAttendeesAsString(meeting.getListOfAttendees());
         encodedMeeting.append(attendees);
@@ -124,7 +130,7 @@ public class MeetingsStorage extends Storage {
             if (a.equals(attendees.get(indexOfLastAttendee))) {
                 meetingAsString.append(a);
             } else {
-                meetingAsString.append(a).append(",");
+                meetingAsString.append(a).append(COMMA);
             }
         }
         return String.valueOf(meetingAsString);

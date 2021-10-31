@@ -22,6 +22,7 @@ cOOPer can help you manage your startup efficiently.
 
 - [How this User Guide Works](#how-this-user-guide-works)
 - [Setup](#setup)
+- [cOOPer's Commands](#coopers-commands)
 - [Getting Started](#getting-started)
   - [How cOOPer is to be Used](#how-cooper-is-to-be-used)
   - [Roles](#roles) 
@@ -68,16 +69,22 @@ The table below explains the formatting and symbols in this user guide.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
 
+
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Setup
 
-1. Ensure that you have Java 11 or above installed on your desktop.
-2. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
-3. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
-4. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
+1. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
+2. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
+3. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
    in the home folder. If you are using Mac or Linux, [open a Terminal window](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/#:~:text=To%20open%20a%20Terminal%20window%20from%20within%20a%20folder%20in,window%20to%20the%20selected%20folder.) 
    in the home folder.
+4. Ensure that you have Java 11 or above installed or your desktop.
+   1. In the Command Prompt / Terminal, enter `java -version`.
+   2. You should see the following on the Command Prompt / Terminal:
+   ![img.png](userGuideImages/javaVersion.png)
+   3. The section enclosed in red shows you the version you currently have installed.
+   4. If nothing appeared on the Command Prompt / Terminal, it most likely means you do not have Java installed on your computer. Do not worry, you can download it [here](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html).
 5. Run cOOPer by entering `java -jar cOOPer.jar`.
 6. A greeting from cOOPer should appear as such:
 
@@ -93,9 +100,11 @@ The table below explains the formatting and symbols in this user guide.
 =========================================================================
 Hello I'm cOOPer! Nice to meet you!
 =========================================================================
-Login or register to gain access to my features!
-To login, enter "login [yourUsername] pw [password] as [yourRole]"
-To register, enter "register [yourUsername] pw [password] as [yourRole]"
+Log in or register to gain access to my features!
+To log in, enter "login [yourUsername] pw [password] as [yourRole]".
+To register, enter "register [yourUsername] pw [password] as [yourRole]".
+
+To exit, enter "exit".
 =========================================================================
 >> 
 ```
@@ -104,35 +113,37 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+## cOOPer's Commands
+
+Here are some things to note about cOOPer's commands.
+> ℹ️Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
+> ℹ️For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
+> ℹ️All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.
+
 ## Getting Started
 
 ### How cOOPer is to be Used
-- The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
+- The **correct** way (as of v2.1) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
 > ⚠️cOOPer's features related to [scheduling meetings](#declaring-available-timing-for-meetings-available) and [posting to the forum](#adding-a-forum-post-post-add) **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ### Roles
 - There are two main roles you can hold as a user of cOOPer, namely the _**admin**_ role or the _**employee**_ role.
 
-- You are eligible to hold the admin role if you hold a high position in the startup. e.g. Chief Executive Officer (CEO),
-Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
+- You are eligible to hold the admin role if you hold a high position in the startup. e.g. Chief Executive Officer (CEO), Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
 
 - On the other hand, you hold the employee role if you are a basic employee at the startup.
 
-- cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of
-  administrative access within the company throughout cOOPer's usage.
+- cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
 ### User Registration
-- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of 
-ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
+- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
 - How to register a user:
-  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `register [username] pw [password]
-  as [role]`. 
+  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `register [username] pw [password] as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
-  3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to
-  find out more about logging in.
+  3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to find out more about logging in.
 
 > ℹ️`[username]` refers to the user's name, `[password]` refers to the user's password, while `[role]` refers to the user's role as determined [here](#roles).
 
@@ -162,7 +173,7 @@ Sebastian is now successfully registered as an admin!
   1. When you see the greeting message as shown in the [Setup](#setup) section, enter `login [username] pw [password] as [role]`.
   2. You now have access to cOOPer's features specific to your role.
 
-> ℹ️`[username]`, `[password]` and `[role]` refer to the user's name and role as registered in cOOPer's system.<br>
+> ℹ️`[username]`, `[password]` and `[role]` refer to the user's name, password and role as registered in cOOPer's system.<br>
 > ⚠️The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian` is not the same as logging in with `Sebastian`.
 
 - Example input:
@@ -185,11 +196,12 @@ You are now logged in successfully as Sebastian!
 ## Features for all users
 
 This section explains cOOPer's features for all users, i.e. users with either the _**admin**_ role or the _**employee**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined.
+
 ### Adding a forum post: `post add`
 
 + You can post a message to forum for cOOPer's users to discuss certain topics.
 + How to post a message to the forum:
-  1. After [logging in](#login), enter `post [postContent]`.
+  1. After [logging in](#login), enter `post add [postContent]`.
   2. Your post will be added to the forum, and you will see a confirmation message indicating that the post was successful.
 
 >ℹ️`[postContent]` refers to the content of your post.
@@ -213,32 +225,6 @@ Sebastian has just posted to forum:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Commenting on a forum post: `post comment`
-+ Adds a comment on a post in the forum.
-+ How to comment on a post:
-  1. When other users see a post on the forum, they can comment on the post using `post comment [commentContent] on [postId]`.
-  2. A comment `[commentContent]` will be added to the post with `[postId]`.
-
-+ Example input:
-
-```
->> post comment welcome on 1
-```
-
-+ Expected output:
-
-```
-=========================================================================
-Eugene has just commented on a post from forum:
-┌────────────────────────────────────────────────────────────────────┐
-|  hello world
-|    ∟  welcome
-└────────────────────────────────────────────────────────────────────┘
-=========================================================================
-```
-
-[⬆️ Back to top](#whats-in-this-user-guide)
-
 ### Viewing a post / posts in the forum: `post list`
 + Shows you the currently active forum posts along with any comments on the posts.
 + You can specify if you want to view all the posts or a specific post.
@@ -247,7 +233,8 @@ Eugene has just commented on a post from forum:
   2. cOOPer lists all posts along with their comments in a hierarchical manner.
   3. Enter `post list [postId]` to view the single post with `[postId]`.
 
-> ℹ️`[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** in the list of posts.
+> ℹ️`[postId]` refers to the index of the post you want to view. It must be a **positive integer** and also an index of the posts **in the list**.<br>
+> 💡 Enter `post list all` to know the index of the specific post you want to view.
 
 + Example input for viewing all the forum posts:
 
@@ -292,14 +279,44 @@ Here is the forum post:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+### Commenting on a forum post: `post comment`
++ Adds a comment on a post in the forum.
++ How to comment on a post:
+  1. When other users see a post on the forum, they can comment on the post using `post comment [commentContent] on [postId]`.
+  2. A comment `[commentContent]` will be added to the post with `[postId]`.
+
+> ℹ️`[postId]` refers to the index of the post you want to comment on. It must be a **positive integer** and also an index of the posts **in the list**.<br>
+> 💡 Enter [`post list all`](#viewing-a-post--posts-in-the-forum-post-list) before commenting on a post to know the index of the specific post you want to comment on.
+
++ Example input:
+
+```
+>> post comment welcome on 1
+```
+
++ Expected output:
+
+```
+=========================================================================
+Eugene has just commented on a post from forum:
+┌────────────────────────────────────────────────────────────────────┐
+|  hello world
+|    ∟  welcome
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Deleting a forum post: `post delete`
 - Deletes an active post on the forum along with its comments.
 - How to delete a post:
   1. Enter `post delete [postId]`.
   2. The post will be deleted from the forum.
 
-> ℹ️ `[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** in the list of posts.<br>
-> 💡 Use the [`post list`](#viewing-a-post--posts-in-the-forum-post-list) command before `post delete` to know the index of the post you want to delete.
+> ℹ️ You are only allowed to delete the posts made by you.<br>
+> ℹ️ `[postId]` refers to the index of the post you want to delete. It must be a **positive integer** and also an index of the posts **in the list**.<br>
+> 💡 Enter [`post list all`](#viewing-a-post--posts-in-the-forum-post-list) before you delete a post to know the index of the post you want to delete.
 
 - Example input:
 
@@ -376,9 +393,9 @@ Here are the availabilities:
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing scheduled meetings: `meetings`
-- Generates a user-specific table of meetings (for the day) for easier visualisation.
+- Shows you your meetings (for the day) which have been scheduled successfully for easier visualisation. Refer to [this](#scheduling-meetings-with-different-users-schedule) section to know how meetings are scheduled.
 - How to view meetings:
-  1. After [logging in](#login) to the system, enter `meetings`.
+  1. After a meeting has been scheduled successfully, enter `meetings`.
   2. You will now see a table with all your meetings for the day.
 
 - Example input:
@@ -403,8 +420,7 @@ Here are your meetings for today:
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Logging out: `logout`
-- Logs you out of your account and brings you back to the part of the app where you can either [log in](#login) or [register](#user-registration).
-
+- Logs you out of your account and brings you back to the part of the app where you can either [log in](#login), [register](#user-registration) or [exit](#exiting-the-program-exit).
 - Example input:
 
 ```
@@ -415,8 +431,11 @@ Here are your meetings for today:
 
 ```
 =========================================================================
-To login, enter "login [yourUsername] pw [password] as [yourRole]"
-To register, enter "register [yourUsername] pw [password] as [yourRole]"
+You are now logged out!
+To log in, enter "login [yourUsername] pw [password] as [yourRole]".
+To register, enter "register [yourUsername] pw [password] as [yourRole]".
+
+To exit, enter "exit".
 =========================================================================
 ```
 
@@ -743,7 +762,8 @@ Bye, see you next time!
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### cOOPer's Data Storage
-This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData' which is created in the *home folder* upon starting up cOOPer for the first time.
+This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
+This folder is created in the *home folder* upon starting up cOOPer for the first time.
 
 The contents of the folder is as shown in the diagram below.
 
@@ -786,10 +806,9 @@ This section contains some frequently asked questions you may have when using cO
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 > Follow the steps below:<br>
 > 1. [Download](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) cOOPer in the other computer. 
-> 2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Setup](#setup) if you do not 
-> know what the *home folder* is.
+> 2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Setup](#setup) if you do not know what the *home folder* is.
 > 3. Copy `cooperData` over to cOOPer's home folder in the other desktop. 
->4. Running cOOPer on the other desktop should load your saved data.
+> 4. Running cOOPer on the other desktop should load your saved data.
 
 **Q**: What is the folder named 'tmp' in the home folder?<br>
 > The 'tmp' folder is created upon starting up cOOPer for the first time. This folder contains important data which enables to cOOPer to process your commands. You **should not** do anything to these files.
@@ -801,12 +820,18 @@ This section contains some frequently asked questions you may have when using cO
 
 ## Command Summary
 
-### Admin Commands
+### Before Logging In
 
 **Command** | **Format**                          | **Example**
 ------------|-------------------------------------|------------
 register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
 login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
+exit        |`exit`                               |`exit`
+
+### Admin Commands
+
+**Command** | **Format**                          | **Example**
+------------|-------------------------------------|------------
 post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
 post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
@@ -828,8 +853,6 @@ exit        |`exit`                               |`exit`
 
 **Command** | **Format**                          | **Example**
 ------------|-------------------------------------|------------
-register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
-login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
 post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
 post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
