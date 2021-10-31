@@ -382,9 +382,9 @@ Here are the availabilities:
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing scheduled meetings: `meetings`
-- Generates a user-specific table of meetings (for the day) for easier visualisation.
+- Shows you your meetings (for the day) which have been scheduled successfully for easier visualisation. Refer to [this](#scheduling-meetings-with-different-users-schedule) section to know how meetings are scheduled.
 - How to view meetings:
-  1. After [logging in](#login) to the system, enter `meetings`.
+  1. After a meeting has been scheduled successfully, enter `meetings`.
   2. You will now see a table with all your meetings for the day.
 
 - Example input:
