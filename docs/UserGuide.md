@@ -22,6 +22,7 @@ cOOPer can help you manage your startup efficiently.
 
 - [How this User Guide Works](#how-this-user-guide-works)
 - [Setup](#setup)
+- [cOOPer's Commands](#coopers-commands)
 - [Getting Started](#getting-started)
   - [How cOOPer is to be Used](#how-cooper-is-to-be-used)
   - [Roles](#roles) 
@@ -170,7 +171,7 @@ Sebastian is now successfully registered as an admin!
   1. When you see the greeting message as shown in the [Setup](#setup) section, enter `login [username] pw [password] as [role]`.
   2. You now have access to cOOPer's features specific to your role.
 
-> ℹ️`[username]`, `[password]` and `[role]` refer to the user's name and role as registered in cOOPer's system.<br>
+> ℹ️`[username]`, `[password]` and `[role]` refer to the user's name, password and role as registered in cOOPer's system.<br>
 > ⚠️The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian` is not the same as logging in with `Sebastian`.
 
 - Example input:
@@ -757,7 +758,8 @@ Bye, see you next time!
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### cOOPer's Data Storage
-This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData' which is created in the *home folder* upon starting up cOOPer for the first time.
+This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
+This folder is created in the *home folder* upon starting up cOOPer for the first time.
 
 The contents of the folder is as shown in the diagram below.
 
@@ -800,10 +802,9 @@ This section contains some frequently asked questions you may have when using cO
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 > Follow the steps below:<br>
 > 1. [Download](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) cOOPer in the other computer. 
-> 2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Setup](#setup) if you do not 
-> know what the *home folder* is.
+> 2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Setup](#setup) if you do not know what the *home folder* is.
 > 3. Copy `cooperData` over to cOOPer's home folder in the other desktop. 
->4. Running cOOPer on the other desktop should load your saved data.
+> 4. Running cOOPer on the other desktop should load your saved data.
 
 **Q**: What is the folder named 'tmp' in the home folder?<br>
 > The 'tmp' folder is created upon starting up cOOPer for the first time. This folder contains important data which enables to cOOPer to process your commands. You **should not** do anything to these files.
@@ -815,12 +816,18 @@ This section contains some frequently asked questions you may have when using cO
 
 ## Command Summary
 
-### Admin Commands
+### Before Logging In
 
 **Command** | **Format**                          | **Example**
 ------------|-------------------------------------|------------
 register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
 login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
+exit        |`exit`                               |`exit`
+
+### Admin Commands
+
+**Command** | **Format**                          | **Example**
+------------|-------------------------------------|------------
 post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
 post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
@@ -842,8 +849,6 @@ exit        |`exit`                               |`exit`
 
 **Command** | **Format**                          | **Example**
 ------------|-------------------------------------|------------
-register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
-login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
 post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
 post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
