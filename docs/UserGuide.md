@@ -68,16 +68,22 @@ The table below explains the formatting and symbols in this user guide.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
 
+
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Setup
 
-1. Ensure that you have Java 11 or above installed on your desktop.
-2. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
-3. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
-4. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
+1. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
+2. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
+3. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
    in the home folder. If you are using Mac or Linux, [open a Terminal window](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/#:~:text=To%20open%20a%20Terminal%20window%20from%20within%20a%20folder%20in,window%20to%20the%20selected%20folder.) 
    in the home folder.
+4. Ensure that you have Java 11 or above installed or your desktop.
+   1. In the Command Prompt / Terminal, enter `java -version`.
+   2. You should see the following on the Command Prompt / Terminal:
+   ![img.png](userGuideImages/javaVersion.png)
+   3. The section enclosed in red shows you the version you currently have installed.
+   4. If nothing appeared on the Command Prompt / Terminal, it most likely means you do not have Java installed on your computer. Do not worry, you can download it [here](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html).
 5. Run cOOPer by entering `java -jar cOOPer.jar`.
 6. A greeting from cOOPer should appear as such:
 
