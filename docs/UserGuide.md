@@ -187,11 +187,12 @@ You are now logged in successfully as Sebastian!
 ## Features for all users
 
 This section explains cOOPer's features for all users, i.e. users with either the _**admin**_ role or the _**employee**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined.
+
 ### Adding a forum post: `post add`
 
 + You can post a message to forum for cOOPer's users to discuss certain topics.
 + How to post a message to the forum:
-  1. After [logging in](#login), enter `post [postContent]`.
+  1. After [logging in](#login), enter `post add [postContent]`.
   2. Your post will be added to the forum, and you will see a confirmation message indicating that the post was successful.
 
 >ℹ️`[postContent]` refers to the content of your post.
