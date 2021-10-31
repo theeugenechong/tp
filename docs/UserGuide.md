@@ -100,9 +100,11 @@ The table below explains the formatting and symbols in this user guide.
 =========================================================================
 Hello I'm cOOPer! Nice to meet you!
 =========================================================================
-Login or register to gain access to my features!
-To login, enter "login [yourUsername] pw [password] as [yourRole]"
-To register, enter "register [yourUsername] pw [password] as [yourRole]"
+Log in or register to gain access to my features!
+To log in, enter "login [yourUsername] pw [password] as [yourRole]".
+To register, enter "register [yourUsername] pw [password] as [yourRole]".
+
+To exit, enter "exit".
 =========================================================================
 >> 
 ```
@@ -418,8 +420,7 @@ Here are your meetings for today:
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Logging out: `logout`
-- Logs you out of your account and brings you back to the part of the app where you can either [log in](#login) or [register](#user-registration).
-
+- Logs you out of your account and brings you back to the part of the app where you can either [log in](#login), [register](#user-registration) or [exit](#exiting-the-program-exit).
 - Example input:
 
 ```
@@ -430,8 +431,11 @@ Here are your meetings for today:
 
 ```
 =========================================================================
-To login, enter "login [yourUsername] pw [password] as [yourRole]"
-To register, enter "register [yourUsername] pw [password] as [yourRole]"
+You are now logged out!
+To log in, enter "login [yourUsername] pw [password] as [yourRole]".
+To register, enter "register [yourUsername] pw [password] as [yourRole]".
+
+To exit, enter "exit".
 =========================================================================
 ```
 

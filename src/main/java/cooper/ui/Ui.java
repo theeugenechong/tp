@@ -31,10 +31,11 @@ public class Ui {
 
     private static final String EMPTY_STRING = "";
 
-    protected static final String LOGIN_REGISTER_FOR_ACCESS = "Login or register to gain access to my features!";
-    protected static final String LOGIN = "To login, enter \"login [yourUsername] pw [password] as [yourRole]\".";
+    protected static final String LOGIN_REGISTER_FOR_ACCESS = "Log in or register to gain access to my features!";
+    protected static final String LOGIN = "To log in, enter \"login [yourUsername] pw [password] as [yourRole]\".";
     protected static final String REGISTER = "To register, enter \"register [yourUsername] pw [password] as "
             + "[yourRole]\".";
+    protected static final String EXIT = "To exit, enter \"exit\".";
 
     private static final String BYE_MESSAGE = "Bye, see you next time!";
     private static final String PROMPT = ">> ";
@@ -89,7 +90,7 @@ public class Ui {
      */
     public static void showIntroduction() {
         showGreetingMessage();
-        showLoginRegisterMessage();
+        showLoginRegisterIntroMessage();
     }
 
     /**
@@ -104,10 +105,11 @@ public class Ui {
     /**
      * Shows a message asking user to login / register along with the format.
      */
-    private static void showLoginRegisterMessage() {
+    private static void showLoginRegisterIntroMessage() {
         show(LOGIN_REGISTER_FOR_ACCESS);
         show(LOGIN);
         show(REGISTER);
+        show(System.lineSeparator() + EXIT);
         show(LINE);
     }
 
@@ -148,6 +150,9 @@ public class Ui {
     }
 
     //@@author ChrisLangton
+    /**
+     * Prints commands available to an admin only along with their formats.
+     */
     public static void printAdminHelp() {
         show(LINE);
         show(ADMIN_COMMANDS);
@@ -160,12 +165,18 @@ public class Ui {
         show(SCHEDULE_FORMAT);
     }
 
+    /**
+     * Prints commands available to an employee only along with their formats.
+     */
     public static void printEmployeeHelp() {
         show(LINE);
         show(EMPLOYEE_COMMANDS);
     }
 
     //@@author fansxx
+    /**
+     * Prints commands available to all users along with their formats.
+     */
     public static void printGeneralHelp() {
         show(POST_ADD_FORMAT);
         show(POST_DELETE_FORMAT);

@@ -16,19 +16,11 @@ public class ParserUi extends Ui {
 
     /**
      * Informs user that an unrecognised command ha been entered.
-     * @param isSignIn Indicates whether the unrecognised command was entered during the sign in stage.
      **/
-    public static void showUnrecognisedCommandError(boolean isSignIn) {
+    public static void showUnrecognisedCommandError() {
         show(LINE);
         show(UNRECOGNISED_COMMAND);
-
-        if (isSignIn) {
-            show(LOGIN);
-            show(REGISTER);
-        } else {
-            show(ENTER_HELP);
-        }
-
+        show(ENTER_HELP);
         show(LINE);
     }
 

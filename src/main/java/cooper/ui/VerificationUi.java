@@ -18,6 +18,26 @@ public class VerificationUi extends Ui {
     private static final String INCORRECT_PASSWORD = "Incorrect password entered! Please try again.";
     private static final String NO_ACCESS = "You do not have access to this command.";
     private static final String LOGGED_OUT = "You are now logged out!";
+    protected static final String SIGN_IN_DETAILS_WRONG_FORMAT = "Your sign in details are of the wrong format!";
+    protected static final String CAN_ONLY_LOGIN_REGISTER_EXIT = "You can only log in, register, or exit here!";
+
+
+    public static void showSignInDetailsIncorrectFormatError() {
+        show(LINE);
+        show(SIGN_IN_DETAILS_WRONG_FORMAT);
+        show(LOGIN);
+        show(REGISTER);
+        show(LINE);
+    }
+
+    public static void showUnrecognisedCommandAtSignInError() {
+        show(LINE);
+        show(CAN_ONLY_LOGIN_REGISTER_EXIT);
+        show(LOGIN);
+        show(REGISTER);
+        show(System.lineSeparator() + EXIT);
+        show(LINE);
+    }
 
     /**
      * Asks user to register as the username does not exist in the list of cOOPer's registered users.
@@ -103,6 +123,7 @@ public class VerificationUi extends Ui {
         show(LOGGED_OUT);
         show(LOGIN);
         show(REGISTER);
+        show(System.lineSeparator() + EXIT);
         show(LINE);
     }
 }
