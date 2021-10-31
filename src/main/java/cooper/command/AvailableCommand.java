@@ -3,6 +3,7 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidTimeException;
 import cooper.exceptions.DuplicateUsernameException;
+import cooper.exceptions.InvalidTimeFormatException;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
@@ -49,9 +50,11 @@ public class AvailableCommand extends Command {
             meetingManager.addAvailability(time, username);
             storageManager.saveAvailability(meetingManager);
             MeetingsUi.printAvailableCommand(time, username);
-        } catch (InvalidTimeException e1) {
+        } catch (InvalidTimeFormatException e1) {
+            MeetingsUi.showInvalidTimeFormatException();
+        } catch (InvalidTimeException e2) {
             MeetingsUi.showInvalidTimeException();
-        } catch (DuplicateUsernameException e2) {
+        } catch (DuplicateUsernameException e3) {
             MeetingsUi.showDuplicateUsernameException();
         }
     }

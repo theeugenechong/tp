@@ -1,9 +1,10 @@
 package cooper.meetings;
 
-import cooper.exceptions.CannotScheduleMeetingException;
-import cooper.exceptions.DuplicateMeetingException;
-import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.InvalidTimeException;
+import cooper.exceptions.InvalidTimeFormatException;
+import cooper.exceptions.DuplicateUsernameException;
+import cooper.exceptions.DuplicateMeetingException;
+import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.ui.MeetingsUi;
 
 import java.time.LocalTime;
@@ -43,6 +44,11 @@ public class MeetingManager {
         }
     }
 
+    private boolean isStartOfHour(String time) {
+        String[] hoursAndMinutes = time.split(":");
+        return hoursAndMinutes[1].equals("00");
+    }
+
     public TreeMap<LocalTime, ArrayList<String>> getAvailability() {
         return availability;
     }
@@ -74,13 +80,19 @@ public class MeetingManager {
      * @param time the start of the hour the user is available at
      * @param name the username of the user that inputted his availability
      * @throws DuplicateUsernameException if the username has already been declared available at that time
-     * @throws InvalidTimeException if the format of the time is not the specified format
+     * @throws InvalidTimeFormatException if the format of the time is not the specified format
+     * @throws InvalidTimeException if the time is not the start of the hour
      */
-    public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeException {
+    public void addAvailability(String time, String name) throws DuplicateUsernameException, InvalidTimeFormatException,
+            InvalidTimeException {
         LocalTime localTime;
         if (isValidTimeFormat(time)) {
             localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
         } else {
+            throw new InvalidTimeFormatException();
+        }
+
+        if (!isStartOfHour(time)) {
             throw new InvalidTimeException();
         }
 
@@ -101,6 +113,13 @@ public class MeetingManager {
         }
     }
 
+    /**
+     * Adds new meeting to meeting list.
+     *
+     * @param meetingName the name of the meeting
+     * @param usernames the usernames of the users in the meeting
+     * @param timing the time of the meeting
+     */
     private void addMeeting(String meetingName, ArrayList<String> usernames, LocalTime timing) {
         Meeting meeting = new Meeting(meetingName, timing, usernames);
         meetingsList.add(meeting);
@@ -166,18 +185,23 @@ public class MeetingManager {
      * @param meetingName the name of the meeting
      * @param usernames the usernames of the users to be in the meeting
      * @param time the time the user is trying to schedule a meeting at
-     * @throws InvalidTimeException if the format of the time is not the specified format
+     * @throws InvalidTimeFormatException if the format of the time is not the specified format
+     * @throws InvalidTimeException if the time is not the start of the hour
      * @throws CannotScheduleMeetingException if no meeting can be scheduled because one or more of the users entered
      *      is unavailable
      * @throws DuplicateMeetingException if one or more user already has a meeting at the time
      */
     public void manualScheduleMeeting(String meetingName, ArrayList<String> usernames, String time)
-            throws InvalidTimeException,
+            throws InvalidTimeFormatException, InvalidTimeException,
             CannotScheduleMeetingException, DuplicateMeetingException {
         LocalTime localTime;
         if (isValidTimeFormat(time)) {
             localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
         } else {
+            throw new InvalidTimeFormatException();
+        }
+
+        if (!isStartOfHour(time)) {
             throw new InvalidTimeException();
         }
 

@@ -19,8 +19,8 @@ public class Ui {
 
     protected static final String LINE = "=========================================================================";
 
-    protected static final String TABLE_TOP = "┌────────────────────────────────────────────────────────────────────┐";
-    protected static final String TABLE_BOT = "└────────────────────────────────────────────────────────────────────┘";
+    protected static final String TABLE_TOP = "+-------+------------------------------------------------------------+";
+    protected static final String TABLE_BOT = "+--------------------------------------------------------------------+";
 
     private static final String GREETING = "Hello I'm cOOPer! Nice to meet you!";
 

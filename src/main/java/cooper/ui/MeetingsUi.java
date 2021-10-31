@@ -10,9 +10,15 @@ import java.util.TreeMap;
 
 public class MeetingsUi extends Ui {
 
-    public static void showInvalidTimeException() {
+    public static void showInvalidTimeFormatException() {
         show(LINE);
         show("The time format you entered is not accepted! Please enter again.");
+        show(LINE);
+    }
+
+    public static void showInvalidTimeException() {
+        show(LINE);
+        show("The time you entered is not the start of the hour! Please enter again.");
         show(LINE);
     }
 
@@ -55,10 +61,10 @@ public class MeetingsUi extends Ui {
 
     public static void printAvailabilities(TreeMap<LocalTime, ArrayList<String>> availability) {
         printTableHeader("Here are the availabilities:");
-        show("│ time  │ names");
-        show("├────────────────────────────────────────────────────────────────────");
+        show("| time  | names");
+        show("+-------+-------------------------------------------------------");
         for (LocalTime timing: availability.keySet()) {
-            show("│ " + timing + " │ " + listOfAvailabilities(availability.get(timing)));
+            show("| " + timing + " | " + listOfAvailabilities(availability.get(timing)));
         }
         show(TABLE_BOT);
         show(LINE);
