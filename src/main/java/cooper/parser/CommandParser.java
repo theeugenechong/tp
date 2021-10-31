@@ -1,9 +1,5 @@
 package cooper.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,36 +7,35 @@ import java.util.Optional;
 
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
-import com.dopsun.chatbot.cli.Parser;
 
 import cooper.command.AddCommand;
+import cooper.command.AvailabilityCommand;
 import cooper.command.AvailableCommand;
 import cooper.command.BsCommand;
 import cooper.command.CfCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
+import cooper.command.GenerateCommand;
+import cooper.command.HelpCommand;
 import cooper.command.ListCommand;
-import cooper.command.AvailabilityCommand;
 import cooper.command.LogoutCommand;
 import cooper.command.MeetingsCommand;
-import cooper.command.HelpCommand;
 import cooper.command.PostAddCommand;
 import cooper.command.PostCommentCommand;
-import cooper.command.PostListCommand;
 import cooper.command.PostDeleteCommand;
+import cooper.command.PostListCommand;
+import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.ui.Ui;
-import cooper.util.Util;
 import cooper.finance.FinanceCommand;
 
+//@@author Rrraaaeee
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
+@SuppressWarnings({"OptionalGetWithoutIsPresent", "SwitchStatementWithTooFewBranches"})
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
-    private Parser parser;
     public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
     /**
@@ -48,24 +43,6 @@ public class CommandParser extends ParserBase {
      */
     private CommandParser()  {
         super();
-
-        try {
-            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
-
-            File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
-
-            InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
-            File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_training.txt");
-
-            parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
-
-        } catch (IOException | URISyntaxException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
-        }
     }
 
     /**
@@ -81,6 +58,7 @@ public class CommandParser extends ParserBase {
         return commandParserImpl.parseInput(input);
     }
 
+    @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException {
         assert input != null;
@@ -98,37 +76,41 @@ public class CommandParser extends ParserBase {
             return parseSimpleInput(commandWord);
         case "add":
         case "available":
-        case "post":
         case "schedule":
+        case "post":
+        case "generate":
+        case "proj":
             return parseComplexInput(input);
         default:
             throw new UnrecognisedCommandException();
         }
     }
 
-    private Command parseSimpleInput(String input) throws UnrecognisedCommandException {
-        assert input != null;
-        switch (input) {
+    private Command parseSimpleInput(String commandWord) throws UnrecognisedCommandException {
+        assert commandWord != null;
+        switch (commandWord) {
         case "list":
             return new ListCommand(financeFlag);
         case "help":
             return new HelpCommand();
         case "availability":
+            financeFlag = FinanceCommand.IDLE;
             return new AvailabilityCommand();
         case "meetings":
+            financeFlag = FinanceCommand.IDLE;
             return new MeetingsCommand();
         case "logout":
+            financeFlag = FinanceCommand.IDLE;
             return new LogoutCommand();
         case "exit":
+            financeFlag = FinanceCommand.IDLE;
             return new ExitCommand();
         case "cf":
+            financeFlag = FinanceCommand.CF;
             return new CfCommand();
         case "bs":
             financeFlag = FinanceCommand.BS;
             return new BsCommand();
-        case "proj":
-            financeFlag = FinanceCommand.PROJ;
-            return null;
         default:
             throw new UnrecognisedCommandException();
         }
@@ -140,15 +122,14 @@ public class CommandParser extends ParserBase {
         if (optResult.isPresent()) {
             var result = optResult.get();
             String command = result.allCommands().get(0).name();
-            // String template = res.allCommands().get(0).template();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
+            case "add":
+                return parseAddArgs(commandArgs);
             case "available":
                 return parseAvailableArgs(commandArgs);
             case "schedule":
                 return parseScheduleArgs(commandArgs);
-            case "add":
-                return parseAddArgs(commandArgs);
             case "postAdd":
                 return parsePostAddArgs(commandArgs);
             case "postDelete":
@@ -157,6 +138,10 @@ public class CommandParser extends ParserBase {
                 return parsePostCommentArgs(commandArgs);
             case "postList":
                 return parsePostListArgs(commandArgs);
+            case "generate":
+                return parseGenerateArgs(commandArgs);
+            case "proj":
+                return parseProjectionArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -165,6 +150,7 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    //@@author ChrisLangton
     private Command parseAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
         String amountAsString;
@@ -191,8 +177,11 @@ public class CommandParser extends ParserBase {
 
     }
 
+    //@@author fansxx
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         String time = "";
 
         for (Argument a : commandArgs) {
@@ -211,6 +200,8 @@ public class CommandParser extends ParserBase {
 
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NoSuchElementException {
+        financeFlag = FinanceCommand.IDLE;
+
         String meetingName = null;
         ArrayList<String> usernames = new ArrayList<>();
         String time = null;
@@ -265,8 +256,11 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    //@@author Rrraaaeee
     private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         String content = "";
 
         for (Argument a : commandArgs) {
@@ -285,6 +279,8 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostDeleteArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         int postId = -1;
 
         for (Argument a : commandArgs) {
@@ -303,6 +299,8 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostCommentArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+        financeFlag = FinanceCommand.IDLE;
+
         String content = "";
         int postId = -1;
 
@@ -325,14 +323,16 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
-        int postId = -1;
+        financeFlag = FinanceCommand.IDLE;
+
+        Integer postId = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
             case "list-hint":
                 if (argVal.equals("all")) {
-                    postId = -1; // list all
+                    postId = null; // list all
                 } else {
                     postId = Integer.parseInt(argVal);
                 }
@@ -342,5 +342,49 @@ public class CommandParser extends ParserBase {
             }
         }
         return new PostListCommand(postId);
+    }
+
+    //@@author theeugenechong
+    private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
+            InvalidCommandFormatException {
+        String documentToGenerate = null;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "document-hint":
+                if (isValidDocToGenerate(argVal)) {
+                    documentToGenerate = argVal.trim().toLowerCase();
+                } else {
+                    throw new InvalidCommandFormatException();
+                }
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new GenerateCommand(documentToGenerate);
+    }
+
+    private boolean isValidDocToGenerate(String doc) {
+        return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
+    }
+
+    //@@author ChrisLangton
+    private Command parseProjectionArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
+            NumberFormatException {
+        int years = 0;
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "years-hint":
+                years = Integer.parseInt(argVal);
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new ProjectionCommand(years, financeFlag);
     }
 }

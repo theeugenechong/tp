@@ -1,5 +1,7 @@
 package cooper.forum;
 
+//@@author Rrraaaeee
+
 public abstract class ForumPostBase {
     private final String content;
     private final String username;

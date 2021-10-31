@@ -1,17 +1,18 @@
 package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.verification.Verifier;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+//@@author theeugenechong
 
 public class SignInDetailsStorage extends Storage {
 
@@ -29,7 +30,7 @@ public class SignInDetailsStorage extends Storage {
         try {
             writeSignInDetails(filePath, cooperVerifier.getRegisteredUsers());
         } catch (IOException e) {
-            Ui.showFileWriteError(e);
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
@@ -42,7 +43,7 @@ public class SignInDetailsStorage extends Storage {
                     SignInDetails decodedSignInDetails = decodeSignInDetails(signInDetails);
                     registeredUsers.put(decodedSignInDetails.getUsername(), decodedSignInDetails);
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
@@ -51,7 +52,7 @@ public class SignInDetailsStorage extends Storage {
     private static SignInDetails decodeSignInDetails(String signInDetailsAsString) throws InvalidFileDataException {
         String[] signInDetails = signInDetailsAsString.split("\\|");
         if (isInvalidFileData(signInDetails)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("signInDetails.txt");
         }
         assert !isInvalidFileData(signInDetails);
 
@@ -68,7 +69,7 @@ public class SignInDetailsStorage extends Storage {
             return true;
         }
 
-        if (!signInDetails[3].trim().equals("A") && !signInDetails[3].equals("E")) {
+        if (!signInDetails[3].trim().equals("A") && !signInDetails[3].trim().equals("E")) {
             return true;
         }
 
@@ -80,9 +81,9 @@ public class SignInDetailsStorage extends Storage {
         return false;
     }
 
-    private static void writeSignInDetails(Path filePath, HashMap<String, SignInDetails> registeredUsers)
+    private static void writeSignInDetails(String filePath, HashMap<String, SignInDetails> registeredUsers)
             throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Map.Entry<String, SignInDetails> e : registeredUsers.entrySet()) {
             String encodedSignInDetails = encodeSignInDetails(e);

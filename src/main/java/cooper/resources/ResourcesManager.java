@@ -3,33 +3,26 @@ package cooper.resources;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.forum.ForumManager;
-import cooper.storage.StorageManager;
 import cooper.verification.UserRole;
-import cooper.verification.Verifier;
+
+//@@author Rrraaaeee
 
 public class ResourcesManager {
 
-    private final Verifier cooperVerifier;
     private final FinanceManager cooperFinanceManager;
     private final MeetingManager cooperMeetingManager;
     private final ForumManager cooperForumManager;
-    private final StorageManager cooperStorageManager;
 
     public ResourcesManager() {
-        cooperStorageManager = new StorageManager();
         cooperFinanceManager = new FinanceManager();
         cooperMeetingManager = new MeetingManager();
         cooperForumManager = new ForumManager();
-        cooperVerifier = new Verifier();
-        // load storage 
-        cooperStorageManager.loadAllData(
-                cooperVerifier,
-                cooperFinanceManager,
-                cooperMeetingManager);
-
-
     }
 
+    public FinanceManager getFinanceManager() {
+        return cooperFinanceManager;
+    }
+    
     public FinanceManager getFinanceManager(UserRole userRole) {
         if (userRole.equals(UserRole.ADMIN)) {
             return cooperFinanceManager;
@@ -38,22 +31,21 @@ public class ResourcesManager {
         }
     }
 
+    public MeetingManager getMeetingManager() {
+        return cooperMeetingManager;
+    }
+
     public MeetingManager getMeetingManager(UserRole userRole) {
         return cooperMeetingManager;
+    }
+
+    // FIXME: These three APIs should not be accessed without user roles,
+    // access right management is done in V2.1
+    public ForumManager getForumManager() {
+        return cooperForumManager;
     }
 
     public ForumManager getForumManager(UserRole userRole) {
         return cooperForumManager;
     }
-
-    public StorageManager getStorageManager() {
-        return cooperStorageManager;
-
-    }
-
-    public Verifier getVerifier() {
-        return cooperVerifier;
-    }
-
-
 }

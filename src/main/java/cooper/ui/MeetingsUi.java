@@ -6,10 +6,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+//@@author fansxx
+
 public class MeetingsUi extends Ui {
-    private static final String LINE = "=========================================================================";
-    private static final String TABLE_TOP = "┌────────────────────────────────────────────────────────────────────┐";
-    private static final String TABLE_BOT = "└────────────────────────────────────────────────────────────────────┘";
 
     public static void showInvalidTimeException() {
         show(LINE);

@@ -3,15 +3,16 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
-import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
+import cooper.ui.FinanceUi;
 import cooper.ui.Ui;
-import cooper.ui.FinanceUI;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.finance.FinanceCommand;
 import cooper.resources.ResourcesManager;
+
+//@@author ChrisLangton
 
 /**
  * The child class of Command that handles the 'add' command specifically.
@@ -33,30 +34,45 @@ public class AddCommand extends Command {
      * The override function for executing the 'add' command, calls for 'add' and subsequently
      * printing the status to the command line if and only if
      * the command is being accessed by an 'admin' level user.
-     * @param signInDetails access role
-     * @param resourcesManager handles all manager classes and their access rights
+     * @param signInDetails Sign in details of user to provide correct access
+     * @param resourcesManager Provides access to manipulate data in the cOOPer's {@code FinanceManager},
+     *                         {@code MeetingsManager} and {@code ForumManager}
+     * @param storageManager Stores data which has just been added
      */
     @Override
-    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager) throws InvalidAccessException {
+    public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
+                        StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-        StorageManager storageManager = resourcesManager.getStorageManager();
-        if (financeManager == null || financeFlag == FinanceCommand.IDLE) {
+
+        if (financeManager == null) {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
+
+        if (financeFlag == FinanceCommand.IDLE) {
+            FinanceUi.showPleaseSpecifyFinancialStatement();
+        }
       
         if (financeFlag == FinanceCommand.BS) {
-            financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
-            storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
-            Ui.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
-            BalanceSheet.balanceSheetStage++;
+            if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfSE) {
+                financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
+                storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);
+                FinanceUi.printAddBalanceCommand(amount, isInflow, BalanceSheet.balanceSheetStage);
+                BalanceSheet.balanceSheetStage++;
+            } else {
+                FinanceUi.showCannotAddToBalanceSheet();
+            }
         } else if (financeFlag == FinanceCommand.CF) {
-            financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
-            storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
-            Ui.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
-            CashFlow.cashFlowStage++;
+            if (CashFlow.cashFlowStage <= FinanceManager.freeCashFlow) {
+                financeManager.addCashFlow(amount, isInflow, CashFlow.cashFlowStage);
+                storageManager.saveCashFlowStatement(financeManager.cooperCashFlowStatement);
+                FinanceUi.printAddCashFlowCommand(amount, isInflow, CashFlow.cashFlowStage);
+                CashFlow.cashFlowStage++;
+            } else {
+                FinanceUi.showCannotAddToCashFlow();
+            }
         }
     }
 }

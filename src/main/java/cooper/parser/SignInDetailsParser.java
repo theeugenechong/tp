@@ -2,62 +2,38 @@ package cooper.parser;
 
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
-import com.dopsun.chatbot.cli.Parser;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
-import cooper.util.Util;
 import cooper.verification.Login;
 import cooper.verification.PasswordHasher;
 import cooper.verification.Registration;
 import cooper.verification.SignInDetails;
 import cooper.verification.SignInProtocol;
 import cooper.verification.UserRole;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+//@@author theeugenechong
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class SignInDetailsParser extends  ParserBase {
 
     private static SignInDetailsParser signInDetailsParserImpl = null;
-    private Parser parser;
 
     /**
      * Constructor. Initialise internal parser.
      */
     private SignInDetailsParser()  {
         super();
-
-        try {
-            InputStream commandSetInputStream = this.getClass().getResourceAsStream("/parser/command-data.properties");
-
-            File commandSetTmpFile = Util.inputStreamToTmpFile(commandSetInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_command.txt");
-
-            InputStream trainingPathInputStream = this.getClass().getResourceAsStream("/parser/training-data.yml");
-            File trainingTmpFile = Util.inputStreamToTmpFile(trainingPathInputStream,
-                    System.getProperty("user.dir") + "/tmp", "/tmp_file_training.txt");
-
-            parser = prepareParser(commandSetTmpFile.getPath(), trainingTmpFile.getPath());
-
-        } catch (IOException | URISyntaxException e) {
-            Ui.showText("Error encountered when creating temp file: "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
-                    + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt");
-        }
     }
 
     /**
      * API to parse a command in string.
      * @param input command to be parsed
-     * @return a command object, to be passed into command handler
+     * @return a SignInProtocol object, to be passed to verifier
      */
     public static SignInProtocol parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidUserRoleException {
@@ -75,6 +51,7 @@ public class SignInDetailsParser extends  ParserBase {
         return signInDetailsParserImpl.parsePassword(input);
     }
 
+    @Override
     public SignInProtocol parseInput(String input) throws InvalidUserRoleException, UnrecognisedCommandException,
             InvalidCommandFormatException {
         assert input != null;
@@ -83,13 +60,22 @@ public class SignInDetailsParser extends  ParserBase {
         switch (signInProtocol) {
         case "login":
         case "register":
-            return parseSignInDetailsInternal(input);
+            return parseSignInDetails(input);
+        case "exit":
+            exitProgram();
+            return null;
         default:
             throw new UnrecognisedCommandException();
         }
     }
 
-    private SignInProtocol parseSignInDetailsInternal(String input) throws UnrecognisedCommandException,
+    private void exitProgram() {
+        Ui.showBye();
+        Ui.closeStreams();
+        System.exit(0);
+    }
+
+    private SignInProtocol parseSignInDetails(String input) throws UnrecognisedCommandException,
             InvalidUserRoleException, NoSuchElementException, InvalidCommandFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {

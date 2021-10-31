@@ -1,33 +1,32 @@
 package cooper.storage;
 
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
+
+//@@author theeugenechong
 
 public class Storage {
 
-    protected final Path filePath;
+    protected final String filePath;
 
     public Storage(String filePath) {
-        this.filePath = Path.of(filePath);
+        this.filePath = filePath;
     }
 
-    protected static Scanner getScanner(Path filePath) {
-        File storageFile = new File(filePath.toString());
+    protected static Scanner getScanner(String filePath) {
+        File storageFile = new File(filePath);
         Scanner fileScanner = null;
         try {
             fileScanner = new Scanner(storageFile);
         } catch (FileNotFoundException e) {
             try {
-                createFileInDirectory(filePath.toString());
-            } catch (IOException ioException) {
-                Ui.showFileCreationError(ioException);
+                createFileInDirectory(filePath);
+            } catch (IOException ioe) {
+                FileIoUi.showFileCreationError(ioe);
             }
         }
         return fileScanner;
@@ -39,10 +38,14 @@ public class Storage {
      * @param filePath string representing the file path
      * @throws IOException if there is an error creating the file
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void createFileInDirectory(String filePath) throws IOException {
         String directoryName = getDirectoryPath(filePath);
-        Files.createDirectories(Paths.get(directoryName));
-        Files.createFile(Paths.get(filePath));
+        File storageDir = new File(directoryName);
+        storageDir.mkdir();
+
+        File storageFile = new File(filePath);
+        storageFile.createNewFile();
     }
 
     /**
@@ -59,7 +62,7 @@ public class Storage {
 
         /* Iterate up to length - 1 because the last argument in a file path is usually the file type */
         for (int i = 0; i < (directoryPathAsArray.length - 1); i++) {
-            directoryPath.append(directoryPathAsArray[i]).append("/");
+            directoryPath.append(directoryPathAsArray[i]);
         }
         return String.valueOf(directoryPath);
     }

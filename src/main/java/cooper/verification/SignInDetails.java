@@ -1,5 +1,6 @@
 package cooper.verification;
 
+//@@author theeugenechong
 /**
  * Class representing the sign in details of a user.
  */
@@ -32,6 +33,4 @@ public class SignInDetails {
     public UserRole getUserRole() {
         return userRole;
     }
-
-
 }

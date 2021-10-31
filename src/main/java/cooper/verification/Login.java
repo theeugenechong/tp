@@ -1,16 +1,17 @@
 package cooper.verification;
 
-import cooper.ui.Ui;
+import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
 
+//@@author theeugenechong
 /**
  * Represents the sign in protocol for user already registered in cOOPer's system.
  * <p></p>
- * User enters their login details (username and role) which is then verified
+ * User enters their login details (username, password and role) which is then verified
  * to determine if the details provided allow for a successful login. A successful
- * login happens when the user is already registered and the user is logging in with
- * the role they registered with.
+ * login is when the username is already registered, the user enters the correct password,
+ * and the user is logging in with the correct role.
  */
 public class Login extends SignInProtocol {
 
@@ -22,7 +23,8 @@ public class Login extends SignInProtocol {
      * Executes the logging in of a user to access cOOPer's features.
      * @param verifier A flag in {@code verifier} is set only upon successful login which allows the program
      *                 to proceed to the next stage - accessing cOOPer's features.
-     * @param rawPassword User's raw password without any hashing/encryption.
+     *                 cOOPer's list of registered users is also obtained from {@code verifier}.
+     * @param rawPassword User's raw password without any hashing.
      */
     @Override
     public void executeSignIn(Verifier verifier, String rawPassword) {
@@ -36,7 +38,7 @@ public class Login extends SignInProtocol {
         assert isRegisteredUser(registeredUsers);
 
         if (!hasCorrectRole(registeredUsers)) {
-            Ui.showIncorrectRoleMessage();
+            VerificationUi.showIncorrectRoleMessage();
             verifier.setSuccessfullySignedIn(false);
             LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect role.");
             return;
@@ -44,13 +46,14 @@ public class Login extends SignInProtocol {
         assert (isRegisteredUser(registeredUsers) && hasCorrectRole(registeredUsers));
 
         if (!hasCorrectPassword(registeredUsers, rawPassword)) {
-            Ui.showIncorrectPasswordError();
+            VerificationUi.showIncorrectPasswordError();
             verifier.setSuccessfullySignedIn(false);
             LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect password.");
+            return;
         }
 
         verifier.setSuccessfullySignedIn(true);
-        Ui.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
+        VerificationUi.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
         LOGGER.info("User with username " + signInDetails.getUsername() + " successfully signed in.");
     }
 
@@ -81,6 +84,6 @@ public class Login extends SignInProtocol {
      * user to register instead.
      */
     private void askUserToRegister() {
-        Ui.showPleaseRegisterMessage();
+        VerificationUi.showPleaseRegisterMessage();
     }
 }

@@ -3,13 +3,14 @@ package cooper.storage;
 import cooper.exceptions.InvalidFileDataException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+//@@author ChrisLangton
 
 public class BalanceSheetStorage extends Storage {
 
@@ -27,28 +28,41 @@ public class BalanceSheetStorage extends Storage {
         try {
             writeBalanceSheet(filePath, cooperBalanceSheet.getBalanceSheet());
         } catch (IOException e) {
-            Ui.showFileWriteError(e);
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
 
     private static void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
         if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
+            int bsEntryIndex = 0;
+            while (fileScanner.hasNext() && bsEntryIndex <= FinanceManager.endOfSE) {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
-                    balanceSheet.add(decodedExpense);
+                    balanceSheet.set(bsEntryIndex, decodedExpense);
+                    addNetValues(bsEntryIndex, decodedExpense);
+                    bsEntryIndex++;
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
     }
 
+    private static void addNetValues(int bsEntryIndex, int decodedExpense) {
+        if (bsEntryIndex <= FinanceManager.endOfAssets) {
+            FinanceManager.netAssets += decodedExpense;
+        } else if (bsEntryIndex <= FinanceManager.endOfLiabilities) {
+            FinanceManager.netLiabilities += decodedExpense;
+        } else {
+            FinanceManager.netSE += decodedExpense;
+        }
+    }
+
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("balanceSheet.txt");
         }
         return Integer.parseInt(expense);
     }
@@ -62,8 +76,8 @@ public class BalanceSheetStorage extends Storage {
         return false;
     }
 
-    private static void writeBalanceSheet(Path filePath, ArrayList<Integer> balanceSheet) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+    private static void writeBalanceSheet(String filePath, ArrayList<Integer> balanceSheet) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : balanceSheet) {
             String encodedExpense = encodeExpense(expense);

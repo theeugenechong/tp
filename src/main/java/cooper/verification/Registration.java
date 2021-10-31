@@ -1,9 +1,10 @@
 package cooper.verification;
 
-import cooper.ui.Ui;
+import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
 
+//@@author theeugenechong
 /**
  * Represents the sign in protocol for a new user registering for cOOPer.
  * <p></p>
@@ -45,7 +46,7 @@ public class Registration extends SignInProtocol {
         String usernameToRegister = signInDetails.getUsername();
         UserRole userRoleToRegister = signInDetails.getUserRole();
         registeredUsers.put(usernameToRegister, signInDetails);
-        Ui.showRegisteredSuccessfullyMessage(usernameToRegister, userRoleToRegister);
+        VerificationUi.showRegisteredSuccessfullyMessage(usernameToRegister, userRoleToRegister);
     }
 
     /**
@@ -53,6 +54,6 @@ public class Registration extends SignInProtocol {
      * the user to log in instead.
      */
     private void askUserToLogin() {
-        Ui.showPleaseLoginMessage();
+        VerificationUi.showPleaseLoginMessage();
     }
 }

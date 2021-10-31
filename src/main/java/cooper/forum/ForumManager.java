@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.exceptions.InvalidForumDeleteByNonOwnerException;
-import cooper.ui.Ui;
+import cooper.ui.ForumUi;
 
+//@@author Rrraaaeee
 
 public class ForumManager {
-    private ArrayList<ForumPost> forumPosts;
+    private final ArrayList<ForumPost> forumPosts;
 
     public ForumManager() {
-        forumPosts = new ArrayList<ForumPost>();
+        forumPosts = new ArrayList<>();
     }
 
     public void addPost(String username, String content) {
@@ -28,7 +29,7 @@ public class ForumManager {
             throws InvalidForumPostIdException, InvalidForumDeleteByNonOwnerException {
         checkValidPostId(postId);
         ForumPost post = forumPosts.get(postId);
-        if (post.getUsername() == username) {
+        if (post.getUsername().equals(username)) {
             // can only delete one's own post
             String content = forumPosts.get(postId).getContent();
             forumPosts.remove(postId);
@@ -46,12 +47,12 @@ public class ForumManager {
     }
 
     public void listPosts() {
-        Ui.printForumPosts(forumPosts);
+        ForumUi.printForumPosts(forumPosts);
     }
 
     public void listPost(int postId) throws InvalidForumPostIdException {
         checkValidPostId(postId);
-        Ui.printForumPost(forumPosts, postId);
+        ForumUi.printForumPost(forumPosts, postId);
     }
 
     private void checkValidPostId(int postId) throws InvalidForumPostIdException {
@@ -60,4 +61,7 @@ public class ForumManager {
         }
     }
 
+    public ArrayList<ForumPost> getForumPosts() {
+        return forumPosts;
+    }
 }

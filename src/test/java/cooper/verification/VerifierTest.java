@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+//@@author theeugenechong
+
 public class VerifierTest {
 
     static Verifier verifier;
@@ -36,6 +38,7 @@ public class VerifierTest {
         String userEncryptedPassword = PasswordHasher.generatePasswordHash("1111", userSalt);
         assertEquals(verifier.getRegisteredUsers().get("Martin").getUserEncryptedPassword(), userEncryptedPassword);
         assertFalse(verifier.isSuccessfullySignedIn());
+        assertTrue(verifier.getRegisteredUsers().containsKey("Martin"));
     }
 
     @Test
@@ -53,20 +56,39 @@ public class VerifierTest {
         actual = verifier.verify(input);
 
         assertTrue(verifier.isSuccessfullySignedIn());
-        assertTrue(verifier.getRegisteredUsers().containsKey("Martin"));
     }
 
     @Test
     @Order(4)
-    void verify_properInputLoginWrongRole_loginFailed() {
+    void verify_wrongPasswordLoginAfterRegister_loginUnsuccessful() {
+        String input = "login Martin pw 1234 as admin";
+        SignInDetails actual = verifier.verify(input);
+
+        String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
+        String userEncryptedPassword = PasswordHasher.generatePasswordHash("1111", userSalt);
+        SignInDetails expected = new SignInDetails("Martin", userEncryptedPassword, userSalt, UserRole.ADMIN);
+        assertFalse(hasSameAttributeValuesAs(actual, expected));
+
+        assertFalse(verifier.isSuccessfullySignedIn());
+        assertTrue(verifier.getRegisteredUsers().containsKey("Martin"));
+    }
+
+    @Test
+    @Order(5)
+    void verify_wrongRoleLoginAfterRegister_loginUnsuccessful() {
         String input = "login Martin pw 1111 as employee";
         SignInDetails actual = verifier.verify(input);
+
+        String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
+        String userEncryptedPassword = PasswordHasher.generatePasswordHash("1111", userSalt);
+        SignInDetails expected = new SignInDetails("Martin", userEncryptedPassword, userSalt, UserRole.ADMIN);
+        assertFalse(hasSameAttributeValuesAs(actual, expected));
 
         assertFalse(verifier.isSuccessfullySignedIn());
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void verify_improperInputEmptyUsernameField_failure() {
         String input = "login as admin";
         SignInDetails signInDetails = verifier.verify(input);
@@ -76,7 +98,7 @@ public class VerifierTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void verify_improperInputEmptyRoleField_failure() {
         String input = "login Sebastian as";
         SignInDetails signInDetails = verifier.verify(input);
@@ -86,7 +108,7 @@ public class VerifierTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void verify_emptyInputString_failure() {
         String input = "";
         SignInDetails signInDetails = verifier.verify(input);
@@ -96,7 +118,7 @@ public class VerifierTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void verify_emptyArguments_failure() {
         String input = "register";
         SignInDetails signInDetails = verifier.verify(input);

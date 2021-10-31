@@ -1,16 +1,16 @@
 package cooper.storage;
 
 import cooper.exceptions.InvalidFileDataException;
-import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
-import cooper.ui.Ui;
+import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+//@@author ChrisLangton
 
 public class CashFlowStorage extends Storage {
 
@@ -28,28 +28,41 @@ public class CashFlowStorage extends Storage {
         try {
             writeCashFlowStatement(filePath, cooperCashFlowStatement.getCashFlowStatement());
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            FileIoUi.showFileWriteError(e);
             System.exit(1);
         }
     }
 
     private static void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
         if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
+            int cfEntryIndex = 0;
+            while (fileScanner.hasNext() && cfEntryIndex <= FinanceManager.freeCashFlow) {
                 String expense = fileScanner.nextLine();
                 try {
                     int decodedExpense = decodeExpense(expense);
-                    cashFlowStatement.add(decodedExpense);
+                    cashFlowStatement.set(cfEntryIndex, decodedExpense);
+                    addNetValues(cfEntryIndex, decodedExpense);
+                    cfEntryIndex++;
                 } catch (InvalidFileDataException e) {
-                    Ui.showInvalidFileDataError();
+                    FileIoUi.showInvalidFileDataError(e);
                 }
             }
         }
     }
 
+    private static void addNetValues(int cfEntryIndex, int decodedExpense) {
+        if (cfEntryIndex <= FinanceManager.endOfOA) {
+            FinanceManager.netOA += decodedExpense;
+        } else if (cfEntryIndex <= FinanceManager.endOfIA) {
+            FinanceManager.netIA += decodedExpense;
+        } else {
+            FinanceManager.netFA += decodedExpense;
+        }
+    }
+
     private static int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException();
+            throw new InvalidFileDataException("cashFlowStatement.txt");
         }
         return Integer.parseInt(expense);
     }
@@ -63,8 +76,9 @@ public class CashFlowStorage extends Storage {
         return false;
     }
 
-    private static void writeCashFlowStatement(Path filePath, ArrayList<Integer> cashFlowStatement) throws IOException {
-        FileWriter fileWriter = new FileWriter(filePath.toString(), false);
+    private static void writeCashFlowStatement(String filePath, ArrayList<Integer> cashFlowStatement)
+            throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : cashFlowStatement) {
             String encodedExpense = encodeExpense(expense);

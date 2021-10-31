@@ -1,15 +1,27 @@
 package cooper.command;
 
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.LogoutException;
+import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
 import cooper.resources.ResourcesManager;
+
+import java.util.ArrayList;
+
+//@@author Rrraaaeee
 
 public abstract class Command {
 
     /**
-     * Child classes are required to implement how to execute on itself.
+     * Executes the command specified.
      */
-    public abstract void execute(SignInDetails signInDetails, ResourcesManager resourcesManager)
-                                 throws InvalidAccessException, LogoutException;
+    public abstract void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
+                                 StorageManager storageManager) throws InvalidAccessException, LogoutException,
+                                 EmptyFinancialStatementException;
+
+    //@@author ChrisLangton
+    protected boolean isEmptyFinancialStatement(ArrayList<Integer> financialStatement) {
+        return financialStatement.stream().allMatch(i -> i == 0);
+    }
 }

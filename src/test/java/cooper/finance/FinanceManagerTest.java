@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//@@author ChrisLangton
+
 public class FinanceManagerTest {
 
     static FinanceManager financeManager;

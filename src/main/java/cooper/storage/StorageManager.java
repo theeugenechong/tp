@@ -4,14 +4,18 @@ import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
+import cooper.forum.ForumManager;
 import cooper.verification.Verifier;
+
+//@@author theeugenechong
 
 public class StorageManager {
 
-    private static final String BASE_DIRECTORY = System.getProperty("user.dir") + "/tmp";
+    private static final String BASE_DIRECTORY = "cooperData";
     private final SignInDetailsStorage signInDetailsStorage;
     private final BalanceSheetStorage balanceSheetStorage;
     private final CashFlowStorage cashFlowStorage;
+    private final ForumStorage forumStorage;
     private final AvailabilityStorage availabilityStorage;
     private final MeetingsStorage meetingsStorage;
 
@@ -21,15 +25,17 @@ public class StorageManager {
         this.availabilityStorage = new AvailabilityStorage(BASE_DIRECTORY + "/availability.txt");
         this.meetingsStorage = new MeetingsStorage(BASE_DIRECTORY + "/meetings.txt");
         this.cashFlowStorage = new CashFlowStorage(BASE_DIRECTORY + "/cashFlowStatement.txt");
+        this.forumStorage = new ForumStorage(BASE_DIRECTORY + "/forum.txt");
     }
 
     public void loadAllData(Verifier cooperVerifier, FinanceManager cooperFinanceManager,
-                            MeetingManager cooperMeetingManager) {
+                            MeetingManager cooperMeetingManager, ForumManager cooperForumManager) {
         signInDetailsStorage.loadSignInDetails(cooperVerifier);
         cashFlowStorage.loadCashFlowStatement(cooperFinanceManager.cooperCashFlowStatement);
         balanceSheetStorage.loadBalanceSheet(cooperFinanceManager.cooperBalanceSheet);
         availabilityStorage.loadAvailability(cooperMeetingManager);
         meetingsStorage.loadMeetings(cooperMeetingManager);
+        forumStorage.loadForum(cooperForumManager);
     }
 
     public void saveSignInDetails(Verifier cooperVerifier) {
@@ -50,5 +56,9 @@ public class StorageManager {
 
     public void saveMeetings(MeetingManager cooperMeetingManager) {
         meetingsStorage.saveMeetings(cooperMeetingManager);
+    }
+
+    public void saveForum(ForumManager cooperForumManager) {
+        forumStorage.saveForum(cooperForumManager);
     }
 }
