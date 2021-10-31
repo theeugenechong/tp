@@ -104,35 +104,37 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+## cOOPer's Commands
+
+Here are some things to note about cOOPer's commands.
+> ℹ️Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
+> ℹ️For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
+> ℹ️All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.
+
 ## Getting Started
 
 ### How cOOPer is to be Used
-- The **correct** way (as of v2.0) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
+- The **correct** way (as of v2.1) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
 > ⚠️cOOPer's features related to [scheduling meetings](#declaring-available-timing-for-meetings-available) and [posting to the forum](#adding-a-forum-post-post-add) **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ### Roles
 - There are two main roles you can hold as a user of cOOPer, namely the _**admin**_ role or the _**employee**_ role.
 
-- You are eligible to hold the admin role if you hold a high position in the startup. e.g. Chief Executive Officer (CEO),
-Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
+- You are eligible to hold the admin role if you hold a high position in the startup. e.g. Chief Executive Officer (CEO), Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
 
 - On the other hand, you hold the employee role if you are a basic employee at the startup.
 
-- cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of
-  administrative access within the company throughout cOOPer's usage.
+- cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
 ### User Registration
-- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of 
-ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
+- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
 - How to register a user:
-  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `register [username] pw [password]
-  as [role]`. 
+  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `register [username] pw [password] as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
-  3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to
-  find out more about logging in.
+  3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to find out more about logging in.
 
 > ℹ️`[username]` refers to the user's name, `[password]` refers to the user's password, while `[role]` refers to the user's role as determined [here](#roles).
 
