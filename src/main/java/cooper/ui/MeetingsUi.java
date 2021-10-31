@@ -29,9 +29,13 @@ public class MeetingsUi extends Ui {
     }
 
     public static void showDuplicateMeetingException() {
+        show("Please schedule a meeting at another time!");
         show(LINE);
-        show("You have already scheduled a meeting at that time!");
+    }
+
+    public static void showMeetingTimeFull(String username, String time) {
         show(LINE);
+        show("Oops, no meeting can be scheduled because " + username + " already has a meeting at " + time);
     }
 
     public static void printAvailableCommand(String time, String username) {

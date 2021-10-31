@@ -50,8 +50,6 @@ public class ScheduleCommand extends Command {
                     storageManager.saveMeetings(meetingManager);
                 } catch (CannotScheduleMeetingException e1) {
                     MeetingsUi.showCannotScheduleMeetingException();
-                } catch (DuplicateMeetingException e2) {
-                    MeetingsUi.showDuplicateMeetingException();
                 }
             } else {
                 try {
