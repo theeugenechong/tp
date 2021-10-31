@@ -223,7 +223,8 @@ Sebastian has just posted to forum:
   2. cOOPer lists all posts along with their comments in a hierarchical manner.
   3. Enter `post list [postId]` to view the single post with `[postId]`.
 
-> ℹ️`[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** in the list of posts.
+> ℹ️`[postId]` refers to the index of the post you want to view. It must be a **positive integer** and also an index of the posts **in the list**.<br>
+> 💡 Enter `post list all` to know the index of the specific post you want to view.
 
 + Example input for viewing all the forum posts:
 
