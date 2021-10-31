@@ -25,6 +25,8 @@ public abstract class ParserBase {
 
     protected Parser parser;
 
+    protected static final String WHITESPACE_SEQUENCE = "\\s+";
+
     /**
      * Constructor. Initialise internal parser.
      */

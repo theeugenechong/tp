@@ -38,6 +38,10 @@ public class CommandParser extends ParserBase {
     private static CommandParser commandParserImpl = null;
     public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
+    protected static final String BS = "bs";
+    protected static final String CF = "cf";
+    protected static final String DOCUMENT_HINT = "document-hint";
+    
     /**
      * Constructor. Initialise internal parser.
      */
@@ -62,7 +66,7 @@ public class CommandParser extends ParserBase {
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException {
         assert input != null;
-        String commandWord = input.split("\\s+")[0].toLowerCase();
+        String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
         switch (commandWord) {
         case "list":
@@ -70,8 +74,8 @@ public class CommandParser extends ParserBase {
         case "availability":
         case "meetings":
         case "exit":
-        case "bs":
-        case "cf":
+        case BS:
+        case CF:
         case "logout":
             return parseSimpleInput(commandWord);
         case "add":
@@ -105,10 +109,10 @@ public class CommandParser extends ParserBase {
         case "exit":
             financeFlag = FinanceCommand.IDLE;
             return new ExitCommand();
-        case "cf":
+        case CF:
             financeFlag = FinanceCommand.CF;
             return new CfCommand();
-        case "bs":
+        case BS:
             financeFlag = FinanceCommand.BS;
             return new BsCommand();
         default:
@@ -331,7 +335,7 @@ public class CommandParser extends ParserBase {
             String argVal = a.value().get();
             switch (argName) {
             case "list-hint":
-                if (argVal.equals("all")) {
+                if (argVal.trim().equals("all")) {
                     postId = null; // list all
                 } else {
                     postId = Integer.parseInt(argVal);
@@ -345,7 +349,6 @@ public class CommandParser extends ParserBase {
     }
 
     //@@author theeugenechong
-
     /**
      * Parses the {@code generate} command to identify the document to generate as PDF.
      * @return a {@code GenerateCommand} containing the document the user wants to generate
@@ -359,12 +362,8 @@ public class CommandParser extends ParserBase {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "document-hint":
-                if (isValidDocToGenerate(argVal)) {
-                    documentToGenerate = argVal.trim().toLowerCase();
-                } else {
-                    throw new InvalidCommandFormatException();
-                }
+            case DOCUMENT_HINT:
+                documentToGenerate = checkDocToGenerate(argVal);
                 break;
             default:
                 throw new InvalidCommandFormatException();
@@ -376,8 +375,14 @@ public class CommandParser extends ParserBase {
     /**
      * Helper method to determine is the user argument is one of bs or cf.
      */
-    private boolean isValidDocToGenerate(String doc) {
-        return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
+    private String checkDocToGenerate(String doc) throws InvalidCommandFormatException {
+        if (doc.trim().equalsIgnoreCase(BS)) {
+            return BS;
+        } else if (doc.trim().equalsIgnoreCase(CF)) {
+            return CF;
+        } else {
+            throw new InvalidCommandFormatException();
+        }
     }
 
     //@@author ChrisLangton

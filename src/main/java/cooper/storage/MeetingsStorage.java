@@ -42,14 +42,16 @@ public class MeetingsStorage extends Storage {
     }
 
     private static void readMeetings(Scanner fileScanner, ArrayList<Meeting> meetings) {
-        if (fileScanner != null) {
-            while (fileScanner.hasNext()) {
-                String meetingsRow = fileScanner.nextLine();
-                try {
-                    decodeMeetings(meetingsRow, meetings);
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+        if (fileScanner == null) {
+            return;
+        }
+
+        while (fileScanner.hasNext()) {
+            String meetingsRow = fileScanner.nextLine();
+            try {
+                decodeMeetings(meetingsRow, meetings);
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
