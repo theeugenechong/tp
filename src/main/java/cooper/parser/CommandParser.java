@@ -38,6 +38,10 @@ public class CommandParser extends ParserBase {
     private static CommandParser commandParserImpl = null;
     public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
+    protected static final String BS = "bs";
+    protected static final String CF = "cf";
+    protected static final String DOCUMENT_HINT = "document-hint";
+    
     /**
      * Constructor. Initialise internal parser.
      */
@@ -70,8 +74,8 @@ public class CommandParser extends ParserBase {
         case "availability":
         case "meetings":
         case "exit":
-        case "bs":
-        case "cf":
+        case BS:
+        case CF:
         case "logout":
             return parseSimpleInput(commandWord);
         case "add":
@@ -105,10 +109,10 @@ public class CommandParser extends ParserBase {
         case "exit":
             financeFlag = FinanceCommand.IDLE;
             return new ExitCommand();
-        case "cf":
+        case CF:
             financeFlag = FinanceCommand.CF;
             return new CfCommand();
-        case "bs":
+        case BS:
             financeFlag = FinanceCommand.BS;
             return new BsCommand();
         default:
@@ -331,7 +335,7 @@ public class CommandParser extends ParserBase {
             String argVal = a.value().get();
             switch (argName) {
             case "list-hint":
-                if (argVal.equals("all")) {
+                if (argVal.trim().equals("all")) {
                     postId = null; // list all
                 } else {
                     postId = Integer.parseInt(argVal);
@@ -358,7 +362,7 @@ public class CommandParser extends ParserBase {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "document-hint":
+            case DOCUMENT_HINT:
                 documentToGenerate = checkDocToGenerate(argVal);
                 break;
             default:
@@ -372,10 +376,10 @@ public class CommandParser extends ParserBase {
      * Helper method to determine is the user argument is one of bs or cf.
      */
     private String checkDocToGenerate(String doc) throws InvalidCommandFormatException {
-        if (doc.trim().equalsIgnoreCase("bs")) {
-            return "bs";
-        } else if (doc.trim().equalsIgnoreCase("cf")) {
-            return "cf";
+        if (doc.trim().equalsIgnoreCase(BS)) {
+            return BS;
+        } else if (doc.trim().equalsIgnoreCase(CF)) {
+            return CF;
         } else {
             throw new InvalidCommandFormatException();
         }
