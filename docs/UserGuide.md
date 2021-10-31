@@ -215,32 +215,6 @@ Sebastian has just posted to forum:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Commenting on a forum post: `post comment`
-+ Adds a comment on a post in the forum.
-+ How to comment on a post:
-  1. When other users see a post on the forum, they can comment on the post using `post comment [commentContent] on [postId]`.
-  2. A comment `[commentContent]` will be added to the post with `[postId]`.
-
-+ Example input:
-
-```
->> post comment welcome on 1
-```
-
-+ Expected output:
-
-```
-=========================================================================
-Eugene has just commented on a post from forum:
-┌────────────────────────────────────────────────────────────────────┐
-|  hello world
-|    ∟  welcome
-└────────────────────────────────────────────────────────────────────┘
-=========================================================================
-```
-
-[⬆️ Back to top](#whats-in-this-user-guide)
-
 ### Viewing a post / posts in the forum: `post list`
 + Shows you the currently active forum posts along with any comments on the posts.
 + You can specify if you want to view all the posts or a specific post.
@@ -294,14 +268,44 @@ Here is the forum post:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+### Commenting on a forum post: `post comment`
++ Adds a comment on a post in the forum.
++ How to comment on a post:
+  1. When other users see a post on the forum, they can comment on the post using `post comment [commentContent] on [postId]`.
+  2. A comment `[commentContent]` will be added to the post with `[postId]`.
+
+> ℹ️`[postId]` refers to the index of the post you want to comment on. It must be a **positive integer** and also an index of the posts **in the list**.<br>
+> 💡 Enter [`post list all`](#viewing-a-post--posts-in-the-forum-post-list) before commenting on a post to know the index of the specific post you want to comment on.
+
++ Example input:
+
+```
+>> post comment welcome on 1
+```
+
++ Expected output:
+
+```
+=========================================================================
+Eugene has just commented on a post from forum:
+┌────────────────────────────────────────────────────────────────────┐
+|  hello world
+|    ∟  welcome
+└────────────────────────────────────────────────────────────────────┘
+=========================================================================
+```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ### Deleting a forum post: `post delete`
 - Deletes an active post on the forum along with its comments.
 - How to delete a post:
   1. Enter `post delete [postId]`.
   2. The post will be deleted from the forum.
 
-> ℹ️ `[postId]` refers to the index of the post shown when `post list all` is entered. It must be a **positive integer** in the list of posts.<br>
-> 💡 Use the [`post list`](#viewing-a-post--posts-in-the-forum-post-list) command before `post delete` to know the index of the post you want to delete.
+> ℹ️ You are only allowed to delete the posts made by you.<br>
+> ℹ️ `[postId]` refers to the index of the post you want to delete. It must be a **positive integer** and also an index of the posts **in the list**.<br>
+> 💡 Enter [`post list all`](#viewing-a-post--posts-in-the-forum-post-list) before you delete a post to know the index of the post you want to delete.
 
 - Example input:
 
