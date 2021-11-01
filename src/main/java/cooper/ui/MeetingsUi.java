@@ -33,7 +33,8 @@ public class MeetingsUi extends Ui {
     public static final String INVALID_SCHEDULE_FORMAT_ERROR_MESSAGE =
             "Please enter the users you would like to schedule a meeting with.";
     public static final String NO_TIME_ENTERED_ERROR_MESSAGE = "Please enter the time of the meeting after /at";
-    public static final String NO_USERNAME_AFTER_COMMA_ERROR_MESSAGE = "You must enter a username after a comma! Please enter again.";
+    public static final String NO_USERNAME_AFTER_COMMA_ERROR_MESSAGE =
+            "You must enter a username after a comma! Please enter again.";
 
     public static void showInvalidScheduleFormatException() {
         show(LINE);
