@@ -24,11 +24,11 @@ cOOPer can help you manage your startup efficiently.
 - [Setup](#setup)
 - [cOOPer's Commands](#coopers-commands)
 - [Getting Started](#getting-started)
-  - [How cOOPer is to be Used](#how-cooper-is-to-be-used)
+  - [How cOOPer is to be used](#how-cooper-is-to-be-used)
   - [Roles](#roles) 
-  - [User Registration](#user-registration)
-- [Log in](#login)
-- [Features for all users](#features-for-all-users)
+  - [User registration](#user-registration)
+- [Login](#login)
+- [Features for All Users](#features-for-all-users)
   - [Adding a forum post: `post add`](#adding-a-forum-post-post-add)
   - [Viewing a post / posts in the forum: `post list`](#viewing-a-post--posts-in-the-forum-post-list)
   - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
@@ -46,10 +46,12 @@ cOOPer can help you manage your startup efficiently.
   - [Generating a PDF from the financial statement: `generate`](#generating-a-pdf-from-the-financial-statement--generate)
   - [Scheduling meetings with different users: `schedule`](#scheduling-meetings-with-different-users-schedule)
 - [Employee Features](#employee-features)
-- [Exiting the program](#exiting-the-program-exit)
+- [Viewing Help: `help`](#viewing-help-help)
+- [Exiting the Program: `exit`](#exiting-the-program-exit)
 - [cOOPer's Data Storage](#coopers-data-storage)
 - [FAQ](#faq)
 - [Command Summary](#command-summary)
+  - [Before logging in](#before-logging-in)
   - [Admin commands](#admin-commands)
   - [Employee commands](#employee-commands)
   
@@ -119,10 +121,13 @@ Here are some things to note about cOOPer's commands.
 > ℹ️Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
 > ℹ️For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
 > ℹ️All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.
+> ℹ️Empty input (for e.g. simply pressing 'Enter', entering whitespaces or 'Tab' characters) will be ignored by cOOPer and cOOPer will continue prompting you for your next command.
+
+[⬆️ Back to top](#whats-in-this-user-guide)
 
 ## Getting Started
 
-### How cOOPer is to be Used
+### How cOOPer is to be used
 - The **correct** way (as of v2.1) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
 > ⚠️cOOPer's features related to [scheduling meetings](#declaring-available-timing-for-meetings-available) and [posting to the forum](#adding-a-forum-post-post-add) **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
@@ -135,13 +140,13 @@ Here are some things to note about cOOPer's commands.
 
 - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
-### User Registration
+### User registration
 - Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
 - How to register a user:
-  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `register [username] pw [password] as [role]`. 
+  1. When you see cOOPer asking you to log in, register or exit, enter `register [username] pw [password] as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
   3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to find out more about logging in.
 
@@ -170,7 +175,7 @@ Sebastian is now successfully registered as an admin!
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
 - How to log in:
-  1. When you see the greeting message as shown in the [Setup](#setup) section, enter `login [username] pw [password] as [role]`.
+  1. When you see cOOPer asking you to log in, register or exit, enter `login [username] pw [password] as [role]`.
   2. You now have access to cOOPer's features specific to your role.
 
 > ℹ️`[username]`, `[password]` and `[role]` refer to the user's name, password and role as registered in cOOPer's system.<br>
@@ -193,7 +198,7 @@ You are now logged in successfully as Sebastian!
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-## Features for all users
+## Features for All Users
 
 This section explains cOOPer's features for all users, i.e. users with either the _**admin**_ role or the _**employee**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined.
 
@@ -664,12 +669,12 @@ After 3 years you can expect Free Cash Flow of 8825
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Generating a PDF from the financial statement : `generate`
-- Creates a Portable Document Format (PDF) file from the *latest version* of the financial statement specified (Balance Sheet or Cash Flow Statement).
+- Creates a Portable Document Format (PDF) file from the *latest version* of the financial statement specified (balance sheet or cash flow statement).
 - How to generate the PDF file:
   1. Enter `generate [financialStatement]` where `[financialStatement]` is one of `bs` or `cf`.
   2. If **successful**, the PDF file is created in a folder named 'output' in the _home folder_ with the name of the financial statement you generated. For example, `generate cf` will create a PDF named 'CashFlowStatement'.
   
-- Example input for successful generation of the Cash Flow Statement PDF:
+- Example input for successful generation of the cash flow statement PDF:
 
 ```
 >> generate cf
@@ -690,7 +695,8 @@ The pdf file has been successfully generated!
 </p> 
 
 > 💡   Always [fill up the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
-> ⚠️The PDF file will not be created if the specified financial statement has not been filled.
+> ⚠️The PDF file will not be created if the specified financial statement has not been filled.<br>
+> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current pdf file with the latest version of the financial statement.
 >
 > ⚠️ **Important:** <br>
 >- The creation of the PDF file requires an **active internet connection**. 
@@ -711,9 +717,9 @@ The pdf file has been successfully generated!
 
 - **Manual** schedule meeting means cOOPer refers to the timing you specified and checks if all specified users are available then, and schedules a meeting if they are.
 - How to **manually** schedule a meeting:
-1. After [logging in](#login) to the system, enter `schedule [meetingName] with [username1], [username2] /at [time]`.
-2. cOOPer will check if the users are all available at the time specified.
-3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with all the users at that specified time.
+  1. After [logging in](#login) to the system, enter `schedule [meetingName] with [username1], [username2] /at [time]`.
+  2. cOOPer will check if the users are all available at the time specified.
+  3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with all the users at that specified time.
 
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
 > 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
@@ -741,6 +747,14 @@ You have scheduled a <<Progress Meeting>> meeting at 10:00 with Sebastian, Eugen
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+## Viewing help: `help`
+Shows you a list of commands **specific to your role**, along with their formats. Refer to the [Roles](#roles) section if you do not know how roles are determined.
+
+> ℹ️The `help` command can only be used once you have logged in to cOOPer.<br>
+> ℹ️The output will be similar to [Command Summary](#command-summary), only without the examples.
+
+[⬆️ Back to top](#whats-in-this-user-guide)
+
 ## Exiting the program: `exit`
 Exits the program.
 
@@ -757,7 +771,6 @@ Exits the program.
 Bye, see you next time!
 =========================================================================
 ```
-
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
