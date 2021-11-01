@@ -40,6 +40,7 @@ public class ScheduleCommand extends Command {
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
                         StorageManager storageManager) throws InvalidAccessException {
+        String username = signInDetails.getUsername();
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
 
@@ -47,6 +48,7 @@ public class ScheduleCommand extends Command {
             // if time field is not entered, proceed to auto schedule a meeting at the earliest time
             if (time == null) {
                 try {
+                    usernames.add(username);
                     meetingManager.autoScheduleMeeting(meetingName, usernames);
                     storageManager.saveMeetings(meetingManager);
                 } catch (CannotScheduleMeetingException e1) {
@@ -54,6 +56,7 @@ public class ScheduleCommand extends Command {
                 }
             } else {
                 try {
+                    usernames.add(username);
                     meetingManager.manualScheduleMeeting(meetingName, usernames, time);
                     storageManager.saveMeetings(meetingManager);
                 } catch (InvalidTimeFormatException e1) {
