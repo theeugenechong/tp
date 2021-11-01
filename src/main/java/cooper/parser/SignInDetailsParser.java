@@ -173,6 +173,12 @@ public class SignInDetailsParser extends  ParserBase {
         return new SignInDetails(username, userEncryptedPassword, userSalt, userRole);
     }
 
+    /**
+     * Helper method to check if the role input by the user is one of admin or employee.
+     * @param role role input by the user
+     * @return the role the user included in their sign in details
+     * @throws InvalidUserRoleException if the role is neither admin nor employee
+     */
     private UserRole checkUserRole(String role) throws InvalidUserRoleException {
         UserRole userRole;
         if (role.equalsIgnoreCase(ADMIN)) {
@@ -189,7 +195,7 @@ public class SignInDetailsParser extends  ParserBase {
      * Parses the user input to get the raw password of the user.
      * @return a string representing the user's raw password
      */
-    private String parsePassword(String input) throws InvalidCommandFormatException {
+    private String parsePassword(String input) throws InvalidCommandFormatException, NoSuchElementException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -203,7 +209,8 @@ public class SignInDetailsParser extends  ParserBase {
     /**
      * Helper method for {@code parsePassword}.
      */
-    private String getRawPassword(List<Argument> commandArgs) throws InvalidCommandFormatException {
+    private String getRawPassword(List<Argument> commandArgs) throws InvalidCommandFormatException,
+            NoSuchElementException {
         String userRawPassword = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
