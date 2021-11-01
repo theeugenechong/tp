@@ -30,6 +30,12 @@ public class VerificationUi extends Ui {
         show(LINE);
     }
 
+    public static void showEmptySignInDetailsError() {
+        show(LINE);
+        show("Your sign in details cannot be empty!");
+        show(LINE);
+    }
+
     public static void showUnrecognisedCommandAtSignInError() {
         show(LINE);
         show(CAN_ONLY_LOGIN_REGISTER_EXIT);
