@@ -49,9 +49,9 @@ public class ParserTest {
     @Test
     void parseSignInDetails_invalidRole_throwsInvalidUserRoleException() {
         assertThrows(InvalidUserRoleException.class, () ->
-                SignInDetailsParser.parse("login Topias pw 1111 as abc"));
+                SignInDetailsParser.parse("login Topias /pw 1111 /as abc"));
 
         assertThrows(InvalidUserRoleException.class, () ->
-                SignInDetailsParser.parse("register Martin pw 1111 as boss"));
+                SignInDetailsParser.parse("register Martin /pw 1111 /as boss"));
     }
 }

@@ -35,8 +35,8 @@ public class Ui {
     private static final String EMPTY_STRING = "";
 
     protected static final String LOGIN_REGISTER_FOR_ACCESS = "Log in or register to gain access to my features!";
-    protected static final String LOGIN = "To log in, enter \"login [yourUsername] pw [password] as [yourRole]\".";
-    protected static final String REGISTER = "To register, enter \"register [yourUsername] pw [password] as "
+    protected static final String LOGIN = "To log in, enter \"login [yourUsername] /pw [password] /as [yourRole]\".";
+    protected static final String REGISTER = "To register, enter \"register [yourUsername] /pw [password] /as "
             + "[yourRole]\".";
     protected static final String EXIT = "To exit, enter \"exit\".";
 
@@ -54,7 +54,7 @@ public class Ui {
     private static final String ADD_FORMAT      = "| add           | add [amount]";
     private static final String LIST_FORMAT     = "| list          | list";
     private static final String GENERATE_FORMAT = "| generate      | generate [financialStatement]";
-    private static final String SCHEDULE_FORMAT = "| schedule      | schedule [meetingName] with [username1], "
+    private static final String SCHEDULE_FORMAT = "| schedule      | schedule [meetingName] /with [username1], "
             + "[username2] /at [meetingTime]";
 
     /* Constants used for employee help command */
@@ -62,7 +62,7 @@ public class Ui {
             + "formats:";
     private static final String POST_ADD_FORMAT     = "| post add      | post add [postContent]";
     private static final String POST_DELETE_FORMAT  = "| post delete   | post delete [postId]";
-    private static final String POST_COMMENT_FORMAT = "| post comment  | post comment [commentContent] on [postId]";
+    private static final String POST_COMMENT_FORMAT = "| post comment  | post comment [commentContent] /on [postId]";
     private static final String POST_LIST_FORMAT    = "| post list     | post list all / post list [postId]";
     private static final String AVAILABLE_FORMAT    = "| available     | available [availableTime]";
     private static final String AVAILABILITY_FORMAT = "| availability  | availability";
