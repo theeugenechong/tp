@@ -9,7 +9,6 @@ import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidProjectionException;
 import cooper.exceptions.InvalidScheduleFormatException;
-import cooper.exceptions.LogoutException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -121,7 +120,7 @@ public class Cooper {
                 VerificationUi.showLogoutMessage();
                 break;
             }
-            
+
             try {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
