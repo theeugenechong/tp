@@ -3,7 +3,16 @@ package cooper;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
-import cooper.exceptions.*;
+import cooper.exceptions.AmountOutOfRangeException;
+import cooper.exceptions.EmptyFinancialStatementException;
+import cooper.exceptions.InvalidAccessException;
+import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidProjectionException;
+import cooper.exceptions.InvalidScheduleFormatException;
+import cooper.exceptions.LogoutException;
+import cooper.exceptions.NoTimeEnteredException;
+import cooper.exceptions.NoUsernameAfterCommaException;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.finance.FinanceManager;
 import cooper.log.CooperLogger;
 import cooper.storage.StorageManager;
