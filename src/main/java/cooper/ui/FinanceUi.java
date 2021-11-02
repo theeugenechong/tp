@@ -1,5 +1,6 @@
 package cooper.ui;
 
+import cooper.CooperState;
 import cooper.finance.FinanceManager;
 
 import java.util.ArrayList;
@@ -287,6 +288,7 @@ public class FinanceUi extends Ui {
 
         if (balanceSheetStage == FinanceManager.endOfSE) {
             printBalanceSheetComplete();
+            Ui.updatePromptState(CooperState.LOGIN);
         }
         show(LINE);
     }
@@ -336,6 +338,7 @@ public class FinanceUi extends Ui {
 
         if (cashFlowStage == FinanceManager.freeCashFlow) {
             printCashFlowComplete();
+            Ui.updatePromptState(CooperState.LOGIN);
         }
         show(LINE);
     }

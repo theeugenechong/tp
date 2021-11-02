@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import cooper.CooperState;
+
 //@@author Rrraaaeee
 
 public class Ui {
@@ -70,6 +72,12 @@ public class Ui {
     private static final String LOGOUT_FORMAT       = "| logout        | logout";
     private static final String EXIT_FORMAT         = "| exit          | exit";
 
+    private static CooperState cooperState = CooperState.LOGOUT;
+    private static final String STATE_LOGOUT = "[Logout] ";
+    private static final String STATE_LOGIN = "[Login] ";
+    private static final String STATE_CF = "[Cash Flow] ";
+    private static final String STATE_BS = "[Balance Sheet] ";
+
     /**
      * Reads input from the user. Behaves like a real command line in the sense that an empty string entered is ignored.
      * @return user input
@@ -132,6 +140,27 @@ public class Ui {
      */
     private static void showPrompt() {
         show(PROMPT, false); // false: do not print newline
+        switch (cooperState) {
+        case LOGOUT:
+            show(STATE_LOGOUT, false);
+            break;
+        case LOGIN:
+            show(STATE_LOGIN, false);
+            break;
+        case CF:
+            show(STATE_CF, false);
+            break;
+        case BS:
+            show(STATE_BS, false);
+            break;
+        default:
+            show(STATE_LOGOUT, false);
+            break;
+        }
+    }
+
+    public static void updatePromptState(CooperState state) {
+        cooperState = state;
     }
 
     /**

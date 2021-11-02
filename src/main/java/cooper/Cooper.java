@@ -104,6 +104,7 @@ public class Cooper {
         }
         assert successfulSignInDetails != null;
         cooperStorageManager.saveSignInDetails(cooperVerifier);
+        Ui.updatePromptState(CooperState.LOGIN);
         return successfulSignInDetails;
     }
 
@@ -144,6 +145,7 @@ public class Cooper {
             } catch (LogoutException e) {
                 cooperVerifier.setSuccessfullySignedIn(false);
                 VerificationUi.showLogoutMessage();
+                Ui.updatePromptState(CooperState.LOGOUT);
                 break;
             }
         }

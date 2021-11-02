@@ -1,5 +1,6 @@
 package cooper.command;
 
+import cooper.CooperState;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.CashFlow;
 import cooper.finance.FinanceManager;
@@ -30,6 +31,7 @@ public class CfCommand extends Command {
         }
         resetCashFlowStatement();
         FinanceUi.initiateCashFlowStatement();
+        Ui.updatePromptState(CooperState.CF);
     }
 
     private void resetCashFlowStatement() {
