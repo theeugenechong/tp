@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
 
+import cooper.CooperState;
 import cooper.command.AddCommand;
 import cooper.command.AvailabilityCommand;
 import cooper.command.AvailableCommand;
@@ -32,6 +33,7 @@ import cooper.exceptions.UnrecognisedCommandException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
 import cooper.finance.FinanceCommand;
+import cooper.ui.Ui;
 
 //@@author Rrraaaeee
 
@@ -39,17 +41,21 @@ import cooper.finance.FinanceCommand;
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
-    public static FinanceCommand financeFlag = FinanceCommand.IDLE;
+    // when command parser is called, user is already logged in
+    private static CooperState cooperState = CooperState.LOGIN;
+    private static final String BS = "bs";
+    private static final String CF = "cf";
+    private static final String DOCUMENT_HINT = "document-hint";
 
-    protected static final String BS = "bs";
-    protected static final String CF = "cf";
-    protected static final String DOCUMENT_HINT = "document-hint";
-    
     /**
      * Constructor. Initialise internal parser.
      */
     private CommandParser()  {
         super("command-data.properties");
+    }
+
+    public static boolean isLogout() {
+        return cooperState == CooperState.LOGOUT;
     }
 
     /**
@@ -63,7 +69,9 @@ public class CommandParser extends ParserBase {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
-        return commandParserImpl.parseInput(input);
+        Command command = commandParserImpl.parseInput(input);
+        Ui.updatePromptState(cooperState);
+        return command;
     }
 
     @Override
@@ -99,26 +107,26 @@ public class CommandParser extends ParserBase {
         assert commandWord != null;
         switch (commandWord) {
         case "list":
-            return new ListCommand(financeFlag);
+            return new ListCommand(FinanceCommand.getCommandFromState(cooperState));
         case "help":
             return new HelpCommand();
         case "availability":
-            financeFlag = FinanceCommand.IDLE;
+            cooperState = CooperState.LOGIN;
             return new AvailabilityCommand();
         case "meetings":
-            financeFlag = FinanceCommand.IDLE;
+            cooperState = CooperState.LOGIN;
             return new MeetingsCommand();
         case "logout":
-            financeFlag = FinanceCommand.IDLE;
+            cooperState = CooperState.LOGOUT;
             return new LogoutCommand();
         case "exit":
-            financeFlag = FinanceCommand.IDLE;
+            cooperState = CooperState.LOGIN;
             return new ExitCommand();
         case CF:
-            financeFlag = FinanceCommand.CF;
+            cooperState = CooperState.CF;
             return new CfCommand();
         case BS:
-            financeFlag = FinanceCommand.BS;
+            cooperState = CooperState.BS;
             return new BsCommand();
         default:
             throw new UnrecognisedCommandException();
@@ -137,16 +145,22 @@ public class CommandParser extends ParserBase {
             case "add":
                 return parseAddArgs(commandArgs);
             case "available":
+                cooperState = CooperState.LOGIN;
                 return parseAvailableArgs(commandArgs);
             case "schedule":
+                cooperState = CooperState.LOGIN;
                 return parseScheduleArgs(commandArgs);
             case "postAdd":
+                cooperState = CooperState.LOGIN;
                 return parsePostAddArgs(commandArgs);
             case "postDelete":
+                cooperState = CooperState.LOGIN;
                 return parsePostDeleteArgs(commandArgs);
             case "postComment":
+                cooperState = CooperState.LOGIN;
                 return parsePostCommentArgs(commandArgs);
             case "postList":
+                cooperState = CooperState.LOGIN;
                 return parsePostListArgs(commandArgs);
             case "generate":
                 return parseGenerateArgs(commandArgs);
@@ -183,14 +197,13 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new AddCommand(amount, isInflow, financeFlag);
+        return new AddCommand(amount, isInflow, FinanceCommand.getCommandFromState(cooperState));
 
     }
 
     //@@author fansxx
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
-        financeFlag = FinanceCommand.IDLE;
 
         String time = "";
 
@@ -211,7 +224,6 @@ public class CommandParser extends ParserBase {
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NoSuchElementException, InvalidScheduleFormatException, NoTimeEnteredException,
             NoUsernameAfterCommaException {
-        financeFlag = FinanceCommand.IDLE;
 
         String meetingName = null;
         ArrayList<String> usernames = new ArrayList<>();
@@ -293,7 +305,6 @@ public class CommandParser extends ParserBase {
     //@@author Rrraaaeee
     private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
-        financeFlag = FinanceCommand.IDLE;
 
         String content = "";
 
@@ -313,7 +324,6 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostDeleteArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
-        financeFlag = FinanceCommand.IDLE;
 
         int postId = -1;
 
@@ -333,7 +343,6 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostCommentArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
-        financeFlag = FinanceCommand.IDLE;
 
         String content = "";
         int postId = -1;
@@ -357,7 +366,6 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
-        financeFlag = FinanceCommand.IDLE;
 
         Integer postId = null;
         for (Argument a : commandArgs) {
@@ -430,6 +438,6 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new ProjectionCommand(years, financeFlag);
+        return new ProjectionCommand(years, FinanceCommand.getCommandFromState(cooperState));
     }
 }

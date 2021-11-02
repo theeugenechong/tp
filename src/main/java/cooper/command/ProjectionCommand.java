@@ -2,6 +2,7 @@ package cooper.command;
 
 import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
+import cooper.exceptions.InvalidProjectionException;
 import cooper.finance.FinanceCommand;
 import cooper.finance.FinanceManager;
 import cooper.resources.ResourcesManager;
@@ -27,7 +28,8 @@ public class ProjectionCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws InvalidAccessException, EmptyFinancialStatementException {
+                        StorageManager storageManager) throws InvalidAccessException, EmptyFinancialStatementException,
+            InvalidProjectionException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
         if (financeManager == null) {

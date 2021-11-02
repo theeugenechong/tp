@@ -3,14 +3,16 @@ package cooper;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
+import cooper.exceptions.AmountOutOfRangeException;
+import cooper.exceptions.EmptyFinancialStatementException;
+import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
-import cooper.exceptions.UnrecognisedCommandException;
+import cooper.exceptions.InvalidProjectionException;
 import cooper.exceptions.InvalidScheduleFormatException;
+import cooper.exceptions.LogoutException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
-import cooper.exceptions.InvalidAccessException;
-import cooper.exceptions.EmptyFinancialStatementException;
-import cooper.exceptions.LogoutException;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.log.CooperLogger;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
@@ -101,6 +103,7 @@ public class Cooper {
         }
         assert successfulSignInDetails != null;
         cooperStorageManager.saveSignInDetails(cooperVerifier);
+        Ui.updatePromptState(CooperState.LOGIN);
         return successfulSignInDetails;
     }
 
@@ -113,6 +116,12 @@ public class Cooper {
      */
     private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
+            if (CommandParser.isLogout()) {
+                // logout as current user
+                cooperVerifier.setSuccessfullySignedIn(false);
+                VerificationUi.showLogoutMessage();
+                break;
+            }
             try {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
@@ -132,13 +141,14 @@ public class Cooper {
                 ParserUi.showUnrecognisedCommandError();
             } catch (InvalidAccessException e) {
                 VerificationUi.showNoAccessError();
+            } catch (InvalidProjectionException e) {
+                FinanceUi.showPleaseInputValidProjection();
+            } catch (AmountOutOfRangeException e) {
+                FinanceUi.showPleaseInputValidRange();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
-            } catch (LogoutException e) {
-                cooperVerifier.setSuccessfullySignedIn(false);
-                VerificationUi.showLogoutMessage();
-                break;
             }
         }
     }
 }
+

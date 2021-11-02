@@ -55,7 +55,10 @@ public class Verifier {
         } catch (UnrecognisedCommandException e) {
             isSuccessfullySignedIn = false;
             VerificationUi.showUnrecognisedCommandAtSignInError();
-        } catch (NoSuchElementException | InvalidCommandFormatException e) {
+        } catch (NoSuchElementException e) {
+            isSuccessfullySignedIn = false;
+            VerificationUi.showEmptySignInDetailsError();
+        } catch (InvalidCommandFormatException e) {
             isSuccessfullySignedIn = false;
             VerificationUi.showSignInDetailsIncorrectFormatError();
         } catch (InvalidUserRoleException e) {
