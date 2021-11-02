@@ -108,7 +108,7 @@ To register, enter "register [yourUsername] pw [password] as [yourRole]".
 
 To exit, enter "exit".
 =========================================================================
->> 
+>> [Logged out]
 ```
 
 Refer to the [Getting Started](#getting-started) section for information on how to start using cOOPer.
