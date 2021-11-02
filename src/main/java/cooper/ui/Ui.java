@@ -73,10 +73,11 @@ public class Ui {
     private static final String EXIT_FORMAT         = "| exit          | exit";
 
     private static CooperState cooperState = CooperState.LOGOUT;
-    private static final String STATE_LOGOUT = "[Logout] ";
-    private static final String STATE_LOGIN = "[Login] ";
+    private static final String STATE_LOGOUT = "[Logged Out] ";
     private static final String STATE_CF = "[Cash Flow] ";
     private static final String STATE_BS = "[Balance Sheet] ";
+
+    protected static final String NL = System.lineSeparator();
 
     /**
      * Reads input from the user. Behaves like a real command line in the sense that an empty string entered is ignored.
@@ -122,7 +123,7 @@ public class Ui {
         show(LOGIN_REGISTER_FOR_ACCESS);
         show(LOGIN);
         show(REGISTER);
-        show(System.lineSeparator() + EXIT);
+        show(NL + EXIT);
         show(LINE);
     }
 

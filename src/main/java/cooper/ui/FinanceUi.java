@@ -25,22 +25,26 @@ public class FinanceUi extends Ui {
 
     private static final String ADD_SUCCESS = "Success!";
     private static final String NEXT_PLEASE_ENTER = "Next, please enter ";
+
     private static final String CANT_ADD_TO_BS = "The Balance Sheet is complete! You can no longer add anything.";
     private static final String CANT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
+
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
+
     private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
     public static final String INPUT_VALID_RANGE = "Please input a number within the range of "
-            + "-2 Billion <= x <= 2 Billion";
-    private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
+            + "-2 Billion to 2 Billion";
+
+    private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth ";
     private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
+
     private static final String MORE_THAN_TWO_BILLION = "more than 2 Billion SGD";
     private static final String LESS_THAN_TWO_BILLION = "less than -2 Billion SGD";
     private static final String ADDED_AS = " has been added as ";
     private static final String AFTER = "After ";
     private static final String YEAR = " Year: ";
-    private static final String NL = System.lineSeparator();
 
     private static final int AMOUNT_UPPER_LIMIT = 2_000_000_000;
     private static final int AMOUNT_LOWER_LIMIT = -2_000_000_000;
