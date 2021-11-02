@@ -29,8 +29,8 @@ public class FinanceUi extends Ui {
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
     private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
-    public static final String INPUT_VALID_RANGE = "Please input a number within the range of " +
-            "-2 Billion <= x <= 2 Billion";
+    public static final String INPUT_VALID_RANGE = "Please input a number within the range of "
+            + "-2 Billion <= x <= 2 Billion";
     private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
     private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
@@ -112,11 +112,12 @@ public class FinanceUi extends Ui {
                 } else {
                     show(NET_AMOUNTS_UI[3] + " " + LESS_THAN_TWO_BILLION);
                 }
-                 show(HEADERS_UI[4]);
+                show(HEADERS_UI[4]);
                 break;
             case FinanceManager.endOfLiabilities:
                 show(BALANCE_SHEET_UI[i] + balanceSheet.get(i));
-                if (FinanceManager.netLiabilities >= AMOUNT_LOWER_LIMIT && FinanceManager.netLiabilities <= AMOUNT_UPPER_LIMIT) {
+                if (FinanceManager.netLiabilities >= AMOUNT_LOWER_LIMIT
+                        && FinanceManager.netLiabilities <= AMOUNT_UPPER_LIMIT) {
                     show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
                 } else if (FinanceManager.netLiabilities > AMOUNT_UPPER_LIMIT) {
                     show(NET_AMOUNTS_UI[4] + MORE_THAN_TWO_BILLION);
@@ -349,8 +350,7 @@ public class FinanceUi extends Ui {
                 show(yearCount + YEAR + cooperProjection.intValue());
             } else if (cooperProjection.intValue() < PROJECTION_LOWER_LIMIT) {
                 show(yearCount + YEAR + LESS_THAN_TWO_BILLION);
-            }
-            else {
+            } else {
                 show(yearCount + YEAR + MORE_THAN_TWO_BILLION);
             }
             yearCount++;
@@ -359,8 +359,7 @@ public class FinanceUi extends Ui {
             show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + (int) finalGrowthValue);
         } else if ((int)finalGrowthValue < PROJECTION_LOWER_LIMIT) {
             show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + LESS_THAN_TWO_BILLION);
-        }
-        else {
+        } else {
             show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + MORE_THAN_TWO_BILLION);
         }
         show(LINE);
