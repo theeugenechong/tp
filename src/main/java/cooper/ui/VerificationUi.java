@@ -18,8 +18,9 @@ public class VerificationUi extends Ui {
     private static final String INCORRECT_PASSWORD = "Incorrect password entered! Please try again.";
     private static final String NO_ACCESS = "You do not have access to this command.";
     private static final String LOGGED_OUT = "You are now logged out!";
-    protected static final String SIGN_IN_DETAILS_WRONG_FORMAT = "Your sign in details are of the wrong format!";
-    protected static final String CAN_ONLY_LOGIN_REGISTER_EXIT = "You can only log in, register, or exit here!";
+    private static final String SIGN_IN_DETAILS_WRONG_FORMAT = "Your sign in details are of the wrong format!";
+    private static final String CAN_ONLY_LOGIN_REGISTER_EXIT = "You can only log in, register, or exit here!";
+    private static final String DETAILS_CANNOT_BE_EMPTY = "Your sign in details cannot be empty!";
 
 
     public static void showSignInDetailsIncorrectFormatError() {
@@ -32,7 +33,7 @@ public class VerificationUi extends Ui {
 
     public static void showEmptySignInDetailsError() {
         show(LINE);
-        show("Your sign in details cannot be empty!");
+        show(DETAILS_CANNOT_BE_EMPTY);
         show(LINE);
     }
 
