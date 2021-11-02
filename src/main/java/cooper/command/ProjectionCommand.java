@@ -18,12 +18,10 @@ public class ProjectionCommand extends Command {
 
     public int years;
     public int oldIndex = 9;
-    public FinanceCommand financeFlag;
 
-    public ProjectionCommand(int years, FinanceCommand financeFlag) {
+    public ProjectionCommand(int years) {
         super();
         this.years = years;
-        this.financeFlag = financeFlag;
     }
 
     @Override

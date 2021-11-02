@@ -438,6 +438,6 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new ProjectionCommand(years, FinanceCommand.getCommandFromState(cooperState));
+        return new ProjectionCommand(years);
     }
 }
