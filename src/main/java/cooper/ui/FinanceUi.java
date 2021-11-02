@@ -1,5 +1,6 @@
 package cooper.ui;
 
+import cooper.CooperState;
 import cooper.finance.FinanceManager;
 
 import java.util.ArrayList;

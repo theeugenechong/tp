@@ -1,5 +1,6 @@
 package cooper.command;
 
+import cooper.CooperState;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;

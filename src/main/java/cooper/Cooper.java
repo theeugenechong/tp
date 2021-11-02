@@ -13,7 +13,6 @@ import cooper.exceptions.LogoutException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
 import cooper.exceptions.UnrecognisedCommandException;
-import cooper.finance.FinanceManager;
 import cooper.log.CooperLogger;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
@@ -104,6 +103,7 @@ public class Cooper {
         }
         assert successfulSignInDetails != null;
         cooperStorageManager.saveSignInDetails(cooperVerifier);
+        Ui.updatePromptState(CooperState.LOGIN);
         return successfulSignInDetails;
     }
 
@@ -116,6 +116,12 @@ public class Cooper {
      */
     private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
+            if (CommandParser.isLogout()) {
+                // logout as current user
+                cooperVerifier.setSuccessfullySignedIn(false);
+                VerificationUi.showLogoutMessage();
+                break;
+            }
             try {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
@@ -141,11 +147,8 @@ public class Cooper {
                 FinanceUi.showPleaseInputValidRange();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
-            } catch (LogoutException e) {
-                cooperVerifier.setSuccessfullySignedIn(false);
-                VerificationUi.showLogoutMessage();
-                break;
             }
         }
     }
 }
+
