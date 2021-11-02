@@ -73,7 +73,7 @@ public class Ui {
     private static final String EXIT_FORMAT         = "| exit          | exit";
 
     private static CooperState cooperState = CooperState.LOGOUT;
-    private static final String STATE_LOGOUT = "[Logged Out] ";
+    private static final String STATE_LOGOUT = "[Logged out] ";
     private static final String STATE_CF = "[Cash Flow] ";
     private static final String STATE_BS = "[Balance Sheet] ";
 
