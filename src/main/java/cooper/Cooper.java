@@ -3,18 +3,22 @@ package cooper;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
-import cooper.exceptions.EmptyFinancialStatementException;
-import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.UnrecognisedCommandException;
+import cooper.exceptions.InvalidScheduleFormatException;
+import cooper.exceptions.NoTimeEnteredException;
+import cooper.exceptions.NoUsernameAfterCommaException;
+import cooper.exceptions.InvalidAccessException;
+import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.LogoutException;
 import cooper.log.CooperLogger;
 import cooper.storage.StorageManager;
-import cooper.ui.FinanceUi;
-import cooper.ui.ParserUi;
+import cooper.ui.MeetingsUi;
 import cooper.ui.Ui;
-import cooper.exceptions.UnrecognisedCommandException;
-import cooper.parser.CommandParser;
+import cooper.ui.ParserUi;
+import cooper.ui.FinanceUi;
 import cooper.ui.VerificationUi;
+import cooper.parser.CommandParser;
 import cooper.verification.SignInDetails;
 import cooper.verification.Verifier;
 import cooper.resources.ResourcesManager;
@@ -116,6 +120,12 @@ public class Cooper {
                 command.execute(signInDetails, cooperResourcesManager, cooperStorageManager);
             } catch (NoSuchElementException | InvalidCommandFormatException e) {
                 ParserUi.showInvalidCommandFormatError();
+            } catch (InvalidScheduleFormatException e) {
+                MeetingsUi.showInvalidScheduleFormatException();
+            } catch (NoTimeEnteredException e) {
+                MeetingsUi.showNoTimeEnteredException();
+            } catch (NoUsernameAfterCommaException e) {
+                MeetingsUi.showNoUsernameAfterCommaException();
             } catch (NumberFormatException e) {
                 ParserUi.showInvalidNumberError();
             } catch (UnrecognisedCommandException e) {

@@ -11,7 +11,7 @@ public class ForumUi extends Ui {
     public static void printForumPosts(ArrayList<ForumPost> forumPosts) {
         show(LINE);
         show("Here is the list of forum posts:");
-        show(TABLE_TOP);
+        show(TABLE_LINE);
         int cntPost = 1;
         for (var post : forumPosts) {
             show("|  " + cntPost + ". " + post.toString());
@@ -23,14 +23,14 @@ public class ForumUi extends Ui {
             cntPost++;
         }
 
-        show(TABLE_BOT);
+        show(TABLE_LINE);
         show(LINE);
     }
 
     public static void printForumPost(ArrayList<ForumPost> forumPosts, int postId) {
         show(LINE);
         show("Here is the forum post:");
-        show(TABLE_TOP);
+        show(TABLE_LINE);
         show("|  " + forumPosts.get(postId).toString());
 
         int cntComment = 1;
@@ -39,35 +39,35 @@ public class ForumUi extends Ui {
             cntComment++;
         }
 
-        show(TABLE_BOT);
+        show(TABLE_LINE);
         show(LINE);
     }
 
     public static void printNewPostCommand(String username, String content) {
         show(LINE);
         show(username + " has just posted to forum:");
-        show(TABLE_TOP);
+        show(TABLE_LINE);
         show("|  " + content);
-        show(TABLE_BOT);
+        show(TABLE_LINE);
         show(LINE);
     }
 
     public static void printDeletePostCommand(String username, String content) {
         show(LINE);
         show(username + " has just deleted a post from forum:");
-        show(TABLE_TOP);
+        show(TABLE_LINE);
         show("|  " + content);
-        show(TABLE_BOT);
+        show(TABLE_LINE);
         show(LINE);
     }
 
     public static void printCommentPostCommand(String username, String content, String comment) {
         show(LINE);
         show(username + " has just commented on a  post from forum:");
-        show(TABLE_TOP);
+        show(TABLE_LINE);
         show("|  " + content);
         show("|    ∟  " + comment);
-        show(TABLE_BOT);
+        show(TABLE_LINE);
         show(LINE);
     }
 
