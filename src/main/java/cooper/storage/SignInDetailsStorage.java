@@ -16,9 +16,15 @@ import java.util.Scanner;
 
 public class SignInDetailsStorage extends Storage {
 
-    protected static final String ADMIN = "A";
-    protected static final String EMPLOYEE = "E";
-    protected static final String SIGN_IN_DETAILS_TXT = "signInDetails.txt";
+    private static final String ADMIN = "A";
+    private static final String EMPLOYEE = "E";
+    private static final String SIGN_IN_DETAILS_TXT = "signInDetails.txt";
+
+    private static final int USERNAME_INDEX = 0;
+    private static final int ENCR_PASSWORD_INDEX = 1;
+    private static final int SALT_INDEX = 2;
+    private static final int ROLE_INDEX = 3;
+    private static final int SIGN_IN_DETAILS_LENGTH = 4;
 
     public SignInDetailsStorage(String filePath) {
         super(filePath);
@@ -62,20 +68,20 @@ public class SignInDetailsStorage extends Storage {
         }
         assert !isInvalidFileData(signInDetails);
 
-        String username = signInDetails[0].trim();
-        String userEncryptedPassword = signInDetails[1].trim();
-        String userSalt = signInDetails[2].trim();
-        UserRole userRole = signInDetails[3].trim().equals(ADMIN) ? UserRole.ADMIN : UserRole.EMPLOYEE;
+        String username = signInDetails[USERNAME_INDEX].trim();
+        String userEncryptedPassword = signInDetails[ENCR_PASSWORD_INDEX].trim();
+        String userSalt = signInDetails[SALT_INDEX].trim();
+        UserRole userRole = signInDetails[ROLE_INDEX].trim().equals(ADMIN) ? UserRole.ADMIN : UserRole.EMPLOYEE;
 
         return new SignInDetails(username, userEncryptedPassword, userSalt, userRole);
     }
 
     private static boolean isInvalidFileData(String[] signInDetails) {
-        if (signInDetails.length != 4) {
+        if (signInDetails.length != SIGN_IN_DETAILS_LENGTH) {
             return true;
         }
 
-        if (!signInDetails[3].trim().equals(ADMIN) && !signInDetails[3].trim().equals(EMPLOYEE)) {
+        if (!signInDetails[ROLE_INDEX].trim().equals(ADMIN) && !signInDetails[ROLE_INDEX].trim().equals(EMPLOYEE)) {
             return true;
         }
 

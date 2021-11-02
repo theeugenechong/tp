@@ -41,10 +41,10 @@ public class CommandParser extends ParserBase {
     private static CommandParser commandParserImpl = null;
     public static FinanceCommand financeFlag = FinanceCommand.IDLE;
 
-    protected static final String BS = "bs";
-    protected static final String CF = "cf";
-    protected static final String DOCUMENT_HINT = "document-hint";
-    
+    private static final String BS = "bs";
+    private static final String CF = "cf";
+    private static final String DOCUMENT_HINT = "document-hint";
+
     /**
      * Constructor. Initialise internal parser.
      */
