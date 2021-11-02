@@ -29,7 +29,8 @@ public class FinanceUi extends Ui {
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
     private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
-    public static final String INPUT_VALID_RANGE = "Please input a number within the range of -2 Billion <= x <= 2 Billion";
+    public static final String INPUT_VALID_RANGE = "Please input a number within the range of " +
+            "-2 Billion <= x <= 2 Billion";
     private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
     private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
