@@ -131,7 +131,7 @@ public class FinanceManager {
             projectionIterator++;
             return createProjection(growth, rate, years);
         }
-        projectionIterator = 0;
+        projectionIterator = 1;
         return principal;
     }
 

@@ -1,5 +1,6 @@
 package cooper.command;
 
+import cooper.exceptions.AmountOutOfRangeException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
@@ -22,6 +23,8 @@ public class AddCommand extends Command {
     public boolean isInflow;
     public int amount;
     public FinanceCommand financeFlag;
+    private static final int AMOUNT_UPPER_LIMIT = 2000000000;
+    private static final int AMOUNT_LOWER_LIMIT = -2000000000;
 
     public AddCommand(int amount, boolean isInflow, FinanceCommand financeFlag) {
         super();
@@ -41,7 +44,7 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws InvalidAccessException {
+                        StorageManager storageManager) throws InvalidAccessException, AmountOutOfRangeException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
@@ -49,6 +52,10 @@ public class AddCommand extends Command {
             Ui.printAdminHelp();
             Ui.printGeneralHelp();
             throw new InvalidAccessException();
+        }
+
+        if ((amount > AMOUNT_UPPER_LIMIT) || (amount < AMOUNT_LOWER_LIMIT)) {
+            throw new AmountOutOfRangeException();
         }
 
         if (financeFlag == FinanceCommand.IDLE) {

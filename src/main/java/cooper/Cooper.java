@@ -3,14 +3,8 @@ package cooper;
 import java.util.NoSuchElementException;
 
 import cooper.command.Command;
-import cooper.exceptions.InvalidCommandFormatException;
-import cooper.exceptions.UnrecognisedCommandException;
-import cooper.exceptions.InvalidScheduleFormatException;
-import cooper.exceptions.NoTimeEnteredException;
-import cooper.exceptions.NoUsernameAfterCommaException;
-import cooper.exceptions.InvalidAccessException;
-import cooper.exceptions.EmptyFinancialStatementException;
-import cooper.exceptions.LogoutException;
+import cooper.exceptions.*;
+import cooper.finance.FinanceManager;
 import cooper.log.CooperLogger;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
@@ -132,6 +126,10 @@ public class Cooper {
                 ParserUi.showUnrecognisedCommandError();
             } catch (InvalidAccessException e) {
                 VerificationUi.showNoAccessError();
+            } catch (InvalidProjectionException e) {
+                FinanceUi.showPleaseInputValidProjection();
+            } catch (AmountOutOfRangeException e) {
+                FinanceUi.showPleaseInputValidRange();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
             } catch (LogoutException e) {

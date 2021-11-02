@@ -11,7 +11,7 @@ public class FinanceUi extends Ui {
     private static final String INITIATE_BALANCE_SHEET = "You are now using the Balance Sheet function.";
     private static final String VIEW_CURRENT_BS = "You can enter 'list' to view the current Balance Sheet or ";
     private static final String FIRST_ENTRY_BALANCE_SHEET = "start off by entering Cash & Cash Equivalents:";
-    private static final String BALANCE_OPENING = "This is the company's current Balance Sheet:";
+    private static final String BALANCE_OPENING = "This is the company's current Balance Sheet (in SGD):";
     private static final String ACCOUNT_MISTAKE = "THERE IS AN ACCOUNTING MISTAKE! One of your entries is incorrect.";
     private static final String ACCOUNT_CORRECT = "Balance Sheet is perfectly balanced, as all things should be.";
     private static final String BALANCE_SHEET_COMPLETE = "The Balance Sheet is complete! enter 'list' to view.";
@@ -19,7 +19,7 @@ public class FinanceUi extends Ui {
     private static final String INITIATE_CASH_FLOW = "You are now using the Cash Flow function.";
     private static final String VIEW_CURRENT_CF = "You can enter 'list' to view the current Cash Flow Statement or ";
     private static final String FIRST_ENTRY_CASH_FLOW = "start off by entering Net Income:";
-    private static final String STATEMENT_OPENING = "This is the company's current Cash Flow Statement:";
+    private static final String STATEMENT_OPENING = "This is the company's current Cash Flow Statement (in SGD):";
     private static final String CASH_FLOW_COMPLETE = "The Cash Flow Statement is complete! Enter 'list' to view.";
 
     private static final String ADD_SUCCESS = "Success!";
@@ -28,8 +28,23 @@ public class FinanceUi extends Ui {
     private static final String CANT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
+    private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
+    public static final String INPUT_VALID_RANGE = "Please input a number within the range of -2 Billion <= x <= 2 Billion";
+    private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
+    private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
+    private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
+    private static final String MORE_THAN_TWO_BILLION = "more than 2 Billion SGD";
+    private static final String LESS_THAN_TWO_BILLION = "less than -2 Billion SGD";
     private static final String ADDED_AS = " has been added as ";
+    private static final String AFTER = "After ";
+    private static final String YEAR = " Year: ";
     private static final String NL = System.lineSeparator();
+
+    private static final int AMOUNT_UPPER_LIMIT = 2_000_000_000;
+    private static final int AMOUNT_LOWER_LIMIT = -2_000_000_000;
+    private static final int PROJECTION_UPPER_LIMIT = 2_000_000_000;
+    private static final int PROJECTION_LOWER_LIMIT = -2_000_000_000;
+
 
     public static final String[] BALANCE_SHEET_UI = new String[] {
         "Cash and Cash Equivalents  ",
@@ -89,12 +104,24 @@ public class FinanceUi extends Ui {
             switch (i) {
             case FinanceManager.endOfAssets:
                 show(BALANCE_SHEET_UI[i] + balanceSheet.get(i));
-                show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
-                show(HEADERS_UI[4]);
+                if (FinanceManager.netAssets >= AMOUNT_LOWER_LIMIT && FinanceManager.netAssets <= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
+                } else if (FinanceManager.netAssets > AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[3] + MORE_THAN_TWO_BILLION);
+                } else {
+                    show(NET_AMOUNTS_UI[3] + " " + LESS_THAN_TWO_BILLION);
+                }
+                 show(HEADERS_UI[4]);
                 break;
             case FinanceManager.endOfLiabilities:
                 show(BALANCE_SHEET_UI[i] + balanceSheet.get(i));
-                show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
+                if (FinanceManager.netLiabilities >= AMOUNT_LOWER_LIMIT && FinanceManager.netLiabilities <= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
+                } else if (FinanceManager.netLiabilities > AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[4] + MORE_THAN_TWO_BILLION);
+                } else {
+                    show(NET_AMOUNTS_UI[4] + " " + LESS_THAN_TWO_BILLION);
+                }
                 show(HEADERS_UI[5]);
                 break;
             default:
@@ -104,7 +131,13 @@ public class FinanceUi extends Ui {
         }
 
         if (i == balanceSheet.size()) {
-            show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
+            if (FinanceManager.netSE >= AMOUNT_LOWER_LIMIT && FinanceManager.netSE <= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
+            } else if (FinanceManager.netSE > AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[5] + MORE_THAN_TWO_BILLION);
+            } else {
+                show(NET_AMOUNTS_UI[5] + " " + LESS_THAN_TWO_BILLION);
+            }
         }
 
         int balance = FinanceManager.netAssets - FinanceManager.netLiabilities - FinanceManager.netSE;
@@ -147,12 +180,24 @@ public class FinanceUi extends Ui {
             switch (i) {
             case FinanceManager.endOfOA:
                 show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
-                show(NET_AMOUNTS_UI[0] + " " + FinanceManager.netOA);
+                if (FinanceManager.netOA >= AMOUNT_LOWER_LIMIT && FinanceManager.netOA <= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[0] + " " + FinanceManager.netOA);
+                } else if (FinanceManager.netOA > AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[0] + " " + MORE_THAN_TWO_BILLION);
+                } else {
+                    show(NET_AMOUNTS_UI[0] + " " + LESS_THAN_TWO_BILLION);
+                }
                 show(HEADERS_UI[1]);
                 break;
             case FinanceManager.endOfIA:
                 show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
-                show(NET_AMOUNTS_UI[1] + " " + FinanceManager.netIA);
+                if (FinanceManager.netIA >= AMOUNT_LOWER_LIMIT && FinanceManager.netIA <= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[1] + " " + FinanceManager.netIA);
+                } else if (FinanceManager.netIA > AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[1] + " " + MORE_THAN_TWO_BILLION);
+                } else {
+                    show(NET_AMOUNTS_UI[1] + " " + LESS_THAN_TWO_BILLION);
+                }
                 show(HEADERS_UI[2]);
                 break;
             case FinanceManager.freeCashFlow:
@@ -163,9 +208,24 @@ public class FinanceUi extends Ui {
             }
         }
         if (i == cashFlowStatement.size()) {
-            show(NET_AMOUNTS_UI[2] + " " + FinanceManager.netFA);
+            if (FinanceManager.netFA >= AMOUNT_LOWER_LIMIT && FinanceManager.netFA <= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[2] + " " + FinanceManager.netFA);
+            } else if (FinanceManager.netFA > AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[2] + " " + MORE_THAN_TWO_BILLION);
+            } else {
+                show(NET_AMOUNTS_UI[2] + " " + LESS_THAN_TWO_BILLION);
+            }
             show(HEADERS_UI[6]);
-            show(CASH_FLOW_UI[9] + " " + cashFlowStatement.get(9));
+            if (cashFlowStatement.get(FinanceManager.freeCashFlow) >= AMOUNT_LOWER_LIMIT
+                    && cashFlowStatement.get(FinanceManager.freeCashFlow) <= AMOUNT_UPPER_LIMIT) {
+                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " "
+                        + cashFlowStatement.get(FinanceManager.freeCashFlow));
+            } else if (cashFlowStatement.get(FinanceManager.freeCashFlow) > AMOUNT_UPPER_LIMIT) {
+                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " " + MORE_THAN_TWO_BILLION);
+            } else {
+                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " " + LESS_THAN_TWO_BILLION);
+
+            }
         }
         show(LINE);
     }
@@ -196,15 +256,27 @@ public class FinanceUi extends Ui {
         show((isInflow ? "+" : "-") + amount + ADDED_AS + BALANCE_SHEET_UI[balanceSheetStage]);
         switch (balanceSheetStage) {
         case FinanceManager.endOfAssets:
-            show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
+            if (FinanceManager.netAssets < AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
+            } else {
+                show(NET_AMOUNTS_UI[3] + MORE_THAN_TWO_BILLION);
+            }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
         case FinanceManager.endOfLiabilities:
-            show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
+            if (FinanceManager.netLiabilities < AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
+            } else {
+                show(NET_AMOUNTS_UI[4] + MORE_THAN_TWO_BILLION);
+            }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
         case FinanceManager.endOfSE:
-            show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
+            if (FinanceManager.netSE < AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
+            } else {
+                show(NET_AMOUNTS_UI[5] + MORE_THAN_TWO_BILLION);
+            }
             break;
         default:
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
@@ -223,15 +295,33 @@ public class FinanceUi extends Ui {
         show((isInflow ? "+" : "-") + amount + ADDED_AS + CASH_FLOW_UI[cashFlowStage]);
         switch (cashFlowStage) {
         case FinanceManager.endOfOA:
-            show(NET_AMOUNTS_UI[0] + FinanceManager.netOA);
+            if (FinanceManager.netOA <= AMOUNT_UPPER_LIMIT && FinanceManager.netOA >= AMOUNT_LOWER_LIMIT) {
+                show(NET_AMOUNTS_UI[0] + FinanceManager.netOA);
+            } else if (FinanceManager.netOA > AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[0] + MORE_THAN_TWO_BILLION);
+            } else {
+                show(NET_AMOUNTS_UI[0] + LESS_THAN_TWO_BILLION);
+            }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfIA:
-            show(NET_AMOUNTS_UI[1] + FinanceManager.netIA);
+            if (FinanceManager.netIA <= AMOUNT_UPPER_LIMIT && FinanceManager.netIA >= AMOUNT_LOWER_LIMIT) {
+                show(NET_AMOUNTS_UI[1] + FinanceManager.netIA);
+            } else if (FinanceManager.netIA > AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[1] + MORE_THAN_TWO_BILLION);
+            } else {
+                show(NET_AMOUNTS_UI[1] + LESS_THAN_TWO_BILLION);
+            }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfFA:
-            show(NET_AMOUNTS_UI[2] + FinanceManager.netFA);
+            if (FinanceManager.netFA <= AMOUNT_UPPER_LIMIT && FinanceManager.netFA >= AMOUNT_LOWER_LIMIT) {
+                show(NET_AMOUNTS_UI[2] + FinanceManager.netFA);
+            } else if (FinanceManager.netFA > AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[2] + MORE_THAN_TWO_BILLION);
+            } else {
+                show(NET_AMOUNTS_UI[2] + LESS_THAN_TWO_BILLION);
+            }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.freeCashFlow:
@@ -250,14 +340,28 @@ public class FinanceUi extends Ui {
 
     public static void printProjections(double finalGrowthValue, ArrayList<Double> cooperProjections) {
         show(LINE);
-        show("At your current rate of profitability growth in Free Cash Flow,"
-                + " these are future year's projections:");
+        show(AT_CURRENT_PROFITABILITY + IN_FREE_CASH_FLOW);
         int yearCount = 1;
         for (Double cooperProjection : cooperProjections) {
-            show(yearCount + " year: " + cooperProjection.intValue());
+            if (cooperProjection.intValue() <= PROJECTION_UPPER_LIMIT
+                    && cooperProjection.intValue() >= PROJECTION_LOWER_LIMIT) {
+                show(yearCount + YEAR + cooperProjection.intValue());
+            } else if (cooperProjection.intValue() < PROJECTION_LOWER_LIMIT) {
+                show(yearCount + YEAR + LESS_THAN_TWO_BILLION);
+            }
+            else {
+                show(yearCount + YEAR + MORE_THAN_TWO_BILLION);
+            }
             yearCount++;
         }
-        show("After " + (yearCount - 1) + " years you can expect Free Cash Flow of " + (int)finalGrowthValue);
+        if ((int)finalGrowthValue <= PROJECTION_UPPER_LIMIT && (int)finalGrowthValue >= PROJECTION_LOWER_LIMIT) {
+            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + (int) finalGrowthValue);
+        } else if ((int)finalGrowthValue < PROJECTION_LOWER_LIMIT) {
+            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + LESS_THAN_TWO_BILLION);
+        }
+        else {
+            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + MORE_THAN_TWO_BILLION);
+        }
         show(LINE);
     }
 
@@ -270,6 +374,18 @@ public class FinanceUi extends Ui {
     public static void showPleaseSpecifyFinancialStatement() {
         show(LINE);
         show(STATEMENT_TO_VIEW);
+        show(LINE);
+    }
+
+    public static void showPleaseInputValidProjection() {
+        show(LINE);
+        show(INPUT_VALID_PROJECTION);
+        show(LINE);
+    }
+
+    public static void showPleaseInputValidRange() {
+        show(LINE);
+        show(INPUT_VALID_RANGE);
         show(LINE);
     }
 }
