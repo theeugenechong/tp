@@ -144,9 +144,6 @@ public class Ui {
         case LOGOUT:
             show(STATE_LOGOUT, false);
             break;
-        case LOGIN:
-            show(STATE_LOGIN, false);
-            break;
         case CF:
             show(STATE_CF, false);
             break;
@@ -154,7 +151,7 @@ public class Ui {
             show(STATE_BS, false);
             break;
         default:
-            show(STATE_LOGOUT, false);
+            // no mode, do not need to show anything
             break;
         }
     }

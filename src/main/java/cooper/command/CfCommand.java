@@ -31,7 +31,6 @@ public class CfCommand extends Command {
         }
         resetCashFlowStatement();
         FinanceUi.initiateCashFlowStatement();
-        Ui.updatePromptState(CooperState.CF);
     }
 
     private void resetCashFlowStatement() {

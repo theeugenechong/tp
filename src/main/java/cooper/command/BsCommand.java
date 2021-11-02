@@ -31,7 +31,6 @@ public class BsCommand extends Command {
         }
         resetBalanceSheet();
         FinanceUi.initiateBalanceSheet();
-        Ui.updatePromptState(CooperState.BS);
     }
 
     private void resetBalanceSheet() {

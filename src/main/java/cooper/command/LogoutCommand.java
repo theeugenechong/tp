@@ -11,8 +11,7 @@ public class LogoutCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws LogoutException {
-        throw new LogoutException();
+                        StorageManager storageManager) {
     }
 
 }
