@@ -140,6 +140,10 @@ public class Cooper {
                 FinanceUi.showEmptyFinancialStatementException();
             } catch (InvalidAddFormatException e) {
                 FinanceUi.showPleaseInputValidAdd();
+            } catch (InvalidAssetException e) {
+                FinanceUi.showPleaseInputValidAsset();
+            } catch (InvalidLiabilityException e) {
+                FinanceUi.showPleaseInputValidLiability();
             }
         }
     }

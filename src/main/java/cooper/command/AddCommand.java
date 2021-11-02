@@ -2,6 +2,8 @@ package cooper.command;
 
 import cooper.exceptions.AmountOutOfRangeException;
 import cooper.exceptions.InvalidAccessException;
+import cooper.exceptions.InvalidAssetException;
+import cooper.exceptions.InvalidLiabilityException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.storage.StorageManager;
@@ -44,7 +46,8 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws InvalidAccessException, AmountOutOfRangeException {
+                        StorageManager storageManager) throws InvalidAccessException, AmountOutOfRangeException,
+            InvalidAssetException, InvalidLiabilityException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
@@ -63,6 +66,15 @@ public class AddCommand extends Command {
         }
       
         if (financeFlag == FinanceCommand.BS) {
+            if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfAssets) {
+                if (!isInflow) {
+                    throw new InvalidAssetException();
+                }
+            } else if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfLiabilities) {
+                if (isInflow) {
+                    throw new InvalidLiabilityException();
+                }
+            }
             if (BalanceSheet.balanceSheetStage <= FinanceManager.endOfSE) {
                 financeManager.addBalance(amount, isInflow, BalanceSheet.balanceSheetStage);
                 storageManager.saveBalanceSheet(financeManager.cooperBalanceSheet);

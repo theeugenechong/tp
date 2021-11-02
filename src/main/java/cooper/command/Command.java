@@ -1,10 +1,6 @@
 package cooper.command;
 
-import cooper.exceptions.AmountOutOfRangeException;
-import cooper.exceptions.EmptyFinancialStatementException;
-import cooper.exceptions.InvalidAccessException;
-import cooper.exceptions.InvalidProjectionException;
-import cooper.exceptions.LogoutException;
+import cooper.exceptions.*;
 import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
 import cooper.resources.ResourcesManager;
@@ -21,7 +17,7 @@ public abstract class Command {
     public abstract void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
                                  StorageManager storageManager) throws InvalidAccessException,
                                  EmptyFinancialStatementException, InvalidProjectionException,
-            AmountOutOfRangeException;
+            AmountOutOfRangeException, InvalidAssetException, InvalidLiabilityException;
 
     //@@author ChrisLangton
     protected boolean isEmptyFinancialStatement(ArrayList<Integer> financialStatement) {

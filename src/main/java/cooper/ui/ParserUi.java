@@ -12,7 +12,7 @@ public class ParserUi extends Ui {
             + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
             + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt";
     private static final String INVALID_COMMAND_FORMAT = "The command you entered is of the wrong format!";
-    private static final String PLEASE_ENTER_NUMBER = "Please enter a valid number (0 to 999,999,999) for the argument!";
+    private static final String PLEASE_ENTER_NUMBER = "Please enter a valid integer (0 to 999,999,999) for the argument.";
 
     /**
      * Informs user that an unrecognised command ha been entered.
