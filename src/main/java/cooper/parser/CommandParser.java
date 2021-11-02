@@ -28,6 +28,7 @@ import cooper.command.PostListCommand;
 import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidDocumentException;
 import cooper.exceptions.InvalidScheduleFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.exceptions.NoTimeEnteredException;
@@ -65,7 +66,7 @@ public class CommandParser extends ParserBase {
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException {
+            NoUsernameAfterCommaException, InvalidDocumentException {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
@@ -77,7 +78,7 @@ public class CommandParser extends ParserBase {
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException {
+            NoUsernameAfterCommaException, InvalidDocumentException {
         assert input != null;
         String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
@@ -135,7 +136,7 @@ public class CommandParser extends ParserBase {
 
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException {
+            NoUsernameAfterCommaException, InvalidDocumentException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -394,7 +395,7 @@ public class CommandParser extends ParserBase {
      * @throws InvalidCommandFormatException if the command is of the wrong format
      */
     private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidDocumentException {
         String documentToGenerate = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
@@ -413,13 +414,13 @@ public class CommandParser extends ParserBase {
     /**
      * Helper method to determine is the user argument is one of bs or cf.
      */
-    private String checkDocToGenerate(String doc) throws InvalidCommandFormatException {
+    private String checkDocToGenerate(String doc) throws InvalidDocumentException {
         if (doc.trim().equalsIgnoreCase(BS)) {
             return BS;
         } else if (doc.trim().equalsIgnoreCase(CF)) {
             return CF;
         } else {
-            throw new InvalidCommandFormatException();
+            throw new InvalidDocumentException();
         }
     }
 

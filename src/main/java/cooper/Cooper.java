@@ -7,6 +7,7 @@ import cooper.exceptions.AmountOutOfRangeException;
 import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidDocumentException;
 import cooper.exceptions.InvalidProjectionException;
 import cooper.exceptions.InvalidScheduleFormatException;
 import cooper.exceptions.NoTimeEnteredException;
@@ -146,6 +147,8 @@ public class Cooper {
                 FinanceUi.showPleaseInputValidRange();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
+            } catch (InvalidDocumentException e) {
+                FinanceUi.showInvalidDocumentError();
             }
         }
     }

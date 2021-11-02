@@ -51,6 +51,8 @@ public class FinanceUi extends Ui {
     private static final int PROJECTION_UPPER_LIMIT = 2_000_000_000;
     private static final int PROJECTION_LOWER_LIMIT = -2_000_000_000;
 
+    private static final String CAN_ONLY_GENERATE_BS_OR_CF =
+            "The financial statement you want to generate can only be 'bs' or 'cf'!";
 
     public static final String[] BALANCE_SHEET_UI = new String[] {
         "Cash and Cash Equivalents  ",
@@ -391,6 +393,12 @@ public class FinanceUi extends Ui {
     public static void showPleaseInputValidRange() {
         show(LINE);
         show(INPUT_VALID_RANGE);
+        show(LINE);
+    }
+
+    public static void showInvalidDocumentError() {
+        show(LINE);
+        show(CAN_ONLY_GENERATE_BS_OR_CF);
         show(LINE);
     }
 }
