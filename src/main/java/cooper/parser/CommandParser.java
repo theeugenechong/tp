@@ -27,7 +27,10 @@ import cooper.command.PostListCommand;
 import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidScheduleFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
+import cooper.exceptions.NoTimeEnteredException;
+import cooper.exceptions.NoUsernameAfterCommaException;
 import cooper.finance.FinanceCommand;
 
 //@@author Rrraaaeee
@@ -55,7 +58,8 @@ public class CommandParser extends ParserBase {
      * @return a command object, to be passed into command handler
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
@@ -64,7 +68,8 @@ public class CommandParser extends ParserBase {
 
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException {
         assert input != null;
         String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
@@ -121,7 +126,8 @@ public class CommandParser extends ParserBase {
     }
 
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -203,7 +209,8 @@ public class CommandParser extends ParserBase {
     }
 
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
-            NoSuchElementException {
+            NoSuchElementException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException {
         financeFlag = FinanceCommand.IDLE;
 
         String meetingName = null;
@@ -227,12 +234,26 @@ public class CommandParser extends ParserBase {
         return new ScheduleCommand(meetingName, usernames, time);
     }
 
-    private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidCommandFormatException {
-        if (!args.contains(",")) {
-            throw new InvalidCommandFormatException();
+    private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidScheduleFormatException,
+            NoUsernameAfterCommaException {
+        if (args.length() < 1) {
+            throw new InvalidScheduleFormatException();
         }
 
-        String[] usernamesArray = args.split(",");
+        String[] usernamesArray;
+        if (args.contains(",")) {
+            if (args.endsWith(",")) {
+                throw new NoUsernameAfterCommaException();
+            }
+            usernamesArray = args.split(",");
+            if (usernamesArray.length < 1) {
+                throw new InvalidScheduleFormatException();
+            }
+        } else {
+            usernamesArray = new String[1];
+            usernamesArray[0] = args;
+        }
+
         ArrayList<String> usernamesArrayList = new ArrayList<>();
         for (String s : usernamesArray) {
             String trimmedUsername = s.trim();
@@ -242,19 +263,28 @@ public class CommandParser extends ParserBase {
         return usernamesArrayList;
     }
 
-    private void getLastUsername(ArrayList<String> usernamesArrayList, String trimmedUsername) {
+    private void getLastUsername(ArrayList<String> usernamesArrayList, String trimmedUsername) throws
+            NoUsernameAfterCommaException {
         if (trimmedUsername.contains("/at")) {
             String[] lastUsernameAndTime = trimmedUsername.split("/at");
-            usernamesArrayList.add(lastUsernameAndTime[0].trim());
+            if (lastUsernameAndTime[0].length() < 1) {
+                throw new NoUsernameAfterCommaException();
+            } else {
+                usernamesArrayList.add(lastUsernameAndTime[0].trim());
+            }
         } else {
             usernamesArrayList.add(trimmedUsername);
         }
     }
 
-    private String parseTimeInSchedule(String args) {
+    private String parseTimeInSchedule(String args) throws NoTimeEnteredException {
         if (args.contains("/at")) {
             String[] argsArray = args.split("/at");
-            return argsArray[1].trim();
+            if (argsArray.length < 2) {
+                throw new NoTimeEnteredException();
+            } else {
+                return argsArray[1].trim();
+            }
         } else {
             return null;
         }

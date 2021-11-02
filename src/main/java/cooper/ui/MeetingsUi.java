@@ -15,10 +15,10 @@ public class MeetingsUi extends Ui {
     public static final String NO_MEETINGS_TABLE_MESSAGE = "| You have no meetings yet!";
     public static final String AVAILABILITY_TABLE_HEADINGS = "| time  | names";
     public static final String AVAILABILITY_TABLE_LINE =
-            "+-------+------------------------------------------------------------";
+            "+-------+-------------------------------------------------------------";
     public static final String MEETINGS_TABLE_HEADINGS = "| meeting    | time  | attendees";
     public static final String MEETINGS_TABLE_LINE =
-            "+----------------------------------------------------------------------";
+            "+---------------------------------------------------------------------";
     public static final String SUCCESS_MESSAGE = "Success!";
     public static final String SUCCESSFUL_AVAILABLE_MESSAGE = "'s availability has been added to ";
 
@@ -30,6 +30,29 @@ public class MeetingsUi extends Ui {
             "The username has already been entered under that timeslot.";
     public static final String CANNOT_SCHEDULE_MEETING_ERROR_MESSAGE = "Oops, no meeting can be scheduled!";
     public static final String DUPLICATE_MEETING_ERROR_MESSAGE = "Please schedule a meeting at another time!";
+    public static final String INVALID_SCHEDULE_FORMAT_ERROR_MESSAGE =
+            "Please enter the users you would like to schedule a meeting with.";
+    public static final String NO_TIME_ENTERED_ERROR_MESSAGE = "Please enter the time of the meeting after /at";
+    public static final String NO_USERNAME_AFTER_COMMA_ERROR_MESSAGE =
+            "You must enter a username after a comma! Please enter again.";
+
+    public static void showInvalidScheduleFormatException() {
+        show(LINE);
+        show(INVALID_SCHEDULE_FORMAT_ERROR_MESSAGE);
+        show(LINE);
+    }
+
+    public static void showNoTimeEnteredException() {
+        show(LINE);
+        show(NO_TIME_ENTERED_ERROR_MESSAGE);
+        show(LINE);
+    }
+
+    public static void showNoUsernameAfterCommaException() {
+        show(LINE);
+        show(NO_USERNAME_AFTER_COMMA_ERROR_MESSAGE);
+        show(LINE);
+    }
 
     public static void showInvalidTimeFormatException() {
         show(LINE);
@@ -75,7 +98,7 @@ public class MeetingsUi extends Ui {
     public static void printSuccessfulScheduleCommand(String meetingName, String time, ArrayList<String> usernames) {
         show(LINE);
         show(SUCCESS_MESSAGE);
-        show("You have scheduled a <<" + meetingName + ">> meeting at " + time + " with "
+        show("You have scheduled a <<" + meetingName + ">> meeting at " + time + " with attendees: "
                 + listOfAvailabilities(usernames));
         show(LINE);
     }
@@ -87,7 +110,7 @@ public class MeetingsUi extends Ui {
         for (LocalTime timing: availability.keySet()) {
             show("| " + timing + " | " + listOfAvailabilities(availability.get(timing)));
         }
-        show(TABLE_BOT);
+        show(AVAILABILITY_TABLE_TOP);
         show(LINE);
     }
 
@@ -115,6 +138,8 @@ public class MeetingsUi extends Ui {
         show(LINE);
         show(MEETINGS_TABLE_MESSAGE);
         show(MEETINGS_TABLE_TOP);
+        show(MEETINGS_TABLE_HEADINGS);
+        show(MEETINGS_TABLE_LINE);
     }
 
     public static void printMeetings(ArrayList<Meeting> meetingsList) {
@@ -122,14 +147,12 @@ public class MeetingsUi extends Ui {
         if (meetingsList.size() == 0) {
             show(NO_MEETINGS_TABLE_MESSAGE);
         } else {
-            show(MEETINGS_TABLE_HEADINGS);
-            show(MEETINGS_TABLE_LINE);
             for (Meeting meeting : meetingsList) {
                 show("| <<" + meeting.getMeetingName() + ">> | " + meeting.getTime() + " | "
                         + listOfAvailabilities(meeting.getListOfAttendees()));
             }
         }
-        show(TABLE_BOT);
+        show(MEETINGS_TABLE_TOP);
         show(LINE);
     }
 }
