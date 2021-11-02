@@ -117,11 +117,11 @@ public class Cooper {
     private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
             if (CommandParser.isLogout()) {
-                // logout as current user
                 cooperVerifier.setSuccessfullySignedIn(false);
                 VerificationUi.showLogoutMessage();
                 break;
             }
+            
             try {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
