@@ -17,7 +17,7 @@ public class ForumUi extends Ui {
             show("|  " + cntPost + ". " + post.toString());
             int cntComment = 1;
             for (var comment : post.getComments()) {
-                show("|    ∟  " + cntComment + ". " + comment.toString());
+                show("|    -  " + cntComment + ". " + comment.toString());
                 cntComment++;
             }
             cntPost++;
@@ -35,7 +35,7 @@ public class ForumUi extends Ui {
 
         int cntComment = 1;
         for (var comment : forumPosts.get(postId).getComments()) {
-            show("|    ∟  " + cntComment + "." + comment.toString());
+            show("|    -  " + cntComment + "." + comment.toString());
             cntComment++;
         }
 
@@ -45,7 +45,7 @@ public class ForumUi extends Ui {
 
     public static void printNewPostCommand(String username, String content) {
         show(LINE);
-        show(username + " has just posted to forum:");
+        show(username + " has just posted to the forum:");
         show(TABLE_LINE);
         show("|  " + content);
         show(TABLE_LINE);
@@ -54,7 +54,7 @@ public class ForumUi extends Ui {
 
     public static void printDeletePostCommand(String username, String content) {
         show(LINE);
-        show(username + " has just deleted a post from forum:");
+        show(username + " has just deleted a post from the forum:");
         show(TABLE_LINE);
         show("|  " + content);
         show(TABLE_LINE);
@@ -63,10 +63,10 @@ public class ForumUi extends Ui {
 
     public static void printCommentPostCommand(String username, String content, String comment) {
         show(LINE);
-        show(username + " has just commented on a  post from forum:");
+        show(username + " has just commented on a post from the forum:");
         show(TABLE_LINE);
         show("|  " + content);
-        show("|    ∟  " + comment);
+        show("|    -  " + comment);
         show(TABLE_LINE);
         show(LINE);
     }
