@@ -27,7 +27,12 @@ import cooper.command.PostDeleteCommand;
 import cooper.command.PostListCommand;
 import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
-import cooper.exceptions.*;
+import cooper.exceptions.InvalidAddFormatException;
+import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidScheduleFormatException;
+import cooper.exceptions.NoTimeEnteredException;
+import cooper.exceptions.NoUsernameAfterCommaException;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.finance.FinanceCommand;
 import cooper.ui.Ui;
 
