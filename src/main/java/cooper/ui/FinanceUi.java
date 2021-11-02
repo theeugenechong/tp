@@ -30,8 +30,7 @@ public class FinanceUi extends Ui {
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
     private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
-    private static final String INPUT_VALID_RANGE = "Please input a number within the range of "
-            + "-2 Billion <= x <= 2 Billion";
+    private static final String INPUT_VALID_RANGE = "Please enter a valid number (0 to 99999999) for the argument!";
     private static final String INPUT_VALID_ADD = "Please use the format \'add [amount]\' with [amount] in parentheses"
             + " in the case of a negative number.";
     private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
