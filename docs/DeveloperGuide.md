@@ -59,7 +59,7 @@ This section includes the sources of code, documentation and third-party librari
 2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
 3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
 4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
-5. [Making a JSON Post Request for LaTex PDF Generation](https://www.baeldung.com/httpurlconnection-post)
+5. [Making a POST Request for LaTex PDF Generation](https://www.baeldung.com/httpurlconnection-post)
 
 ## Setting Up and Getting Started
 
@@ -279,6 +279,19 @@ The `Command` component:
 
 ### Storage Component
 
+**API**: [`Storage.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
+
+<p align="center">
+    <img src="developerGuideDiagrams/storageComponent.png" alt="storageComponent"><br>
+</p>
+
+- The `Storage` component consists of a parent `Storage` class along with its subclasses as shown in the diagram above.
+- The `Storage` class contains a `filePath` attribute representing the path of the file where the data is to be stored. It also contains methods common to all its subclasses such as `getScanner()` and `createFileInDirectory()` which aid in the process of writing to and creating the storage file.
+- `Cooper` contains a reference to a `StorageManager` object. This `StorageManager` object in turn contains references to each of the subclasses of `Storage`.
+
+The `Storage` component:
+- Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
+- Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
 ### Util Component
 
 **API**: [`Util.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
@@ -396,7 +409,7 @@ Assuming that the above registration has taken place successfully, the following
 ### Generating a PDF from the financial statement
 The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF generated.
 
-The PDF is generated with the help of an online LaTeX Editor. The LaTeX (`.tex`) templates for the PDF files can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
+The PDF is generated with the help of an online LaTeX Compiler. The LaTeX (`.tex`) templates for the PDF files can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
 Certain identifiers (in the form of LaTeX comments `'%'`) in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
 
 The example below shows the template of an entry in the financial statement:
@@ -411,7 +424,7 @@ The example below shows the template of an entry in the financial statement:
 \\[3ex]
 ```
 
-Calling `replace("% {Description}", "Depreciation and Amortisation")` and `replace("% {Amount}", 1500)` on the template will result in it becoming
+Calling `replace("% {Description}", "Depreciation and Amortisation")` and `replace("% {Amount}", 1500)` on the template above will result in the following:
 
 ```
 \centering
@@ -423,14 +436,17 @@ Depreciation and Amortisation
 \\[3ex]
 ```
 
-Compiling this template using the online LaTeX editor will create an entry 'Depreciation and Amortisation' on the PDF with an amount of $1500.
-Iterating through cOOPer's financial statement while implementing this procedure and using `append()` will then form a long `String` representing the `.tex` file which will be sent to the online LaTeX editor to be compiled into a PDF. 
 
-The methods `createHeader()`, `createEntry()` and `createSummary()` in the `PdfGenerator` class are responsible for forming the different sections of the financial statement. The diagram below shows the different parts of the 'Operating Activities' section of the cash flow statement formed by these methods.
+When compiled, the LaTeX code above will correspond to an entry 'Depreciation and Amortisation' on the PDF with the amount $1500. This technique can be used on the header and summary templates which will format the header and summary of a particular section in the financial statement.
+
+The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGenerator` perform the text replacement as shown above. The diagram below shows how these methods correspond to the different parts of the 'Operating Activities' section in the cash flow statement PDF.
 
 <p align="center">
     <img width="750" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
 </p>
+
+`createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. These templates are then appended together using `append()`.
+This forms a long `String` which is then sent to the online LaTeX compiler via a [POST request](https://en.wikipedia.org/wiki/POST_(HTTP)). The reply data obtained from the compiler is used to construct the PDF. This is done using the `write()` method of Java's `FileOutputStream` class.
 
 ### Loading and saving data
 
