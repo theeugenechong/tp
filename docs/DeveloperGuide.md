@@ -429,7 +429,7 @@ Iterating through cOOPer's financial statement while implementing this procedure
 The methods `createHeader()`, `createEntry()` and `createSummary()` in the `PdfGenerator` class are responsible for forming the different sections of the financial statement. The diagram below shows the different parts of the 'Operating Activities' section of the cash flow statement formed by these methods.
 
 <p align="center">
-    <img width="1000" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
+    <img width="750" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
 </p>
 
 ### Loading and saving data
