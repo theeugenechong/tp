@@ -287,9 +287,8 @@ The `Command` component:
 - There are only two methods in the `Util` class, namely `inputStreamToTmpFile()` and `inputStreamToString()`. 
 - `inputStreamToTmpFile()` is used to recreate the dopsun chatbot-cli's training files (originally located in `src/main/resources`). 
 In the process of packaging cOOPer into a JAR application, these training files are converted to bytes which are unable to be read in by the chatbot API. Hence, there is a need to recreate these files for the chatbot to work.
-- `inputStreamToString()` is used for cOOPer's [`generate`](UserGuide.md#generating-a-pdf-from-the-financial-statement--generate) feature which allows the user to generate a PDF file from data in cOOPer's balance sheet or
-cash flow Statement. This method is used to convert the `.tex` template files into a `String` object which can then be handled easily 
-in the code. More details of implementation can be found [here]().
+- `inputStreamToString()` is used for cOOPer's [`generate`](UserGuide.md#generating-a-pdf-from-the-financial-statement--generate) feature which allows the user to generate a PDF file from data in cOOPer's balance sheet or cash flow statement. 
+This method is used to convert the `.tex` template files into a `String` object which can then be handled easily in the code. More details of the implementation can be found [here](#generating-a-pdf-from-the-financial-statement).
 
 ## Implementation
 
@@ -379,19 +378,19 @@ If the password is correct, the user's role will then be checked to determine if
 The following sequence diagram shows the detailed process of registering a user. `userInput` is `register John /pw 123 /as admin`.
 
 <p align="center">
-    <img src="developerGuideDiagrams/registrationSequenceDiagram" alt="registrationSequenceDiagram"><br>
+    <img src="developerGuideDiagrams/registrationSequenceDiagram.png" alt="registrationSequenceDiagram"><br>
 </p>
 
 The `SignInDetailsParser` constructs a `SignInDetails` object parsed from the arguments in `userInput`. This `SignInDetails` object is then used to construct a `Registration` object which executes the registration of the user.
 
 <p align="center">
-    <img src="developerGuideDiagrams/refFrameRegistration" alt="refFrameSequenceDiagram"><br>
+    <img src="developerGuideDiagrams/refFrameRegistration.png" alt="refFrameSequenceDiagram"><br>
 </p>
 
 Assuming that the above registration has taken place successfully, the following sequence diagram shows the login process of the user. `userInput` is `login John /pw 123 /as admin`.
 
 <p align="center">
-    <img src="developerGuideDiagrams/loginSequenceDiagram" alt="loginSequenceDiagram"><br>
+    <img src="developerGuideDiagrams/loginSequenceDiagram.png" alt="loginSequenceDiagram"><br>
 </p>
 
 ### Generating a PDF from the financial statement
