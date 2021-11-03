@@ -118,7 +118,7 @@ public class AvailabilityStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeAvailability(Map.Entry<LocalDateTime, ArrayList<String>> meeting) {
+    private String encodeAvailability(Map.Entry<LocalDateTime, ArrayList<String>> meeting) {
         StringBuilder encodedAvailability = new StringBuilder();
 
         String availableDate = meeting.getKey().toLocalDate().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
