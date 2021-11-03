@@ -45,7 +45,7 @@ public class SignInDetailsStorage extends Storage {
         }
     }
 
-    private static void readSignInDetails(Scanner fileScanner, HashMap<String, SignInDetails> registeredUsers) {
+    private void readSignInDetails(Scanner fileScanner, HashMap<String, SignInDetails> registeredUsers) {
         if (fileScanner == null) {
             return;
         }
@@ -61,7 +61,7 @@ public class SignInDetailsStorage extends Storage {
         }
     }
 
-    private static SignInDetails decodeSignInDetails(String signInDetailsAsString) throws InvalidFileDataException {
+    private SignInDetails decodeSignInDetails(String signInDetailsAsString) throws InvalidFileDataException {
         String[] signInDetails = signInDetailsAsString.split(SEPARATOR_REGEX);
         if (isInvalidFileData(signInDetails)) {
             throw new InvalidFileDataException(SIGN_IN_DETAILS_TXT);
@@ -76,7 +76,7 @@ public class SignInDetailsStorage extends Storage {
         return new SignInDetails(username, userEncryptedPassword, userSalt, userRole);
     }
 
-    private static boolean isInvalidFileData(String[] signInDetails) {
+    private boolean isInvalidFileData(String[] signInDetails) {
         if (signInDetails.length != SIGN_IN_DETAILS_LENGTH) {
             return true;
         }
@@ -93,7 +93,7 @@ public class SignInDetailsStorage extends Storage {
         return false;
     }
 
-    private static void writeSignInDetails(String filePath, HashMap<String, SignInDetails> registeredUsers)
+    private void writeSignInDetails(String filePath, HashMap<String, SignInDetails> registeredUsers)
             throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
@@ -104,7 +104,7 @@ public class SignInDetailsStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeSignInDetails(Map.Entry<String, SignInDetails> registeredUser) {
+    private String encodeSignInDetails(Map.Entry<String, SignInDetails> registeredUser) {
         StringBuilder encodedSignInDetails = new StringBuilder();
 
         String username = registeredUser.getKey();

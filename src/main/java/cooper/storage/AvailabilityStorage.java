@@ -46,7 +46,8 @@ public class AvailabilityStorage extends Storage {
         }
     }
 
-    private static void readAvailability(Scanner fileScanner, TreeMap<LocalDateTime, ArrayList<String>> availability) {
+
+    private void readAvailability(Scanner fileScanner, TreeMap<LocalDateTime, ArrayList<String>> availability) {
         if (fileScanner == null) {
             return;
         }
@@ -61,9 +62,8 @@ public class AvailabilityStorage extends Storage {
         }
     }
 
-    private static void decodeAvailability(String availabilityRowAsString, TreeMap<LocalDateTime,
-            ArrayList<String>> availability)
-            throws InvalidFileDataException {
+    private void decodeAvailability(String availabilityRowAsString, TreeMap<LocalDateTime,
+            ArrayList<String>> availability) throws InvalidFileDataException {
         String[] availabilityRowAsArray = availabilityRowAsString.split(SEPARATOR_REGEX);
         if (isInvalidFileData(availabilityRowAsArray)) {
             throw new InvalidFileDataException(AVAILABILITY_TXT);
@@ -80,7 +80,7 @@ public class AvailabilityStorage extends Storage {
         availability.put(availableDateTime, attendees);
     }
 
-    private static boolean isInvalidFileData(String[] availability) {
+    private boolean isInvalidFileData(String[] availability) {
         if (availability.length != 3) {
             return true;
         }
@@ -107,7 +107,7 @@ public class AvailabilityStorage extends Storage {
         return false;
     }
 
-    private static void writeAvailability(String filePath, TreeMap<LocalDateTime, ArrayList<String>> meetings)
+    private void writeAvailability(String filePath, TreeMap<LocalDateTime, ArrayList<String>> meetings)
             throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
@@ -133,7 +133,7 @@ public class AvailabilityStorage extends Storage {
         return String.valueOf(encodedAvailability);
     }
 
-    private static String getAttendeesAsString(ArrayList<String> attendees) {
+    private String getAttendeesAsString(ArrayList<String> attendees) {
         StringBuilder attendeesAsString = new StringBuilder();
         for (String a : attendees) {
             /* don't need comma for last attendee */

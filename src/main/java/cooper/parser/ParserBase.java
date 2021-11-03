@@ -13,13 +13,14 @@ import com.dopsun.chatbot.cli.input.CommandSet;
 import com.dopsun.chatbot.cli.input.FileCommandSet;
 import com.dopsun.chatbot.cli.input.FileTrainingSet;
 import com.dopsun.chatbot.cli.input.TrainingSet;
+import cooper.exceptions.InvalidDocumentException;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.exceptions.InvalidAddFormatException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidScheduleFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
-import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.ParserUi;
 import cooper.util.Util;
 
@@ -58,7 +59,8 @@ public abstract class ParserBase {
      */
     public abstract Object parseInput(String input) throws UnrecognisedCommandException, InvalidCommandFormatException,
             InvalidUserRoleException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidAddFormatException;
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException;
+
 
     /**
      * A parser takes in a schema. Every child class needs to have its own schema.

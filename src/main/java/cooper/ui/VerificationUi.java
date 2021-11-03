@@ -42,7 +42,7 @@ public class VerificationUi extends Ui {
         show(CAN_ONLY_LOGIN_REGISTER_EXIT);
         show(LOGIN);
         show(REGISTER);
-        show(System.lineSeparator() + EXIT);
+        show(NL + EXIT);
         show(LINE);
     }
 
@@ -107,7 +107,7 @@ public class VerificationUi extends Ui {
     /**
      * Informs user that the password entered is not the password the user registered with.
      */
-    public static void showIncorrectPasswordError() {
+    public static void showIncorrectPasswordMessage() {
         show(LINE);
         show(INCORRECT_PASSWORD);
         show(LINE);
@@ -130,7 +130,7 @@ public class VerificationUi extends Ui {
         show(LOGGED_OUT);
         show(LOGIN);
         show(REGISTER);
-        show(System.lineSeparator() + EXIT);
+        show(NL + EXIT);
         show(LINE);
     }
 }

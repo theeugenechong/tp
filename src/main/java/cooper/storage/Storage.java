@@ -26,7 +26,7 @@ public class Storage {
      * @param filePath Path of the file
      * @return Scanner to read that file
      */
-    protected static Scanner getScanner(String filePath) {
+    protected Scanner getScanner(String filePath) {
         File storageFile = new File(filePath);
         Scanner fileScanner = null;
         try {
@@ -48,7 +48,7 @@ public class Storage {
      * @throws IOException if there is an error creating the file
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private static void createFileInDirectory(String filePath) throws IOException {
+    private void createFileInDirectory(String filePath) throws IOException {
         String directoryName = getDirectoryPath(filePath);
         File storageDir = new File(directoryName);
         storageDir.mkdir();
@@ -65,7 +65,7 @@ public class Storage {
      * @param filePath string representing the file path
      * @return a string representing the full directory path of {@code filePath}
      */
-    private static String getDirectoryPath(String filePath) {
+    private String getDirectoryPath(String filePath) {
         String[] directoryPathAsArray = filePath.split(SLASH);
         StringBuilder directoryPath = new StringBuilder();
 

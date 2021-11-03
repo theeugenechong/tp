@@ -29,6 +29,7 @@ import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
 import cooper.exceptions.InvalidAddFormatException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidDocumentException;
 import cooper.exceptions.InvalidScheduleFormatException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
@@ -42,6 +43,7 @@ import cooper.ui.Ui;
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
+
     // when command parser is called, user is already logged in
     private static CooperState cooperState = CooperState.LOGIN;
     private static final String BS = "bs";
@@ -59,6 +61,10 @@ public class CommandParser extends ParserBase {
         return cooperState == CooperState.LOGOUT;
     }
 
+    public static void setCooperState(CooperState state) {
+        cooperState = state;
+    }
+
     /**
      * API to parse a command in string.
      * @param input command to be parsed
@@ -66,7 +72,7 @@ public class CommandParser extends ParserBase {
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidAddFormatException {
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
@@ -78,7 +84,7 @@ public class CommandParser extends ParserBase {
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidAddFormatException {
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         assert input != null;
         String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
@@ -136,7 +142,7 @@ public class CommandParser extends ParserBase {
 
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidAddFormatException {
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -395,7 +401,7 @@ public class CommandParser extends ParserBase {
      * @throws InvalidCommandFormatException if the command is of the wrong format
      */
     private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidDocumentException {
         String documentToGenerate = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
@@ -414,13 +420,13 @@ public class CommandParser extends ParserBase {
     /**
      * Helper method to determine is the user argument is one of bs or cf.
      */
-    private String checkDocToGenerate(String doc) throws InvalidCommandFormatException {
+    private String checkDocToGenerate(String doc) throws InvalidDocumentException {
         if (doc.trim().equalsIgnoreCase(BS)) {
             return BS;
         } else if (doc.trim().equalsIgnoreCase(CF)) {
             return CF;
         } else {
-            throw new InvalidCommandFormatException();
+            throw new InvalidDocumentException();
         }
     }
 
@@ -439,6 +445,6 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new ProjectionCommand(years, FinanceCommand.getCommandFromState(cooperState));
+        return new ProjectionCommand(years);
     }
 }

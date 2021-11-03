@@ -9,6 +9,7 @@ import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidAddFormatException;
 import cooper.exceptions.InvalidAssetException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidDocumentException;
 import cooper.exceptions.InvalidLiabilityException;
 import cooper.exceptions.InvalidProjectionException;
 import cooper.exceptions.InvalidScheduleFormatException;
@@ -103,9 +104,11 @@ public class Cooper {
             String input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
-        assert successfulSignInDetails != null;
+
         cooperStorageManager.saveSignInDetails(cooperVerifier);
+        CommandParser.setCooperState(CooperState.LOGIN);
         Ui.updatePromptState(CooperState.LOGIN);
+
         return successfulSignInDetails;
     }
 
@@ -119,11 +122,11 @@ public class Cooper {
     private void runLoopUntilLogoutCommand(SignInDetails signInDetails) {
         while (true) {
             if (CommandParser.isLogout()) {
-                // logout as current user
                 cooperVerifier.setSuccessfullySignedIn(false);
                 VerificationUi.showLogoutMessage();
                 break;
             }
+
             try {
                 String input = Ui.getInput();
                 Command command = CommandParser.parse(input);
@@ -149,6 +152,8 @@ public class Cooper {
                 FinanceUi.showPleaseInputValidRange();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
+            } catch (InvalidDocumentException e) {
+                FinanceUi.showInvalidDocumentError();
             } catch (InvalidAddFormatException e) {
                 FinanceUi.showPleaseInputValidAdd();
             } catch (InvalidAssetException e) {

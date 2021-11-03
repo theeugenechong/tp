@@ -1,6 +1,5 @@
 package cooper.command;
 
-import cooper.exceptions.LogoutException;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;

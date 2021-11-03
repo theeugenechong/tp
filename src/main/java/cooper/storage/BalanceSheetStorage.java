@@ -35,7 +35,7 @@ public class BalanceSheetStorage extends Storage {
         }
     }
 
-    private static void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
+    private void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
         if (fileScanner == null) {
             return;
         }
@@ -54,7 +54,7 @@ public class BalanceSheetStorage extends Storage {
         }
     }
 
-    private static void addNetValues(int bsEntryIndex, int decodedExpense) {
+    private void addNetValues(int bsEntryIndex, int decodedExpense) {
         if (bsEntryIndex <= FinanceManager.endOfAssets) {
             FinanceManager.netAssets += decodedExpense;
         } else if (bsEntryIndex <= FinanceManager.endOfLiabilities) {
@@ -64,14 +64,14 @@ public class BalanceSheetStorage extends Storage {
         }
     }
 
-    private static int decodeExpense(String expense) throws InvalidFileDataException {
+    private int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
             throw new InvalidFileDataException(BALANCE_SHEET_TXT);
         }
         return Integer.parseInt(expense);
     }
 
-    private static boolean isInvalidFileData(String expenseAsString) {
+    private boolean isInvalidFileData(String expenseAsString) {
         try {
             int dummyExpense = Integer.parseInt(expenseAsString);
         } catch (NumberFormatException e) {
@@ -80,7 +80,7 @@ public class BalanceSheetStorage extends Storage {
         return false;
     }
 
-    private static void writeBalanceSheet(String filePath, ArrayList<Integer> balanceSheet) throws IOException {
+    private void writeBalanceSheet(String filePath, ArrayList<Integer> balanceSheet) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : balanceSheet) {
@@ -90,7 +90,7 @@ public class BalanceSheetStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeExpense(Integer expense) {
+    private String encodeExpense(Integer expense) {
         return expense.toString();
     }
 }

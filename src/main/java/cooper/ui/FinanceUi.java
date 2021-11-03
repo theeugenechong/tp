@@ -1,6 +1,5 @@
 package cooper.ui;
 
-import cooper.CooperState;
 import cooper.finance.FinanceManager;
 
 import java.util.ArrayList;
@@ -25,31 +24,37 @@ public class FinanceUi extends Ui {
 
     private static final String ADD_SUCCESS = "Success!";
     private static final String NEXT_PLEASE_ENTER = "Next, please enter ";
+
     private static final String CANT_ADD_TO_BS = "The Balance Sheet is complete! You can no longer add anything.";
     private static final String CANT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
+
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
-    private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
+
     private static final String INPUT_VALID_RANGE = "Please enter a valid integer (0 to 999,999,999) for the argument.";
     private static final String INPUT_VALID_ASSET = "Please enter the asset as a positive number.";
     private static final String INPUT_VALID_LIABILITY = "Please enter the liability as a negative number.";
-    private static final String INPUT_VALID_ADD = "Please use the format \'add [amount]\' with [amount] in parentheses"
+    private static final String INPUT_VALID_ADD = "Please use the format \"add [amount]\" with [amount] in parentheses"
             + " in the case of a negative number.";
-    private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
+
+    private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
+    private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth ";
     private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
+
     private static final String MORE_THAN_TWO_BILLION = "more than 2 Billion SGD";
     private static final String LESS_THAN_TWO_BILLION = "less than -2 Billion SGD";
     private static final String ADDED_AS = " has been added as ";
     private static final String AFTER = "After ";
     private static final String YEAR = " Year: ";
-    private static final String NL = System.lineSeparator();
 
     private static final int AMOUNT_UPPER_LIMIT = 2_000_000_000;
     private static final int AMOUNT_LOWER_LIMIT = -2_000_000_000;
     private static final int PROJECTION_UPPER_LIMIT = 2_000_000_000;
     private static final int PROJECTION_LOWER_LIMIT = -2_000_000_000;
 
+    private static final String CAN_ONLY_GENERATE_BS_OR_CF =
+            "The financial statement you want to generate can only be 'bs' or 'cf'!";
 
     public static final String[] BALANCE_SHEET_UI = new String[] {
         "Cash and Cash Equivalents  ",
@@ -390,6 +395,13 @@ public class FinanceUi extends Ui {
     public static void showPleaseInputValidRange() {
         show(LINE);
         show(INPUT_VALID_RANGE);
+        show(LINE);
+    }
+
+
+    public static void showInvalidDocumentError() {
+        show(LINE);
+        show(CAN_ONLY_GENERATE_BS_OR_CF);
         show(LINE);
     }
 
