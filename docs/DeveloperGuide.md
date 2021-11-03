@@ -38,6 +38,7 @@ This developer guide is for software designers, developers, and software testers
   - [Glossary](#glossary)
 - [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
   - [Launch and Shutdown](#launch-and-shutdown)
+  - [Sign-in](#sign-in)
 
 ## How This Developer Guide Works
 
@@ -366,8 +367,36 @@ FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
 ### Verifying user credentials
+The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer. 
+
+Different conditions are checked depending on whether a user is trying to log in or register. For example, if a user is trying to register, cOOPer will check if the username is already registered and asks the user to log in if they are not registered yet.
+On the other hand, if an unregistered user is trying to log in, cOOPer will ask the user to register first.
+
+For a registered user trying to log in, cOOPer will first check if the entered password is correct. This is done with the help of the `PasswordHasher` class which hashes the entered password with the user's salt stored by cOOPer. The hash obtained will then be compared to the user's stored hash to determine if the entered password is correct. 
+
+If the password is correct, the user's role will then be checked to determine if they are logging in with the role they registered with.
+
+The following sequence diagram shows the detailed process of registering a user. `userInput` is `register John /pw 123 /as admin`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/registrationSequenceDiagram" alt="registrationSequenceDiagram"><br>
+</p>
+
+The `SignInDetailsParser` constructs a `SignInDetails` object parsed from the arguments in `userInput`. This `SignInDetails` object is then used to construct a `Registration` object which executes the registration of the user.
+
+<p align="center">
+    <img src="developerGuideDiagrams/refFrameRegistration" alt="refFrameSequenceDiagram"><br>
+</p>
+
+Assuming that the above registration has taken place successfully, the following sequence diagram shows the login process of the user. `userInput` is `login John /pw 123 /as admin`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/loginSequenceDiagram" alt="loginSequenceDiagram"><br>
+</p>
 
 ### Generating a PDF from the financial statement
+
+### Loading and saving data
 
 ## Appendix: Requirements
 
@@ -390,7 +419,8 @@ Example Users:
 & manage company communication **more reliably** than a typical GUI driven app.
 
 ### User Stories
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+> 💡 Priorities:<br>
+> High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a ... | I want to ...             | So that I can ...                                           |
 | ------- | -------- | ------------------------- | ----------------------------------------------------------- |
