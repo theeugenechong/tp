@@ -27,7 +27,7 @@ public class MeetingsUi extends Ui {
     public static final String INVALID_DATE_TIME_FORMAT_MESSAGE =
             "The date and time format you entered is not accepted or the date/time entered is not valid! "
                     + "Please enter again.";
-    public static final String CORRECT_DATE_TIME_FORMAT_MESSAGE = "The correct format is: schedule [dd-MM-yyyy HH:mm]";
+    public static final String CORRECT_DATE_TIME_FORMAT_MESSAGE = "The correct format is: [dd-MM-yyyy HH:mm]";
     public static final String INVALID_TIME_MESSAGE =
             "The time you entered is not the start of the hour! Please enter again.";
     public static final String DUPLICATE_USERNAME_ERROR_MESSAGE =
