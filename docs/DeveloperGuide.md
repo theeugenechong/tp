@@ -439,9 +439,15 @@ To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label
 
 1. Registering
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
-   2. Enter `register [username] /pw [password] /as [role]` where `[username]` is your username, `[password]` is your password and `[role]` is one of admin or employee.
+   2. Enter `register [username] /pw [password] /as [role]` where `[username]` is your username, `[password]` is your password and `[role]` is one of 'admin' or 'employee'.<br>
 **Expected output:** A message informing you that you have successfully registered is shown.
 2. Logging in
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
-   2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.
+   2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.<br>
 **Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
+
+### Viewing help
+1. Viewing help
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `help`.<br>
+   **Expected output:** A list of commands specific to your role is shown along with their formats.
