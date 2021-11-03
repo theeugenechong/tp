@@ -30,8 +30,11 @@ public class FinanceUi extends Ui {
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
     private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
-    public static final String INPUT_VALID_RANGE = "Please input a number within the range of "
-            + "-2 Billion <= x <= 2 Billion";
+    private static final String INPUT_VALID_RANGE = "Please enter a valid integer (0 to 999,999,999) for the argument.";
+    private static final String INPUT_VALID_ASSET = "Please enter the asset as a positive number.";
+    private static final String INPUT_VALID_LIABILITY = "Please enter the liability as a negative number.";
+    private static final String INPUT_VALID_ADD = "Please use the format \'add [amount]\' with [amount] in parentheses"
+            + " in the case of a negative number.";
     private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth";
     private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
@@ -143,7 +146,7 @@ public class FinanceUi extends Ui {
             }
         }
 
-        int balance = FinanceManager.netAssets - FinanceManager.netLiabilities - FinanceManager.netSE;
+        int balance = FinanceManager.netAssets + FinanceManager.netLiabilities - FinanceManager.netSE;
 
         if (balance != 0) {
             show(ACCOUNT_MISTAKE);
@@ -387,6 +390,24 @@ public class FinanceUi extends Ui {
     public static void showPleaseInputValidRange() {
         show(LINE);
         show(INPUT_VALID_RANGE);
+        show(LINE);
+    }
+
+    public static void showPleaseInputValidAdd() {
+        show(LINE);
+        show(INPUT_VALID_ADD);
+        show(LINE);
+    }
+
+    public static void showPleaseInputValidAsset() {
+        show(LINE);
+        show(INPUT_VALID_ASSET);
+        show(LINE);
+    }
+
+    public static void showPleaseInputValidLiability() {
+        show(LINE);
+        show(INPUT_VALID_LIABILITY);
         show(LINE);
     }
 }

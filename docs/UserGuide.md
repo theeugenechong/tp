@@ -459,7 +459,7 @@ This section explains cOOPer's features for specific to users, with the _**admin
   5. cOOPer then continues prompting you for the rest of the balance sheet fields.
   6. When the balance sheet is complete, cOOPer prompts the user to enter [`list`](#accessing-the-balance-sheet-bs--list) to view the complete balance sheet.
 
-> ℹ️ By default, cOOPer treats `[amount]` as a positive number. To specify a negative number, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
+> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
 > ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the balance sheet field.<br>
 > 💡    Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
 > ⚠️Running `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**.
@@ -509,7 +509,7 @@ Next, please enter Accounts Receivable
   5. cOOPer then continues prompting you for the rest of the cash flow statement fields.
   6. When the cash flow statement is complete, cOOPer prompts the user to enter [`list`](#accessing-the-cash-flow-statement-cf--list) to view the complete cash flow statement.
 
-> ℹ️ By default, cOOPer treats `[amount]` as a positive number. To specify a negative number, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
+> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
 > ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the cash flow statement field.<br>
 > 💡    Remember to enter `cf` before entering `add` or cOOPer will not know which financial statement to add to.<br>
 > ⚠️Running `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**.
@@ -560,7 +560,7 @@ Next, please enter Depreciation and Amortisation
 > 💡 Remember to fill up the fields of the balance sheet with `add` before entering `list`.<br>
 > ℹ️`list` displays the *latest version* of the balance sheet. Refer to [this](#creating-the-balance-sheet-bs--add) section to know what *latest version* means.<br>
 > ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.
-
+> ℹ️The check can only inform you if the statement does or does not tally, and not which entry is incorrect as that comes down to human error.
 - Example input:
 
 ```

@@ -6,10 +6,12 @@ import cooper.command.Command;
 import cooper.exceptions.AmountOutOfRangeException;
 import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
+import cooper.exceptions.InvalidAddFormatException;
+import cooper.exceptions.InvalidAssetException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidLiabilityException;
 import cooper.exceptions.InvalidProjectionException;
 import cooper.exceptions.InvalidScheduleFormatException;
-import cooper.exceptions.LogoutException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
 import cooper.exceptions.UnrecognisedCommandException;
@@ -147,6 +149,12 @@ public class Cooper {
                 FinanceUi.showPleaseInputValidRange();
             } catch (EmptyFinancialStatementException e) {
                 FinanceUi.showEmptyFinancialStatementException();
+            } catch (InvalidAddFormatException e) {
+                FinanceUi.showPleaseInputValidAdd();
+            } catch (InvalidAssetException e) {
+                FinanceUi.showPleaseInputValidAsset();
+            } catch (InvalidLiabilityException e) {
+                FinanceUi.showPleaseInputValidLiability();
             }
         }
     }
