@@ -27,12 +27,13 @@ import cooper.command.PostDeleteCommand;
 import cooper.command.PostListCommand;
 import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
+import cooper.exceptions.InvalidAddFormatException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidDocumentException;
 import cooper.exceptions.InvalidScheduleFormatException;
-import cooper.exceptions.UnrecognisedCommandException;
 import cooper.exceptions.NoTimeEnteredException;
 import cooper.exceptions.NoUsernameAfterCommaException;
+import cooper.exceptions.UnrecognisedCommandException;
 import cooper.finance.FinanceCommand;
 import cooper.ui.Ui;
 
@@ -42,6 +43,7 @@ import cooper.ui.Ui;
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
+
     // when command parser is called, user is already logged in
     private static CooperState cooperState = CooperState.LOGIN;
     private static final String BS = "bs";
@@ -66,7 +68,7 @@ public class CommandParser extends ParserBase {
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidDocumentException {
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
@@ -78,7 +80,7 @@ public class CommandParser extends ParserBase {
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidDocumentException {
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         assert input != null;
         String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
@@ -136,7 +138,7 @@ public class CommandParser extends ParserBase {
 
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
-            NoUsernameAfterCommaException, InvalidDocumentException {
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
@@ -177,7 +179,7 @@ public class CommandParser extends ParserBase {
 
     //@@author ChrisLangton
     private Command parseAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
-            NumberFormatException, InvalidCommandFormatException {
+            NumberFormatException, InvalidAddFormatException {
         String amountAsString;
         int amount = 0;
         boolean isInflow = true;
@@ -185,7 +187,7 @@ public class CommandParser extends ParserBase {
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
-            if (argName.equals("amount-hint")) {
+            if (argName.equals("amount-hint") && !argVal.contains("-")) {
                 if (argVal.charAt(0) == '(' && argVal.charAt(argVal.length() - 1) == ')') {
                     isInflow = false;
                     amountAsString = argVal.substring(1, argVal.length() - 1);
@@ -195,7 +197,7 @@ public class CommandParser extends ParserBase {
                 }
                 amount = Integer.parseInt(amountAsString);
             } else {
-                throw new InvalidCommandFormatException();
+                throw new InvalidAddFormatException();
             }
         }
         return new AddCommand(amount, isInflow, FinanceCommand.getCommandFromState(cooperState));
