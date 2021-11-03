@@ -1,5 +1,6 @@
 package cooper.meetings;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -7,12 +8,12 @@ import java.util.ArrayList;
 
 public class Meeting {
     private final String meetingName;
-    private final LocalTime time;
+    private final LocalDateTime dateTime;
     private final ArrayList<String> listOfAttendees;
 
-    public Meeting(String meetingName, LocalTime time, ArrayList<String> listOfAttendees) {
+    public Meeting(String meetingName, LocalDateTime dateTime, ArrayList<String> listOfAttendees) {
         this.meetingName = meetingName;
-        this.time = time;
+        this.dateTime = dateTime;
         this.listOfAttendees = listOfAttendees;
     }
 
@@ -20,8 +21,8 @@ public class Meeting {
         return meetingName;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public ArrayList<String> getListOfAttendees() {

@@ -3,7 +3,7 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidTimeException;
 import cooper.exceptions.DuplicateUsernameException;
-import cooper.exceptions.InvalidTimeFormatException;
+import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
@@ -15,11 +15,11 @@ import cooper.resources.ResourcesManager;
 //@@author fansxx
 
 public class AvailableCommand extends Command {
-    private final String time;
+    private final String dateTime;
 
     public AvailableCommand(String time) {
         super();
-        this.time = time;
+        this.dateTime = time;
     }
 
     /**
@@ -47,11 +47,11 @@ public class AvailableCommand extends Command {
 
 
         try {
-            meetingManager.addAvailability(time, username);
+            meetingManager.addAvailability(dateTime, username);
             storageManager.saveAvailability(meetingManager);
-            MeetingsUi.printAvailableCommand(time, username);
-        } catch (InvalidTimeFormatException e1) {
-            MeetingsUi.showInvalidTimeFormatException();
+            MeetingsUi.printAvailableCommand(dateTime, username);
+        } catch (InvalidDateTimeFormatException e1) {
+            MeetingsUi.showInvalidDateTimeFormatException();
         } catch (InvalidTimeException e2) {
             MeetingsUi.showInvalidTimeException();
         } catch (DuplicateUsernameException e3) {

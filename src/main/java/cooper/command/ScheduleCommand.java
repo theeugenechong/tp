@@ -1,7 +1,7 @@
 package cooper.command;
 
 import cooper.exceptions.InvalidTimeException;
-import cooper.exceptions.InvalidTimeFormatException;
+import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.InvalidAccessException;
@@ -59,8 +59,8 @@ public class ScheduleCommand extends Command {
                     usernames.add(username);
                     meetingManager.manualScheduleMeeting(meetingName, usernames, time);
                     storageManager.saveMeetings(meetingManager);
-                } catch (InvalidTimeFormatException e1) {
-                    MeetingsUi.showInvalidTimeFormatException();
+                } catch (InvalidDateTimeFormatException e1) {
+                    MeetingsUi.showInvalidDateTimeFormatException();
                 } catch (InvalidTimeException e2) {
                     MeetingsUi.showInvalidTimeException();
                 } catch (CannotScheduleMeetingException e3) {

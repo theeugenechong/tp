@@ -7,6 +7,8 @@ import cooper.ui.FileIoUi;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -18,9 +20,11 @@ import java.util.Scanner;
 
 public class MeetingsStorage extends Storage {
 
-    protected static final String TIME_FORMAT = "HH:mm";
+    protected static final String DATE_TIME_FORMAT = "dd-MM-yyyy HH:mm";
     protected static final String COMMA = ",";
     protected static final String MEETINGS_TXT = "meetings.txt";
+    public static final String DATE_FORMAT = "dd-MM-yyyy";
+    public static final String TIME_FORMAT = "HH:mm";
 
     public MeetingsStorage(String filePath) {
         super(filePath);
@@ -64,12 +68,13 @@ public class MeetingsStorage extends Storage {
         }
         assert !isInvalidFileData(attendees);
 
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_FORMAT);
-        LocalTime meetingTime = LocalTime.parse(attendees[0].trim(), timeFormat);
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        String dateTime = attendees[0].trim() + " " + attendees[1].trim();
+        LocalDateTime meetingTime = LocalDateTime.parse(dateTime, dateTimeFormat);
 
-        String meetingName = attendees[1].trim();
+        String meetingName = attendees[2].trim();
 
-        String[] attendeesAsArray = attendees[2].trim().split(COMMA);
+        String[] attendeesAsArray = attendees[3].trim().split(COMMA);
         ArrayList<String> attendeesArrayList = new ArrayList<>(Arrays.asList(attendeesAsArray));
         Meeting meeting = new Meeting(meetingName, meetingTime, attendeesArrayList);
 
@@ -77,13 +82,20 @@ public class MeetingsStorage extends Storage {
     }
 
     private static boolean isInvalidFileData(String[] meeting) {
-        if (meeting.length != 3) {
+        if (meeting.length != 4) {
+            return true;
+        }
+
+        try {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_FORMAT);
+            LocalDate dummyMeetingDate = LocalDate.parse(meeting[0].trim(), dateFormat);
+        } catch (DateTimeParseException e) {
             return true;
         }
 
         try {
             DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern(TIME_FORMAT);
-            LocalTime dummyMeetingTime = LocalTime.parse(meeting[0].trim(), timeFormat);
+            LocalTime dummyMeetingTime = LocalTime.parse(meeting[1].trim(), timeFormat);
         } catch (DateTimeParseException e) {
             return true;
         }
@@ -110,7 +122,10 @@ public class MeetingsStorage extends Storage {
     private static String encodeMeeting(Meeting meeting) {
         StringBuilder encodedMeeting = new StringBuilder();
 
-        String meetingTime = meeting.getTime().toString();
+        String meetingDate = meeting.getDateTime().toLocalDate().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
+        encodedMeeting.append(meetingDate).append(SEPARATOR);
+
+        String meetingTime = meeting.getDateTime().toLocalTime().format(DateTimeFormatter.ofPattern(TIME_FORMAT));
         encodedMeeting.append(meetingTime).append(SEPARATOR);
 
         String meetingName = meeting.getMeetingName();
