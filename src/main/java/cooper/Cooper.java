@@ -104,9 +104,11 @@ public class Cooper {
             String input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
         }
-        assert successfulSignInDetails != null;
+
         cooperStorageManager.saveSignInDetails(cooperVerifier);
+        CommandParser.setCooperState(CooperState.LOGIN);
         Ui.updatePromptState(CooperState.LOGIN);
+
         return successfulSignInDetails;
     }
 

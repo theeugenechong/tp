@@ -61,6 +61,10 @@ public class CommandParser extends ParserBase {
         return cooperState == CooperState.LOGOUT;
     }
 
+    public static void setCooperState(CooperState state) {
+        cooperState = state;
+    }
+
     /**
      * API to parse a command in string.
      * @param input command to be parsed
