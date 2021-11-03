@@ -14,6 +14,10 @@ import java.util.HashMap;
  */
 public class Registration extends SignInProtocol {
 
+    /* Log messages */
+    private static final String USER_WITH_USERNAME = "User with username ";
+    private static final String SUCCESSFULLY_REGISTERED = " has been successfully registered.";
+
     public Registration(SignInDetails signInDetails) {
         super(signInDetails);
     }
@@ -31,7 +35,7 @@ public class Registration extends SignInProtocol {
             askUserToLogin();
         } else {
             registerUser(registeredUsers);
-            LOGGER.info("User with username " + signInDetails.getUsername() + " has been successfully registered.");
+            LOGGER.info(USER_WITH_USERNAME + signInDetails.getUsername() + SUCCESSFULLY_REGISTERED);
         }
         verifier.setSuccessfullySignedIn(false);
     }

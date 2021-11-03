@@ -107,7 +107,7 @@ public class VerificationUi extends Ui {
     /**
      * Informs user that the password entered is not the password the user registered with.
      */
-    public static void showIncorrectPasswordError() {
+    public static void showIncorrectPasswordMessage() {
         show(LINE);
         show(INCORRECT_PASSWORD);
         show(LINE);
