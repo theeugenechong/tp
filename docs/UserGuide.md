@@ -560,8 +560,9 @@ Next, please enter Depreciation and Amortisation
 
 > 💡 Remember to fill up the fields of the balance sheet with `add` before entering `list`.<br>
 > ℹ️`list` displays the *latest version* of the balance sheet. Refer to [this](#creating-the-balance-sheet-bs--add) section to know what *latest version* means.<br>
-> ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.
-> ℹ️The check can only inform you if the statement does or does not tally, and not which entry is incorrect as that comes down to human error.
+> ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.<br>
+> ℹ️The check can only inform you if the statement does or does not tally, and not which entry is incorrect as that comes down to human error.<br>
+
 - Example input:
 
 ```
