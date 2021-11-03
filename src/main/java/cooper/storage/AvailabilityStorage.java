@@ -42,7 +42,7 @@ public class AvailabilityStorage extends Storage {
         }
     }
 
-    private static void readAvailability(Scanner fileScanner, TreeMap<LocalTime, ArrayList<String>> availability) {
+    private void readAvailability(Scanner fileScanner, TreeMap<LocalTime, ArrayList<String>> availability) {
         if (fileScanner == null) {
             return;
         }
@@ -57,7 +57,7 @@ public class AvailabilityStorage extends Storage {
         }
     }
 
-    private static void decodeAvailability(String availabilityRowAsString, TreeMap<LocalTime,
+    private void decodeAvailability(String availabilityRowAsString, TreeMap<LocalTime,
             ArrayList<String>> availability)
             throws InvalidFileDataException {
         String[] availabilityRowAsArray = availabilityRowAsString.split(SEPARATOR_REGEX);
@@ -75,7 +75,7 @@ public class AvailabilityStorage extends Storage {
         availability.put(availableTime, attendees);
     }
 
-    private static boolean isInvalidFileData(String[] meeting) {
+    private boolean isInvalidFileData(String[] meeting) {
         if (meeting.length != 2) {
             return true;
         }
@@ -95,7 +95,7 @@ public class AvailabilityStorage extends Storage {
         return false;
     }
 
-    private static void writeAvailability(String filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
+    private void writeAvailability(String filePath, TreeMap<LocalTime, ArrayList<String>> meetings)
             throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
@@ -106,7 +106,7 @@ public class AvailabilityStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeAvailability(Map.Entry<LocalTime, ArrayList<String>> meeting) {
+    private String encodeAvailability(Map.Entry<LocalTime, ArrayList<String>> meeting) {
         StringBuilder encodedAvailability = new StringBuilder();
 
         String availableTime = meeting.getKey().toString();
@@ -118,7 +118,7 @@ public class AvailabilityStorage extends Storage {
         return String.valueOf(encodedAvailability);
     }
 
-    private static String getAttendeesAsString(ArrayList<String> attendees) {
+    private String getAttendeesAsString(ArrayList<String> attendees) {
         StringBuilder attendeesAsString = new StringBuilder();
         for (String a : attendees) {
             /* don't need comma for last attendee */

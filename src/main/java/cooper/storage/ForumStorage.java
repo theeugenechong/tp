@@ -23,7 +23,7 @@ public class ForumStorage extends Storage {
         super(filePath);
     }
 
-    public void loadForum(ForumManager forumManager) {
+    public void loadForum(ForumManager cooperForumManager) {
         Scanner fileScanner = getScanner(filePath);
         if (fileScanner == null) {
             return;
@@ -34,10 +34,10 @@ public class ForumStorage extends Storage {
             switch (post[0]) {
             case POST:
                 currentPostId++;
-                forumManager.addPost(post[1],post[2]);
+                cooperForumManager.addPost(post[1],post[2]);
                 break;
             case COMMENT:
-                tryAddPostComment(forumManager, post, currentPostId - 1);
+                tryAddPostComment(cooperForumManager, post, currentPostId - 1);
                 break;
             default:
                 break;
@@ -51,14 +51,13 @@ public class ForumStorage extends Storage {
         } catch (InvalidForumPostIdException e) {
             ForumUi.printInvalidForumPostIndexError();
             System.exit(1);
-            return;
         }
     }
 
-    public void saveForum(ForumManager forumManager) { 
+    public void saveForum(ForumManager cooperForumManager) {
         try {
             FileWriter fileWriter = new FileWriter(filePath, false);
-            ArrayList<ForumPost> forumPosts = forumManager.getForumPosts();
+            ArrayList<ForumPost> forumPosts = cooperForumManager.getForumPosts();
             for (ForumPost post : forumPosts) {
                 saveForumPost(fileWriter, post);
             }

@@ -41,7 +41,7 @@ public class MeetingsStorage extends Storage {
         }
     }
 
-    private static void readMeetings(Scanner fileScanner, ArrayList<Meeting> meetings) {
+    private void readMeetings(Scanner fileScanner, ArrayList<Meeting> meetings) {
         if (fileScanner == null) {
             return;
         }
@@ -56,7 +56,7 @@ public class MeetingsStorage extends Storage {
         }
     }
 
-    private static void decodeMeetings(String meetingAsString, ArrayList<Meeting> meetings)
+    private void decodeMeetings(String meetingAsString, ArrayList<Meeting> meetings)
             throws InvalidFileDataException {
         String[] attendees = meetingAsString.split(SEPARATOR_REGEX);
         if (isInvalidFileData(attendees)) {
@@ -76,7 +76,7 @@ public class MeetingsStorage extends Storage {
         meetings.add(meeting);
     }
 
-    private static boolean isInvalidFileData(String[] meeting) {
+    private boolean isInvalidFileData(String[] meeting) {
         if (meeting.length != 3) {
             return true;
         }
@@ -96,7 +96,7 @@ public class MeetingsStorage extends Storage {
         return false;
     }
 
-    private static void writeMeetings(String filePath, ArrayList<Meeting> meetingsList)
+    private void writeMeetings(String filePath, ArrayList<Meeting> meetingsList)
             throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
@@ -107,7 +107,7 @@ public class MeetingsStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeMeeting(Meeting meeting) {
+    private String encodeMeeting(Meeting meeting) {
         StringBuilder encodedMeeting = new StringBuilder();
 
         String meetingTime = meeting.getTime().toString();
@@ -122,7 +122,7 @@ public class MeetingsStorage extends Storage {
         return String.valueOf(encodedMeeting);
     }
 
-    private static String getAttendeesAsString(ArrayList<String> attendees) {
+    private String getAttendeesAsString(ArrayList<String> attendees) {
         StringBuilder meetingAsString = new StringBuilder();
         for (String a : attendees) {
             /* don't need comma for last attendee */

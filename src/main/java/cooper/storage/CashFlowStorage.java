@@ -35,7 +35,7 @@ public class CashFlowStorage extends Storage {
         }
     }
 
-    private static void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
+    private void readCashFlowStatement(Scanner fileScanner, ArrayList<Integer> cashFlowStatement) {
         if (fileScanner == null) {
             return;
         }
@@ -54,7 +54,7 @@ public class CashFlowStorage extends Storage {
         }
     }
 
-    private static void addNetValues(int cfEntryIndex, int decodedExpense) {
+    private void addNetValues(int cfEntryIndex, int decodedExpense) {
         if (cfEntryIndex <= FinanceManager.endOfOA) {
             FinanceManager.netOA += decodedExpense;
         } else if (cfEntryIndex <= FinanceManager.endOfIA) {
@@ -64,7 +64,7 @@ public class CashFlowStorage extends Storage {
         }
     }
 
-    private static int decodeExpense(String expense) throws InvalidFileDataException {
+    private int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
             throw new InvalidFileDataException(CASH_FLOW_STATEMENT_TXT);
         }
@@ -80,7 +80,7 @@ public class CashFlowStorage extends Storage {
         return false;
     }
 
-    private static void writeCashFlowStatement(String filePath, ArrayList<Integer> cashFlowStatement)
+    private void writeCashFlowStatement(String filePath, ArrayList<Integer> cashFlowStatement)
             throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
@@ -91,7 +91,7 @@ public class CashFlowStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeExpense(Integer expense) {
+    private String encodeExpense(Integer expense) {
         return expense.toString();
     }
 }
