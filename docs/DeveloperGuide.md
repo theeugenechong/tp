@@ -73,11 +73,10 @@ This section includes the sources of code, documentation and third-party librari
 1. Fork [this repo](https://github.com/AY2122S1-CS2113T-W13-4/tp) and clone the fork into your computer.
 2. If you are using IntelliJ IDEA, ensure that IntelliJ is configured to use **JDK 11**. You can refer to IntelliJ's own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to correctly configure the JDK.
 3. Import the project as a Gradle project. You can follow [this guide](https://se-education.org/guides/tutorials/intellijImportGradleProject.html) to find out how to import the project into IntelliJ.
-4. Verify the setup:
-   1. Run `cooper.Cooper`
-      1. Navigate to `src/main/java/cooper/Cooper.java`
-      2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
-      3. You should see the following output if the setup was done correctly:
+4. Verify the setup by running `cooper.Cooper`
+   1. Navigate to `src/main/java/cooper/Cooper.java`
+   2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
+   3. You should see the following output if the setup was done correctly:
       
 ```
             /$$$$$$   /$$$$$$  /$$$$$$$
@@ -91,11 +90,13 @@ This section includes the sources of code, documentation and third-party librari
 =========================================================================
 Hello I'm cOOPer! Nice to meet you!
 =========================================================================
-Login or register to gain access to my features!
-To login, enter "login  [yourUsername] pw [password] as [yourRole]"
-To register, enter "register [yourUsername] pw [password] as [yourRole]"
+Log in or register to gain access to my features!
+To log in, enter "login [yourUsername] pw [password] as [yourRole]".
+To register, enter "register [yourUsername] pw [password] as [yourRole]".
+
+To exit, enter "exit".
 =========================================================================
->> 
+>> [Logged out]
 ```
 
 5. Run `JUnit` tests (optional):
@@ -153,7 +154,7 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 - [`Command`](#command-component): Executes commands which are parsed from user input.
 - [`Resources`](#resources-component): Manages cOOPer's data for finance, meetings and forum features while the app is running.
 - [`Storage`](#storage-component): Loads data from, and saves data to storage files in the computer hard disk.
-- [`Util`](#util-component): Utility methods which help with some of cOOPer's features.
+- [`Util`](#util-component): Provides utility which help with some of cOOPer's features.
 
 #### Interaction of the architecture components to process user input
 - The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in details** for verification.
@@ -204,9 +205,9 @@ The `Ui` component:
 
 
 - The `Parser` component consists of an abstract `ParserBase` class with its children classes, `CommandParser` and `SignInDetailsParser`. 
-- To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different objects are parsed from user input at different layers. 
+- To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different types of objects are constructed from user input at different layers. 
 User input at the verification layer will be parsed to construct a `SignInProtocol` object while user input at the features layer will be parsed to construct a `Command` object. 
-- The `SignInProtocol` object executes the signing in of the user with details provided in the input while the `Command` object executes the command input by the user.
+- The `SignInProtocol` object executes the signing in of the user with details provided while the `Command` object executes the command input by the user.
 - `ParserBase` contains a reference to the `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library used by cOOPer. 
 More information about cOOPer's implementation of the library can be found [here](#parsing-user-input).
 
@@ -245,18 +246,35 @@ The `Verification` component:
 
 - The `Command` component consists of an abstract `Command` class and its subclasses as shown in the diagram above.
 - Each subclass (`ABCCommand`) overrides `Command`'s abstract method, `execute()` and has its own unique implementation of the method based on how the command is to be executed.
-- Some subclasses also contain extra attributes which are [parsed](#parser-component) from user input. 
-- These extra attributes aid in the execution of the command.
-For example, the [`schedule`](UserGuide.md#scheduling-meetings-with-different-users-schedule) command contains a `String` representing the meeting name as well as an `ArrayList` representing the users associated with that meeting.
-- The `execute()` method takes in a `SignInDetails` object as a parameter. This object represents the sign in details of a user who has successfully signed in to cOOPer. For some of cOOPer's finance features which are only accessible by an admin, the `UserRole` attribute of this `SignInDetails` object is checked to grant correct access to the feature.
+- This makes the addition of a new command to cOOPer relatively easy. For example, you can define a `HelloCommand` which prints out `Hello world!` by inheriting from `Command` and implementing the `execute()` method as such:
+
+```java
+public class HelloCommand extends Command {
+	// constructors and attributes for execution of the command are omitted
+	public void execute() {
+		System.out.println("Hello world!");
+	}
+}
+```
+
+- Some subclasses contain extra attributes which are [parsed](#parser-component) from the arguments in the user input. 
+- These attributes aid in the execution of the command.
+For example, [`ScheduleCommand`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/command/ScheduleCommand.java) contains a `String` representing the meeting name as well as an `ArrayList` representing the users associated with that meeting.
+- The `execute()` method takes in a `SignInDetails` object as a parameter. This object represents the sign in details of a user who has successfully signed in to cOOPer. For some of cOOPer's finance features which are only accessible by an _admin_, the `UserRole` attribute of this `SignInDetails` object is checked to grant correct access to the feature.
 
 The `Command` component:
 - Executes a command entered by the user.
-- May make changes to the objects in [`Resources`](#resources-component) Component depending on the command.
-- Performs the storage of data using the `StorageManager` if there is any change to the data after the command is executed
+- May make changes to the objects in [`Resources`](#resources-component) component depending on the command.
+- Performs the storage of data via the [`Storage`](#storage-component) component if there is any change to the data after the command is executed
 - Prints status messages or error messages to the output using the `Ui` component to inform the user of the status of command execution
 
 ### Resources Component
+
+#### Finance 
+
+#### Meetings
+
+#### Forum
 
 ### Storage Component
 
@@ -276,18 +294,14 @@ in the code. More details of implementation can be found [here]().
 
 ### Parsing user input
 
-`Parser` interprets and validates user input and then constructs `SignInProtocol` and `Command` objects which .
-
-#### Dopsun chatbot-cli
-
 cOOPer's uses the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library as its frontend parser that allows you to define any arbitrary *input schema* under `src/main/resources/parser/command-data.properties` 
 such as 
 
 ```
-login = login ${username-hint} pw ${password-hint} as ${role-hint}
+login = login ${username-hint} /pw ${password-hint} /as ${role-hint}
 ```
 
-The `Parser` library automatically parses the place-holders defined with `$` leaders to strings. For example, `login Yvonne pw 12345 as admin` will be parsed 
+The chatbot's `Parser` library automatically parses the place-holders defined with `$` leaders to strings. For example, `login Yvonne /pw 12345 /as admin` will be parsed 
 into the following fields:
 
 ```python
@@ -307,15 +321,6 @@ and adding new commands to cOOPer for new features become trivial.
 
 As mentioned above, `CommandParser` returns a `Command` polymorphic base object. Any specialisation of the `Command` base object must implement the`execute()` abstract base method. For example, Developer can add a new command like `HelloCommand` by inheriting from the `Command` base class and implements the `execute()` function to print out `Hello world` as shown below.
 
-```java
-public class HelloCommand extends Command {
-	// constructors and arguments to execute function are omitted
-	public void execute() {
-		System.out.println("Hello world");
-	}
-}
-```
-
 This allows developers to inherit any arbitrary number of different command specialisation with different 
 behaviours using a unified driver. Developers do not need to modify the frontend to accommodate for every new commands.
 
@@ -323,7 +328,7 @@ behaviours using a unified driver. Developers do not need to modify the frontend
 `Meetings` provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
 
 #### Meeting module descriptions
-`MeetingManger` stores **2** attributes:
+`MeetingManager` stores **2** attributes:
 1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
 2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
 
@@ -359,6 +364,10 @@ FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 ```
 
 will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+
+### Verifying user credentials
+
+### Generating a PDF from the financial statement
 
 ## Appendix: Requirements
 
@@ -399,8 +408,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 * Should work on any _mainstream OS_ with Java 11 or above installed.
-* Should be able to store up to 1000 meetings, forum posts, and financial statements without observing any noticeable sluggishness in performance.
-* Should log in and enter user-specific roles faster than traditional web-applications
+* Should be able to store up to 100 meetings, forum posts, and financial statements without observing any noticeable sluggishness in performance.
+* Should log in and enter user-specific roles faster than traditional web-applications.
 * A user with average typing speed should be able to accomplish meeting scheduling and forum posting faster and more reliably using commands than using a mouse interaction GUI driven app.
 * A user with average typing speed should also be able to accomplish financial statement creation faster than by human means or a mouse interaction GUI driven app. 
 
@@ -416,7 +425,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    2. Launch the Command Prompt / Terminal from the folder.
    3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
    4. Run `java -jar cOOPer.jar`. <br>
-Expected output: cOOPer's greeting message is shown.
+**Expected output:** cOOPer's greeting message is shown.
 2. Exiting cOOPer
    1. Enter `exit`.<br>
-Expected output: cOOPer's bye message is shown and the program exits successfully.
+**Expected output:** cOOPer's bye message is shown and the program exits successfully.
+
+### Sign-in
+To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label can be seen beside cOOPer's command prompt as such:
+
+```
+>> [Logged out]
+```
+
+1. Registering
+   1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
+   2. Enter `register [username] /pw [password] /as [role]` where `[username]` is your username, `[password]` is your password and `[role]` is one of admin or employee.
+**Expected output:** A message informing you that you have successfully registered is shown.
+2. Logging in
+   1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
+   2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.
+**Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
