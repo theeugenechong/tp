@@ -424,12 +424,12 @@ Depreciation and Amortisation
 ```
 
 Compiling this template using the online LaTeX editor will create an entry 'Depreciation and Amortisation' on the PDF with an amount of $1500.
-Iterating through cOOPer's financial statement while implementing this procedure and using `append()` will then form a long `String` representing the LaTeX file which will be sent to the online LaTeX editor to be compiled into a PDF. 
+Iterating through cOOPer's financial statement while implementing this procedure and using `append()` will then form a long `String` representing the `.tex` file which will be sent to the online LaTeX editor to be compiled into a PDF. 
 
-The methods `createHeader()`, `createEntry()` and `createSummary()` in the `PdfGenerator` class are responsible for forming the different sections of the financial statement. The diagram below shows how these methods form the 'Operating Activities' section of the cash flow statement.
+The methods `createHeader()`, `createEntry()` and `createSummary()` in the `PdfGenerator` class are responsible for forming the different sections of the financial statement. The diagram below shows the different parts of the 'Operating Activities' section of the cash flow statement formed by these methods.
 
 <p align="center">
-    <img src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
+    <img width="1000" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
 </p>
 
 ### Loading and saving data
