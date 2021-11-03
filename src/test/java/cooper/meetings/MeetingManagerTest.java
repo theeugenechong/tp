@@ -27,7 +27,7 @@ public class MeetingManagerTest {
     @Test
     @Order(1)
     void addAvailability_invalidTimeFormat_expectException() {
-        String inputTime = "12.00";
+        String inputTime = "12-02-2021 12.00";
         String inputName = "shixi";
         assertThrows(InvalidDateTimeFormatException.class, () -> meetingManager.addAvailability(inputTime, inputName));
     }
@@ -36,7 +36,7 @@ public class MeetingManagerTest {
     @Order(2)
     void addAvailability_duplicateName_expectException() throws InvalidDateTimeFormatException,
             InvalidTimeException, DuplicateUsernameException {
-        String inputTime = "16:00";
+        String inputTime = "12-02-2021 16:00";
         String inputName = "shixi";
         meetingManager.addAvailability(inputTime, inputName);
         assertThrows(DuplicateUsernameException.class, () -> meetingManager.addAvailability(inputTime, inputName));
@@ -47,14 +47,14 @@ public class MeetingManagerTest {
     void manualScheduleMeeting_duplicateMeeting_expectException() throws DuplicateUsernameException,
             InvalidDateTimeFormatException, InvalidTimeException, CannotScheduleMeetingException,
             DuplicateMeetingException {
-        meetingManager.addAvailability("12:00", "shixi");
-        meetingManager.addAvailability("12:00", "fan");
+        meetingManager.addAvailability("12-02-2021 12:00", "shixi");
+        meetingManager.addAvailability("12-02-2021 12:00", "fan");
 
         String meetingName = "Project Meeting";
         ArrayList<String> listOfAttendees = new ArrayList<>();
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
-        String time = "12:00";
+        String time = "12-02-2021 12:00";
         meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time);
         assertThrows(DuplicateMeetingException.class, () ->
                 meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
@@ -67,7 +67,7 @@ public class MeetingManagerTest {
         ArrayList<String> listOfAttendees = new ArrayList<>();
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
-        String time = "1200";
+        String time = "12-02-2021 1200";
         assertThrows(InvalidDateTimeFormatException.class, () ->
                 meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
     }
@@ -79,7 +79,7 @@ public class MeetingManagerTest {
         ArrayList<String> listOfAttendees = new ArrayList<>();
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
-        String time = "12:34";
+        String time = "12-02-2021 12:34";
         assertThrows(InvalidTimeException.class, () ->
                 meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
     }
