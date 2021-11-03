@@ -1,5 +1,7 @@
 ![cOOPer](userGuideImages/cooperLogo.png)
 
+<!--@@author theeugenechong-->
+
 # User Guide
 
 ## Introducing cOOPer
@@ -203,6 +205,8 @@ You are now logged in successfully as Sebastian!
 - This section explains cOOPer's features for all users, i.e. users with either the _**admin**_ role or the _**employee**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined.
 - These features are accessible to you only **after** you have successfully [logged in](#login).
 
+<!--@@author Rrraaaeee-->
+
 ### Adding a forum post: `post add`
 
 + You can post a message to forum for cOOPer's users to discuss certain topics.
@@ -343,6 +347,8 @@ Sebastian has just deleted a post from the forum:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<!--@@author fansxx-->
+
 ### Declaring available timing for meetings: `available`
 - For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
 - How to input your availability:
@@ -425,6 +431,8 @@ Here are your meetings for today:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<!--@@author theeugenechong-->
+
 ### Logging out: `logout`
 - Logs you out of your account and brings you back to the part of the app where you can either [log in](#login), [register](#user-registration) or [exit](#exiting-the-program-exit).
 - Example input:
@@ -449,6 +457,8 @@ To exit, enter "exit".
 
 ## Admin Features 
 This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny** users without the admin role access to these features.
+
+<!--@@author ChrisLangton-->
 
 ### Creating the balance sheet: `bs` → `add`
 - Fills up the different fields of cOOPer's balance sheet like 'Cash and Cash Equivalents', 'Inventory', 'Accounts Payable', 'Equity Capital', etc.
@@ -670,6 +680,8 @@ After 3 years you can expect Free Cash Flow of 8825
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<!--@@author theeugenechong-->
+
 ### Generating a PDF from the financial statement : `generate`
 - Creates a Portable Document Format (PDF) file from the *latest version* of the financial statement specified (balance sheet or cash flow statement).
 - How to generate the PDF file:
@@ -708,6 +720,8 @@ The pdf file has been successfully generated!
 > 💡 **Always** ensure that you have an active internet connection before running `generate`. 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<!--@@author fansxx-->
 
 ### Scheduling meetings with different users: `schedule`
 - cOOPer helps you to schedule meetings easily by either an **auto** or **manual** way. 
@@ -776,6 +790,8 @@ Bye, see you next time!
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<!--@@author theeugenechong-->
+
 ### cOOPer's Data Storage
 This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
 This folder is created in the *home folder* upon starting up cOOPer for the first time.
@@ -832,6 +848,8 @@ This section contains some frequently asked questions you may have when using cO
 > Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<!--@@author fansxx-->
 
 ## Command Summary
 
