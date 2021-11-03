@@ -353,7 +353,7 @@ When the user wants to schedule a meeting, `ScheduleCommand` will check if the u
 
 ### Resources
 
-`Resources` manages other manager modules like the `FinanceManager`, `MeetingsManager` and `ForumManager`.
+`Resources` manages other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`.
 
 #### Resources module descriptions
 
@@ -394,6 +394,43 @@ Assuming that the above registration has taken place successfully, the following
 </p>
 
 ### Generating a PDF from the financial statement
+The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF generated.
+
+The PDF is generated with the help of an online LaTeX Editor. The LaTeX (`.tex`) templates for the PDF files can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
+Certain identifiers (in the form of LaTeX comments `'%'`) in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
+
+The example below shows the template of an entry in the financial statement:
+
+```
+\centering
+% {Description}
+& \centering
+& \centering
+& \centering
+& % {Amount}
+\\[3ex]
+```
+
+Calling `replace("% {Description}", "Depreciation and Amortisation")` and `replace("% {Amount}", 1500)` on the template will result in it becoming
+
+```
+\centering
+Depreciation and Amortisation
+& \centering
+& \centering
+& \centering
+& 1500
+\\[3ex]
+```
+
+Compiling this template using the online LaTeX editor will create an entry 'Depreciation and Amortisation' on the PDF with an amount of $1500.
+Iterating through cOOPer's financial statement while implementing this procedure and using `append()` will then form a long `String` representing the LaTeX file which will be sent to the online LaTeX editor to be compiled into a PDF. 
+
+The methods `createHeader()`, `createEntry()` and `createSummary()` in the `PdfGenerator` class are responsible for forming the different sections of the financial statement. The diagram below shows how these methods form the 'Operating Activities' section of the cash flow statement.
+
+<p align="center">
+    <img src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
+</p>
 
 ### Loading and saving data
 
