@@ -1,7 +1,7 @@
 package cooper.meetings;
 
 import cooper.exceptions.InvalidTimeException;
-import cooper.exceptions.InvalidTimeFormatException;
+import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.DuplicateMeetingException;
@@ -29,12 +29,12 @@ public class MeetingManagerTest {
     void addAvailability_invalidTimeFormat_expectException() {
         String inputTime = "12.00";
         String inputName = "shixi";
-        assertThrows(InvalidTimeFormatException.class, () -> meetingManager.addAvailability(inputTime, inputName));
+        assertThrows(InvalidDateTimeFormatException.class, () -> meetingManager.addAvailability(inputTime, inputName));
     }
 
     @Test
     @Order(2)
-    void addAvailability_duplicateName_expectException() throws InvalidTimeFormatException,
+    void addAvailability_duplicateName_expectException() throws InvalidDateTimeFormatException,
             InvalidTimeException, DuplicateUsernameException {
         String inputTime = "16:00";
         String inputName = "shixi";
@@ -45,7 +45,7 @@ public class MeetingManagerTest {
     @Test
     @Order(3)
     void manualScheduleMeeting_duplicateMeeting_expectException() throws DuplicateUsernameException,
-            InvalidTimeFormatException, InvalidTimeException, CannotScheduleMeetingException,
+            InvalidDateTimeFormatException, InvalidTimeException, CannotScheduleMeetingException,
             DuplicateMeetingException {
         meetingManager.addAvailability("12:00", "shixi");
         meetingManager.addAvailability("12:00", "fan");
@@ -68,7 +68,7 @@ public class MeetingManagerTest {
         listOfAttendees.add("shixi");
         listOfAttendees.add("fan");
         String time = "1200";
-        assertThrows(InvalidTimeFormatException.class, () ->
+        assertThrows(InvalidDateTimeFormatException.class, () ->
                 meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
     }
 
