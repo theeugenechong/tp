@@ -68,7 +68,7 @@ The table below explains the formatting and symbols in this user guide.
 **bold**|Text in bold emphasizes the text's importance and indicates that you should pay more attention to the text.
 `command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal. Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
 `[argument]`|Text highlighted in grey wrapped in square brackets represent a command argument that needs to be present when a command is entered. You are free to decide the argument entered. 
-`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands.
+`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands. At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt. Specifically, there are three types of labels you will see, namely `[Logged out]` which indicates you are currently logged out of cOOPer, `[Balance Sheet]` which indicates you are using cOOPer's [balance sheet](#creating-the-balance-sheet-bs--add) function and `[Cash Flow]` which indicates you are using cOOPer's [cash flow](#creating-the-cash-flow-statement-cf--add) function.
 ℹ️  |The info symbol indicates useful information about cOOPer's features.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
@@ -445,8 +445,8 @@ Here are your meetings for today:
 ```
 =========================================================================
 You are now logged out!
-To log in, enter "login [yourUsername] pw [password] as [yourRole]".
-To register, enter "register [yourUsername] pw [password] as [yourRole]".
+To log in, enter "login [yourUsername] /pw [password] /as [yourRole]".
+To register, enter "register [yourUsername] /pw [password] /as [yourRole]".
 
 To exit, enter "exit".
 =========================================================================
@@ -493,7 +493,7 @@ start off by entering Cash & Cash Equivalents:
 - Example input for adding to 'Cash and Cash Equivalents':
 
 ```
->> add 1500
+>> [Balance Sheet] add 1500
 ```
 
 - Example output: 
@@ -544,7 +544,7 @@ start off by entering Net Income:
 
 
 ```
->> add 1500
+>> [Cash Flow] add 1500
 ```
 
 - Example output:
@@ -575,7 +575,7 @@ Next, please enter Depreciation and Amortisation
 - Example input:
 
 ```
->> list
+>> [Balance Sheet] list
 ```
 
 - Example output:
@@ -621,7 +621,7 @@ Check: 0
 - Example input:
 
 ```
->> list
+>> [Cash Flow] list
 ```
 
 - Example output:
