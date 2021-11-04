@@ -170,7 +170,6 @@ Sebastian is now successfully registered as an admin!
 
 > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
 > 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
-> ⚠️In order to be recorded as cOOPer's registered users, it is **compulsory** for you to [log in](#login) after you register. Refer to [this](#signindetailstxt) section to find out more about how your credentials are stored.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -807,15 +806,15 @@ The contents of the folder is as shown in the diagram below.
 
 #### availability.txt
 - What it stores: The different timings and the users associated with each timing. 
-- When is the data stored: Immediately after the user enters the [`available`](#declaring-available-timing-for-meetings-available) command.
+- When is the data stored: Immediately after you enter the [`available`](#declaring-available-timing-for-meetings-available) command.
 
 #### balanceSheet.txt
 - What it stores: The fields of the balance sheet.
-- When is the data stored: Each individual field is updated immediately after the user enters the [`add`](#creating-the-balance-sheet-bs--add) command.
+- When is the data stored: Each individual field is updated immediately after you enter the [`add`](#creating-the-balance-sheet-bs--add) command.
 
 #### cashFlowStatement.txt
 - What it stores: The fields of the cash flow statement.
-- When is the data stored: Each individual field is updated immediately after the user enters the [`add`](#creating-the-cash-flow-statement-cf--add) command.
+- When is the data stored: Each individual field is updated immediately after you enter the [`add`](#creating-the-cash-flow-statement-cf--add) command.
 
 #### forum.txt
 - What it stores: The posts created in the forum along with its comments.
@@ -827,7 +826,7 @@ The contents of the folder is as shown in the diagram below.
 
 #### signInDetails.txt
 - What it stores: The username, an encrypted hash of the user's password, the salt used to generate the password hash, and the user's role.
-- When is the data stored: Only after a user has [logged in](#login) to cOOPer **at least once**. Hence, only **registering without logging in** will **not** save your credentials to cOOPer's storage.
+- When is the data stored: Immediately after you [register](#user-registration) as a user of cOOPer.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
