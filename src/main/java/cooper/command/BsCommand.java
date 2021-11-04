@@ -4,6 +4,7 @@ import cooper.CooperState;
 import cooper.exceptions.InvalidAccessException;
 import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
+import cooper.parser.CommandParser;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.ui.FinanceUi;
@@ -24,9 +25,12 @@ public class BsCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
+
         if (financeManager == null) {
             throw new InvalidAccessException();
         }
+
+        CommandParser.setCooperState(CooperState.BS);
         resetBalanceSheet();
         FinanceUi.initiateBalanceSheet();
     }

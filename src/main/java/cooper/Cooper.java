@@ -107,7 +107,6 @@ public class Cooper {
 
         cooperStorageManager.saveSignInDetails(cooperVerifier);
         CommandParser.setCooperState(CooperState.LOGIN);
-        Ui.updatePromptState(CooperState.LOGIN);
 
         return successfulSignInDetails;
     }
