@@ -29,7 +29,8 @@ public class FinanceUi extends Ui {
     private static final String CANT_ADD_TO_CF = "The Cash Flow Statement is complete! You can no longer add anything.";
 
     private static final String STATEMENT_EMPTY = "The financial statement is currently empty! Please add an entry.";
-    private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view/add to.";
+    private static final String STATEMENT_TO_ADD = "Please specify the financial statement you wish to add to.";
+    private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view.";
 
     private static final String INPUT_VALID_RANGE = "Please enter a valid integer (0 to 999,999,999) for the argument.";
     private static final String INPUT_VALID_ASSET = "Please enter the asset as a positive number.";
@@ -380,7 +381,13 @@ public class FinanceUi extends Ui {
         show(LINE);
     }
 
-    public static void showPleaseSpecifyFinancialStatement() {
+    public static void showPleaseSpecifyFinancialStatementToAdd() {
+        show(LINE);
+        show(STATEMENT_TO_ADD);
+        show(LINE);
+    }
+
+    public static void showPleaseSpecifyFinancialStatementToView() {
         show(LINE);
         show(STATEMENT_TO_VIEW);
         show(LINE);

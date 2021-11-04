@@ -41,7 +41,7 @@ public class ListCommand extends Command {
         }
 
         if (financeFlag == FinanceCommand.IDLE) {
-            FinanceUi.showPleaseSpecifyFinancialStatement();
+            FinanceUi.showPleaseSpecifyFinancialStatementToView();
         }
 
         boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());

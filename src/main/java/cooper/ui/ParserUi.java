@@ -7,7 +7,7 @@ package cooper.ui;
 public class ParserUi extends Ui {
 
     private static final String UNRECOGNISED_COMMAND = "I don't recognise the command you entered.";
-    protected static final String ENTER_HELP = "Enter 'help' to view the format of each command.";
+    private static final String ENTER_HELP = "Enter \"help\" to view the format of each command.";
     private static final String TMP_FILE_CREATION_ERROR = "Error encountered when creating temp file: "
             + System.getProperty("user.dir") + "/tmp" + "/tmp_file_command.txt" + " or "
             + System.getProperty("user.dir") + "/tmp" + "/tmp_file_training.txt";
