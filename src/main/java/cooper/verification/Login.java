@@ -1,5 +1,6 @@
 package cooper.verification;
 
+import cooper.storage.StorageManager;
 import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class Login extends SignInProtocol {
      * @param rawPassword User's raw password without any hashing.
      */
     @Override
-    public void executeSignIn(Verifier verifier, String rawPassword) {
+    public void executeSignIn(Verifier verifier, String rawPassword, StorageManager storageManager) {
         HashMap<String, SignInDetails> registeredUsers = verifier.getRegisteredUsers();
         if (!isRegisteredUser(registeredUsers)) {
             askUserToRegister();

@@ -1,5 +1,7 @@
 package cooper.verification;
 
+import cooper.storage.StorageManager;
+
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -18,7 +20,7 @@ public abstract class SignInProtocol {
         this.signInDetails = signInDetails;
     }
 
-    public abstract void executeSignIn(Verifier verifier, String rawPassword);
+    public abstract void executeSignIn(Verifier verifier, String rawPassword, StorageManager storageManager);
 
     /**
      * Checks if the username in {@code signInDetails} is already present in the list of registered

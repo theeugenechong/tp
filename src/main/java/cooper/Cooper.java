@@ -43,9 +43,9 @@ public class Cooper {
      * Initializes cOOPer's components.
      */
     public Cooper() {
-        cooperVerifier = new Verifier();
-        cooperResourcesManager = new ResourcesManager();
         cooperStorageManager = new StorageManager();
+        cooperVerifier = new Verifier(cooperStorageManager);
+        cooperResourcesManager = new ResourcesManager();
         CooperLogger.setupLogger();
     }
 
@@ -105,9 +105,7 @@ public class Cooper {
             successfulSignInDetails = cooperVerifier.verify(input);
         }
 
-        cooperStorageManager.saveSignInDetails(cooperVerifier);
         CommandParser.setCooperState(CooperState.LOGIN);
-
         return successfulSignInDetails;
     }
 

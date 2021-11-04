@@ -1,5 +1,6 @@
 package cooper.verification;
 
+import cooper.storage.StorageManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,8 @@ public class VerifierTest {
 
     @BeforeAll
     static void setUpVerifier() {
-        verifier = new Verifier();
+        StorageManager storageManager = new StorageManager();
+        verifier = new Verifier(storageManager);
     }
 
     @Test

@@ -4,6 +4,7 @@ import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.InvalidUserRoleException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.parser.SignInDetailsParser;
+import cooper.storage.StorageManager;
 import cooper.ui.VerificationUi;
 
 import java.util.HashMap;
@@ -18,7 +19,10 @@ public class Verifier {
     private final HashMap<String, SignInDetails> registeredUsers;
     private boolean isSuccessfullySignedIn;
 
-    public Verifier() {
+    private final StorageManager storageManager;
+
+    public Verifier(StorageManager storageManager) {
+        this.storageManager = storageManager;
         this.registeredUsers = new HashMap<>();
         this.isSuccessfullySignedIn = false;
     }
@@ -50,7 +54,7 @@ public class Verifier {
         try {
             SignInProtocol signInProtocol = SignInDetailsParser.parse(input);
             String rawPassword = SignInDetailsParser.parseRawPassword(input);
-            signInProtocol.executeSignIn(this, rawPassword);
+            signInProtocol.executeSignIn(this, rawPassword, storageManager);
             signInDetails = signInProtocol.signInDetails;
         } catch (UnrecognisedCommandException e) {
             isSuccessfullySignedIn = false;
