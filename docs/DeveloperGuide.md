@@ -503,7 +503,7 @@ Example Users:
 
 ### User Stories
 > 💡 Priorities:<br>
-> High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+> High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
 
 | Priority | As a ... | I want to ...             | So that I can ...                                           |
 | ------- | -------- | ------------------------- | ----------------------------------------------------------- |
