@@ -1,6 +1,5 @@
 package cooper.verification;
 
-import cooper.storage.StorageManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,7 @@ public class VerifierTest {
 
     @BeforeAll
     static void setUpVerifier() {
-        StorageManager storageManager = new StorageManager();
-        verifier = new Verifier(storageManager);
+        verifier = new Verifier();
     }
 
     @Test
@@ -43,7 +41,6 @@ public class VerifierTest {
         assertTrue(verifier.getRegisteredUsers().containsKey("Martin"));
     }
 
-    /*
     @Test
     @Order(3)
     void verify_properInputLoginAfterRegister_loginSuccessful() {
@@ -60,7 +57,6 @@ public class VerifierTest {
 
         assertTrue(verifier.isSuccessfullySignedIn());
     }
-     */
 
     @Test
     @Order(4)
