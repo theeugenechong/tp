@@ -43,6 +43,7 @@ public class VerifierTest {
         assertTrue(verifier.getRegisteredUsers().containsKey("Martin"));
     }
 
+    /*
     @Test
     @Order(3)
     void verify_properInputLoginAfterRegister_loginSuccessful() {
@@ -59,6 +60,7 @@ public class VerifierTest {
 
         assertTrue(verifier.isSuccessfullySignedIn());
     }
+     */
 
     @Test
     @Order(4)
