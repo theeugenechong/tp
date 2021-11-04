@@ -36,7 +36,11 @@ public class ResourcesManager {
     }
 
     public MeetingManager getMeetingManager(UserRole userRole) {
-        return cooperMeetingManager;
+        if (userRole.equals(UserRole.ADMIN)) {
+            return cooperMeetingManager;
+        } else {
+            return null;
+        }
     }
 
     public ForumManager getForumManager() {
