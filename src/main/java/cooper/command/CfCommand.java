@@ -25,8 +25,6 @@ public class CfCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
         if (financeManager == null) {
-            Ui.printAdminHelp();
-            Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
         resetCashFlowStatement();

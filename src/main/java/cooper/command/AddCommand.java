@@ -8,7 +8,6 @@ import cooper.finance.BalanceSheet;
 import cooper.finance.CashFlow;
 import cooper.storage.StorageManager;
 import cooper.ui.FinanceUi;
-import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -52,8 +51,6 @@ public class AddCommand extends Command {
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
 
         if (financeManager == null) {
-            Ui.printAdminHelp();
-            Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
 
@@ -62,7 +59,7 @@ public class AddCommand extends Command {
         }
 
         if (financeFlag == FinanceCommand.IDLE) {
-            FinanceUi.showPleaseSpecifyFinancialStatement();
+            FinanceUi.showPleaseSpecifyFinancialStatementToAdd();
         }
       
         if (financeFlag == FinanceCommand.BS) {

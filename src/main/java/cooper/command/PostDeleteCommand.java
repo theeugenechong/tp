@@ -5,7 +5,6 @@ import cooper.exceptions.InvalidForumDeleteByNonOwnerException;
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.storage.StorageManager;
 import cooper.ui.ForumUi;
-import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -37,22 +36,19 @@ public class PostDeleteCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
-        if (forumManager != null) {
-            try {
-                String username = signInDetails.getUsername();
-                String contentDeleted = forumManager.deletePost(username, postId - 1);
-                storageManager.saveForum(forumManager);
-                ForumUi.printDeletePostCommand(username, contentDeleted);
-            } catch (InvalidForumPostIdException e) {
-                ForumUi.printInvalidForumPostIndexError();
-            } catch (InvalidForumDeleteByNonOwnerException e) {
-                ForumUi.printInvalidForumDeleteByNonOwnerError();
-            }
-        } else {
-            Ui.printEmployeeHelp();
-            Ui.printGeneralHelp();
-            Ui.printAdminHelp();
+        if (forumManager == null) {
             throw new InvalidAccessException();
+        }
+
+        try {
+            String username = signInDetails.getUsername();
+            String contentDeleted = forumManager.deletePost(username, postId - 1);
+            storageManager.saveForum(forumManager);
+            ForumUi.printDeletePostCommand(username, contentDeleted);
+        } catch (InvalidForumPostIdException e) {
+            ForumUi.printInvalidForumPostIndexError();
+        } catch (InvalidForumDeleteByNonOwnerException e) {
+            ForumUi.printInvalidForumDeleteByNonOwnerError();
         }
     }
 }
