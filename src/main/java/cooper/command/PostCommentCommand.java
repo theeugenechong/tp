@@ -4,7 +4,6 @@ import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.storage.StorageManager;
 import cooper.ui.ForumUi;
-import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -38,19 +37,17 @@ public class PostCommentCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
-        if (forumManager != null) {
-            try {
-                String username = signInDetails.getUsername();
-                String postContent = forumManager.commentPost(username, content, postId - 1);
-                ForumUi.printCommentPostCommand(username, postContent, content);
-            } catch (InvalidForumPostIdException e) {
-                ForumUi.printInvalidForumPostIndexError();
-            }
-        } else {
-            Ui.printEmployeeHelp();
-            Ui.printGeneralHelp();
-            Ui.printAdminHelp();
+        if (forumManager == null) {
             throw new InvalidAccessException();
+        }
+
+        try {
+            String username = signInDetails.getUsername();
+            String postContent = forumManager.commentPost(username, content, postId - 1);
+            storageManager.saveForum(forumManager);
+            ForumUi.printCommentPostCommand(username, postContent, content);
+        } catch (InvalidForumPostIdException e) {
+            ForumUi.printInvalidForumPostIndexError();
         }
     }
 }

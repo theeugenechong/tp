@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.dopsun.chatbot.cli.Argument;
 import com.dopsun.chatbot.cli.ParseResult;
 
+import cooper.CooperState;
 import cooper.command.AddCommand;
 import cooper.command.AvailabilityCommand;
 import cooper.command.AvailableCommand;
@@ -26,9 +27,15 @@ import cooper.command.PostDeleteCommand;
 import cooper.command.PostListCommand;
 import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
+import cooper.exceptions.InvalidAddFormatException;
 import cooper.exceptions.InvalidCommandFormatException;
+import cooper.exceptions.InvalidDocumentException;
+import cooper.exceptions.InvalidScheduleFormatException;
+import cooper.exceptions.NoTimeEnteredException;
+import cooper.exceptions.NoUsernameAfterCommaException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.finance.FinanceCommand;
+import cooper.ui.Ui;
 
 //@@author Rrraaaeee
 
@@ -36,13 +43,27 @@ import cooper.finance.FinanceCommand;
 public class CommandParser extends ParserBase {
 
     private static CommandParser commandParserImpl = null;
-    public static FinanceCommand financeFlag = FinanceCommand.IDLE;
+
+    // when command parser is called, user is already logged in
+    private static CooperState cooperState = CooperState.LOGIN;
+    private static final String BS = "bs";
+    private static final String CF = "cf";
+    private static final String DOCUMENT_HINT = "document-hint";
 
     /**
      * Constructor. Initialise internal parser.
      */
     private CommandParser()  {
-        super();
+        super("command-data.properties");
+    }
+
+    public static boolean isLogout() {
+        return cooperState == CooperState.LOGOUT;
+    }
+
+    public static void setCooperState(CooperState state) {
+        cooperState = state;
+        Ui.updatePromptState(state);
     }
 
     /**
@@ -51,17 +72,22 @@ public class CommandParser extends ParserBase {
      * @return a command object, to be passed into command handler
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         if (commandParserImpl == null) {
             commandParserImpl = new CommandParser();
         }
-        return commandParserImpl.parseInput(input);
+        Command command = commandParserImpl.parseInput(input);
+        Ui.updatePromptState(cooperState);
+        return command;
     }
 
+    @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         assert input != null;
-        String commandWord = input.split("\\s+")[0].toLowerCase();
+        String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
         switch (commandWord) {
         case "list":
@@ -69,8 +95,8 @@ public class CommandParser extends ParserBase {
         case "availability":
         case "meetings":
         case "exit":
-        case "bs":
-        case "cf":
+        case BS:
+        case CF:
         case "logout":
             return parseSimpleInput(commandWord);
         case "add":
@@ -89,21 +115,22 @@ public class CommandParser extends ParserBase {
         assert commandWord != null;
         switch (commandWord) {
         case "list":
-            return new ListCommand(financeFlag);
+            return new ListCommand(FinanceCommand.getCommandFromState(cooperState));
         case "help":
             return new HelpCommand();
         case "availability":
+            cooperState = CooperState.LOGIN;
             return new AvailabilityCommand();
         case "meetings":
+            cooperState = CooperState.LOGIN;
             return new MeetingsCommand();
         case "logout":
             return new LogoutCommand();
         case "exit":
             return new ExitCommand();
-        case "cf":
+        case CF:
             return new CfCommand();
-        case "bs":
-            financeFlag = FinanceCommand.BS;
+        case BS:
             return new BsCommand();
         default:
             throw new UnrecognisedCommandException();
@@ -111,32 +138,37 @@ public class CommandParser extends ParserBase {
     }
 
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
         Optional<ParseResult> optResult = parser.tryParse(input);
         if (optResult.isPresent()) {
             var result = optResult.get();
             String command = result.allCommands().get(0).name();
-            // String template = res.allCommands().get(0).template();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
             case "add":
                 return parseAddArgs(commandArgs);
             case "available":
+                cooperState = CooperState.LOGIN;
                 return parseAvailableArgs(commandArgs);
             case "schedule":
+                cooperState = CooperState.LOGIN;
                 return parseScheduleArgs(commandArgs);
             case "postAdd":
+                cooperState = CooperState.LOGIN;
                 return parsePostAddArgs(commandArgs);
             case "postDelete":
+                cooperState = CooperState.LOGIN;
                 return parsePostDeleteArgs(commandArgs);
             case "postComment":
+                cooperState = CooperState.LOGIN;
                 return parsePostCommentArgs(commandArgs);
             case "postList":
+                cooperState = CooperState.LOGIN;
                 return parsePostListArgs(commandArgs);
             case "generate":
                 return parseGenerateArgs(commandArgs);
             case "proj":
-                financeFlag = FinanceCommand.PROJ;
                 return parseProjectionArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
@@ -148,7 +180,7 @@ public class CommandParser extends ParserBase {
 
     //@@author ChrisLangton
     private Command parseAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
-            NumberFormatException, InvalidCommandFormatException {
+            NumberFormatException, InvalidAddFormatException {
         String amountAsString;
         int amount = 0;
         boolean isInflow = true;
@@ -156,7 +188,7 @@ public class CommandParser extends ParserBase {
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
-            if (argName.equals("amount-hint")) {
+            if (argName.equals("amount-hint") && !argVal.contains("-")) {
                 if (argVal.charAt(0) == '(' && argVal.charAt(argVal.length() - 1) == ')') {
                     isInflow = false;
                     amountAsString = argVal.substring(1, argVal.length() - 1);
@@ -166,16 +198,17 @@ public class CommandParser extends ParserBase {
                 }
                 amount = Integer.parseInt(amountAsString);
             } else {
-                throw new InvalidCommandFormatException();
+                throw new InvalidAddFormatException();
             }
         }
-        return new AddCommand(amount, isInflow, financeFlag);
+        return new AddCommand(amount, isInflow, FinanceCommand.getCommandFromState(cooperState));
 
     }
 
     //@@author fansxx
     private Command parseAvailableArgs(List<Argument> commandArgs) throws NoSuchElementException,
             InvalidCommandFormatException {
+
         String time = "";
 
         for (Argument a : commandArgs) {
@@ -193,7 +226,9 @@ public class CommandParser extends ParserBase {
     }
 
     private Command parseScheduleArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
-            NoSuchElementException {
+            NoSuchElementException, InvalidScheduleFormatException, NoTimeEnteredException,
+            NoUsernameAfterCommaException {
+
         String meetingName = null;
         ArrayList<String> usernames = new ArrayList<>();
         String time = null;
@@ -215,12 +250,26 @@ public class CommandParser extends ParserBase {
         return new ScheduleCommand(meetingName, usernames, time);
     }
 
-    private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidCommandFormatException {
-        if (!args.contains(",")) {
-            throw new InvalidCommandFormatException();
+    private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidScheduleFormatException,
+            NoUsernameAfterCommaException {
+        if (args.length() < 1) {
+            throw new InvalidScheduleFormatException();
         }
 
-        String[] usernamesArray = args.split(",");
+        String[] usernamesArray;
+        if (args.contains(",")) {
+            if (args.endsWith(",")) {
+                throw new NoUsernameAfterCommaException();
+            }
+            usernamesArray = args.split(",");
+            if (usernamesArray.length < 1) {
+                throw new InvalidScheduleFormatException();
+            }
+        } else {
+            usernamesArray = new String[1];
+            usernamesArray[0] = args;
+        }
+
         ArrayList<String> usernamesArrayList = new ArrayList<>();
         for (String s : usernamesArray) {
             String trimmedUsername = s.trim();
@@ -230,19 +279,28 @@ public class CommandParser extends ParserBase {
         return usernamesArrayList;
     }
 
-    private void getLastUsername(ArrayList<String> usernamesArrayList, String trimmedUsername) {
+    private void getLastUsername(ArrayList<String> usernamesArrayList, String trimmedUsername) throws
+            NoUsernameAfterCommaException {
         if (trimmedUsername.contains("/at")) {
             String[] lastUsernameAndTime = trimmedUsername.split("/at");
-            usernamesArrayList.add(lastUsernameAndTime[0].trim());
+            if (lastUsernameAndTime[0].length() < 1) {
+                throw new NoUsernameAfterCommaException();
+            } else {
+                usernamesArrayList.add(lastUsernameAndTime[0].trim());
+            }
         } else {
             usernamesArrayList.add(trimmedUsername);
         }
     }
 
-    private String parseTimeInSchedule(String args) {
+    private String parseTimeInSchedule(String args) throws NoTimeEnteredException {
         if (args.contains("/at")) {
             String[] argsArray = args.split("/at");
-            return argsArray[1].trim();
+            if (argsArray.length < 2) {
+                throw new NoTimeEnteredException();
+            } else {
+                return argsArray[1].trim();
+            }
         } else {
             return null;
         }
@@ -251,6 +309,7 @@ public class CommandParser extends ParserBase {
     //@@author Rrraaaeee
     private Command parsePostAddArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+
         String content = "";
 
         for (Argument a : commandArgs) {
@@ -269,6 +328,7 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostDeleteArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+
         int postId = -1;
 
         for (Argument a : commandArgs) {
@@ -287,6 +347,7 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostCommentArgs(List<Argument> commandArgs) throws NoSuchElementException,
             NumberFormatException, InvalidCommandFormatException {
+
         String content = "";
         int postId = -1;
 
@@ -309,13 +370,14 @@ public class CommandParser extends ParserBase {
 
     private Command parsePostListArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
             NumberFormatException {
+
         Integer postId = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
             case "list-hint":
-                if (argVal.equals("all")) {
+                if (argVal.trim().equals("all")) {
                     postId = null; // list all
                 } else {
                     postId = Integer.parseInt(argVal);
@@ -329,19 +391,21 @@ public class CommandParser extends ParserBase {
     }
 
     //@@author theeugenechong
+    /**
+     * Parses the {@code generate} command to identify the document to generate as PDF.
+     * @return a {@code GenerateCommand} containing the document the user wants to generate
+     * @throws NoSuchElementException if the command is missing arguments
+     * @throws InvalidCommandFormatException if the command is of the wrong format
+     */
     private Command parseGenerateArgs(List<Argument> commandArgs) throws NoSuchElementException,
-            InvalidCommandFormatException {
+            InvalidCommandFormatException, InvalidDocumentException {
         String documentToGenerate = null;
         for (Argument a : commandArgs) {
             String argName = a.name();
             String argVal = a.value().get();
             switch (argName) {
-            case "document-hint":
-                if (isValidDocToGenerate(argVal)) {
-                    documentToGenerate = argVal.trim().toLowerCase();
-                } else {
-                    throw new InvalidCommandFormatException();
-                }
+            case DOCUMENT_HINT:
+                documentToGenerate = checkDocToGenerate(argVal);
                 break;
             default:
                 throw new InvalidCommandFormatException();
@@ -350,8 +414,17 @@ public class CommandParser extends ParserBase {
         return new GenerateCommand(documentToGenerate);
     }
 
-    private boolean isValidDocToGenerate(String doc) {
-        return doc.trim().equalsIgnoreCase("bs") || doc.trim().equalsIgnoreCase("cf");
+    /**
+     * Helper method to determine is the user argument is one of bs or cf.
+     */
+    private String checkDocToGenerate(String doc) throws InvalidDocumentException {
+        if (doc.trim().equalsIgnoreCase(BS)) {
+            return BS;
+        } else if (doc.trim().equalsIgnoreCase(CF)) {
+            return CF;
+        } else {
+            throw new InvalidDocumentException();
+        }
     }
 
     //@@author ChrisLangton
@@ -369,6 +442,6 @@ public class CommandParser extends ParserBase {
                 throw new InvalidCommandFormatException();
             }
         }
-        return new ProjectionCommand(years, financeFlag);
+        return new ProjectionCommand(years);
     }
 }

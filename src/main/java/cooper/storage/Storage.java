@@ -13,11 +13,20 @@ public class Storage {
 
     protected final String filePath;
 
+    protected static final String SLASH = "/";
+    protected static final String SEPARATOR = " | ";
+    protected static final String SEPARATOR_REGEX = "\\|";
+
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
-    protected static Scanner getScanner(String filePath) {
+    /**
+     * Gets a scanner object to read from a file. If the file is not found, the file is created correctly.
+     * @param filePath Path of the file
+     * @return Scanner to read that file
+     */
+    protected Scanner getScanner(String filePath) {
         File storageFile = new File(filePath);
         Scanner fileScanner = null;
         try {
@@ -39,7 +48,7 @@ public class Storage {
      * @throws IOException if there is an error creating the file
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private static void createFileInDirectory(String filePath) throws IOException {
+    private void createFileInDirectory(String filePath) throws IOException {
         String directoryName = getDirectoryPath(filePath);
         File storageDir = new File(directoryName);
         storageDir.mkdir();
@@ -56,8 +65,8 @@ public class Storage {
      * @param filePath string representing the file path
      * @return a string representing the full directory path of {@code filePath}
      */
-    private static String getDirectoryPath(String filePath) {
-        String[] directoryPathAsArray = filePath.split("/");
+    private String getDirectoryPath(String filePath) {
+        String[] directoryPathAsArray = filePath.split(SLASH);
         StringBuilder directoryPath = new StringBuilder();
 
         /* Iterate up to length - 1 because the last argument in a file path is usually the file type */

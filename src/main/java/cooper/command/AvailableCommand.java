@@ -3,22 +3,21 @@ package cooper.command;
 import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidTimeException;
 import cooper.exceptions.DuplicateUsernameException;
+import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
-import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
-import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
 //@@author fansxx
 
 public class AvailableCommand extends Command {
-    private final String time;
+    private final String dateTime;
 
     public AvailableCommand(String time) {
         super();
-        this.time = time;
+        this.dateTime = time;
     }
 
     /**
@@ -34,24 +33,17 @@ public class AvailableCommand extends Command {
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
             throws InvalidAccessException {
         String username = signInDetails.getUsername();
-        UserRole userRole = signInDetails.getUserRole();
-        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
-
-        if (meetingManager == null) {
-            Ui.printEmployeeHelp();
-            Ui.printGeneralHelp();
-            Ui.printAdminHelp();
-            throw new InvalidAccessException();
-        } 
-
+        MeetingManager meetingManager = resourcesManager.getMeetingManager();
 
         try {
-            meetingManager.addAvailability(time, username);
+            meetingManager.addAvailability(dateTime, username);
             storageManager.saveAvailability(meetingManager);
-            MeetingsUi.printAvailableCommand(time, username);
-        } catch (InvalidTimeException e1) {
+            MeetingsUi.printAvailableCommand(dateTime, username);
+        } catch (InvalidDateTimeFormatException e1) {
+            MeetingsUi.showInvalidDateTimeFormatException();
+        } catch (InvalidTimeException e2) {
             MeetingsUi.showInvalidTimeException();
-        } catch (DuplicateUsernameException e2) {
+        } catch (DuplicateUsernameException e3) {
             MeetingsUi.showDuplicateUsernameException();
         }
     }

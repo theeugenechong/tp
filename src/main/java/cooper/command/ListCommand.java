@@ -4,7 +4,6 @@ import cooper.exceptions.EmptyFinancialStatementException;
 import cooper.exceptions.InvalidAccessException;
 import cooper.storage.StorageManager;
 import cooper.ui.FinanceUi;
-import cooper.ui.Ui;
 import cooper.finance.FinanceManager;
 import cooper.finance.FinanceCommand;
 import cooper.verification.SignInDetails;
@@ -38,13 +37,11 @@ public class ListCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
         if (financeManager == null) {
-            Ui.printAdminHelp();
-            Ui.printGeneralHelp();
             throw new InvalidAccessException();
         }
 
         if (financeFlag == FinanceCommand.IDLE) {
-            FinanceUi.showPleaseSpecifyFinancialStatement();
+            FinanceUi.showPleaseSpecifyFinancialStatementToView();
         }
 
         boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());

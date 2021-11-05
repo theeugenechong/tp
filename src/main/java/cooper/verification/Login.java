@@ -15,6 +15,14 @@ import java.util.HashMap;
  */
 public class Login extends SignInProtocol {
 
+    /* Log messages */
+    private static final String FAILED_SIGN_IN_ATTEMPT = "Failed sign in attempt by user ";
+    private static final String UNREGISTERED_USERNAME = "with unregistered username, ";
+    private static final String INCORRECT_PASSWORD = " with incorrect password.";
+    private static final String INCORRECT_ROLE = " with incorrect role.";
+    private static final String USER_WITH_USERNAME = "User with username ";
+    private static final String SUCCESSFULLY_SIGNED_IN = " successfully signed in.";
+
     public Login(SignInDetails signInDetails) {
         super(signInDetails);
     }
@@ -32,29 +40,31 @@ public class Login extends SignInProtocol {
         if (!isRegisteredUser(registeredUsers)) {
             askUserToRegister();
             verifier.setSuccessfullySignedIn(false);
-            LOGGER.info("Failed sign in attempt by user with unregistered username, " + signInDetails.getUsername());
+            LOGGER.info(FAILED_SIGN_IN_ATTEMPT + UNREGISTERED_USERNAME + signInDetails.getUsername());
             return;
         }
         assert isRegisteredUser(registeredUsers);
 
+        if (!hasCorrectPassword(registeredUsers, rawPassword)) {
+            VerificationUi.showIncorrectPasswordMessage();
+            verifier.setSuccessfullySignedIn(false);
+            LOGGER.info(FAILED_SIGN_IN_ATTEMPT + signInDetails.getUsername() + INCORRECT_PASSWORD);
+            return;
+        }
+        assert (isRegisteredUser(registeredUsers) && hasCorrectPassword(registeredUsers, rawPassword));
+
         if (!hasCorrectRole(registeredUsers)) {
             VerificationUi.showIncorrectRoleMessage();
             verifier.setSuccessfullySignedIn(false);
-            LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect role.");
+            LOGGER.info(FAILED_SIGN_IN_ATTEMPT + signInDetails.getUsername() + INCORRECT_ROLE);
             return;
         }
-        assert (isRegisteredUser(registeredUsers) && hasCorrectRole(registeredUsers));
-
-        if (!hasCorrectPassword(registeredUsers, rawPassword)) {
-            VerificationUi.showIncorrectPasswordError();
-            verifier.setSuccessfullySignedIn(false);
-            LOGGER.info("Failed sign in attempt by user " + signInDetails.getUsername() + " with incorrect password.");
-            return;
-        }
+        assert (isRegisteredUser(registeredUsers) && hasCorrectPassword(registeredUsers, rawPassword)
+                && hasCorrectRole(registeredUsers));
 
         verifier.setSuccessfullySignedIn(true);
         VerificationUi.showLoggedInSuccessfullyMessage(signInDetails.getUsername());
-        LOGGER.info("User with username " + signInDetails.getUsername() + " successfully signed in.");
+        LOGGER.info(USER_WITH_USERNAME + signInDetails.getUsername() + SUCCESSFULLY_SIGNED_IN);
     }
 
     /**
@@ -72,6 +82,15 @@ public class Login extends SignInProtocol {
         return userRoleInHashMap.equals(signInDetails.getUserRole());
     }
 
+    /**
+     * Hashes {@code rawPassword} with the registered user salt and compares it with the registered user's
+     * encrypted password. Returns true if the hash obtained is same as the registered user's encrypted password.
+     *
+     * @param registeredUsers A list of users already registered with cOOPer along with their respective
+     *                        roles.
+     * @param rawPassword the raw password (unencrypted) entered for this sign in instance
+     * @return true if the password hash matches the one stored in {@code registeredUsers}
+     */
     private boolean hasCorrectPassword(HashMap<String, SignInDetails> registeredUsers, String rawPassword) {
         SignInDetails user = registeredUsers.get(signInDetails.getUsername());
         String userSalt = user.getUserSalt();

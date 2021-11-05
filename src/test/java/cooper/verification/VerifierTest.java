@@ -23,7 +23,7 @@ public class VerifierTest {
     @Test
     @Order(1)
     void verify_properInputFirstLoginAttempt_loginFailed() {
-        String input = "login Topias pw 1111 as admin";
+        String input = "login Topias /pw 1111 /as admin";
         SignInDetails actual = verifier.verify(input);
         assertFalse(verifier.isSuccessfullySignedIn());
     }
@@ -31,7 +31,7 @@ public class VerifierTest {
     @Test
     @Order(2)
     void verify_properInputRegisterUser_registrationSuccessful() {
-        String input = "register Martin pw 1111 as admin";
+        String input = "register Martin /pw 1111 /as admin";
         SignInDetails actual = verifier.verify(input);
 
         String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
@@ -44,7 +44,7 @@ public class VerifierTest {
     @Test
     @Order(3)
     void verify_properInputLoginAfterRegister_loginSuccessful() {
-        String input = "register Martin pw 1111 as admin";
+        String input = "register Martin /pw 1111 /as admin";
         SignInDetails actual = verifier.verify(input);
 
         String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
@@ -52,7 +52,7 @@ public class VerifierTest {
         SignInDetails expected = new SignInDetails("Martin", userEncryptedPassword, userSalt, UserRole.ADMIN);
         assertTrue(hasSameAttributeValuesAs(actual, expected));
 
-        input = "login Martin pw 1111 as admin";
+        input = "login Martin /pw 1111 /as admin";
         actual = verifier.verify(input);
 
         assertTrue(verifier.isSuccessfullySignedIn());
@@ -61,7 +61,7 @@ public class VerifierTest {
     @Test
     @Order(4)
     void verify_wrongPasswordLoginAfterRegister_loginUnsuccessful() {
-        String input = "login Martin pw 1234 as admin";
+        String input = "login Martin /pw 1234 /as admin";
         SignInDetails actual = verifier.verify(input);
 
         String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();
@@ -76,7 +76,7 @@ public class VerifierTest {
     @Test
     @Order(5)
     void verify_wrongRoleLoginAfterRegister_loginUnsuccessful() {
-        String input = "login Martin pw 1111 as employee";
+        String input = "login Martin /pw 1111 /as employee";
         SignInDetails actual = verifier.verify(input);
 
         String userSalt = verifier.getRegisteredUsers().get("Martin").getUserSalt();

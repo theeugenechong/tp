@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class BalanceSheetStorage extends Storage {
 
+    protected static final String BALANCE_SHEET_TXT = "balanceSheet.txt";
+
     public BalanceSheetStorage(String filePath) {
         super(filePath);
     }
@@ -33,24 +35,26 @@ public class BalanceSheetStorage extends Storage {
         }
     }
 
-    private static void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
-        if (fileScanner != null) {
-            int bsEntryIndex = 0;
-            while (fileScanner.hasNext() && bsEntryIndex <= FinanceManager.endOfSE) {
-                String expense = fileScanner.nextLine();
-                try {
-                    int decodedExpense = decodeExpense(expense);
-                    balanceSheet.set(bsEntryIndex, decodedExpense);
-                    addNetValues(bsEntryIndex, decodedExpense);
-                    bsEntryIndex++;
-                } catch (InvalidFileDataException e) {
-                    FileIoUi.showInvalidFileDataError(e);
-                }
+    private void readBalanceSheet(Scanner fileScanner, ArrayList<Integer> balanceSheet) {
+        if (fileScanner == null) {
+            return;
+        }
+
+        int bsEntryIndex = 0;
+        while (fileScanner.hasNext() && bsEntryIndex <= FinanceManager.endOfSE) {
+            String expense = fileScanner.nextLine();
+            try {
+                int decodedExpense = decodeExpense(expense);
+                balanceSheet.set(bsEntryIndex, decodedExpense);
+                addNetValues(bsEntryIndex, decodedExpense);
+                bsEntryIndex++;
+            } catch (InvalidFileDataException e) {
+                FileIoUi.showInvalidFileDataError(e);
             }
         }
     }
 
-    private static void addNetValues(int bsEntryIndex, int decodedExpense) {
+    private void addNetValues(int bsEntryIndex, int decodedExpense) {
         if (bsEntryIndex <= FinanceManager.endOfAssets) {
             FinanceManager.netAssets += decodedExpense;
         } else if (bsEntryIndex <= FinanceManager.endOfLiabilities) {
@@ -60,14 +64,14 @@ public class BalanceSheetStorage extends Storage {
         }
     }
 
-    private static int decodeExpense(String expense) throws InvalidFileDataException {
+    private int decodeExpense(String expense) throws InvalidFileDataException {
         if (isInvalidFileData(expense)) {
-            throw new InvalidFileDataException("balanceSheet.txt");
+            throw new InvalidFileDataException(BALANCE_SHEET_TXT);
         }
         return Integer.parseInt(expense);
     }
 
-    private static boolean isInvalidFileData(String expenseAsString) {
+    private boolean isInvalidFileData(String expenseAsString) {
         try {
             int dummyExpense = Integer.parseInt(expenseAsString);
         } catch (NumberFormatException e) {
@@ -76,7 +80,7 @@ public class BalanceSheetStorage extends Storage {
         return false;
     }
 
-    private static void writeBalanceSheet(String filePath, ArrayList<Integer> balanceSheet) throws IOException {
+    private void writeBalanceSheet(String filePath, ArrayList<Integer> balanceSheet) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, false);
 
         for (Integer expense : balanceSheet) {
@@ -86,7 +90,7 @@ public class BalanceSheetStorage extends Storage {
         fileWriter.close();
     }
 
-    private static String encodeExpense(Integer expense) {
+    private String encodeExpense(Integer expense) {
         return expense.toString();
     }
 }

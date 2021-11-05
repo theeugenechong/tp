@@ -1,5 +1,6 @@
 package cooper.finance;
 
+import cooper.exceptions.InvalidProjectionException;
 import cooper.finance.pdfgenerator.BalanceSheetGenerator;
 import cooper.finance.pdfgenerator.CashFlowStatementGenerator;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class FinanceManager {
     public static int netSE = 0;
     public static int pastFCF = 0;
     public static int capExIndex = 5;
+    public static int projectionIterator = 1;
 
     private final BalanceSheetGenerator balanceSheetGenerator;
     private final CashFlowStatementGenerator cashFlowStatementGenerator;
@@ -90,6 +92,8 @@ public class FinanceManager {
 
     //@@author theeugenechong
     public void generateBalanceSheetAsPdf() {
+        runTotalAmountsCheck(cooperBalanceSheet.getBalanceSheet());
+
         balanceSheetGenerator.addAssets(cooperBalanceSheet);
         balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
         balanceSheetGenerator.addShareholderEquity(cooperBalanceSheet);
@@ -99,6 +103,8 @@ public class FinanceManager {
     }
 
     public void generateCashFlowStatementAsPdf() {
+        runNetAmountsCheck(cooperCashFlowStatement.getCashFlowStatement());
+
         cashFlowStatementGenerator.addCfFromOperatingActivities(cooperCashFlowStatement);
         cashFlowStatementGenerator.addCfFromInvestingActivities(cooperCashFlowStatement);
         cashFlowStatementGenerator.addCfFromFinancingActivities(cooperCashFlowStatement);
@@ -107,33 +113,54 @@ public class FinanceManager {
     }
 
     //@@author ChrisLangton
+    @SuppressWarnings("UnnecessaryLocalVariable")
     public int calculateFreeCashFlow(ArrayList<Integer> cashFlowStatement) {
         int freeCashFlow = netOA - cashFlowStatement.get(capExIndex);
         return freeCashFlow;
     }
 
-    public double createProjection(double principal, double rate, int years) {
-        if (years > 0) {
-            double growth = (principal * Math.pow(1 + (rate / 100), years));
-            cooperProjection.getProjection().add(growth);
-            return createProjection(growth, rate, years - 1);
+    public double createProjection(double principal, double rate, int years) throws InvalidProjectionException {
+
+        if (years <= 0) {
+            throw new InvalidProjectionException();
         }
+
+        if (projectionIterator <= years) {
+            double growth = (principal * Math.pow(1 + (rate / 100), projectionIterator));
+            cooperProjection.getProjection().add(growth);
+            projectionIterator++;
+            return createProjection(growth, rate, years);
+        }
+        projectionIterator = 1;
         return principal;
     }
 
-    public static void runNetAmountsCheck(ArrayList<Integer> cashFlowStatement) {
-        if (netOA == 0) {
-            for (int i = 0; i < cashFlowStatement.size(); i++) {
-                if (i <= endOfOA) {
-                    netOA += cashFlowStatement.get(i);
-                } else if (i <= endOfIA) {
-                    netIA += cashFlowStatement.get(i);
-                } else if (i <= endOfFA) {
-                    netFA += cashFlowStatement.get(i);
-                } else {
-                    pastFCF += cashFlowStatement.get(i);
-                }
+    public static void runTotalAmountsCheck(ArrayList<Integer> balanceSheet) {
+        netAssets = netLiabilities = netSE = 0;
+        for (int i = 0; i < balanceSheet.size(); i++) {
+            if (i <= endOfAssets) {
+                netAssets += balanceSheet.get(i);
+            } else if (i <= endOfLiabilities) {
+                netLiabilities += balanceSheet.get(i);
+            } else {
+                netSE += balanceSheet.get(i);
             }
         }
     }
+
+    public static void runNetAmountsCheck(ArrayList<Integer> cashFlowStatement) {
+        netOA = netIA = netFA = pastFCF = 0;
+        for (int i = 0; i < cashFlowStatement.size(); i++) {
+            if (i <= endOfOA) {
+                netOA += cashFlowStatement.get(i);
+            } else if (i <= endOfIA) {
+                netIA += cashFlowStatement.get(i);
+            } else if (i <= endOfFA) {
+                netFA += cashFlowStatement.get(i);
+            } else {
+                pastFCF += cashFlowStatement.get(i);
+            }
+        }
+    }
+
 }

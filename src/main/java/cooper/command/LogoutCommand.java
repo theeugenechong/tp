@@ -1,6 +1,7 @@
 package cooper.command;
 
-import cooper.exceptions.LogoutException;
+import cooper.CooperState;
+import cooper.parser.CommandParser;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
@@ -11,8 +12,8 @@ public class LogoutCommand extends Command {
 
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws LogoutException {
-        throw new LogoutException();
+                        StorageManager storageManager) {
+        CommandParser.setCooperState(CooperState.LOGOUT);
     }
 
 }
