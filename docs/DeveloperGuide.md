@@ -74,7 +74,7 @@ This section includes the sources of code, documentation and third-party librari
 2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
 3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
 4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
-5. [Making a POST Request for LaTex PDF Generation](https://www.baeldung.com/httpurlconnection-post)
+5. [Making a POST Request for LaTeX PDF Generation](https://www.baeldung.com/httpurlconnection-post)
 
 <div style="page-break-after: always;"></div>
 
