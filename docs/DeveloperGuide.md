@@ -559,8 +559,30 @@ To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label
    2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.<br>
 **Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
 
+### Generating the PDF
+
+The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
+
+1. Generating the balance sheet
+   1. Ensure that you are logged in as an *admin*.
+   2. Fill up the balance sheet with `bs` → `add`.
+   3. Ensure that you have an active Internet connection.
+   4. Enter `generate bs`.<br>
+**Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+
+2. Generating the cash flow statement
+   1. Ensure that you are logged in as an *admin*.
+   2. Fill up the cash flow statement with `cf` → `add`.
+   3. Ensure that you have an active Internet connection.
+   4. Enter `generate cf`.<br>
+**Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+
 ### Viewing help
 1. Viewing help
    1. Ensure that you are logged in to cOOPer.
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
+
+<div style="page-break-after: always;"></div>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
