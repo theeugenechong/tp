@@ -23,6 +23,18 @@ public class BalanceSheetGenerator extends PdfGenerator {
     private static final String BS_HEADER_TEMPLATE_PATH = "/pdf/bs/bsHeaderTemplate.tex";
     private static final String BS_ENTRY_TEMPLATE_PATH = "/pdf/bs/bsEntryTemplate.tex";
     private static final String BS_SUMMARY_TEMPLATE_PATH = "/pdf/bs/bsSummaryTemplate.tex";
+    private static final String BS_CHECK_VALUE_TEMPLATE_PATH = "/pdf/bs/bsCheckValue.tex";
+
+    /* Index of entries in the balance sheet*/
+    protected static final int START_OF_ASSETS = 0;
+    protected static final int START_OF_LIABILITIES = 6;
+    protected static final int START_OF_SE = 10;
+
+    /* Extra identifier for the check value of the balance sheet*/
+    protected static final String CHECK_VALUE_IDENTIFIER = "% {Balance}";
+
+    /* Extra template attribute for the check value of the balance sheet*/
+    private String checkValueTemplate;
 
     /* Content of the headers to be added to each section of the balance sheet */
     private static final String ASSETS = "Assets";
@@ -51,7 +63,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
     public void addAssets(BalanceSheet balanceSheet) {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(ASSETS);
-        for (int i = 0; i <= FinanceManager.endOfAssets; i++) {
+        for (int i = START_OF_ASSETS; i <= FinanceManager.endOfAssets; i++) {
             createEntry(FinanceUi.BALANCE_SHEET_UI[i].trim(), bs.get(i));
         }
         createSummary(ASSETS, FinanceManager.netAssets);
@@ -64,7 +76,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
     public void addLiabilities(BalanceSheet balanceSheet) {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(LIABILITIES);
-        for (int i = 6; i <= FinanceManager.endOfLiabilities; i++) {
+        for (int i = START_OF_LIABILITIES; i <= FinanceManager.endOfLiabilities; i++) {
             createEntry(FinanceUi.BALANCE_SHEET_UI[i].trim(), bs.get(i));
         }
         createSummary(LIABILITIES, FinanceManager.netLiabilities);
@@ -77,7 +89,7 @@ public class BalanceSheetGenerator extends PdfGenerator {
     public void addShareholderEquity(BalanceSheet balanceSheet) {
         ArrayList<Integer> bs = balanceSheet.getBalanceSheet();
         createHeader(SHAREHOLDERS_EQUITY);
-        for (int i = 10; i <= FinanceManager.endOfSE; i++) {
+        for (int i = START_OF_SE; i <= FinanceManager.endOfSE; i++) {
             createEntry(FinanceUi.BALANCE_SHEET_UI[i].trim(), bs.get(i));
         }
         createSummary(SHAREHOLDERS_EQUITY, FinanceManager.netSE);

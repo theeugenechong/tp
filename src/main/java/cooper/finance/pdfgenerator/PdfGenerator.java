@@ -24,6 +24,13 @@ public abstract class PdfGenerator {
     protected static final String LINE_FEED = "\r\n";
     protected static final String GENERATED_FILE_DIR = "output";
 
+    /* Identifiers used for creating the pdf */
+    protected static final String TYPE_IDENTIFIER = "% {Type}";
+    protected static final String DESCRIPTION_IDENTIFIER = "% {Description}";
+    protected static final String AMOUNT_IDENTIFIER = "% {Amount}";
+    protected static final String TOTAL_IDENTIFIER = "% {Total}";
+    protected static final String CONTENT_IDENTIFIER = "% {Content}";
+
     protected final ArrayList<String> pdfContent;
     protected String template;
     protected String headerTemplate;
@@ -39,8 +46,8 @@ public abstract class PdfGenerator {
      * @param resourcePath Path of the file template
      */
     protected void loadTemplate(String resourcePath) {
-        InputStream invoiceTemplateStream = this.getClass().getResourceAsStream(resourcePath);
-        template = Util.inputStreamToString(invoiceTemplateStream);
+        InputStream templateStream = this.getClass().getResourceAsStream(resourcePath);
+        template = Util.inputStreamToString(templateStream);
     }
 
     /**
@@ -80,7 +87,7 @@ public abstract class PdfGenerator {
      */
     protected void createHeader(String type) {
         String sectionHeader = headerTemplate;
-        sectionHeader = sectionHeader.replace("% {Type}", type);
+        sectionHeader = sectionHeader.replace(TYPE_IDENTIFIER, type);
 
         pdfContent.add(sectionHeader);
     }
@@ -91,8 +98,8 @@ public abstract class PdfGenerator {
      */
     protected void createEntry(String description, Integer amount) {
         String sectionEntry = entryTemplate;
-        sectionEntry = sectionEntry.replace("% {Description}", description);
-        sectionEntry = sectionEntry.replace("% {Amount}", amount.toString());
+        sectionEntry = sectionEntry.replace(DESCRIPTION_IDENTIFIER, description);
+        sectionEntry = sectionEntry.replace(AMOUNT_IDENTIFIER, amount.toString());
 
         pdfContent.add(sectionEntry);
     }
@@ -103,8 +110,8 @@ public abstract class PdfGenerator {
      */
     protected void createSummary(String type, Integer total) {
         String sectionSummary = summaryTemplate;
-        sectionSummary = sectionSummary.replace("% {Type}", type);
-        sectionSummary = sectionSummary.replace("% {Total}", total.toString());
+        sectionSummary = sectionSummary.replace(TYPE_IDENTIFIER, type);
+        sectionSummary = sectionSummary.replace(TOTAL_IDENTIFIER, total.toString());
 
         pdfContent.add(sectionSummary);
     }
@@ -118,7 +125,7 @@ public abstract class PdfGenerator {
         for (String content : pdfContent) {
             compiledContent.append(content).append(System.lineSeparator());
         }
-        return template.replace("% {Content}", compiledContent.toString());
+        return template.replace(CONTENT_IDENTIFIER, compiledContent.toString());
     }
 
     //@@author Rrraaaeee
