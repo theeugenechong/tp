@@ -355,14 +355,14 @@ Sebastian has just deleted a post from the forum:
   2. You will now have your name stored under the specified time in the system.
   
 > ℹ️`[time]` refers to the **start of the hour** that you are available at. For example, `available 14:00` means that you are available from **14:00** to **14:59**.<br>
-> ⚠️`[date]` has a format of **dd-MM-yyyy**. Any other format will **not** be accepted and your availability will not be stored.
+> ⚠️`[date]` has a format of **dd-MM-yyyy**. Any other format will **not** be accepted and your availability will not be stored. <br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.<br>
 > ⚠️Duplicate `[username]` in one timeslot will **not** be accepted.
 
 - Example input:
 
 ```
->> available 14:00
+>> available 08-11-2021 14:00
 ```
 
 - Expected output:
@@ -370,7 +370,7 @@ Sebastian has just deleted a post from the forum:
 ```
 =========================================================================
 Success!
-Sebastian's availability has been added to 14:00
+Sebastian's availability has been added to 08-11-2021 14:00
 =========================================================================
 ```
 
@@ -737,7 +737,7 @@ The pdf file has been successfully generated!
   2. cOOPer will check if the users are all available at the time specified.
   3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with all the users at that specified time.
   
-> ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. 
+> ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. <br>
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
 > 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
