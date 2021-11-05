@@ -192,7 +192,7 @@ public abstract class PdfGenerator {
             fileWriter.close();
             FileIoUi.showBackupFileSuccessfullyCreated();
         } catch (IOException e) {
-            FileIoUi.showFileCreationError(e);
+            FileIoUi.showBackupFileCreationError(e);
         }
     }
 
@@ -217,7 +217,7 @@ public abstract class PdfGenerator {
             fileOutputStream.close();
             FileIoUi.showPdfSuccessfullyGenerated();
         } catch (IOException e) {
-            FileIoUi.showFileCreationError(e);
+            FileIoUi.showPdfGenerationError(e);
         }
     }
 }
