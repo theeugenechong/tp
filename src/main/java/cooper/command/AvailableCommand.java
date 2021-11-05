@@ -7,9 +7,7 @@ import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.meetings.MeetingManager;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
-import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
-import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
 //@@author fansxx
@@ -35,16 +33,7 @@ public class AvailableCommand extends Command {
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
             throws InvalidAccessException {
         String username = signInDetails.getUsername();
-        UserRole userRole = signInDetails.getUserRole();
-        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
-
-        if (meetingManager == null) {
-            Ui.printEmployeeHelp();
-            Ui.printGeneralHelp();
-            Ui.printAdminHelp();
-            throw new InvalidAccessException();
-        } 
-
+        MeetingManager meetingManager = resourcesManager.getMeetingManager();
 
         try {
             meetingManager.addAvailability(dateTime, username);

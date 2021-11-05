@@ -9,7 +9,6 @@ import cooper.meetings.MeetingManager;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
-import cooper.ui.Ui;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
@@ -44,35 +43,33 @@ public class ScheduleCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
 
-        if (userRole.equals(UserRole.ADMIN)) {
-            // if time field is not entered, proceed to auto schedule a meeting at the earliest time
-            if (time == null) {
-                try {
-                    usernames.add(username);
-                    meetingManager.autoScheduleMeeting(meetingName, usernames);
-                    storageManager.saveMeetings(meetingManager);
-                } catch (CannotScheduleMeetingException e1) {
-                    MeetingsUi.showCannotScheduleMeetingException();
-                }
-            } else {
-                try {
-                    usernames.add(username);
-                    meetingManager.manualScheduleMeeting(meetingName, usernames, time);
-                    storageManager.saveMeetings(meetingManager);
-                } catch (InvalidDateTimeFormatException e1) {
-                    MeetingsUi.showInvalidDateTimeFormatException();
-                } catch (InvalidTimeException e2) {
-                    MeetingsUi.showInvalidTimeException();
-                } catch (CannotScheduleMeetingException e3) {
-                    MeetingsUi.showCannotScheduleMeetingException();
-                } catch (DuplicateMeetingException e4) {
-                    MeetingsUi.showDuplicateMeetingException();
-                }
+        if (meetingManager == null) {
+            throw new InvalidAccessException();
+        }
+
+        // if time field is not entered, proceed to auto schedule a meeting at the earliest time
+        if (time == null) {
+            try {
+                usernames.add(username);
+                meetingManager.autoScheduleMeeting(meetingName, usernames);
+                storageManager.saveMeetings(meetingManager);
+            } catch (CannotScheduleMeetingException e1) {
+                MeetingsUi.showCannotScheduleMeetingException();
             }
         } else {
-            Ui.printEmployeeHelp();
-            Ui.printGeneralHelp();
-            throw new InvalidAccessException();
+            try {
+                usernames.add(username);
+                meetingManager.manualScheduleMeeting(meetingName, usernames, time);
+                storageManager.saveMeetings(meetingManager);
+            } catch (InvalidDateTimeFormatException e1) {
+                MeetingsUi.showInvalidDateTimeFormatException();
+            } catch (InvalidTimeException e2) {
+                MeetingsUi.showInvalidTimeException();
+            } catch (CannotScheduleMeetingException e3) {
+                MeetingsUi.showCannotScheduleMeetingException();
+            } catch (DuplicateMeetingException e4) {
+                MeetingsUi.showDuplicateMeetingException();
+            }
         }
     }
 }

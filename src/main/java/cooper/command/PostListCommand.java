@@ -4,7 +4,6 @@ import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidForumPostIdException;
 import cooper.storage.StorageManager;
 import cooper.ui.ForumUi;
-import cooper.ui.Ui;
 import cooper.forum.ForumManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
@@ -37,9 +36,6 @@ public class PostListCommand extends Command {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
         if (forumManager == null) {
-            Ui.printEmployeeHelp();
-            Ui.printGeneralHelp();
-            Ui.printAdminHelp();
             throw new InvalidAccessException();
         }
 

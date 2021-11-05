@@ -20,8 +20,8 @@ public abstract class Command {
      * Executes the command specified.
      */
     public abstract void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                                 StorageManager storageManager) throws InvalidAccessException,
-                                 EmptyFinancialStatementException, InvalidProjectionException,
+                                 StorageManager storageManager) throws
+            InvalidAccessException, EmptyFinancialStatementException, InvalidProjectionException,
             AmountOutOfRangeException, InvalidAssetException, InvalidLiabilityException;
 
     //@@author ChrisLangton

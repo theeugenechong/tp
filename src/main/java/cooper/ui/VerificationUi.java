@@ -17,6 +17,7 @@ public class VerificationUi extends Ui {
     private static final String INVALID_ROLE = "Invalid role entered! Role can only be admin or employee.";
     private static final String INCORRECT_PASSWORD = "Incorrect password entered! Please try again.";
     private static final String NO_ACCESS = "You do not have access to this command.";
+    private static final String ENTER_HELP = "Enter \"help\" to view the commands you have access to.";
     private static final String LOGGED_OUT = "You are now logged out!";
     private static final String SIGN_IN_DETAILS_WRONG_FORMAT = "Your sign in details are of the wrong format!";
     private static final String CAN_ONLY_LOGIN_REGISTER_EXIT = "You can only log in, register, or exit here!";
@@ -119,6 +120,7 @@ public class VerificationUi extends Ui {
     public static void showNoAccessError() {
         show(LINE);
         show(NO_ACCESS);
+        show(ENTER_HELP);
         show(LINE);
     }
 

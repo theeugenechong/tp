@@ -63,6 +63,7 @@ public class CommandParser extends ParserBase {
 
     public static void setCooperState(CooperState state) {
         cooperState = state;
+        Ui.updatePromptState(state);
     }
 
     /**
@@ -124,16 +125,12 @@ public class CommandParser extends ParserBase {
             cooperState = CooperState.LOGIN;
             return new MeetingsCommand();
         case "logout":
-            cooperState = CooperState.LOGOUT;
             return new LogoutCommand();
         case "exit":
-            cooperState = CooperState.LOGIN;
             return new ExitCommand();
         case CF:
-            cooperState = CooperState.CF;
             return new CfCommand();
         case BS:
-            cooperState = CooperState.BS;
             return new BsCommand();
         default:
             throw new UnrecognisedCommandException();

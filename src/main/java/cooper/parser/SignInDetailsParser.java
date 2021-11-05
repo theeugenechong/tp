@@ -181,9 +181,9 @@ public class SignInDetailsParser extends  ParserBase {
      */
     private UserRole checkUserRole(String role) throws InvalidUserRoleException {
         UserRole userRole;
-        if (role.equalsIgnoreCase(ADMIN)) {
+        if (role.trim().equalsIgnoreCase(ADMIN)) {
             userRole = UserRole.ADMIN;
-        } else if (role.equalsIgnoreCase(EMPLOYEE)) {
+        } else if (role.trim().equalsIgnoreCase(EMPLOYEE)) {
             userRole = UserRole.EMPLOYEE;
         } else {
             throw new InvalidUserRoleException();

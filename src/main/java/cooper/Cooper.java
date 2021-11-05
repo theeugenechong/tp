@@ -44,8 +44,8 @@ public class Cooper {
      */
     public Cooper() {
         cooperVerifier = new Verifier();
-        cooperResourcesManager = new ResourcesManager();
         cooperStorageManager = new StorageManager();
+        cooperResourcesManager = new ResourcesManager();
         CooperLogger.setupLogger();
     }
 
@@ -103,12 +103,10 @@ public class Cooper {
         while (!cooperVerifier.isSuccessfullySignedIn()) {
             String input = Ui.getInput();
             successfulSignInDetails = cooperVerifier.verify(input);
+            cooperStorageManager.saveSignInDetails(cooperVerifier);
         }
 
-        cooperStorageManager.saveSignInDetails(cooperVerifier);
         CommandParser.setCooperState(CooperState.LOGIN);
-        Ui.updatePromptState(CooperState.LOGIN);
-
         return successfulSignInDetails;
     }
 

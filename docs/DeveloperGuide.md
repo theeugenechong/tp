@@ -29,6 +29,10 @@ This developer guide is for software designers, developers, and software testers
   - [Storage component](#storage-component)
   - [Util component](#util-component)
 - [Implementation](#Implementation)
+  - [Parsing user input](#parsing-user-input)
+  - [Verifying user credentials](#verifying-user-credentials)
+  - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
+  - [Saving and loading data](#saving-and-loading-data)
 - [Appendix: Requirements](#appendix-requirements)
   - [Product Scope](#product-scope)
     - [Target user profile](#target-user-profile)
@@ -307,7 +311,7 @@ This method is used to convert the `.tex` template files into a `String` object 
 
 ### Parsing user input
 
-cOOPer's uses the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library as its frontend parser that allows you to define any arbitrary *input schema* under `src/main/resources/parser/command-data.properties` 
+cOOPer uses the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library as its frontend parser that allows you to define any arbitrary *input schema* under `src/main/resources/parser/command-data.properties` 
 such as 
 
 ```
@@ -325,17 +329,6 @@ into the following fields:
 
 This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command 
 and adding new commands to cOOPer for new features become trivial.
-
-### Command
-
-`Command` are action objects that implement the `execute()` methods for interacting with different resources such as the `FianceManager`and `MeetingsManager`.
-
-#### Command component descriptions
-
-As mentioned above, `CommandParser` returns a `Command` polymorphic base object. Any specialisation of the `Command` base object must implement the`execute()` abstract base method. For example, Developer can add a new command like `HelloCommand` by inheriting from the `Command` base class and implements the `execute()` function to print out `Hello world` as shown below.
-
-This allows developers to inherit any arbitrary number of different command specialisation with different 
-behaviours using a unified driver. Developers do not need to modify the frontend to accommodate for every new commands.
 
 ### Meetings
 `Meetings` provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
@@ -388,6 +381,7 @@ For a registered user trying to log in, cOOPer will first check if the entered p
 
 If the password is correct, the user's role will then be checked to determine if they are logging in with the role they registered with.
 
+#### Registering a user
 The following sequence diagram shows the detailed process of registering a user. `userInput` is `register John /pw 123 /as admin`.
 
 <p align="center">
@@ -400,6 +394,7 @@ The `SignInDetailsParser` constructs a `SignInDetails` object parsed from the ar
     <img src="developerGuideDiagrams/refFrameRegistration.png" alt="refFrameSequenceDiagram"><br>
 </p>
 
+#### Logging in
 Assuming that the above registration has taken place successfully, the following sequence diagram shows the login process of the user. `userInput` is `login John /pw 123 /as admin`.
 
 <p align="center">
@@ -409,8 +404,9 @@ Assuming that the above registration has taken place successfully, the following
 ### Generating a PDF from the financial statement
 The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF generated.
 
-The PDF is generated with the help of an online LaTeX Compiler. The LaTeX (`.tex`) templates for the PDF files can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
-Certain identifiers (in the form of LaTeX comments `'%'`) in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
+#### Creating the PDF with LaTeX
+The PDF is generated with the help of an online LaTeX compiler. The LaTeX (`.tex`) templates for the PDF can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
+Certain identifiers (in the form of LaTeX comments '`%`') in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
 
 The example below shows the template of an entry in the financial statement:
 
@@ -445,10 +441,45 @@ The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGener
     <img width="750" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
 </p>
 
-`createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. These templates are then appended together using `append()`.
-This forms a long `String` which is then sent to the online LaTeX compiler via a [POST request](https://en.wikipedia.org/wiki/POST_(HTTP)). The reply data obtained from the compiler is used to construct the PDF. This is done using the `write()` method of Java's `FileOutputStream` class.
+#### Compiling the LaTeX code online
+`createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. Iterating through the `ArrayList`, these templates are then appended together using `append()`.
+This forms a long `String` which is then sent to the online LaTeX compiler via a [POST request](https://en.wikipedia.org/wiki/POST_(HTTP)). The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
 
-### Loading and saving data
+### Saving and loading data
+> ℹ️Due to the way the `Storage` component is implemented, the classes and methods used for storage have names which are quite similar. In order to generalize the explanations in this section for how data is saved and loaded, the term `XYZ` will be used as a placeholder where `XYZ` is `signInDetails`, `balanceSheet`, `cashFlowStatement`, `availability`, `meetings` and `forum`.
+
+The `StorageManager` class facilitates the saving and loading of cOOPer's data to and from its storage files. This data includes the sign in details of registered users (from the [`Verification`](#verification-component) component) , entries of the balance sheet and cash flow statement, list of availabilities, scheduled meetings, and forum posts (all from the [`Resources`](#resources-component) component).
+cOOPer's data is stored separately in multiple text files named `XYZ.txt` located in the 'cooperData' folder in the home folder.
+
+#### Saving data
+Certain commands, when executed successfully, can change the data in the `Verification` and `Resources` components. (e.g. `register`, `add`, `available`, etc.) Whenever the data in these components change, the command that made the change will call the `saveXYZ()` method of the `StorageManager` to update the storage file with the change. 
+For example, when a new availability is added successfully, the method `saveAvailability()` is called by `AvailableCommand` and the storage file is updated with the new list of availabilities.
+
+The following sequence diagram shows the general procedure of saving data to the storage file whenever a change is made.
+
+<p align="center">
+    <img src="developerGuideDiagrams/saveDataSequenceDiagram.png" alt="saveDataSequenceDiagram"><br>
+</p>
+
+#### Loading data
+Data is loaded from cOOPer's storage files to the `Verification` and `Resources` component upon launching the app. The `StorageManager` constructor is first called and each subclass `XYZStorage` is initialized with the file paths of their storage files, `XYZ.txt`.
+The `loadAllData()` method of `StorageManager` is then called and this method in turn calls the `loadXYZ()` methods of the `XYZStorage` subclasses. If the storage files are not present upon launching cOOPer, the storage files will be created and any error in file creation will be made known to the user. 
+Since data in the storage files are of a specific format, any change to the storage format will throw an `InvalidFileDataException` and a message will be printed for the user specifying the file containing invalid data. 
+
+The following sequence diagram shows the general procedure of loading data from the storage file upon launching cOOPer.
+
+<p align="center">
+    <img src="developerGuideDiagrams/loadDataSequenceDiagram.png" alt="loadDataSequenceDiagram"><br>
+</p>
+
+#### Storage design considerations
+**Current choice**: Individual subclasses which store the sign in details of registered users, entries of the balance sheet and cash flow statement, list of availabilities, scheduled meetings, and forum posts in separate storage files.
+- Pros:
+  - Easy to implement
+  - Efficient (only saves the data changed for a specific component, not all)
+  - Extensible (each subclass follows a certain template for storage)
+- Cons:
+  - Some methods are duplicated (e.g. `saveXYZ()`, `loadXYZ()`, etc.)
 
 ## Appendix: Requirements
 
@@ -472,7 +503,7 @@ Example Users:
 
 ### User Stories
 > 💡 Priorities:<br>
-> High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+> High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
 
 | Priority | As a ... | I want to ...             | So that I can ...                                           |
 | ------- | -------- | ------------------------- | ----------------------------------------------------------- |

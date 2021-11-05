@@ -68,7 +68,7 @@ The table below explains the formatting and symbols in this user guide.
 **bold**|Text in bold emphasizes the text's importance and indicates that you should pay more attention to the text.
 `command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal. Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
 `[argument]`|Text highlighted in grey wrapped in square brackets represent a command argument that needs to be present when a command is entered. You are free to decide the argument entered. 
-`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands.
+`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands. At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt. Specifically, there are three types of labels you will see, namely `[Logged out]` which indicates you are currently logged out of cOOPer, `[Balance Sheet]` which indicates you are using cOOPer's [balance sheet](#creating-the-balance-sheet-bs--add) function and `[Cash Flow]` which indicates you are using cOOPer's [cash flow](#creating-the-cash-flow-statement-cf--add) function.
 ℹ️  |The info symbol indicates useful information about cOOPer's features.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
@@ -170,7 +170,6 @@ Sebastian is now successfully registered as an admin!
 
 > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
 > 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
-> ⚠️In order to be recorded as cOOPer's registered users, it is **compulsory** for you to [log in](#login) after you register. Refer to [this](#signindetailstxt) section to find out more about how your credentials are stored.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -446,8 +445,8 @@ Here are your meetings for today:
 ```
 =========================================================================
 You are now logged out!
-To log in, enter "login [yourUsername] pw [password] as [yourRole]".
-To register, enter "register [yourUsername] pw [password] as [yourRole]".
+To log in, enter "login [yourUsername] /pw [password] /as [yourRole]".
+To register, enter "register [yourUsername] /pw [password] /as [yourRole]".
 
 To exit, enter "exit".
 =========================================================================
@@ -494,7 +493,7 @@ start off by entering Cash & Cash Equivalents:
 - Example input for adding to 'Cash and Cash Equivalents':
 
 ```
->> add 1500
+>> [Balance Sheet] add 1500
 ```
 
 - Example output: 
@@ -545,7 +544,7 @@ start off by entering Net Income:
 
 
 ```
->> add 1500
+>> [Cash Flow] add 1500
 ```
 
 - Example output:
@@ -576,7 +575,7 @@ Next, please enter Depreciation and Amortisation
 - Example input:
 
 ```
->> list
+>> [Balance Sheet] list
 ```
 
 - Example output:
@@ -622,7 +621,7 @@ Check: 0
 - Example input:
 
 ```
->> list
+>> [Cash Flow] list
 ```
 
 - Example output:
@@ -807,15 +806,15 @@ The contents of the folder is as shown in the diagram below.
 
 #### availability.txt
 - What it stores: The different timings and the users associated with each timing. 
-- When is the data stored: Immediately after the user enters the [`available`](#declaring-available-timing-for-meetings-available) command.
+- When is the data stored: Immediately after you enter the [`available`](#declaring-available-timing-for-meetings-available) command.
 
 #### balanceSheet.txt
 - What it stores: The fields of the balance sheet.
-- When is the data stored: Each individual field is updated immediately after the user enters the [`add`](#creating-the-balance-sheet-bs--add) command.
+- When is the data stored: Each individual field is updated immediately after you enter the [`add`](#creating-the-balance-sheet-bs--add) command.
 
 #### cashFlowStatement.txt
 - What it stores: The fields of the cash flow statement.
-- When is the data stored: Each individual field is updated immediately after the user enters the [`add`](#creating-the-cash-flow-statement-cf--add) command.
+- When is the data stored: Each individual field is updated immediately after you enter the [`add`](#creating-the-cash-flow-statement-cf--add) command.
 
 #### forum.txt
 - What it stores: The posts created in the forum along with its comments.
@@ -827,7 +826,7 @@ The contents of the folder is as shown in the diagram below.
 
 #### signInDetails.txt
 - What it stores: The username, an encrypted hash of the user's password, the salt used to generate the password hash, and the user's role.
-- When is the data stored: Only after a user has [logged in](#login) to cOOPer **at least once**. Hence, only **registering without logging in** will **not** save your credentials to cOOPer's storage.
+- When is the data stored: Immediately after you [register](#user-registration) as a user of cOOPer.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
