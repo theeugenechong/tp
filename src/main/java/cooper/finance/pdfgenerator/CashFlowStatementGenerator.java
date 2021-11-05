@@ -28,6 +28,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
     private static final String OPERATING_ACTIVITIES = "Operating Activities";
     private static final String INVESTING_ACTIVITIES = "Investing Activities";
     private static final String FINANCING_ACTIVITIES = "Financing Activities";
+    private static final String FREE_CASH_FLOW = "Free Cash Flow";
 
     /* Names of the files created */
     private static final String CF_PDF_FILE = "/CashFlowStatement.pdf";
@@ -87,6 +88,16 @@ public class CashFlowStatementGenerator extends PdfGenerator {
             createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(FINANCING_ACTIVITIES, FinanceManager.netFA);
+    }
+
+    /**
+     * Adds Free Cash Flow section from {@code cashFlow} into {@code pdfContent}.
+     * @param cashFlow Cash flow statement containing the entries to be added to the pdf file.
+     */
+    public void addFreeCashFlow(CashFlow cashFlow) {
+        ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
+        createHeader(FREE_CASH_FLOW);
+        createEntry(FREE_CASH_FLOW, cf.get(FCF_INDEX));
     }
 
     /**
