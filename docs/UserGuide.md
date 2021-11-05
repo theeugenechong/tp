@@ -273,7 +273,7 @@ Here is the list of forum posts:
 >> post list 1
 ```
 
-+ Example output:
++ Expected output:
 
 ```
 =========================================================================
@@ -333,7 +333,7 @@ Eugene has just commented on a post from the forum:
 >> post delete 1
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -351,10 +351,11 @@ Sebastian has just deleted a post from the forum:
 ### Declaring available timing for meetings: `available`
 - For easier scheduling of meetings, cOOPer has a function to gather availabilities of everybody to find a common time for a meeting.
 - How to input your availability:
-  1. Enter `available [time]`.
+  1. Enter `available [date] [time]`.
   2. You will now have your name stored under the specified time in the system.
   
 > ℹ️`[time]` refers to the **start of the hour** that you are available at. For example, `available 14:00` means that you are available from **14:00** to **14:59**.<br>
+> ⚠️`[date]` has a format of **dd-MM-yyyy**. Any other format will **not** be accepted and your availability will not be stored.
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.<br>
 > ⚠️Duplicate `[username]` in one timeslot will **not** be accepted.
 
@@ -392,12 +393,12 @@ Sebastian's availability has been added to 14:00
 ```
 =========================================================================
 Here are the availabilities:
-+-------+------------------------------------------------------------+
-| time  | names
-+-------+-------------------------------------------------------------
-| 10:00 | Eugene
-| 14:00 | Sebastian
-+-------+------------------------------------------------------------+
++------------+-------+-----------------------------------------------+
+| date       | time  | names
++------------+-------+-----------------------------------------------+
+| 08-11-2021 | 10:00 | Eugene
+| 08-11-2021 | 14:00 | Sebastian
++------------+-------+-----------------------------------------------+
 =========================================================================
 ```
 
@@ -407,7 +408,7 @@ Here are the availabilities:
 - Shows you your meetings (for the day) which have been scheduled successfully for easier visualisation. Refer to [this](#scheduling-meetings-with-different-users-schedule) section to know how meetings are scheduled.
 - How to view meetings:
   1. After a meeting has been scheduled successfully, enter `meetings`.
-  2. You will now see a table with all your meetings for the day.
+  2. You will now see a table with all your meetings with date and time.
 
 - Example input:
 
@@ -420,11 +421,11 @@ Here are the availabilities:
 ```
 =========================================================================
 Here are your meetings for today:
-+------------+-------+-----------------------------------------------+
-| meeting    | time  | attendees
-+---------------------------------------------------------------------
-| <<Progress Meeting>> | 10:00 | Eugene, Sebastian
-+------------+-------+-----------------------------------------------+
++----------------------+------------+-------+------------------------+
+| meeting              | date       | time  | attendees
++--------------------------------------------------------------------+
+| <<Progress Meeting>> | 08-11-2021 | 10:00 | Eugene, Sebastian
++----------------------+------------+-------+------------------------+
 =========================================================================
 ```
 
@@ -440,7 +441,7 @@ Here are your meetings for today:
 >> logout
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -480,7 +481,7 @@ This section explains cOOPer's features for specific to users, with the _**admin
 >> bs
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -496,7 +497,7 @@ start off by entering Cash & Cash Equivalents:
 >> [Balance Sheet] add 1500
 ```
 
-- Example output: 
+- Expected output: 
 
 ```
 =========================================================================
@@ -530,7 +531,7 @@ Next, please enter Accounts Receivable
 >> cf
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -547,7 +548,7 @@ start off by entering Net Income:
 >> [Cash Flow] add 1500
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -578,7 +579,7 @@ Next, please enter Depreciation and Amortisation
 >> [Balance Sheet] list
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -624,7 +625,7 @@ Check: 0
 >> [Cash Flow] list
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -665,7 +666,7 @@ Free Cash Flow   3000
 >> proj 3
 ```
 
-- Example output:
+- Expected output:
 
 ```
 =========================================================================
@@ -724,26 +725,28 @@ The pdf file has been successfully generated!
 
 ### Scheduling meetings with different users: `schedule`
 - cOOPer helps you to schedule meetings easily by either an **auto** or **manual** way. 
-- **Auto** schedule meeting means cOOPer picks the earliest timing all specified users are available at and schedule a meeting then. 
+- **Auto** schedule meeting means cOOPer picks the earliest timing all specified users and yourself are available at and schedule a meeting then. 
 - How to **auto** schedule a meeting:
   1. Enter `schedule [meetingName] /with [username1], [username2]`.
   2. cOOPer will find the **earliest timing** when all specified users are available.
   3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with the specified users.
 
-- **Manual** schedule meeting means cOOPer refers to the timing you specified and checks if all specified users are available then, and schedules a meeting if they are.
+- **Manual** schedule meeting means cOOPer goes to the timing you specified and checks if all specified users and yourself are available then, and schedules a meeting then.
 - How to **manually** schedule a meeting:
-  1. Enter `schedule [meetingName] /with [username1], [username2] /at [time]`.
+  1. Enter `schedule [meetingName] /with [username1], [username2] /at [date] [time]`.
   2. cOOPer will check if the users are all available at the time specified.
   3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with all the users at that specified time.
-
+  
+> ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. 
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
 > 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
+> ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and my result in incorrect behaviour.
 
 - Example input for **auto** schedule meeting:
 
 ```
->> schedule Progress Meeting /with Sebastian, Eugene
+>> schedule Progress Meeting /with Eugene
 ```
 
 - Expected output for **auto** schedule meeting:
@@ -751,7 +754,22 @@ The pdf file has been successfully generated!
 ```
 =========================================================================
 Success!
-You have scheduled a <<Progress Meeting>> meeting at 10:00 with Sebastian, Eugene
+You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 10:00 with attendees: Eugene, Sebastian
+=========================================================================
+```
+
+- Example input for **manual** schedule meeting:
+
+```
+>> schedule Progress Meeting /with Eugene /at 08-11-2021 14:00
+```
+
+- Expected output for **manual** schedule meeting:
+
+```
+=========================================================================
+Success!
+You have scheduled a <<Project Meeting>> meeting at 08-11-2021 14:00 with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
