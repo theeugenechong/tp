@@ -15,10 +15,14 @@ If you are running a tech startup, cOOPer can help you with **accounting** and *
 - **Generating** your company's **financial statements**
 - **Forecasting** your company's **cash flow**
 - **Scheduling meetings** with your employees
-- Having **discussions** with your employees
+- Having **discussions** with your colleagues
 
 cOOPer  is optimized for use via a [**Command Line Interface (CLI)**](https://simple.wikipedia.org/wiki/Command-line_interface), so if you are someone who types fast,
 cOOPer can help you manage your startup efficiently.
+
+This user guide is written to assist users like you in using cOOPer. It provides you with the necessary guidance you need for using cOOPer's features to manage your startup.
+
+<div style="page-break-after: always;"></div>
 
 ## What's in This User Guide
 
@@ -56,7 +60,9 @@ cOOPer can help you manage your startup efficiently.
   - [Before logging in](#before-logging-in)
   - [Admin commands](#admin-commands)
   - [Employee commands](#employee-commands)
-  
+
+<div style="page-break-after: always;"></div>
+
 ## How this User Guide Works
 
 Throughout this user guide, you will see text formatted differently from normal text, as well as symbols appearing before another line of text. 
@@ -75,6 +81,8 @@ The table below explains the formatting and symbols in this user guide.
 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Setup
 
@@ -117,6 +125,8 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## cOOPer's Commands
 
 Here are some things to note about cOOPer's commands.
@@ -126,6 +136,8 @@ Here are some things to note about cOOPer's commands.
 - ℹ️Empty input (for e.g. simply pressing 'Enter', entering whitespaces or 'Tab' characters) will be ignored and cOOPer will continue prompting you for your next command.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Getting Started
 
@@ -198,6 +210,8 @@ You are now logged in successfully as Sebastian!
 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Features for All Users
 
@@ -453,6 +467,8 @@ To exit, enter "exit".
 ```
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Admin Features 
 This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny** users without the admin role access to these features.
@@ -757,10 +773,14 @@ You have scheduled a <<Progress Meeting>> meeting at 10:00 with Sebastian, Eugen
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## Employee Features
 - As of v2.1, cOOPer does not have features exclusive to employees yet 😥, there will be more to come in future versions!
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Viewing help: `help`
 Shows you a list of commands **specific to your role**, along with their formats. Refer to the [Roles](#roles) section if you do not know how roles are determined.
@@ -788,6 +808,8 @@ Bye, see you next time!
 ```
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 <!--@@author theeugenechong-->
 
@@ -830,8 +852,16 @@ The contents of the folder is as shown in the diagram below.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
+
+**Q**: Do I need any programming knowledge to use cOOPer?<br>
+> No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to [this](#command-summary) section to know the formats of each command.
+
+**Q**: How do I know which commands to enter when using cOOPer?<br>
+> After you have successfully [logged in](#login) to cOOPer, you can either enter `help` or refer to [this](#command-summary) section to know the commands recognised by cOOPer.
 
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 > Follow the steps below:<br>
@@ -844,9 +874,11 @@ This section contains some frequently asked questions you may have when using cO
 > The 'tmp' folder is created upon starting up cOOPer for the first time. This folder contains important data which enables to cOOPer to process your commands. You **should not** do anything to these files.
 
 **Q**: Another person using cOOPer on their desktop stated their availability / posted to the forum. However, I am unable to see their availability / post when I run cOOPer on my desktop. Why does this occur?<br>
-> Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section.
+> Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section to find out why this occurs.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 <!--@@author fansxx-->
 
@@ -896,3 +928,5 @@ logout      |`logout`                             |`logout`
 exit        |`exit`                               |`exit`
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
