@@ -4,8 +4,10 @@ import cooper.finance.BalanceSheet;
 import cooper.finance.FinanceManager;
 import cooper.ui.FileIoUi;
 import cooper.ui.FinanceUi;
+import cooper.util.Util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,6 +56,15 @@ public class BalanceSheetGenerator extends PdfGenerator {
         loadHeaderTemplate(BS_HEADER_TEMPLATE_PATH);
         loadEntryTemplate(BS_ENTRY_TEMPLATE_PATH);
         loadSummaryTemplate(BS_SUMMARY_TEMPLATE_PATH);
+        loadCheckValueTemplate();
+    }
+
+    /**
+     * Loads the check value template from {@code resourcePath} and converts it to a string.
+     */
+    private void loadCheckValueTemplate() {
+        InputStream checkValueTemplateStream = this.getClass().getResourceAsStream(BS_CHECK_VALUE_TEMPLATE_PATH);
+        checkValueTemplate = Util.inputStreamToString(checkValueTemplateStream);
     }
 
     /**
@@ -96,12 +107,23 @@ public class BalanceSheetGenerator extends PdfGenerator {
     }
 
     /**
-     * Computes and adds the balance of the {@code balanceSheet} into {@code pdfContent}.
+     * Creates the final check value of the balance sheet by replacing the identifier from the template
+     * with {@code balance}.
+     * @param balance check value of balance sheet which is assets + liabilities - SE
      */
-    public void addBalance() {
-        int balance = FinanceManager.netAssets - FinanceManager.netLiabilities - FinanceManager.netSE;
+    private void createCheckValue(String balance) {
+        String checkValue = checkValueTemplate.replace(CHECK_VALUE_IDENTIFIER, balance);
+
+        pdfContent.add(checkValue);
+    }
+
+    /**
+     * Computes and adds the check value of the {@code balanceSheet} into {@code pdfContent}.
+     */
+    public void addCheckValue() {
+        int balance = FinanceManager.netAssets + FinanceManager.netLiabilities - FinanceManager.netSE;
         String balanceAsString = Integer.valueOf(balance).toString();
-        template = template.replace("% {Balance}", balanceAsString);
+        createCheckValue(balanceAsString);
     }
 
     /**
