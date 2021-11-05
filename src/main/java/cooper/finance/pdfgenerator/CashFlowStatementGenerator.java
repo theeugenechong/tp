@@ -28,10 +28,17 @@ public class CashFlowStatementGenerator extends PdfGenerator {
     private static final String OPERATING_ACTIVITIES = "Operating Activities";
     private static final String INVESTING_ACTIVITIES = "Investing Activities";
     private static final String FINANCING_ACTIVITIES = "Financing Activities";
+    private static final String FREE_CASH_FLOW = "Free Cash Flow";
 
     /* Names of the files created */
     private static final String CF_PDF_FILE = "/CashFlowStatement.pdf";
     private static final String CF_BACKUP_FILE = "/backupCf.txt";
+
+    /* Index of entries in the cash flow statement*/
+    private static final int START_OF_OA = 0;
+    private static final int START_OF_IA = 5;
+    private static final int START_OF_FA = 7;
+    private static final int FCF_INDEX = 9;
 
     /**
      * The constructor loads the templates from the template files.
@@ -51,7 +58,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
     public void addCfFromOperatingActivities(CashFlow cashFlow) {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(OPERATING_ACTIVITIES);
-        for (int i = 0; i <= FinanceManager.endOfOA; i++) {
+        for (int i = START_OF_OA; i <= FinanceManager.endOfOA; i++) {
             createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(OPERATING_ACTIVITIES, FinanceManager.netOA);
@@ -64,7 +71,7 @@ public class CashFlowStatementGenerator extends PdfGenerator {
     public void addCfFromInvestingActivities(CashFlow cashFlow) {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(INVESTING_ACTIVITIES);
-        for (int i = 5; i <= FinanceManager.endOfIA; i++) {
+        for (int i = START_OF_IA; i <= FinanceManager.endOfIA; i++) {
             createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(INVESTING_ACTIVITIES, FinanceManager.netIA);
@@ -77,10 +84,20 @@ public class CashFlowStatementGenerator extends PdfGenerator {
     public void addCfFromFinancingActivities(CashFlow cashFlow) {
         ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
         createHeader(FINANCING_ACTIVITIES);
-        for (int i = 7; i <= FinanceManager.endOfFA; i++) {
+        for (int i = START_OF_FA; i <= FinanceManager.endOfFA; i++) {
             createEntry(FinanceUi.CASH_FLOW_UI[i].trim(), cf.get(i));
         }
         createSummary(FINANCING_ACTIVITIES, FinanceManager.netFA);
+    }
+
+    /**
+     * Adds Free Cash Flow section from {@code cashFlow} into {@code pdfContent}.
+     * @param cashFlow Cash flow statement containing the entries to be added to the pdf file.
+     */
+    public void addFreeCashFlow(CashFlow cashFlow) {
+        ArrayList<Integer> cf = cashFlow.getCashFlowStatement();
+        createHeader(FREE_CASH_FLOW);
+        createEntry(FREE_CASH_FLOW, cf.get(FCF_INDEX));
     }
 
     /**
