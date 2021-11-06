@@ -35,7 +35,7 @@ public class AvailableCommand extends Command {
             throws InvalidAccessException {
         String username = signInDetails.getUsername();
         UserRole userRole = signInDetails.getUserRole();
-        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
+        MeetingManager meetingManager = resourcesManager.getMeetingManager();
 
         try {
             meetingManager.addAvailability(dateTime, username);

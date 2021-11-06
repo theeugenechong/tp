@@ -22,7 +22,7 @@ public class ResourcesManager {
 
     
     public FinanceManager getFinanceManager(UserRole userRole) {
-        if (userRole.equals(UserRole.ADMIN)) {
+        if (checkFinanceAccessibility(userRole)) {
             return cooperFinanceManager;
         } else {
             return null;
@@ -30,15 +30,35 @@ public class ResourcesManager {
     }
 
     public MeetingManager getMeetingManager(UserRole userRole) {
-        if (userRole.equals(UserRole.ADMIN)) {
+        if (checkMeetingAccessibility(userRole)) {
             return cooperMeetingManager;
         } else {
             return null;
         }
     }
 
+    public MeetingManager getMeetingManager() {
+        return cooperMeetingManager;
+    }
+
     public ForumManager getForumManager(UserRole userRole) {
-        return cooperForumManager;
+        if (checkForumAccessibility(userRole)) {
+            return cooperForumManager;
+        } else {
+            return null;
+        }
+    }
+
+    private boolean checkFinanceAccessibility(UserRole userRole) {
+        return (userRole.equals(UserRole.ADMIN));
+    }
+
+    private boolean checkMeetingAccessibility(UserRole userRole) {
+        return (userRole.equals(UserRole.ADMIN));
+    }
+
+    private boolean checkForumAccessibility(UserRole userRole) {
+        return (userRole.equals(UserRole.ADMIN) || userRole.equals(UserRole.EMPLOYEE));
     }
 
     /**
