@@ -184,6 +184,10 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 
 > ℹ️`userInput` represents the credentials input by the user for verification. For example, `register John /pw 12345 /as admin`.
 
+<p align="center">
+    <img src="developerGuideDiagrams/signInSequenceDiagram.png" alt="signInSequenceDiagram"><br>
+</p> 
+
 - The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
 
 > ℹ️ `userInput` represents a command input by the user. For example, `meetings`.
@@ -624,10 +628,10 @@ Example Users:
    1. Download cOOPer's latest JAR file [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) and copy the JAR file into an empty folder.
    2. Launch the Command Prompt / Terminal from the folder.
    3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
-   4. Run `java -jar cOOPer.jar`. <br>
+   4. Run `java -jar cOOPer.jar`. 
    **Expected output:** cOOPer's greeting message is shown.
 2. Exiting cOOPer
-   1. Enter `exit`.<br>
+   1. Enter `exit`.
    **Expected output:** cOOPer's bye message is shown and the program exits successfully.
 
 ### Sign-in
