@@ -11,65 +11,65 @@ cOOPer was developed in Java following an **Object-Oriented Programming (OOP)** 
 All the code I contributed for this project can be found at this [RepoSense link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=groupTitle%20dsc&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&tabAuthor=theeugenechong&tabRepo=AY2122S1-CS2113T-W13-4%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false).
 
 ### Enhancements Implemented
-**Feature 1:** Implemented the sign-in system for cOOPer
-- This feature is what the user sees first upon launching cOOPer.
-- It allows cOOPer's users to sign in to cOOPer with a username, password as well as the role they hold in the startup.
-- Since users have different access to different features of cOOPer based on their role in the startup, this feature ensures the correct level of access is given to its users within the startup throughout cOOPer's usage.
-- This feature also ensures that cOOPer's users experience something similar to having a personal account with cOOPer. For example, cOOPer's meetings feature allows the user logged in at the moment to view a list of meetings specific to them.
-- This feature has a reasonable level of security, with the implementation of a NIST recommended algorithm, the Password Based Key Derivation Function (PBKDF2) hashing algorithm with salt, for storing user passwords. The additional usage of salt makes user passwords insusceptible to rainbow-table attacks, hence more secure in the event that cOOPer's users have duplicate passwords.
+- **Feature 1:** Implemented the sign-in system for cOOPer
+  - This feature is what the user sees first upon launching cOOPer.
+  - It allows cOOPer's users to sign in to cOOPer with a username, password as well as the role they hold in the startup.
+  - Since users have different access to different features of cOOPer based on their role in the startup, this feature ensures the correct level of access is given to its users within the startup throughout cOOPer's usage.
+  - This feature also ensures that cOOPer's users experience something similar to having a personal account with cOOPer. For example, cOOPer's meetings feature allows the user logged in at the moment to view a list of meetings specific to them.
+  - This feature has a reasonable level of security, with the implementation of a NIST recommended algorithm, the Password Based Key Derivation Function (PBKDF2) hashing algorithm with salt, for storing user passwords. The additional usage of salt makes user passwords insusceptible to rainbow-table attacks, hence more secure in the event that cOOPer's users have duplicate passwords.
 
-**Feature 2:** Implemented the `generate` feature 
-- This feature generates one of cOOPer's financial statements (balance sheet or cash flow statement) as a LaTeX-formatted PDF document.
-- This feature allows the user to view a neatly-formatted financial statement which is may not always be possible when using a CLI.
-- The PDF document is generated with the help of an online LaTeX compiler, and in the event that there is no connection while using this feature, a backup text file is created representing the LaTeX file used to create the PDF.
-- I worked together with Ray on this feature, who came up with the code for sending a POST Request to the online LaTeX compiler. He also came up with the base LaTeX template for the PDF, and I made enhancements to the template which formatted the PDF like an actual financial statement.
+- **Feature 2:** Implemented the `generate` feature 
+  - This feature generates one of cOOPer's financial statements (balance sheet or cash flow statement) as a LaTeX-formatted PDF document.
+  - This feature allows the user to view a neatly-formatted financial statement which is may not always be possible when using a CLI.
+  - The PDF document is generated with the help of an online LaTeX compiler, and in the event that there is no connection while using this feature, a backup text file is created representing the LaTeX file used to create the PDF.
+  - I worked together with Ray on this feature, who came up with the code for sending a POST Request to the online LaTeX compiler. He also came up with the base LaTeX template for the PDF, and I made enhancements to the template which formatted the PDF like an actual financial statement.
 
-**Feature 3:** Implemented the storage feature for cOOPer
-- The storage feature loads and saves user data to and from storage files.
-- Some methods for this feature was reused from my [CS2113T Individual Project (iP)](https://github.com/theeugenechong/ip) as well as the idea of encoding and decoding objects into strings which can be written to and read from text files.
-- I came up with the 'template' for each of the `Storage` classes which each had a `load()` and `save()` method as well as a `encode()` and `decode()` method.
-- This storage feature also does error checking of the content in the storage files to ensure that the correct data is being loaded into cOOPer.
+- **Feature 3:** Implemented the storage feature for cOOPer
+  - The storage feature loads and saves user data to and from storage files.
+  - Some methods for this feature was reused from my [CS2113T Individual Project (iP)](https://github.com/theeugenechong/ip) as well as the idea of encoding and decoding objects into strings which can be written to and read from text files.
+  - I came up with the 'template' for each of the `Storage` classes which each had a `load()` and `save()` method as well as a `encode()` and `decode()` method.
+  - This storage feature also does error checking of the content in the storage files to ensure that the correct data is being loaded into cOOPer.
 
 ### Contributions to the User Guide
-**Contribution 1:** Documented the 'Getting Started' and 'Login' section
-- Provided explanations and steps for the startup to start using cOOPer. e.g. provided instructions on how cOOPer is to be used, as well as how roles are determined
-- Provided steps for registering and logging in as a user of cOOPer.
+- **Contribution 1:** Documented the 'Getting Started' and 'Login' section
+  - Provided explanations and steps for the startup to start using cOOPer. e.g. provided instructions on how cOOPer is to be used, as well as how roles are determined
+  - Provided steps for registering and logging in as a user of cOOPer.
 
-**Contribution 2:** Documented the `generate` feature
-- Since I implemented this feature, I explained the steps to use this feature, as well as additional information for users regarding the online compilation done.
+- **Contribution 2:** Documented the `generate` feature
+  - Since I implemented this feature, I explained the steps to use this feature, as well as additional information for users regarding the online compilation done.
 
-**Contribution 3:** Documented the storage feature
-- Provided explanations to the user on things like what is stored in each storage file, as well as when the storage file is updated throughout cOOPer's usage.
+- **Contribution 3:** Documented the storage feature
+  - Provided explanations to the user on things like what is stored in each storage file, as well as when the storage file is updated throughout cOOPer's usage.
 
-**Contribution 4:** Documented the 'Setup' section
-- Provided a beginner-friendly, step-by-step walkthrough for the user to set up cOOPer properly.
+- **Contribution 4:** Documented the 'Setup' section
+  - Provided a beginner-friendly, step-by-step walkthrough for the user to set up cOOPer properly.
 
-**Contribution 5:** Documented other minor features like `help` and `exit`
-- Provided explanations on how to use these commands.
+- **Contribution 5:** Documented other minor features like `help` and `exit`
+  - Provided explanations on how to use these commands.
 
-**Contribution 6:** Added some questions to the 'FAQ' section
+- **Contribution 6:** Added some questions to the 'FAQ' section
 
-**Contribution 7**: Came up with the 'How This User Guide Works' section
-- Created a table explaining the different formatting / symbols used in the user guide so that readers are able to use the guide with ease.
+- **Contribution 7**: Came up with the 'How This User Guide Works' section
+  - Created a table explaining the different formatting / symbols used in the user guide so that readers are able to use the guide with ease.
 
 ### Contributions to the Developer Guide
-**Contribution 1:** Documented the 'Setting Up and Getting Started' section 
-- Provided instructions for developers to set up cOOPer correctly.
+- **Contribution 1:** Documented the 'Setting Up and Getting Started' section 
+  - Provided instructions for developers to set up cOOPer correctly.
 
-**Contribution 2:** Came up with the layer diagram, architecture diagram and sequence diagrams under the 'Design' section
-- Briefly explained cOOPer's internal software architecture / design.
+- **Contribution 2:** Came up with the layer diagram, architecture diagram and sequence diagrams under the 'Design' section
+  - Briefly explained cOOPer's internal software architecture / design.
 
-**Contribution 3:** Documented the `Ui`, `Parser`, `Verification`, and `Storage` components under the 'Design' section
-- Came up with the class diagrams and explanations about the design of these components.
+- **Contribution 3:** Documented the `Ui`, `Parser`, `Verification`, and `Storage` components under the 'Design' section
+  - Came up with the class diagrams and explanations about the design of these components.
 
-**Contribution 4:** Documented the 'Verifying user credentials', 'Generating a PDF from the financial statement' and 'Saving and loading data' features under the 'Implementation' section
-- Came up with explanations and sequence diagrams for the implementation of these features.
+- **Contribution 4:** Documented the 'Verifying user credentials', 'Generating a PDF from the financial statement' and 'Saving and loading data' features under the 'Implementation' section
+  - Came up with explanations and sequence diagrams for the implementation of these features.
 
-**Contribution 5:** Came up with the 'How This Developer Guide Works' section
-- Created a table explaining the different formatting / symbols used in the developer guide 
+- **Contribution 5:** Came up with the 'How This Developer Guide Works' section
+  - Created a table explaining the different formatting / symbols used in the developer guide 
 
-**Contribution 6:** Added the `generate`, `help` and 'Launch and Shutdown' sections to manual testing
-- Provided steps on how to test this features.
+- **Contribution 6:** Added the `generate`, `help` and 'Launch and Shutdown' sections to manual testing
+  - Provided steps on how to test these features.
 
 ### Contribution to Team-based Tasks
 - Maintained the issue tracker (added issues, labels, milestones, proper descriptions etc.)
@@ -96,7 +96,7 @@ All the code I contributed for this project can be found at this [RepoSense link
 ### Contributions beyond the project team
 - [Reported bugs for the PE Dry Run](https://github.com/theeugenechong/ped/issues).
 
-### [Optional] Contribution to the User Guide
+## [Optional] Contribution to the User Guide
 
 Here is an extract of one of my contributions to the User Guide:
 
@@ -144,7 +144,7 @@ Here is an extract of one of my contributions to the User Guide:
 > > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
 > > 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
 
-### [Optional] Contribution to the Developer Guide
+## [Optional] Contribution to the Developer Guide
 
 Here is an extract of one of my contributions to the Developer Guide:
 
