@@ -70,11 +70,11 @@ The table below explains the formatting and symbols in this user guide.
 
 ## Acknowledgements
 This section includes the sources of code, documentation and third-party libraries reused / adapted in developing cOOPer.
-1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
-2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
-3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
-4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
-5. [Making a POST Request for LaTeX PDF Generation](https://www.baeldung.com/httpurlconnection-post)
+1. The [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) is a third-party library which eases the parsing of user input.
+2. The implementation of [the `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage) was adapted from one of our member's CS2113T Individual Project (iP). A few of the methods for file reading and file creation were reused.
+3. The implementation of the PBKDF2 algorithm for storing passwords was adapted from [this website](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html). The two methods for generating the hash as well as obtaining the salt were reused.
+4. The method used to convert an input stream to a file in `Util.java` was adapted from [this website](https://www.baeldung.com/convert-input-stream-to-a-file).
+5. The method used to make a _POST Request_ to an online LaTeX compiler was adapted from [this website](https://www.baeldung.com/httpurlconnection-post).
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
