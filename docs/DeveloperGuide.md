@@ -64,9 +64,9 @@ The table below explains the formatting and symbols in this user guide.
 ℹ️  |The info symbol indicates useful information about diagrams / content.
 💡     |The light bulb symbol indicates a useful tip which eases development of cOOPer.
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Acknowledgements
 This section includes the sources of code, documentation and third-party libraries reused / adapted in developing cOOPer.
@@ -76,9 +76,9 @@ This section includes the sources of code, documentation and third-party librari
 4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
 5. [Making a POST Request for LaTeX PDF Generation](https://www.baeldung.com/httpurlconnection-post)
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Setting Up and Getting Started
 
@@ -135,10 +135,10 @@ To exit, enter "exit".
   - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
+  
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
 
 ## Design
 
@@ -198,9 +198,9 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
     <img src="developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
 </p> 
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ### Ui Component
 
@@ -342,9 +342,9 @@ In the process of packaging cOOPer into a JAR application, these training files 
 - `inputStreamToString()` is used for cOOPer's [`generate`](UserGuide.md#generating-a-pdf-from-the-financial-statement--generate) feature which allows the user to generate a PDF file from data in cOOPer's balance sheet or cash flow statement. 
 This method is used to convert the `.tex` template files (located in `src/main/resources/pdf`) into a `String` object which can then be handled easily in the code. More details of the implementation can be found [here](#generating-a-pdf-from-the-financial-statement).
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Implementation
 
@@ -530,9 +530,9 @@ The following sequence diagram shows the general procedure of loading data from 
 - Cons:
   - Some methods are duplicated (e.g. `saveXYZ()`, `loadXYZ()`, etc.)
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Requirements
 
@@ -586,9 +586,9 @@ Example Users:
 * *UML* - Unified Modelling Language
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Instructions for Manual Testing
 
@@ -642,7 +642,7 @@ The `generate` command works regardless of whether the prompt label is showing `
    1. Ensure that you are logged in to cOOPer.
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
+   
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
