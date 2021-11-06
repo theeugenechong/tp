@@ -82,7 +82,6 @@ This section includes the sources of code, documentation and third-party librari
    1. Navigate to `src/main/java/cooper/Cooper.java`
    2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
    3. You should see the following output if the setup was done correctly:
-      
 ```
             /$$$$$$   /$$$$$$  /$$$$$$$
            /$$__  $$ /$$__  $$| $$__  $$
@@ -161,18 +160,20 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 - [`Storage`](#storage-component): Loads data from, and saves data to storage files in the computer hard disk.
 - [`Util`](#util-component): Provides utility which help with some of cOOPer's features.
 
-#### Interaction of the architecture components to process user input
+#### Interaction of the architecture components to sign in to a user account
 - The *sequence diagram* below shows how cOOPer's components interact with each other when a user enters their **sign in details** for verification.
 
-> ℹ️`userInput` represents the sign in details input by the user for verification. For example, `register John pw 12345 as admin`.
+> ℹ️`userInput` represents the sign in details input by the user for verification. For example, `register John /pw 12345 /as admin`.
 
 <p align="center">
     <img src="developerGuideDiagrams/signInSequenceDiagram.png" alt="signInSequenceDiagram"><br>
 </p> 
+#### Interaction of the architecture components to process user input
 
-- The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** after successfully logging in.
 
-> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
+- The sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** after successfully logging in.
+
+> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.
 > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
 <p align="center">
@@ -211,7 +212,7 @@ The `Ui` component:
 
 - The `Parser` component consists of an abstract `ParserBase` class with its children classes, `CommandParser` and `SignInDetailsParser`. 
 - To emphasize the different [layers](#overview) of cOOPer and to improve *cohesiveness*, different types of objects are constructed from user input at different layers. 
-User input at the verification layer will be parsed to construct a `SignInProtocol` object while user input at the features layer will be parsed to construct a `Command` object. 
+User input at the *verification layer* will be parsed to construct a `SignInProtocol` object while user input at the *features layer* will be parsed to construct a `Command` object. 
 - The `SignInProtocol` object executes the signing in of the user with details provided while the `Command` object executes the command input by the user.
 - `ParserBase` contains a reference to the `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library used by cOOPer. 
 More information about cOOPer's implementation of the library can be found [here](#parsing-user-input).
@@ -269,11 +270,30 @@ For example, [`ScheduleCommand`](https://github.com/AY2122S1-CS2113T-W13-4/tp/bl
 
 The `Command` component:
 - Executes a command entered by the user.
-- May make changes to the objects in [`Resources`](#resources-component) component depending on the command.
+- May request reference from [`Resources`](#resources-component) component and interface with feature managers depending on the goals of the command.
 - Performs the storage of data via the [`Storage`](#storage-component) component if there is any change to the data after the command is executed
 - Prints status messages or error messages to the output using the `Ui` component to inform the user of the status of command execution
 
 ### Resources Component
+
+**API**: [`Resources.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
+
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesComponent.png" alt="resourcesComponent"><br>
+</p>
+
+- The `Storage` component consists of a parent `Storage` class along with its subclasses as shown in the diagram above.
+- The `Storage` class contains a `filePath` attribute representing the path of the file where the data is to be stored. It also contains methods common to all its subclasses such as `getScanner()` and `createFileInDirectory()` which aid in the process of writing to and creating the storage file.
+- `Cooper` contains a reference to a `StorageManager` object. This `StorageManager` object in turn contains references to each of the subclasses of `Storage`.
+
+The `Storage` component:
+
+- Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
+- Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
+
+ResourcesManager manages access rights to feature managers based on UserRole
+
+
 
 #### Finance 
 
@@ -296,6 +316,11 @@ The `Command` component:
 The `Storage` component:
 - Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
 - Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
+> We do not put `Storage` class under `Resources` for 2 reasons:
+>
+> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features user can interact with and hence should not be kept under `ResourcesManager`.
+> 2. `Storage` has super priviledges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
+
 ### Util Component
 
 **API**: [`Util.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
@@ -538,10 +563,10 @@ Example Users:
    2. Launch the Command Prompt / Terminal from the folder.
    3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
    4. Run `java -jar cOOPer.jar`. <br>
-**Expected output:** cOOPer's greeting message is shown.
+   **Expected output:** cOOPer's greeting message is shown.
 2. Exiting cOOPer
    1. Enter `exit`.<br>
-**Expected output:** cOOPer's bye message is shown and the program exits successfully.
+   **Expected output:** cOOPer's bye message is shown and the program exits successfully.
 
 ### Sign-in
 To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label can be seen beside cOOPer's command prompt as such:
@@ -553,11 +578,11 @@ To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label
 1. Registering
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
    2. Enter `register [username] /pw [password] /as [role]` where `[username]` is your username, `[password]` is your password and `[role]` is one of 'admin' or 'employee'.<br>
-**Expected output:** A message informing you that you have successfully registered is shown.
+   **Expected output:** A message informing you that you have successfully registered is shown.
 2. Logging in
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
    2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.<br>
-**Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
+   **Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
 
 ### Viewing help
 1. Viewing help
