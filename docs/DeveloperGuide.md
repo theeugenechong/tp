@@ -312,7 +312,7 @@ The `Command` component:
 - The `Resources` component contains `ResourcesManager` which manages access rights to feature managers based on `UserRole`.
 
 
-  - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole== ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+  - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole == UserRole.ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
     ```java
     FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
@@ -430,7 +430,7 @@ When the user wants to schedule a meeting, `ScheduleCommand` will check if the u
 
 ### Interacting with forum
 
-The folloing sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
+The following sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
 
 + For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
 
@@ -446,7 +446,7 @@ The folloing sequence diagram shows 3 operations with forum. `addPost`, `comment
     <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
 </p>
 
-### Requesting a resources
+### Requesting a resource
 
 `Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`. 
 
