@@ -24,7 +24,6 @@ public class MeetingsCommand extends Command {
     @Override        
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
                         StorageManager storageManager) throws InvalidAccessException {
-        UserRole userRole = signInDetails.getUserRole();
         String username = signInDetails.getUsername();
         MeetingManager meetingManager = resourcesManager.getMeetingManager();
         MeetingsUi.printMeetings(meetingManager.getUserSpecificMeetings(username));

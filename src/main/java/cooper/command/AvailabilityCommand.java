@@ -24,7 +24,6 @@ public class AvailabilityCommand extends Command {
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, 
                         StorageManager storageManager) throws InvalidAccessException {
-        UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager();
         MeetingsUi.printAvailabilities(meetingManager.getAvailability());
     }
