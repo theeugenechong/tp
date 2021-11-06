@@ -46,7 +46,7 @@ public class ResourcesManager {
      * Use this give-receive pattern to get private members from ResourcesManager (Similar to friend class)
      * Pattern adepted from:
      * https://stackoverflow.com/questions/14226228/implementation-of-friend-concept-in-javat
-     */
+     **/
     public FinanceManager giveFinanceManager(StorageManager storageManager) {
         return storageManager.receiveFinanceManager(cooperFinanceManager);
     }
