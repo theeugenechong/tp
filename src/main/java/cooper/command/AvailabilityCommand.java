@@ -6,6 +6,7 @@ import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
 import cooper.verification.SignInDetails;
+import cooper.verification.UserRole;
 
 //@@author fansxx
 
@@ -23,7 +24,8 @@ public class AvailabilityCommand extends Command {
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, 
                         StorageManager storageManager) throws InvalidAccessException {
-        MeetingManager meetingManager = resourcesManager.getMeetingManager();
+        UserRole userRole = signInDetails.getUserRole();
+        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
         MeetingsUi.printAvailabilities(meetingManager.getAvailability());
     }
 }
