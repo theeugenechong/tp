@@ -33,6 +33,8 @@ This developer guide is for software designers, developers, and software testers
   - [Util component](#util-component)
 - [Implementation](#Implementation)
   - [Parsing user input](#parsing-user-input)
+  - [Interacting with forum](#interacting-with-forum)
+  - [Requesting a resource](#requesting-a-resource)
   - [Verifying user credentials](#verifying-user-credentials)
   - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
   - [Saving and loading data](#saving-and-loading-data)
@@ -48,6 +50,7 @@ This developer guide is for software designers, developers, and software testers
   - [Sign-in](#sign-in)
   - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Forum actions](#forum-actions)
 
 <div style="page-break-after: always;"></div>
 
@@ -64,21 +67,21 @@ The table below explains the formatting and symbols in this user guide.
 ℹ️  |The info symbol indicates useful information about diagrams / content.
 💡     |The light bulb symbol indicates a useful tip which eases development of cOOPer.
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Acknowledgements
 This section includes the sources of code, documentation and third-party libraries reused / adapted in developing cOOPer.
-1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
-2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
-3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
-4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
-5. [Making a POST Request for LaTeX PDF Generation](https://www.baeldung.com/httpurlconnection-post)
-
-<div style="page-break-after: always;"></div>
+1. The [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) is a third-party library which eases the parsing of user input.
+2. The implementation of [the `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage) was adapted from one of our member's CS2113T Individual Project (iP). A few of the methods for file reading and file creation were reused.
+3. The implementation of the PBKDF2 algorithm for storing passwords was adapted from [this website](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html). The two methods for generating the hash as well as obtaining the salt were reused.
+4. The method used to convert an input stream to a file in `Util.java` was adapted from [this website](https://www.baeldung.com/convert-input-stream-to-a-file).
+5. The method used to make a _POST Request_ to an online LaTeX compiler was adapted from [this website](https://www.baeldung.com/httpurlconnection-post).
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Setting Up and Getting Started
 
@@ -97,6 +100,7 @@ This section includes the sources of code, documentation and third-party librari
    1. Navigate to `src/main/java/cooper/Cooper.java`
    2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
    3. You should see the following output if the setup was done correctly:
+
 ```
             /$$$$$$   /$$$$$$  /$$$$$$$
            /$$__  $$ /$$__  $$| $$__  $$
@@ -135,9 +139,9 @@ To exit, enter "exit".
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Design
 
@@ -190,16 +194,16 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 
 - The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
 
-> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.
+> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
 > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
 <p align="center">
     <img src="developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
 </p> 
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ### Ui Component
 
@@ -208,7 +212,6 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 <p align="center">
     <img src="developerGuideDiagrams/uiComponent.png" alt="uiComponent"><br>
 </p> 
-
 
 - The `Ui` component consists of a parent `Ui` class and its subclasses as shown by the class diagram above.
 - The parent `Ui` class contains general constants and methods used across cOOPer's components which read user input and print recurring messages.
@@ -231,7 +234,6 @@ The `Ui` component:
     <img src="developerGuideDiagrams/parserComponent.png" alt="parserComponent"><br>
 </p>
 
-
 - The `Parser` component consists of an abstract `ParserBase` class with its subclasses, `CommandParser` and `SignInDetailsParser`. 
 - To emphasize the different [layers](#overview) of cOOPer and to increase cohesiveness, different types of objects are constructed from user input at different layers. 
 User input at the _verification layer_ will be parsed to construct a `SignInProtocol` object while user input at the _features layer_ will be parsed to construct a `Command` object. 
@@ -249,7 +251,7 @@ The `Parser`component:
 
 ### Verification Component
 
-**API**: [`Verifier.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
+**API**: [`cooper.verification`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
 
 <p align="center">
     <img src="developerGuideDiagrams/verificationComponent.png" alt="verificationComponent"><br>
@@ -304,18 +306,27 @@ The `Command` component:
 
 ### Resources Component
 
-**API**: [`Resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
+**API**: [`cooper.resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
 
 <p align="center">
     <img src="developerGuideDiagrams/resourcesComponent.png" alt="resourcesComponent"><br>
 </p>
 
 - The `Resources` component contains `ResourcesManager` which manages access rights to feature managers based on `UserRole`.
-- It also implements a *give-receive* pattern to pass private members of `ResourcesManager` class to `StorageManager` safely. This is because `StorageManager` has "super privilege" to access internal data structures of feature managers and save to/ load from hard disk.
+
+
+  - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole== ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+
+    ```java
+    FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
+    ```
+
+
+- It also implements a *give-receive* pattern to pass private members of `ResourcesManager` class to `StorageManager` safely. This is because `StorageManager` has "super privilege" to access internal data structures of feature managers and save to/ load from hard disk. 
 
 The `Resources` component:
 
-- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only `Admin` is able to get `FinanceManager` successfully.
+- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only an *admin* is able to get `FinanceManager` successfully.
 - Returns references to `StorageManager` safely upon request.
 
 
@@ -340,25 +351,25 @@ The `Finance` component:
 
 #### Forum
 
-**API**: [`Forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
+**API**: [`cooper.forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
 
 <p align="center">
     <img src="developerGuideDiagrams/forumComponent.png" alt="forumComponent"><br>
 </p>
 
-+ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contains the attributes `content` and `username`. 
++ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contain the attributes `content` and `username`. 
 + Forum posts are stored in a hierarchical way where`ForumManager` keeps a list of `ForumPost`s and each `ForumPost` keeps a list of `ForumComment`s.
 
 The `Forum` component:
 
 + handles adding/deleting/listing of posts, comments
-+ a forum post or comment is only deleted if the user requesting the action *owns* the post or comment, i.e. the username of request body must match the username field of the post or comment.
++ Deletes a post or comment only if the user requesting the action *owns* the post or comment, i.e. the username of request body must match the username field of the post or comment.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Storage Component
 
-**API**: [`Storage.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
+**API**: [`cooper.storage`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
 
 <p align="center">
     <img src="developerGuideDiagrams/storageComponent.png" alt="storageComponent"><br>
@@ -371,10 +382,10 @@ The `Forum` component:
 The `Storage` component:
 - Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
 - Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
-> We do not put `Storage` class under `Resources` for 2 reasons:
->
-> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features user can interact with and hence should not be kept under `ResourcesManager`.
-> 2. `Storage` has super priviledges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
+
+> ℹ️We do not put `Storage` class under `Resources` for 2 reasons:<br>
+> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features the user can interact with and hence should not be kept under `ResourcesManager`.
+> 2. `Storage` has super privileges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -389,9 +400,9 @@ In the process of packaging cOOPer into a JAR application, these training files 
 - `inputStreamToString()` is used for cOOPer's [`generate`](UserGuide.md#generating-a-pdf-from-the-financial-statement--generate) feature which allows the user to generate a PDF file from data in cOOPer's balance sheet or cash flow statement. 
 This method is used to convert the `.tex` template files (located in `src/main/resources/pdf`) into a `String` object which can then be handled easily in the code. More details of the implementation can be found [here](#generating-a-pdf-from-the-financial-statement).
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Implementation
 
@@ -413,8 +424,7 @@ into the following fields:
   "role-hint" : admin }
 ```
 
-This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command 
-and adding new commands to cOOPer for new features become trivial.
+This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command and adding new commands to cOOPer for new features become trivial.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -459,25 +469,36 @@ When the user wants to list a financial statement, `FinanceManager` will run a c
 When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
 ### Forum 
 
-`Forum` provides features like posting a forum thread, commenting on a post, listing posts. 
+### Interacting with forum
 
-#### Forum module descriptions
+The folloing sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
 
-`ForumManager` stores a list of `ForumPost`objects. Each `ForumPost` object stores a list of `ForumComment` objects. Both `ForumPost` and `ForumComment` need to store two attributes, username and content. When a user wants to delete a post or comment, `ForumManager` will check if the username of the post matches the user performing the action and deletion is successful only if these two are a match.
++ For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
 
-### Resources
++ For commenting on a post, `ForumManager` will first check if the `postId` specified is a valid index. If it is not, an exception will be thrown. Otherwise, it will get the `ForumPost` by its `postId` and add a new `ForumComment` to it.
 
-`Resources` manages other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`.
++ For deleting a post, `ForumManager` will again check the `postId` and delete the post only if the `postId` is valid.
 
-#### Resources module descriptions
+  > ℹ️ In the actual implementation, `ForumManager` will also ensure the username of the user requesting for the `deletePost` operation matches the *owner* of the forum post. This checking is omitted in this sequence diagram for simplicity and represented as the method call to`remove(postId)`.
 
-`ResourcesManager` grants reference to other manager modules for different `Command` objects to perform their execution functions  by checking the `UserRole`. For example, 
 
-```java 
-FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-```
 
-will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+<p align="center">
+    <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Requesting a resource
+
+`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
+
++ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
++ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private memebers are passes safely using `give-receive` pattern, instead of universal `getters`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
+</p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -557,7 +578,7 @@ The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGener
 
 #### Compiling the LaTeX code online
 `createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. Iterating through the `ArrayList`, these templates are then appended together using `append()`.
-This forms a long `String` which is then sent to the online LaTeX compiler via a [POST request](https://en.wikipedia.org/wiki/POST_(HTTP)). The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
+This forms a long `String` which is then sent to the online LaTeX compiler via a POST request. The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -597,9 +618,9 @@ The following sequence diagram shows the general procedure of loading data from 
 - Cons:
   - Some methods are duplicated (e.g. `saveXYZ()`, `loadXYZ()`, etc.)
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Requirements
 
@@ -651,11 +672,13 @@ Example Users:
 * *IDE* - Integrated Development Environment
 * *JDK* - Java Development Kit
 * *UML* - Unified Modelling Language
+* *API* - Application Programming Interface
+* *POST Request* - A request used to send data to the server to create or update a resource
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Instructions for Manual Testing
 
@@ -664,10 +687,10 @@ Example Users:
    1. Download cOOPer's latest JAR file [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) and copy the JAR file into an empty folder.
    2. Launch the Command Prompt / Terminal from the folder.
    3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
-   4. Run `java -jar cOOPer.jar`. 
+   4. Run `java -jar cOOPer.jar`. <br>
    **Expected output:** cOOPer's greeting message is shown.
 2. Exiting cOOPer
-   1. Enter `exit`.
+   1. Enter `exit`.<br>
    **Expected output:** cOOPer's bye message is shown and the program exits successfully.
 
 ### Sign-in
@@ -710,6 +733,28 @@ The `generate` command works regardless of whether the prompt label is showing `
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
 
-<div style="page-break-after: always;"></div>
+### Forum actions
+
+1. Adding a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `post add hello world`
+      **Expected output**: A box with the content you just entered as confirmation
+2. Commenting a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least 1 post
+   3. Enter `post comment hello world 2 /on 1`
+      **Expected output**: A box with the post and your comment you just entered as confirmation
+3. Deleting a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least 1 post
+   3. Enter `post delete 1`
+      Expected output: A box with the post you just deleted as confirmation
+4. Listing all posts
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least 1 post
+   3. Enter `post list all`
+      **Expected output**: A box containing all posts and comments you have entered so far
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>

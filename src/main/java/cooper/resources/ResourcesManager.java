@@ -22,7 +22,7 @@ public class ResourcesManager {
 
     
     public FinanceManager getFinanceManager(UserRole userRole) {
-        if (userRole.equals(UserRole.ADMIN)) {
+        if (checkFinanceAccessibility(userRole)) {
             return cooperFinanceManager;
         } else {
             return null;
@@ -30,21 +30,41 @@ public class ResourcesManager {
     }
 
     public MeetingManager getMeetingManager(UserRole userRole) {
-        if (userRole.equals(UserRole.ADMIN)) {
+        if (checkMeetingAccessibility(userRole)) {
             return cooperMeetingManager;
         } else {
             return null;
         }
     }
 
+    public MeetingManager getMeetingManager() {
+        return cooperMeetingManager;
+    }
+
     public ForumManager getForumManager(UserRole userRole) {
-        return cooperForumManager;
+        if (checkForumAccessibility(userRole)) {
+            return cooperForumManager;
+        } else {
+            return null;
+        }
+    }
+
+    private boolean checkFinanceAccessibility(UserRole userRole) {
+        return (userRole.equals(UserRole.ADMIN));
+    }
+
+    private boolean checkMeetingAccessibility(UserRole userRole) {
+        return (userRole.equals(UserRole.ADMIN));
+    }
+
+    private boolean checkForumAccessibility(UserRole userRole) {
+        return (userRole.equals(UserRole.ADMIN) || userRole.equals(UserRole.EMPLOYEE));
     }
 
     /**
      * Storage class has "super privilege" to access private member in resources class.
      * Use this give-receive pattern to get private members from ResourcesManager (Similar to friend class)
-     * Pattern adepted from:
+     * Pattern adapted from:
      * https://stackoverflow.com/questions/14226228/implementation-of-friend-concept-in-javat
      **/
     public FinanceManager giveFinanceManager(StorageManager storageManager) {
