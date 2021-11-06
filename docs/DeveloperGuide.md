@@ -33,6 +33,8 @@ This developer guide is for software designers, developers, and software testers
   - [Util component](#util-component)
 - [Implementation](#Implementation)
   - [Parsing user input](#parsing-user-input)
+  - [Interacting with forum](#interacting-with-forum)
+  - [Requesting a resource](#requesting-a-resource)
   - [Verifying user credentials](#verifying-user-credentials)
   - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
   - [Saving and loading data](#saving-and-loading-data)
@@ -447,19 +449,18 @@ The folloing sequence diagram shows 3 operations with forum. `addPost`, `comment
     <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
 </p>
 
-### Requesting a resources
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
-`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`. 
+### Requesting a resource
 
-#### Resources module descriptions
+`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
 
++ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
++ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private memebers are passes safely using `give-receive` pattern, instead of universal `getters`.
 
-
-
-
-
-
-
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
+</p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
