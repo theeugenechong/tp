@@ -7,7 +7,9 @@ import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
 
 //@@author Rrraaaeee
-
+/**
+ * Logs the user out of their current account.
+ */
 public class LogoutCommand extends Command {
 
     @Override
@@ -15,5 +17,4 @@ public class LogoutCommand extends Command {
                         StorageManager storageManager) {
         CommandParser.setCooperState(CooperState.LOGOUT);
     }
-
 }

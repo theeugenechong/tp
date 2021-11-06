@@ -12,14 +12,21 @@ import java.io.IOException;
 public class FileIoUi extends Ui {
 
     private static final String FILE_WRITE_ERROR = "Error writing to file: ";
-    private static final String FILE_CREATION_ERROR = "Error creating storage file: ";
+    private static final String STORAGE_FILE_CREATION_ERROR = "Error creating storage file: ";
     private static final String INVALID_FILE_DATA = "Invalid file data in storage file: ";
-    private static final String PDF_SUCCESSFUL = "The pdf file has been successfully generated!";
-    private static final String BACKUP_FILE_SUCCESSFUL = "The backup file has been successfully created!";
+
+    private static final String PDF_SUCCESSFUL = "The PDF has been successfully generated!";
+    private static final String PDF_GENERATION_ERROR = "There was an error generating the PDF: ";
+
+    private static final String CREATING_BACKUP = "Creating backup file now...";
+    private static final String BACKUP_FILE_SUCCESSFUL = "The backup .txt file has been successfully created!";
+    private static final String BACKUP_CREATION_ERROR = "There was an error creating the backup .txt file: ";
+
     private static final String POST_REQUEST_ERROR = "Error encountered when sending post request!";
     private static final String CONNECTION_PROBLEM = "There was a problem with your connection.";
-    private static final String CREATING_BACKUP = "Creating backup file now...";
+
     private static final String LATEX_URL_INCORRECT = "The URL provided for LaTex compilation is incorrect!";
+
 
     /**
      * Informs user that there was an error writing data to the file.
@@ -36,7 +43,7 @@ public class FileIoUi extends Ui {
      **/
     public static void showFileCreationError(IOException e) {
         show(LINE);
-        show(FILE_CREATION_ERROR, false);
+        show(STORAGE_FILE_CREATION_ERROR, false);
         show(e.getMessage(), true);
         show(LINE);
     }
@@ -61,11 +68,31 @@ public class FileIoUi extends Ui {
     }
 
     /**
+     * Informs user that there was an error creating the pdf along with the error.
+     */
+    public static void showPdfGenerationError(IOException e) {
+        show(LINE);
+        show(PDF_GENERATION_ERROR, false);
+        show(e.getMessage(), true);
+        show(LINE);
+    }
+
+    /**
      * Informs use that the backup file for the pdf has been created successfully.
      */
     public static void showBackupFileSuccessfullyCreated() {
         show(LINE);
         show(BACKUP_FILE_SUCCESSFUL);
+        show(LINE);
+    }
+
+    /**
+     * Informs the user that there was an error creating the backup file for the pdf.
+     */
+    public static void showBackupFileCreationError(IOException e) {
+        show(LINE);
+        show(BACKUP_CREATION_ERROR, false);
+        show(e.getMessage(), true);
         show(LINE);
     }
 
