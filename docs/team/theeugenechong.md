@@ -5,6 +5,8 @@ cOOPer is a **Command Line Interface (CLI) desktop application** developed to si
 
 cOOPer was developed in Java following an **Object-Oriented Programming (OOP)** paradigm, hence the letters OOP in its name.
 
+<div style="page-break-after: always;"></div>
+
 ## Summary of Contributions
 
 ### Code Contributed
@@ -30,6 +32,8 @@ All the code I contributed for this project can be found at this [RepoSense link
   - I came up with the 'template' for each of the `Storage` classes which each had a `load()` and `save()` method as well as a `encode()` and `decode()` method.
   - This storage feature also does error checking of the content in the storage files to ensure that the correct data is being loaded into cOOPer.
 
+<div style="page-break-after: always;"></div>
+
 ### Contributions to the User Guide
 - **Contribution 1:** Documented the 'Getting Started' and 'Login' section
   - Provided explanations and steps for the startup to start using cOOPer. e.g. provided instructions on how cOOPer is to be used, as well as how roles are determined
@@ -52,6 +56,8 @@ All the code I contributed for this project can be found at this [RepoSense link
 - **Contribution 7**: Came up with the 'How This User Guide Works' section
   - Created a table explaining the different formatting / symbols used in the user guide so that readers are able to use the guide with ease.
 
+<div style="page-break-after: always;"></div>
+
 ### Contributions to the Developer Guide
 - **Contribution 1:** Documented the 'Setting Up and Getting Started' section 
   - Provided instructions for developers to set up cOOPer correctly.
@@ -70,6 +76,8 @@ All the code I contributed for this project can be found at this [RepoSense link
 
 - **Contribution 6:** Added the `generate`, `help` and 'Launch and Shutdown' sections to manual testing
   - Provided steps on how to test these features.
+
+<div style="page-break-after: always;"></div>
 
 ### Contribution to Team-based Tasks
 - Maintained the issue tracker (added issues, labels, milestones, proper descriptions etc.)
@@ -95,6 +103,8 @@ All the code I contributed for this project can be found at this [RepoSense link
 
 ### Contributions beyond the project team
 - [Reported bugs for the PE Dry Run](https://github.com/theeugenechong/ped/issues).
+
+<div style="page-break-after: always;"></div>
 
 ## [Optional] Contribution to the User Guide
 
@@ -143,6 +153,8 @@ Here is an extract of one of my contributions to the User Guide:
 > 
 > > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
 > > 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
+
+<div style="page-break-after: always;"></div>
 
 ## [Optional] Contribution to the Developer Guide
 
@@ -205,4 +217,6 @@ Here is an extract of one of my contributions to the Developer Guide:
 > <p align="center">
 >     <img src="../developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
 > </p> 
+
+<div style="page-break-after: always;"></div>
 
