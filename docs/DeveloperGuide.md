@@ -614,6 +614,8 @@ Example Users:
 * *IDE* - Integrated Development Environment
 * *JDK* - Java Development Kit
 * *UML* - Unified Modelling Language
+* *API* - Application Programming Interface
+* *POST Request* - A request used to send data to the server to create or update a resource
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
