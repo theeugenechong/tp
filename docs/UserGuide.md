@@ -130,13 +130,15 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 ## cOOPer's Commands
 
-Here are some things to note about cOOPer's **commands**.
+Here are some things to note about cOOPer's **commands**.<br>
+
 ℹ️Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
 ℹ️For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
 ℹ️All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.<br>
 ℹ️Empty input (for e.g. simply pressing <kbd>Enter</kbd>, entering whitespaces or <kbd>Tab</kbd> characters) will be ignored and cOOPer will continue prompting you for your next command.<br>
 
 Here is some additional information about cOOPer's **command prompt**.<br>
+
 ℹ️At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt.<br> 
 ℹ️There are **three** types of labels you will see:
   - `[Logged out]` indicates you are currently **logged out** of cOOPer
