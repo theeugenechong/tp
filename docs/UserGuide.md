@@ -378,7 +378,7 @@ Sebastian has just deleted a post from the forum:
 - How to input your availability:
   1. Enter `available [date] [time]`.
   2. You will now have your name stored under the specified time in the system.
-  
+
 > ℹ️`[time]` refers to the **start of the hour** that you are available at. For example, `available 14:00` means that you are available from **14:00** to **14:59**.<br>
 > ⚠️`[date]` has a format of **dd-MM-yyyy**. Any other format will **not** be accepted and your availability will not be stored. <br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.<br>
@@ -763,7 +763,7 @@ The pdf file has been successfully generated!
   1. Enter `schedule [meetingName] /with [username1], [username2] /at [date] [time]`.
   2. cOOPer will check if the users are all available at the time specified.
   3. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with all the users at that specified time.
-  
+
 > ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. <br>
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
 > 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
@@ -917,8 +917,8 @@ This section contains some frequently asked questions you may have when using cO
 
 **Command** | **Format**                          | **Example**
 ------------|-------------------------------------|------------
-register    |`register [username] pw [password] as [role]` |`register Sebastian pw 123 as admin`
-login       |`login [username] pw [password] as [role]` |`login Sebastian pw 123 as admin`
+register    |`register [username] /pw [password] /as [role]` |`register Sebastian /pw 123 /as admin`
+login       |`login [username] /pw [password] /as [role]` |`login Sebastian /pw 123 /as admin`
 exit        |`exit`                               |`exit`
 
 ### Admin Commands
@@ -927,7 +927,7 @@ exit        |`exit`                               |`exit`
 ------------|-------------------------------------|------------
 post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
-post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
+post comment|`post comment [commentContent] /on [postId]`|`post comment I'm up! /on 1`
 post delete |`post delete [postId]`               |`post delete 1`
 bs          |`bs`                                 |`bs`
 cf          |`cf`                                 |`cf`
@@ -937,7 +937,7 @@ list        |`list`                               |`list`
 generate    |`generate [financialStatement]`      |`generate bs`
 available   |`available [time]`                   |`available 14:00`
 availability|`availability`                       |`availability`
-schedule    |`schedule [meetingName] with [username1], [username2]` or `schedule [meetingName] with [username1], [username2] /at [time]`|`schedule Progress Meeting with Sebastian, Eugene` or `schedule Progress Meeting with Sebastian, Eugene /at 14:00`
+schedule    |`schedule [meetingName] /with [username1], [username2]` or `schedule [meetingName] /with [username1], [username2] /at [time]`|`schedule Progress Meeting /with Sebastian, Eugene` or `schedule Progress Meeting /with Sebastian, Eugene /at 14:00`
 meetings    |`meetings`                           |`meetings`
 logout      |`logout`                             |`logout`
 exit        |`exit`                               |`exit`
@@ -948,9 +948,9 @@ exit        |`exit`                               |`exit`
 ------------|-------------------------------------|------------
 post add    |`post add [postContent]`             |`post add Who's up for dinner? :D`
 post list   |`post list all` or `post list [postId]`|`post list all` or `post list 1`
-post comment|`post comment [commentContent] on [postId]`|`post comment I'm up! on 1`
+post comment|`post comment [commentContent] /on [postId]`|`post comment I'm up! /on 1`
 post delete |`post delete [postId]`               |`post delete 1`
-available   |`available at [time]`                |`available 14:00`
+available   |`available [date] [time]`                |`available 08-11-2021 14:00`
 availability|`availability`                       |`availability`
 meetings    |`meetings`                           |`meetings`
 logout      |`logout`                             |`logout`
