@@ -64,21 +64,21 @@ The table below explains the formatting and symbols in this user guide.
 ℹ️  |The info symbol indicates useful information about diagrams / content.
 💡     |The light bulb symbol indicates a useful tip which eases development of cOOPer.
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Acknowledgements
 This section includes the sources of code, documentation and third-party libraries reused / adapted in developing cOOPer.
-1. [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli)
-2. [Implementation of `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage)
-3. [Implementation of PBKDF2 algorithm for storing passwords](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html)
-4. [Converting input stream to file in `Util.java`](https://www.baeldung.com/convert-input-stream-to-a-file)
-5. [Making a POST Request for LaTeX PDF Generation](https://www.baeldung.com/httpurlconnection-post)
-
-<div style="page-break-after: always;"></div>
+1. The [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) is a third-party library which eases the parsing of user input.
+2. The implementation of [the `Storage` component](https://github.com/theeugenechong/ip/tree/master/src/main/java/duke/storage) was adapted from one of our member's CS2113T Individual Project (iP). A few of the methods for file reading and file creation were reused.
+3. The implementation of the PBKDF2 algorithm for storing passwords was adapted from [this website](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html). The two methods for generating the hash as well as obtaining the salt were reused.
+4. The method used to convert an input stream to a file in `Util.java` was adapted from [this website](https://www.baeldung.com/convert-input-stream-to-a-file).
+5. The method used to make a _POST Request_ to an online LaTeX compiler was adapted from [this website](https://www.baeldung.com/httpurlconnection-post).
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Setting Up and Getting Started
 
@@ -97,6 +97,7 @@ This section includes the sources of code, documentation and third-party librari
    1. Navigate to `src/main/java/cooper/Cooper.java`
    2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
    3. You should see the following output if the setup was done correctly:
+
 ```
             /$$$$$$   /$$$$$$  /$$$$$$$
            /$$__  $$ /$$__  $$| $$__  $$
@@ -134,10 +135,10 @@ To exit, enter "exit".
   - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
+  
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
 
 ## Design
 
@@ -190,16 +191,16 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 
 - The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
 
-> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.
+> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
 > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
 <p align="center">
     <img src="developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
 </p> 
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ### Ui Component
 
@@ -208,7 +209,6 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 <p align="center">
     <img src="developerGuideDiagrams/uiComponent.png" alt="uiComponent"><br>
 </p> 
-
 
 - The `Ui` component consists of a parent `Ui` class and its subclasses as shown by the class diagram above.
 - The parent `Ui` class contains general constants and methods used across cOOPer's components which read user input and print recurring messages.
@@ -231,7 +231,6 @@ The `Ui` component:
     <img src="developerGuideDiagrams/parserComponent.png" alt="parserComponent"><br>
 </p>
 
-
 - The `Parser` component consists of an abstract `ParserBase` class with its subclasses, `CommandParser` and `SignInDetailsParser`. 
 - To emphasize the different [layers](#overview) of cOOPer and to increase cohesiveness, different types of objects are constructed from user input at different layers. 
 User input at the _verification layer_ will be parsed to construct a `SignInProtocol` object while user input at the _features layer_ will be parsed to construct a `Command` object. 
@@ -249,7 +248,7 @@ The `Parser`component:
 
 ### Verification Component
 
-**API**: [`Verifier.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
+**API**: [`cooper.verification`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
 
 <p align="center">
     <img src="developerGuideDiagrams/verificationComponent.png" alt="verificationComponent"><br>
@@ -304,7 +303,7 @@ The `Command` component:
 
 ### Resources Component
 
-**API**: [`Resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
+**API**: [`cooper.resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
 
 <p align="center">
     <img src="developerGuideDiagrams/resourcesComponent.png" alt="resourcesComponent"><br>
@@ -315,7 +314,7 @@ The `Command` component:
 
 The `Resources` component:
 
-- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only `Admin` is able to get `FinanceManager` successfully.
+- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only an *admin* is able to get `FinanceManager` successfully.
 - Returns references to `StorageManager` safely upon request.
 
 #### Finance 
@@ -324,13 +323,13 @@ The `Resources` component:
 
 #### Forum
 
-**API**: [`Forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
+**API**: [`cooper.forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
 
 <p align="center">
     <img src="developerGuideDiagrams/forumComponent.png" alt="forumComponent"><br>
 </p>
 
-+ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contains the attributes `content` and `username`. 
++ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contain the attributes `content` and `username`. 
 + Forum posts are stored in a hierarchical way where`ForumManager` keeps a list of `ForumPost`s and each `ForumPost` keeps a list of `ForumComment`s.
 
 The `Forum` component:
@@ -342,7 +341,7 @@ The `Forum` component:
 
 ### Storage Component
 
-**API**: [`Storage.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
+**API**: [`cooper.storage`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
 
 <p align="center">
     <img src="developerGuideDiagrams/storageComponent.png" alt="storageComponent"><br>
@@ -355,10 +354,10 @@ The `Forum` component:
 The `Storage` component:
 - Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
 - Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
-> We do not put `Storage` class under `Resources` for 2 reasons:
->
-> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features user can interact with and hence should not be kept under `ResourcesManager`.
-> 2. `Storage` has super priviledges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
+
+> ℹ️We do not put `Storage` class under `Resources` for 2 reasons:<br>
+> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features the user can interact with and hence should not be kept under `ResourcesManager`.
+> 2. `Storage` has super privileges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -373,9 +372,9 @@ In the process of packaging cOOPer into a JAR application, these training files 
 - `inputStreamToString()` is used for cOOPer's [`generate`](UserGuide.md#generating-a-pdf-from-the-financial-statement--generate) feature which allows the user to generate a PDF file from data in cOOPer's balance sheet or cash flow statement. 
 This method is used to convert the `.tex` template files (located in `src/main/resources/pdf`) into a `String` object which can then be handled easily in the code. More details of the implementation can be found [here](#generating-a-pdf-from-the-financial-statement).
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Implementation
 
@@ -521,7 +520,7 @@ The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGener
 
 #### Compiling the LaTeX code online
 `createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. Iterating through the `ArrayList`, these templates are then appended together using `append()`.
-This forms a long `String` which is then sent to the online LaTeX compiler via a [POST request](https://en.wikipedia.org/wiki/POST_(HTTP)). The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
+This forms a long `String` which is then sent to the online LaTeX compiler via a POST request. The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -561,9 +560,9 @@ The following sequence diagram shows the general procedure of loading data from 
 - Cons:
   - Some methods are duplicated (e.g. `saveXYZ()`, `loadXYZ()`, etc.)
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Requirements
 
@@ -615,11 +614,13 @@ Example Users:
 * *IDE* - Integrated Development Environment
 * *JDK* - Java Development Kit
 * *UML* - Unified Modelling Language
+* *API* - Application Programming Interface
+* *POST Request* - A request used to send data to the server to create or update a resource
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
-<div style="page-break-after: always;"></div>
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Instructions for Manual Testing
 
@@ -673,7 +674,7 @@ The `generate` command works regardless of whether the prompt label is showing `
    1. Ensure that you are logged in to cOOPer.
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
+   
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
