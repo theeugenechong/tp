@@ -43,16 +43,16 @@ public class FinanceUi extends Ui {
     private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are future year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
 
-    private static final String MORE_THAN_TWO_BILLION = "more than 2 Billion SGD";
-    private static final String LESS_THAN_TWO_BILLION = "less than -2 Billion SGD";
+    private static final String MORE_THAN_ONE_BILLION = "1 Billion SGD or more ";
+    private static final String LESS_THAN_ONE_BILLION = "-1 Billion SGD or more ";
     private static final String ADDED_AS = " has been added as ";
     private static final String AFTER = "After ";
     private static final String YEAR = " Year: ";
 
-    private static final int AMOUNT_UPPER_LIMIT = 2_000_000_000;
-    private static final int AMOUNT_LOWER_LIMIT = -2_000_000_000;
-    private static final int PROJECTION_UPPER_LIMIT = 2_000_000_000;
-    private static final int PROJECTION_LOWER_LIMIT = -2_000_000_000;
+    private static final int AMOUNT_UPPER_LIMIT = 1_000_000_000;
+    private static final int AMOUNT_LOWER_LIMIT = -1_000_000_000;
+    private static final int PROJECTION_UPPER_LIMIT = 1_000_000_000;
+    private static final int PROJECTION_LOWER_LIMIT = -1_000_000_000;
 
     private static final String CAN_ONLY_GENERATE_BS_OR_CF =
             "The financial statement you want to generate can only be 'bs' or 'cf'!";
@@ -115,24 +115,24 @@ public class FinanceUi extends Ui {
             switch (i) {
             case FinanceManager.endOfAssets:
                 show(BALANCE_SHEET_UI[i] + balanceSheet.get(i));
-                if (FinanceManager.netAssets >= AMOUNT_LOWER_LIMIT && FinanceManager.netAssets <= AMOUNT_UPPER_LIMIT) {
+                if (FinanceManager.netAssets > AMOUNT_LOWER_LIMIT && FinanceManager.netAssets < AMOUNT_UPPER_LIMIT) {
                     show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
-                } else if (FinanceManager.netAssets > AMOUNT_UPPER_LIMIT) {
-                    show(NET_AMOUNTS_UI[3] + MORE_THAN_TWO_BILLION);
+                } else if (FinanceManager.netAssets >= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[3] + MORE_THAN_ONE_BILLION);
                 } else {
-                    show(NET_AMOUNTS_UI[3] + " " + LESS_THAN_TWO_BILLION);
+                    show(NET_AMOUNTS_UI[3] + " " + LESS_THAN_ONE_BILLION);
                 }
                 show(HEADERS_UI[4]);
                 break;
             case FinanceManager.endOfLiabilities:
                 show(BALANCE_SHEET_UI[i] + balanceSheet.get(i));
-                if (FinanceManager.netLiabilities >= AMOUNT_LOWER_LIMIT
-                        && FinanceManager.netLiabilities <= AMOUNT_UPPER_LIMIT) {
+                if (FinanceManager.netLiabilities > AMOUNT_LOWER_LIMIT
+                        && FinanceManager.netLiabilities < AMOUNT_UPPER_LIMIT) {
                     show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
-                } else if (FinanceManager.netLiabilities > AMOUNT_UPPER_LIMIT) {
-                    show(NET_AMOUNTS_UI[4] + MORE_THAN_TWO_BILLION);
+                } else if (FinanceManager.netLiabilities >= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[4] + MORE_THAN_ONE_BILLION);
                 } else {
-                    show(NET_AMOUNTS_UI[4] + " " + LESS_THAN_TWO_BILLION);
+                    show(NET_AMOUNTS_UI[4] + " " + LESS_THAN_ONE_BILLION);
                 }
                 show(HEADERS_UI[5]);
                 break;
@@ -143,12 +143,12 @@ public class FinanceUi extends Ui {
         }
 
         if (i == balanceSheet.size()) {
-            if (FinanceManager.netSE >= AMOUNT_LOWER_LIMIT && FinanceManager.netSE <= AMOUNT_UPPER_LIMIT) {
+            if (FinanceManager.netSE > AMOUNT_LOWER_LIMIT && FinanceManager.netSE < AMOUNT_UPPER_LIMIT) {
                 show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
-            } else if (FinanceManager.netSE > AMOUNT_UPPER_LIMIT) {
-                show(NET_AMOUNTS_UI[5] + MORE_THAN_TWO_BILLION);
+            } else if (FinanceManager.netSE >= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[5] + MORE_THAN_ONE_BILLION);
             } else {
-                show(NET_AMOUNTS_UI[5] + " " + LESS_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[5] + " " + LESS_THAN_ONE_BILLION);
             }
         }
 
@@ -192,23 +192,23 @@ public class FinanceUi extends Ui {
             switch (i) {
             case FinanceManager.endOfOA:
                 show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
-                if (FinanceManager.netOA >= AMOUNT_LOWER_LIMIT && FinanceManager.netOA <= AMOUNT_UPPER_LIMIT) {
+                if (FinanceManager.netOA > AMOUNT_LOWER_LIMIT && FinanceManager.netOA < AMOUNT_UPPER_LIMIT) {
                     show(NET_AMOUNTS_UI[0] + " " + FinanceManager.netOA);
-                } else if (FinanceManager.netOA > AMOUNT_UPPER_LIMIT) {
-                    show(NET_AMOUNTS_UI[0] + " " + MORE_THAN_TWO_BILLION);
+                } else if (FinanceManager.netOA >= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[0] + " " + MORE_THAN_ONE_BILLION);
                 } else {
-                    show(NET_AMOUNTS_UI[0] + " " + LESS_THAN_TWO_BILLION);
+                    show(NET_AMOUNTS_UI[0] + " " + LESS_THAN_ONE_BILLION);
                 }
                 show(HEADERS_UI[1]);
                 break;
             case FinanceManager.endOfIA:
                 show(CASH_FLOW_UI[i] + cashFlowStatement.get(i));
-                if (FinanceManager.netIA >= AMOUNT_LOWER_LIMIT && FinanceManager.netIA <= AMOUNT_UPPER_LIMIT) {
+                if (FinanceManager.netIA > AMOUNT_LOWER_LIMIT && FinanceManager.netIA < AMOUNT_UPPER_LIMIT) {
                     show(NET_AMOUNTS_UI[1] + " " + FinanceManager.netIA);
-                } else if (FinanceManager.netIA > AMOUNT_UPPER_LIMIT) {
-                    show(NET_AMOUNTS_UI[1] + " " + MORE_THAN_TWO_BILLION);
+                } else if (FinanceManager.netIA >= AMOUNT_UPPER_LIMIT) {
+                    show(NET_AMOUNTS_UI[1] + " " + MORE_THAN_ONE_BILLION);
                 } else {
-                    show(NET_AMOUNTS_UI[1] + " " + LESS_THAN_TWO_BILLION);
+                    show(NET_AMOUNTS_UI[1] + " " + LESS_THAN_ONE_BILLION);
                 }
                 show(HEADERS_UI[2]);
                 break;
@@ -220,22 +220,22 @@ public class FinanceUi extends Ui {
             }
         }
         if (i == cashFlowStatement.size()) {
-            if (FinanceManager.netFA >= AMOUNT_LOWER_LIMIT && FinanceManager.netFA <= AMOUNT_UPPER_LIMIT) {
+            if (FinanceManager.netFA > AMOUNT_LOWER_LIMIT && FinanceManager.netFA < AMOUNT_UPPER_LIMIT) {
                 show(NET_AMOUNTS_UI[2] + " " + FinanceManager.netFA);
-            } else if (FinanceManager.netFA > AMOUNT_UPPER_LIMIT) {
-                show(NET_AMOUNTS_UI[2] + " " + MORE_THAN_TWO_BILLION);
+            } else if (FinanceManager.netFA >= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[2] + " " + MORE_THAN_ONE_BILLION);
             } else {
-                show(NET_AMOUNTS_UI[2] + " " + LESS_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[2] + " " + LESS_THAN_ONE_BILLION);
             }
             show(HEADERS_UI[6]);
-            if (cashFlowStatement.get(FinanceManager.freeCashFlow) >= AMOUNT_LOWER_LIMIT
-                    && cashFlowStatement.get(FinanceManager.freeCashFlow) <= AMOUNT_UPPER_LIMIT) {
+            if (cashFlowStatement.get(FinanceManager.freeCashFlow) > AMOUNT_LOWER_LIMIT
+                    && cashFlowStatement.get(FinanceManager.freeCashFlow) < AMOUNT_UPPER_LIMIT) {
                 show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " "
                         + cashFlowStatement.get(FinanceManager.freeCashFlow));
-            } else if (cashFlowStatement.get(FinanceManager.freeCashFlow) > AMOUNT_UPPER_LIMIT) {
-                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " " + MORE_THAN_TWO_BILLION);
+            } else if (cashFlowStatement.get(FinanceManager.freeCashFlow) >= AMOUNT_UPPER_LIMIT) {
+                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " " + MORE_THAN_ONE_BILLION);
             } else {
-                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " " + LESS_THAN_TWO_BILLION);
+                show(CASH_FLOW_UI[FinanceManager.freeCashFlow] + " " + LESS_THAN_ONE_BILLION);
 
             }
         }
@@ -271,7 +271,7 @@ public class FinanceUi extends Ui {
             if (FinanceManager.netAssets < AMOUNT_UPPER_LIMIT) {
                 show(NET_AMOUNTS_UI[3] + FinanceManager.netAssets);
             } else {
-                show(NET_AMOUNTS_UI[3] + MORE_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[3] + MORE_THAN_ONE_BILLION);
             }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
@@ -279,7 +279,7 @@ public class FinanceUi extends Ui {
             if (FinanceManager.netLiabilities < AMOUNT_UPPER_LIMIT) {
                 show(NET_AMOUNTS_UI[4] + FinanceManager.netLiabilities);
             } else {
-                show(NET_AMOUNTS_UI[4] + MORE_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[4] + MORE_THAN_ONE_BILLION);
             }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.BALANCE_SHEET_UI[balanceSheetStage + 1]);
             break;
@@ -287,7 +287,7 @@ public class FinanceUi extends Ui {
             if (FinanceManager.netSE < AMOUNT_UPPER_LIMIT) {
                 show(NET_AMOUNTS_UI[5] + FinanceManager.netSE);
             } else {
-                show(NET_AMOUNTS_UI[5] + MORE_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[5] + MORE_THAN_ONE_BILLION);
             }
             break;
         default:
@@ -307,32 +307,32 @@ public class FinanceUi extends Ui {
         show((isInflow ? "+" : "-") + amount + ADDED_AS + CASH_FLOW_UI[cashFlowStage]);
         switch (cashFlowStage) {
         case FinanceManager.endOfOA:
-            if (FinanceManager.netOA <= AMOUNT_UPPER_LIMIT && FinanceManager.netOA >= AMOUNT_LOWER_LIMIT) {
+            if (FinanceManager.netOA < AMOUNT_UPPER_LIMIT && FinanceManager.netOA > AMOUNT_LOWER_LIMIT) {
                 show(NET_AMOUNTS_UI[0] + FinanceManager.netOA);
-            } else if (FinanceManager.netOA > AMOUNT_UPPER_LIMIT) {
-                show(NET_AMOUNTS_UI[0] + MORE_THAN_TWO_BILLION);
+            } else if (FinanceManager.netOA >= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[0] + MORE_THAN_ONE_BILLION);
             } else {
-                show(NET_AMOUNTS_UI[0] + LESS_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[0] + LESS_THAN_ONE_BILLION);
             }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfIA:
-            if (FinanceManager.netIA <= AMOUNT_UPPER_LIMIT && FinanceManager.netIA >= AMOUNT_LOWER_LIMIT) {
+            if (FinanceManager.netIA < AMOUNT_UPPER_LIMIT && FinanceManager.netIA > AMOUNT_LOWER_LIMIT) {
                 show(NET_AMOUNTS_UI[1] + FinanceManager.netIA);
-            } else if (FinanceManager.netIA > AMOUNT_UPPER_LIMIT) {
-                show(NET_AMOUNTS_UI[1] + MORE_THAN_TWO_BILLION);
+            } else if (FinanceManager.netIA >= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[1] + MORE_THAN_ONE_BILLION);
             } else {
-                show(NET_AMOUNTS_UI[1] + LESS_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[1] + LESS_THAN_ONE_BILLION);
             }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
         case FinanceManager.endOfFA:
-            if (FinanceManager.netFA <= AMOUNT_UPPER_LIMIT && FinanceManager.netFA >= AMOUNT_LOWER_LIMIT) {
+            if (FinanceManager.netFA < AMOUNT_UPPER_LIMIT && FinanceManager.netFA > AMOUNT_LOWER_LIMIT) {
                 show(NET_AMOUNTS_UI[2] + FinanceManager.netFA);
-            } else if (FinanceManager.netFA > AMOUNT_UPPER_LIMIT) {
-                show(NET_AMOUNTS_UI[2] + MORE_THAN_TWO_BILLION);
+            } else if (FinanceManager.netFA >= AMOUNT_UPPER_LIMIT) {
+                show(NET_AMOUNTS_UI[2] + MORE_THAN_ONE_BILLION);
             } else {
-                show(NET_AMOUNTS_UI[2] + LESS_THAN_TWO_BILLION);
+                show(NET_AMOUNTS_UI[2] + LESS_THAN_ONE_BILLION);
             }
             show(NL + NEXT_PLEASE_ENTER + FinanceUi.CASH_FLOW_UI[cashFlowStage + 1]);
             break;
@@ -355,22 +355,22 @@ public class FinanceUi extends Ui {
         show(AT_CURRENT_PROFITABILITY + IN_FREE_CASH_FLOW);
         int yearCount = 1;
         for (Double cooperProjection : cooperProjections) {
-            if (cooperProjection.intValue() <= PROJECTION_UPPER_LIMIT
-                    && cooperProjection.intValue() >= PROJECTION_LOWER_LIMIT) {
+            if (cooperProjection.intValue() < PROJECTION_UPPER_LIMIT
+                    && cooperProjection.intValue() > PROJECTION_LOWER_LIMIT) {
                 show(yearCount + YEAR + cooperProjection.intValue());
-            } else if (cooperProjection.intValue() < PROJECTION_LOWER_LIMIT) {
-                show(yearCount + YEAR + LESS_THAN_TWO_BILLION);
+            } else if (cooperProjection.intValue() <= PROJECTION_LOWER_LIMIT) {
+                show(yearCount + YEAR + LESS_THAN_ONE_BILLION);
             } else {
-                show(yearCount + YEAR + MORE_THAN_TWO_BILLION);
+                show(yearCount + YEAR + MORE_THAN_ONE_BILLION);
             }
             yearCount++;
         }
-        if ((int)finalGrowthValue <= PROJECTION_UPPER_LIMIT && (int)finalGrowthValue >= PROJECTION_LOWER_LIMIT) {
+        if ((int)finalGrowthValue < PROJECTION_UPPER_LIMIT && (int)finalGrowthValue > PROJECTION_LOWER_LIMIT) {
             show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + (int) finalGrowthValue);
-        } else if ((int)finalGrowthValue < PROJECTION_LOWER_LIMIT) {
-            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + LESS_THAN_TWO_BILLION);
+        } else if ((int)finalGrowthValue <= PROJECTION_LOWER_LIMIT) {
+            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + LESS_THAN_ONE_BILLION);
         } else {
-            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + MORE_THAN_TWO_BILLION);
+            show(AFTER + (yearCount - 1) + YEARS_CAN_EXPECT + MORE_THAN_ONE_BILLION);
         }
         show(LINE);
     }

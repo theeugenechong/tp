@@ -492,15 +492,16 @@ This section explains cOOPer's features for specific to users, with the _**admin
 - How to create the balance sheet:
   1. Enter `bs`.
   2. cOOPer initiates the balance sheet function and prompts you to enter the first entry, 'Cash and Cash Equivalents'.
-  3. Enter `add [amount]`.
-  4. `[amount]` will be added as 'Cash and Cash Equivalents'.
-  5. cOOPer then continues prompting you for the rest of the balance sheet fields.
+  3. Enter `add [amount]` as an unsigned integer with no brackets.
+  4. `[amount]` will be added as 'Cash and Cash Equivalents' as an **asset**.
+  5. cOOPer then continues prompting you for the rest of the balance sheet fields. All assets should be added without brackets, and all liabilities should be added with brackets. Shareholder's Equity can be with or without brackets. To see which fields belong where, see [here](#accessing-the-balance-sheet-bs--list).
   6. When the balance sheet is complete, cOOPer prompts the user to enter [`list`](#accessing-the-balance-sheet-bs--list) to view the complete balance sheet.
 
-> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
-> ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the balance sheet field.<br>
+> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an asset of $5000 while `add (5000)` specifies a liability of $5000.<br>
+> ℹ️ `[amount]` should be an **unsigned integer** representing the amount of assets / liabilities added as the balance sheet field.<br>
 > 💡    Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
-> ⚠️Running `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**.
+> ⚠️Running `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
+> ℹ️ Any entries more than or equal to 1 Billion SGD (positive or negative) will not be added.
 
 - Example input for initiating the balance sheet function:
 
@@ -550,7 +551,8 @@ Next, please enter Accounts Receivable
 > ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
 > ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the cash flow statement field.<br>
 > 💡    Remember to enter `cf` before entering `add` or cOOPer will not know which financial statement to add to.<br>
-> ⚠️Running `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**.
+> ⚠️Running `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**. <br>
+> ℹ️ Any entries more than or equal to 1 Billion SGD (positive or negative) will not be added.
 
 - Example input for initiating the cash flow statement function:
 
@@ -599,7 +601,7 @@ Next, please enter Depreciation and Amortisation
 > ℹ️`list` displays the *latest version* of the balance sheet. Refer to [this](#creating-the-balance-sheet-bs--add) section to know what *latest version* means.<br>
 > ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.<br>
 > ℹ️The check can only inform you if the statement does or does not tally, and not which entry is incorrect as that comes down to human error.<br>
-
+> ℹ️ Any scalar values more than or equal to 1 Billion SGD (positive or negative) will be displayed as such, and not as their exact values.
 - Example input:
 
 ```
@@ -644,7 +646,8 @@ Check: 0
 
 > 💡 Remember to fill up the fields of the cash flow statement with `add` before entering `list`.<br>
 > ℹ️`list` displays the *latest version* of the cash flow statement. Refer to [this](#creating-the-cash-flow-statement-cf--add) section to know what *latest version* means.<br>
-> ℹ️Entering `list` while the cash flow statement is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.
+> ℹ️Entering `list` while the cash flow statement is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields. <br>
+> ℹ ️Any scalar values more than or equal to 1 Billion SGD (positive or negative) will be displayed as such, and not as their exact values.
 
 - Example input:
 
