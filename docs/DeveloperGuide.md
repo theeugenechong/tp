@@ -50,6 +50,7 @@ This developer guide is for software designers, developers, and software testers
   - [Sign-in](#sign-in)
   - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Interacting with forum](#interacting-with-forum)
 
 <div style="page-break-after: always;"></div>
 
