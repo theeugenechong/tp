@@ -34,7 +34,6 @@ public class AvailableCommand extends Command {
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
             throws InvalidAccessException {
         String username = signInDetails.getUsername();
-        UserRole userRole = signInDetails.getUserRole();
         MeetingManager meetingManager = resourcesManager.getMeetingManager();
 
         try {

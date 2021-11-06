@@ -9,11 +9,11 @@ Welcome to cOOPer's Developer Guide!
 cOOPer is a **Command Line Interface (CLI) desktop** application developed to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 
 This developer guide is for software designers, developers, and software testers of cOOPer. It will be your reference manual if you are looking to:
-- Know more about cOOPer's internal software design
-- Improve cOOPer's internal software design
-- Add more features to cOOPer
-- Enhance cOOPer's existing features
-- Perform software testing on cOOPer
+- **Know more** about cOOPer's internal **software design**
+- **Improve** cOOPer's internal **software design**
+- **Add** more features to cOOPer
+- **Enhance** cOOPer's existing features
+- Perform software **testing** on cOOPer
 
 ## What's in this Developer Guide
 - [How this Developer Guide Works](#how-this-developer-guide-works)
@@ -315,7 +315,7 @@ The `Command` component:
 - The `Resources` component contains `ResourcesManager` which manages access rights to feature managers based on `UserRole`.
 
 
-  - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole== ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+  - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole == UserRole.ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
     ```java
     FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
@@ -433,7 +433,7 @@ When the user wants to schedule a meeting, `ScheduleCommand` will check if the u
 
 ### Interacting with forum
 
-The folloing sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
+The following sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
 
 + For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
 
@@ -449,14 +449,12 @@ The folloing sequence diagram shows 3 operations with forum. `addPost`, `comment
     <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
 </p>
 
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
 ### Requesting a resource
 
 `Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
 
 + To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
-+ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private memebers are passes safely using `give-receive` pattern, instead of universal `getters`.
++ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using `give-receive` pattern, instead of universal `getters`.
 
 <p align="center">
     <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
@@ -605,8 +603,7 @@ Example Users:
 & manage company communication **more reliably** than a typical GUI driven app.
 
 ### User Stories
-> 💡 Priorities:<br>
-> High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
+> 💡 Priorities: High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
 
 | Priority | As a ... | I want to ...             | So that I can ...                                           |
 | ------- | -------- | ------------------------- | ----------------------------------------------------------- |

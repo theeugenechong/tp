@@ -45,6 +45,7 @@ public class ScheduleCommand extends Command {
         if (meetingManager == null) {
             throw new InvalidAccessException();
         }
+
         // if time field is not entered, proceed to auto schedule a meeting at the earliest time
         if (time == null) {
             try {
