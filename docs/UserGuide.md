@@ -166,7 +166,7 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
 ### User registration
-- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
+- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role.
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
