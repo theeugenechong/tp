@@ -5,7 +5,6 @@ cOOPer is a **Command Line Interface (CLI) desktop application** developed to si
 
 cOOPer was developed in Java following an **Object-Oriented Programming (OOP)** paradigm, hence the letters OOP in its name.
 
-<div style="page-break-after: always;"></div>
 
 ## Summary of Contributions
 
@@ -218,5 +217,4 @@ Here is an extract of one of my contributions to the Developer Guide:
 >     <img src="../developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
 > </p> 
 
-<div style="page-break-after: always;"></div>
 
