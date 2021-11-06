@@ -24,6 +24,9 @@ public class VerificationUi extends Ui {
     private static final String DETAILS_CANNOT_BE_EMPTY = "Your sign in details cannot be empty!";
 
 
+    /**
+     * Informs the user that their sign in details input when trying to sign in to cOOPer are of the wrong format.
+     */
     public static void showSignInDetailsIncorrectFormatError() {
         show(LINE);
         show(SIGN_IN_DETAILS_WRONG_FORMAT);
@@ -32,12 +35,18 @@ public class VerificationUi extends Ui {
         show(LINE);
     }
 
+    /**
+     * Informs the user that the fields of their sign in details are empty.
+     */
     public static void showEmptySignInDetailsError() {
         show(LINE);
         show(DETAILS_CANNOT_BE_EMPTY);
         show(LINE);
     }
 
+    /**
+     * Informs the user that they can only log in, register or exit at the verification layer.
+     */
     public static void showUnrecognisedCommandAtSignInError() {
         show(LINE);
         show(CAN_ONLY_LOGIN_REGISTER_EXIT);

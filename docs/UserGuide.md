@@ -15,10 +15,14 @@ If you are running a tech startup, cOOPer can help you with **accounting** and *
 - **Generating** your company's **financial statements**
 - **Forecasting** your company's **cash flow**
 - **Scheduling meetings** with your employees
-- Having **discussions** with your employees
+- Having **discussions** with your colleagues
 
 cOOPer  is optimized for use via a [**Command Line Interface (CLI)**](https://simple.wikipedia.org/wiki/Command-line_interface), so if you are someone who types fast,
 cOOPer can help you manage your startup efficiently.
+
+This user guide is written to assist users like you in using cOOPer. It provides you with the necessary guidance you need for using cOOPer's features to manage your startup.
+
+<div style="page-break-after: always;"></div>
 
 ## What's in This User Guide
 
@@ -56,7 +60,9 @@ cOOPer can help you manage your startup efficiently.
   - [Before logging in](#before-logging-in)
   - [Admin commands](#admin-commands)
   - [Employee commands](#employee-commands)
-  
+
+<div style="page-break-after: always;"></div>
+
 ## How this User Guide Works
 
 Throughout this user guide, you will see text formatted differently from normal text, as well as symbols appearing before another line of text. 
@@ -66,15 +72,18 @@ The table below explains the formatting and symbols in this user guide.
 ------------|------------------------------------|
 *italics* |Text in italics represent special terminology specific to using cOOPer.
 **bold**|Text in bold emphasizes the text's importance and indicates that you should pay more attention to the text.
-`command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal. Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
+<kbd>key</kbd> | Text formatted as such represents a key you can press on your keyboard. 
+`command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal.<br> Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
 `[argument]`|Text highlighted in grey wrapped in square brackets represent a command argument that needs to be present when a command is entered. You are free to decide the argument entered. 
-`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands. At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt. Specifically, there are three types of labels you will see, namely `[Logged out]` which indicates you are currently logged out of cOOPer, `[Balance Sheet]` which indicates you are using cOOPer's [balance sheet](#creating-the-balance-sheet-bs--add) function and `[Cash Flow]` which indicates you are using cOOPer's [cash flow](#creating-the-cash-flow-statement-cf--add) function.
+`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands.<br> Refer to the [cOOPer's Commands](#coopers-commands) section for additional info regarding the prompt.
 ℹ️  |The info symbol indicates useful information about cOOPer's features.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Setup
 
@@ -86,7 +95,7 @@ The table below explains the formatting and symbols in this user guide.
 4. Ensure that you have Java 11 or above installed or your desktop.
    1. In the Command Prompt / Terminal, enter `java -version`.
    2. You should see the following on the Command Prompt / Terminal:
-   ![img.png](userGuideImages/javaVersion.png)
+   ![javaVersion.png](userGuideImages/javaVersion.png)
    3. The section enclosed in red shows you the version you currently have installed.
    4. If nothing appeared on the Command Prompt / Terminal, it most likely means you do not have Java installed on your computer. Do not worry, you can download it [here](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html).
 5. Run cOOPer by entering `java -jar cOOPer.jar`.
@@ -117,21 +126,35 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## cOOPer's Commands
 
-Here are some things to note about cOOPer's commands.
-- ℹ️Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
-- ℹ️For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
-- ℹ️All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.<br>
-- ℹ️Empty input (for e.g. simply pressing 'Enter', entering whitespaces or 'Tab' characters) will be ignored and cOOPer will continue prompting you for your next command.
+ℹ️Here are some things to note about cOOPer's **commands**.<br>
+
+- Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
+- For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
+- All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.<br>
+- Empty input (for e.g. simply pressing <kbd>Enter</kbd>, entering whitespaces or <kbd>Tab</kbd> characters) will be ignored and cOOPer will continue prompting you for your next command.<br>
+
+ℹ️Here is some additional information about cOOPer's **command prompt**.<br>
+
+- At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt.<br> 
+- There are **three** types of labels you will see:
+  - `[Logged out]` indicates you are currently **logged out** of cOOPer
+  - `[Balance Sheet]` indicates you are using cOOPer's **[balance sheet](#creating-the-balance-sheet-bs--add) function**
+  - `[Cash Flow]` indicates you are using cOOPer's **[cash flow](#creating-the-cash-flow-statement-cf--add) function**
+- No label shown indicates you are **logged in** to the cOOPer, but you are using **neither** the balance sheet function nor the cash flow statement function.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Getting Started
 
 ### How cOOPer is to be used
 - The **correct** way (as of v2.1) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
-> ⚠️cOOPer's features related to [scheduling meetings](#declaring-available-timing-for-meetings-available) and [posting to the forum](#adding-a-forum-post-post-add) **will not work** if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
+> ⚠️cOOPer's features **will not work** as described in this user guide if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ### Roles
 - There are two main roles you can hold as a user of cOOPer, namely the _**admin**_ role or the _**employee**_ role.
@@ -143,7 +166,7 @@ Here are some things to note about cOOPer's commands.
 - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
 ### User registration
-- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role. (Each user is free to decide their own password)
+- Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role.
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
@@ -198,6 +221,8 @@ You are now logged in successfully as Sebastian!
 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Features for All Users
 
@@ -454,6 +479,8 @@ To exit, enter "exit".
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## Admin Features 
 This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny** users without the admin role access to these features.
 
@@ -707,16 +734,16 @@ The pdf file has been successfully generated!
     <img width="500" src="userGuideImages/generateCfOutput.png" alt="CfOutputPdf"><br>
 </p> 
 
-> 💡   Always [fill up the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
-> ⚠️The PDF file will not be created if the specified financial statement has not been filled.<br>
-> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current pdf file with the latest version of the financial statement.
+> ℹ️You **do not** need to be currently using the balance sheet function or the cash flow statement function in order to use this command. <br>
+> 💡   Always [**fill up** the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
+> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current PDF with the latest version of the financial statement.
 >
 > ⚠️ **Important:** <br>
->- The creation of the PDF file requires an **active internet connection**. 
+>- The creation of the PDF requires an **active internet connection**. 
 >- In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
 >- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). <br>
 >
-> 💡 **Always** ensure that you have an active internet connection before running `generate`. 
+> 💡 **Always** ensure that you have an active internet connection before using the `generate` command. 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -757,10 +784,14 @@ You have scheduled a <<Progress Meeting>> meeting at 10:00 with Sebastian, Eugen
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## Employee Features
 - As of v2.1, cOOPer does not have features exclusive to employees yet 😥, there will be more to come in future versions!
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Viewing help: `help`
 Shows you a list of commands **specific to your role**, along with their formats. Refer to the [Roles](#roles) section if you do not know how roles are determined.
@@ -788,6 +819,8 @@ Bye, see you next time!
 ```
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 <!--@@author theeugenechong-->
 
@@ -830,8 +863,16 @@ The contents of the folder is as shown in the diagram below.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
+<div style="page-break-after: always;"></div>
+
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
+
+**Q**: Do I need any programming knowledge to use cOOPer?<br>
+> No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to [this](#command-summary) section to know the formats of each command.
+
+**Q**: How do I know which commands to enter when using cOOPer?<br>
+> After you have successfully [logged in](#login) to cOOPer, you can either enter `help` or refer to [this](#command-summary) section to know the commands recognised by cOOPer.
 
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 > Follow the steps below:<br>
@@ -844,9 +885,11 @@ This section contains some frequently asked questions you may have when using cO
 > The 'tmp' folder is created upon starting up cOOPer for the first time. This folder contains important data which enables to cOOPer to process your commands. You **should not** do anything to these files.
 
 **Q**: Another person using cOOPer on their desktop stated their availability / posted to the forum. However, I am unable to see their availability / post when I run cOOPer on my desktop. Why does this occur?<br>
-> Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section.
+> Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section to find out why this occurs.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 <!--@@author fansxx-->
 
@@ -896,3 +939,5 @@ logout      |`logout`                             |`logout`
 exit        |`exit`                               |`exit`
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>

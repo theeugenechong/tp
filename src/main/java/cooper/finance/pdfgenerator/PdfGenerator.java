@@ -22,6 +22,7 @@ public abstract class PdfGenerator {
 
     protected static final String TEX_LIVE_URL = "https://texlive.net/cgi-bin/latexcgi";
     protected static final String LINE_FEED = "\r\n";
+
     protected static final String GENERATED_FILE_DIR = "output";
 
     /* Identifiers used for creating the pdf */
@@ -182,8 +183,8 @@ public abstract class PdfGenerator {
         try {
             File backupFile = new File(GENERATED_FILE_DIR + backupFileName);
             if (!backupFile.exists()) {
-                File pdfDir = new File(GENERATED_FILE_DIR);
-                pdfDir.mkdir();
+                File backUpDir = new File(GENERATED_FILE_DIR);
+                backUpDir.mkdir();
                 backupFile.createNewFile();
             }
 
@@ -192,7 +193,7 @@ public abstract class PdfGenerator {
             fileWriter.close();
             FileIoUi.showBackupFileSuccessfullyCreated();
         } catch (IOException e) {
-            FileIoUi.showFileCreationError(e);
+            FileIoUi.showBackupFileCreationError(e);
         }
     }
 
@@ -217,7 +218,7 @@ public abstract class PdfGenerator {
             fileOutputStream.close();
             FileIoUi.showPdfSuccessfullyGenerated();
         } catch (IOException e) {
-            FileIoUi.showFileCreationError(e);
+            FileIoUi.showPdfGenerationError(e);
         }
     }
 }
