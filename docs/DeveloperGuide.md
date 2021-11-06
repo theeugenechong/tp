@@ -333,7 +333,7 @@ The `Resources` component:
 
 The `Finance` component:
 
-+ Handles adding/listing/generating of Balance Sheets, Cash Flow Statements, and Cash Flow Projections.
++ Handles adding/listing/generating of Balance Sheets, Cash Flow Statements, and Free Cash Flow Projections.
 + Assists the parser in identifying which function is being used at any given time.
 + Contains the `PdfGenerator` class for the `generate` command, more info can be found [here](#generating-a-pdf-from-the-financial-statement).
 #### Meetings
@@ -437,6 +437,26 @@ When the user wants to enter an availability, `MeetingManager` will check if the
 
 When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
 
+### Finance
+`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
+
+#### Finance module descriptions
+'FinanceManager' stores **3** attributes:
+1. the **balance sheet**, which is a `BalanceSheet` object.
+2. the **cash flow statement**, which is a `CashFlow` object.
+3. the **free cash flow projections**, which is a `Projection` object.
+
+The `BalanceSheet` object stores the attribute `balanceSheet` which is an `ArrayList<Integer>` object.
+
+The `CashFlow` object stores the attribute `cashFlowStatement` which is an `ArrayList<Integer>` object.
+
+The `Projection` object stores the attribute `growthValues` which is an `ArrayList<Double>` object.
+
+When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
+
+When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
+
+When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
 ### Forum 
 
 `Forum` provides features like posting a forum thread, commenting on a post, listing posts. 
