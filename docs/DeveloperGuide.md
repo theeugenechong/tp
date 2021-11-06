@@ -50,7 +50,7 @@ This developer guide is for software designers, developers, and software testers
   - [Sign-in](#sign-in)
   - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
-  - [Interacting with forum](#interacting-with-forum)
+  - [Forum actions](#forum-actions)
 
 <div style="page-break-after: always;"></div>
 
@@ -138,7 +138,7 @@ To exit, enter "exit".
   - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
-  
+
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
@@ -694,12 +694,8 @@ The `generate` command works regardless of whether the prompt label is showing `
    1. Ensure that you are logged in to cOOPer.
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
-   
-[⬆️ Back to top](#whats-in-this-developer-guide)
 
-
-
-### Interacting with forum
+### Forum actions
 
 1. Adding a post
    1. Ensure that you are logged in to cOOPer.
@@ -720,5 +716,7 @@ The `generate` command works regardless of whether the prompt label is showing `
    2. Ensure you have added at least 1 post
    3. Enter `post list all`
       **Expected output**: A box containing all posts and comments you have entered so far
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
