@@ -6,6 +6,7 @@ import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
 import cooper.forum.ForumManager;
 import cooper.verification.Verifier;
+import cooper.resources.ResourcesManager;
 
 //@@author theeugenechong
 
@@ -35,13 +36,18 @@ public class StorageManager {
         this.forumStorage = new ForumStorage(BASE_DIRECTORY + FORUM_FILE);
     }
 
-    public void loadAllData(Verifier cooperVerifier, FinanceManager cooperFinanceManager,
-                            MeetingManager cooperMeetingManager, ForumManager cooperForumManager) {
+    public void loadAllData(Verifier cooperVerifier, ResourcesManager resourcesManager) {
         signInDetailsStorage.loadSignInDetails(cooperVerifier);
+
+        FinanceManager cooperFinanceManager = resourcesManager.giveFinanceManager(this);
         cashFlowStorage.loadCashFlowStatement(cooperFinanceManager.cooperCashFlowStatement);
         balanceSheetStorage.loadBalanceSheet(cooperFinanceManager.cooperBalanceSheet);
+
+        MeetingManager cooperMeetingManager = resourcesManager.giveMeetingManager(this);
         availabilityStorage.loadAvailability(cooperMeetingManager);
         meetingsStorage.loadMeetings(cooperMeetingManager);
+
+        ForumManager cooperForumManager = resourcesManager.giveForumManager(this);
         forumStorage.loadForum(cooperForumManager);
     }
 
@@ -67,5 +73,24 @@ public class StorageManager {
 
     public void saveForum(ForumManager cooperForumManager) {
         forumStorage.saveForum(cooperForumManager);
+    }
+
+
+    /**
+     * Storage class has "super privilege" to access private member in resources class.
+     * Use this give-receive pattern to get private members from ResourcesManager (Similar to friend class)
+     * Pattern adepted from:
+     * https://stackoverflow.com/questions/14226228/implementation-of-friend-concept-in-javat
+     */
+    public FinanceManager receiveFinanceManager(FinanceManager financeManager) {
+        return financeManager;
+    }
+
+    public MeetingManager receiveMeetingManager(MeetingManager meetingManager) {
+        return meetingManager;
+    }
+
+    public ForumManager receiveForumManager(ForumManager forumManager) {
+        return forumManager;
     }
 }
