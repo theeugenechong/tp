@@ -732,16 +732,16 @@ The pdf file has been successfully generated!
     <img width="500" src="userGuideImages/generateCfOutput.png" alt="CfOutputPdf"><br>
 </p> 
 
-> 💡   Always [fill up the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
-> ⚠️The PDF file will not be created if the specified financial statement has not been filled.<br>
-> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current pdf file with the latest version of the financial statement.
+> ℹ️You **do not** need to be currently using the balance sheet function or the cash flow statement function in order to use this command. <br>
+> 💡   Always [**fill up** the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
+> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current PDF with the latest version of the financial statement.
 >
 > ⚠️ **Important:** <br>
->- The creation of the PDF file requires an **active internet connection**. 
+>- The creation of the PDF requires an **active internet connection**. 
 >- In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
 >- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). <br>
 >
-> 💡 **Always** ensure that you have an active internet connection before running `generate`. 
+> 💡 **Always** ensure that you have an active internet connection before using the `generate` command. 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
