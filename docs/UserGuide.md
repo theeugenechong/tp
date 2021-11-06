@@ -72,9 +72,10 @@ The table below explains the formatting and symbols in this user guide.
 ------------|------------------------------------|
 *italics* |Text in italics represent special terminology specific to using cOOPer.
 **bold**|Text in bold emphasizes the text's importance and indicates that you should pay more attention to the text.
-`command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal. Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
+<kbd>key</kbd> | Text formatted as such represents a key you can press on your keyboard. 
+`command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal.<br> Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
 `[argument]`|Text highlighted in grey wrapped in square brackets represent a command argument that needs to be present when a command is entered. You are free to decide the argument entered. 
-`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands. At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt. Specifically, there are three types of labels you will see, namely `[Logged out]` which indicates you are currently logged out of cOOPer, `[Balance Sheet]` which indicates you are using cOOPer's [balance sheet](#creating-the-balance-sheet-bs--add) function and `[Cash Flow]` which indicates you are using cOOPer's [cash flow](#creating-the-cash-flow-statement-cf--add) function.
+`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands.<br> Refer to the [cOOPer's Commands](#coopers-commands) section for additional info regarding the prompt.
 ℹ️  |The info symbol indicates useful information about cOOPer's features.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
@@ -94,7 +95,7 @@ The table below explains the formatting and symbols in this user guide.
 4. Ensure that you have Java 11 or above installed or your desktop.
    1. In the Command Prompt / Terminal, enter `java -version`.
    2. You should see the following on the Command Prompt / Terminal:
-   ![img.png](userGuideImages/javaVersion.png)
+   ![javaVersion.png](userGuideImages/javaVersion.png)
    3. The section enclosed in red shows you the version you currently have installed.
    4. If nothing appeared on the Command Prompt / Terminal, it most likely means you do not have Java installed on your computer. Do not worry, you can download it [here](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html).
 5. Run cOOPer by entering `java -jar cOOPer.jar`.
@@ -129,11 +130,19 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 
 ## cOOPer's Commands
 
-Here are some things to note about cOOPer's commands.
+Here are some things to note about cOOPer's **commands**.
 - ℹ️Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
 - ℹ️For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
 - ℹ️All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.<br>
-- ℹ️Empty input (for e.g. simply pressing 'Enter', entering whitespaces or 'Tab' characters) will be ignored and cOOPer will continue prompting you for your next command.
+- ℹ️Empty input (for e.g. simply pressing <kbd>Enter</kbd>, entering whitespaces or <kbd>Tab</kbd> characters) will be ignored and cOOPer will continue prompting you for your next command.
+
+Here is some additional information about cOOPer's **command prompt**.
+- ℹ️At different stages of using cOOPer, an additional label which looks like `[label]` will appear beside the prompt. 
+- ℹ️There are **three** types of labels you will see:
+  - `[Logged out]` indicates you are currently **logged out** of cOOPer
+  - `[Balance Sheet]` indicates you are using cOOPer's **[balance sheet](#creating-the-balance-sheet-bs--add) function**
+  - `[Cash Flow]` indicates you are using cOOPer's **[cash flow](#creating-the-cash-flow-statement-cf--add) function**
+- ℹ️No label shown indicates you are logged in to the cOOPer, but you are using neither of the balance sheet function nor the cash flow statement function.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
