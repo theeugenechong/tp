@@ -771,7 +771,7 @@ The pdf file has been successfully generated!
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
 > 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
-> ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and my result in incorrect behaviour.
+> ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and will result in incorrect behaviour.
 
 - Example input for **auto** schedule meeting:
 
