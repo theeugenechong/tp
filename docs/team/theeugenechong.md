@@ -21,12 +21,12 @@ All the code I contributed for this project can be found at this [RepoSense link
 
 - **Feature 2:** Implemented the `generate` feature 
   - This feature generates one of cOOPer's financial statements (balance sheet or cash flow statement) as a LaTeX-formatted PDF document.
-  - This feature allows the user to view a neatly-formatted financial statement which is may not always be possible when using a CLI.
-  - The PDF document is generated with the help of an online LaTeX compiler, and in the event that there is no connection while using this feature, a backup text file is created representing the LaTeX file used to create the PDF.
+  - This feature allows the user to view a neatly-formatted financial statement which may not always be possible when using a CLI.
+  - The PDF document is generated with the help of an online LaTeX compiler, and in the event that there is no Internet connection while using this feature, a backup text file is created representing the LaTeX file used to create the PDF.
   - I worked together with Ray on this feature, who came up with the code for sending a POST Request to the online LaTeX compiler. He also came up with the base LaTeX template for the PDF, and I made enhancements to the template which formatted the PDF like an actual financial statement.
 
 - **Feature 3:** Implemented the storage feature for cOOPer
-  - The storage feature loads and saves user data to and from storage files.
+  - The storage feature saves and loads user data to and from storage files.
   - Some methods for this feature was reused from my [CS2113T Individual Project (iP)](https://github.com/theeugenechong/ip) as well as the idea of encoding and decoding objects into strings which can be written to and read from text files.
   - I came up with the 'template' for each of the `Storage` classes which each had a `load()` and `save()` method as well as a `encode()` and `decode()` method.
   - This storage feature also does error checking of the content in the storage files to ensure that the correct data is being loaded into cOOPer.
@@ -35,11 +35,11 @@ All the code I contributed for this project can be found at this [RepoSense link
 
 ### Contributions to the User Guide
 - **Contribution 1:** Documented the 'Getting Started' and 'Login' section
-  - Provided explanations and steps for the startup to start using cOOPer. e.g. provided instructions on how cOOPer is to be used, as well as how roles are determined
+  - Provided explanations and steps  to start using cOOPer. e.g. provided instructions on how cOOPer is to be used, as well as how user roles are determined
   - Provided steps for registering and logging in as a user of cOOPer.
 
 - **Contribution 2:** Documented the `generate` feature
-  - Since I implemented this feature, I explained the steps to use this feature, as well as additional information for users regarding the online compilation done.
+  - Since I implemented this feature, I explained the steps to use this feature, as well as additional information for users regarding the online LaTeX compilation.
 
 - **Contribution 3:** Documented the storage feature
   - Provided explanations to the user on things like what is stored in each storage file, as well as when the storage file is updated throughout cOOPer's usage.
