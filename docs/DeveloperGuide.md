@@ -9,11 +9,11 @@ Welcome to cOOPer's Developer Guide!
 cOOPer is a **Command Line Interface (CLI) desktop** application developed to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 
 This developer guide is for software designers, developers, and software testers of cOOPer. It will be your reference manual if you are looking to:
-- Know more about cOOPer's internal software design
-- Improve cOOPer's internal software design
-- Add more features to cOOPer
-- Enhance cOOPer's existing features
-- Perform software testing on cOOPer
+- **Know more** about cOOPer's internal **software design**
+- **Improve** cOOPer's internal **software design**
+- **Add** more features to cOOPer
+- **Enhance** cOOPer's existing features
+- Perform software **testing** on cOOPer
 
 ## What's in this Developer Guide
 - [How this Developer Guide Works](#how-this-developer-guide-works)
