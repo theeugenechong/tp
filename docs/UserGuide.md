@@ -17,7 +17,7 @@ If you are running a tech startup, cOOPer can help you with **accounting** and *
 - **Scheduling meetings** with your employees
 - Having **discussions** with your colleagues
 
-cOOPer  is optimized for use via a [**Command Line Interface (CLI)**](https://simple.wikipedia.org/wiki/Command-line_interface), so if you are someone who types fast,
+cOOPer is optimized for use via a [**Command Line Interface (CLI)**](https://simple.wikipedia.org/wiki/Command-line_interface), so if you are someone who types fast,
 cOOPer can help you manage your startup efficiently.
 
 This user guide is written to assist users like you in using cOOPer. It provides you with the necessary guidance you need for using cOOPer's features to manage your startup.
