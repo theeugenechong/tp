@@ -97,6 +97,7 @@ This section includes the sources of code, documentation and third-party librari
    1. Navigate to `src/main/java/cooper/Cooper.java`
    2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
    3. You should see the following output if the setup was done correctly:
+
 ```
             /$$$$$$   /$$$$$$  /$$$$$$$
            /$$__  $$ /$$__  $$| $$__  $$
@@ -190,7 +191,7 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 
 - The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
 
-> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.
+> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
 > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
 <p align="center">
@@ -208,7 +209,6 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 <p align="center">
     <img src="developerGuideDiagrams/uiComponent.png" alt="uiComponent"><br>
 </p> 
-
 
 - The `Ui` component consists of a parent `Ui` class and its subclasses as shown by the class diagram above.
 - The parent `Ui` class contains general constants and methods used across cOOPer's components which read user input and print recurring messages.
@@ -230,7 +230,6 @@ The `Ui` component:
 <p align="center">
     <img src="developerGuideDiagrams/parserComponent.png" alt="parserComponent"><br>
 </p>
-
 
 - The `Parser` component consists of an abstract `ParserBase` class with its subclasses, `CommandParser` and `SignInDetailsParser`. 
 - To emphasize the different [layers](#overview) of cOOPer and to increase cohesiveness, different types of objects are constructed from user input at different layers. 
@@ -304,7 +303,7 @@ The `Command` component:
 
 ### Resources Component
 
-**API**: [`Resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
+**API**: [`cooper.resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
 
 <p align="center">
     <img src="developerGuideDiagrams/resourcesComponent.png" alt="resourcesComponent"><br>
@@ -315,7 +314,7 @@ The `Command` component:
 
 The `Resources` component:
 
-- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only `Admin` is able to get `FinanceManager` successfully.
+- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only an *admin* is able to get `FinanceManager` successfully.
 - Returns references to `StorageManager` safely upon request.
 
 #### Finance 
@@ -324,13 +323,13 @@ The `Resources` component:
 
 #### Forum
 
-**API**: [`Forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
+**API**: [`cooper.forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
 
 <p align="center">
     <img src="developerGuideDiagrams/forumComponent.png" alt="forumComponent"><br>
 </p>
 
-+ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contains the attributes `content` and `username`. 
++ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contain the attributes `content` and `username`. 
 + Forum posts are stored in a hierarchical way where`ForumManager` keeps a list of `ForumPost`s and each `ForumPost` keeps a list of `ForumComment`s.
 
 The `Forum` component:
@@ -355,10 +354,10 @@ The `Forum` component:
 The `Storage` component:
 - Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
 - Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
-> We do not put `Storage` class under `Resources` for 2 reasons:
->
-> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features user can interact with and hence should not be kept under `ResourcesManager`.
-> 2. `Storage` has super priviledges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
+
+> ℹ️We do not put `Storage` class under `Resources` for 2 reasons:<br>
+> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features the user can interact with and hence should not be kept under `ResourcesManager`.
+> 2. `Storage` has super privileges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -521,7 +520,7 @@ The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGener
 
 #### Compiling the LaTeX code online
 `createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. Iterating through the `ArrayList`, these templates are then appended together using `append()`.
-This forms a long `String` which is then sent to the online LaTeX compiler via a [POST request](https://en.wikipedia.org/wiki/POST_(HTTP)). The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
+This forms a long `String` which is then sent to the online LaTeX compiler via a POST request. The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
