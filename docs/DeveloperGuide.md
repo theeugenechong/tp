@@ -33,6 +33,8 @@ This developer guide is for software designers, developers, and software testers
   - [Util component](#util-component)
 - [Implementation](#Implementation)
   - [Parsing user input](#parsing-user-input)
+  - [Interacting with forum](#interacting-with-forum)
+  - [Requesting a resource](#requesting-a-resource)
   - [Verifying user credentials](#verifying-user-credentials)
   - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
   - [Saving and loading data](#saving-and-loading-data)
@@ -48,6 +50,7 @@ This developer guide is for software designers, developers, and software testers
   - [Sign-in](#sign-in)
   - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Forum actions](#forum-actions)
 
 <div style="page-break-after: always;"></div>
 
@@ -135,7 +138,7 @@ To exit, enter "exit".
   - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
 - **Get to know cOOPer's design**
   - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
-  
+
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
@@ -448,17 +451,14 @@ The following sequence diagram shows 3 operations with forum. `addPost`, `commen
 
 ### Requesting a resource
 
-`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`. 
+`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
 
-#### Resources module descriptions
++ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
++ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using `give-receive` pattern, instead of universal `getters`.
 
-
-
-
-
-
-
-
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
+</p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -603,8 +603,7 @@ Example Users:
 & manage company communication **more reliably** than a typical GUI driven app.
 
 ### User Stories
-> 💡 Priorities:<br>
-> High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
+> 💡 Priorities: High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
 
 | Priority | As a ... | I want to ...             | So that I can ...                                           |
 | ------- | -------- | ------------------------- | ----------------------------------------------------------- |
@@ -692,15 +691,29 @@ The `generate` command works regardless of whether the prompt label is showing `
    1. Ensure that you are logged in to cOOPer.
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
-   
+
+### Forum actions
+
+1. Adding a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `post add hello world`
+      **Expected output**: A box with the content you just entered as confirmation
+2. Commenting a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least 1 post
+   3. Enter `post comment hello world 2 /on 1`
+      **Expected output**: A box with the post and your comment you just entered as confirmation
+3. Deleting a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least 1 post
+   3. Enter `post delete 1`
+      Expected output: A box with the post you just deleted as confirmation
+4. Listing all posts
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least 1 post
+   3. Enter `post list all`
+      **Expected output**: A box containing all posts and comments you have entered so far
+
 [⬆️ Back to top](#whats-in-this-developer-guide)
-
-
-
-
-
-
-
-
 
 <div style="page-break-after: always;"></div>
