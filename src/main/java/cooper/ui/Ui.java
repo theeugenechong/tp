@@ -35,6 +35,7 @@ public class Ui {
     protected static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private static final String EMPTY_STRING = "";
+    protected static final String NL = System.lineSeparator();
 
     protected static final String LOGIN_REGISTER_FOR_ACCESS = "Log in or register to gain access to my features!";
     protected static final String LOGIN = "To log in, enter \"login [yourUsername] /pw [password] /as [yourRole]\".";
@@ -57,7 +58,8 @@ public class Ui {
     private static final String LIST_FORMAT     = "| list          | list";
     private static final String GENERATE_FORMAT = "| generate      | generate [financialStatement]";
     private static final String SCHEDULE_FORMAT = "| schedule      | schedule [meetingName] /with [username1], "
-            + "[username2] /at [meetingTime]";
+            + "[username2] or " + NL
+            + "|               | schedule [meetingName] /with [username1], [username2] /at [meetingTime]";
 
     /* Constants used for employee help command */
     private static final String EMPLOYEE_COMMANDS = "Here are the commands available to an employee along with their "
@@ -65,19 +67,19 @@ public class Ui {
     private static final String POST_ADD_FORMAT     = "| post add      | post add [postContent]";
     private static final String POST_DELETE_FORMAT  = "| post delete   | post delete [postId]";
     private static final String POST_COMMENT_FORMAT = "| post comment  | post comment [commentContent] /on [postId]";
-    private static final String POST_LIST_FORMAT    = "| post list     | post list all / post list [postId]";
-    private static final String AVAILABLE_FORMAT    = "| available     | available [availableTime]";
+    private static final String POST_LIST_FORMAT    = "| post list     | post list all or post list [postId]";
+    private static final String AVAILABLE_FORMAT    = "| available     | available [date] [time]";
     private static final String AVAILABILITY_FORMAT = "| availability  | availability";
     private static final String MEETINGS_FORMAT     = "| meetings      | meetings";
     private static final String LOGOUT_FORMAT       = "| logout        | logout";
     private static final String EXIT_FORMAT         = "| exit          | exit";
+    private static final String REFER_TO_UG = "Refer to my User Guide for more information: ";
+    private static final String UG_LINK = "https://ay2122s1-cs2113t-w13-4.github.io/tp/UserGuide.html";
 
     private static CooperState cooperState = CooperState.LOGOUT;
     private static final String STATE_LOGOUT = "[Logged out] ";
     private static final String STATE_CF = "[Cash Flow] ";
     private static final String STATE_BS = "[Balance Sheet] ";
-
-    protected static final String NL = System.lineSeparator();
 
     /**
      * Reads input from the user. Behaves like a real command line in the sense that an empty string entered is ignored.
@@ -222,6 +224,8 @@ public class Ui {
         show(LOGOUT_FORMAT);
         show(EXIT_FORMAT);
         show(HELP_TABLE_TOP);
+        show(REFER_TO_UG);
+        show(UG_LINK);
         show(LINE);
     }
 }
