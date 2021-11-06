@@ -74,10 +74,7 @@ public class Cooper {
         Ui.showIntroduction();
 
         // Load data from storage
-        cooperStorageManager.loadAllData(cooperVerifier,
-                cooperResourcesManager.getFinanceManager(),
-                cooperResourcesManager.getMeetingManager(),
-                cooperResourcesManager.getForumManager());
+        cooperStorageManager.loadAllData(cooperVerifier, cooperResourcesManager);
     }
 
     /**

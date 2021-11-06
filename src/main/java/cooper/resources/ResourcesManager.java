@@ -2,6 +2,7 @@ package cooper.resources;
 
 import cooper.finance.FinanceManager;
 import cooper.meetings.MeetingManager;
+import cooper.storage.StorageManager;
 import cooper.forum.ForumManager;
 import cooper.verification.UserRole;
 
@@ -19,9 +20,6 @@ public class ResourcesManager {
         cooperForumManager = new ForumManager();
     }
 
-    public FinanceManager getFinanceManager() {
-        return cooperFinanceManager;
-    }
     
     public FinanceManager getFinanceManager(UserRole userRole) {
         if (userRole.equals(UserRole.ADMIN)) {
@@ -29,10 +27,6 @@ public class ResourcesManager {
         } else {
             return null;
         }
-    }
-
-    public MeetingManager getMeetingManager() {
-        return cooperMeetingManager;
     }
 
     public MeetingManager getMeetingManager(UserRole userRole) {
@@ -43,11 +37,26 @@ public class ResourcesManager {
         }
     }
 
-    public ForumManager getForumManager() {
-        return cooperForumManager;
-    }
-
     public ForumManager getForumManager(UserRole userRole) {
         return cooperForumManager;
     }
+
+    /**
+     * Storage class has "super privilege" to access private member in resources class.
+     * Use this give-receive pattern to get private members from ResourcesManager (Similar to friend class)
+     * Pattern adepted from:
+     * https://stackoverflow.com/questions/14226228/implementation-of-friend-concept-in-javat
+     **/
+    public FinanceManager giveFinanceManager(StorageManager storageManager) {
+        return storageManager.receiveFinanceManager(cooperFinanceManager);
+    }
+
+    public MeetingManager giveMeetingManager(StorageManager storageManager) {
+        return storageManager.receiveMeetingManager(cooperMeetingManager);
+    }
+
+    public ForumManager giveForumManager(StorageManager storageManager) {
+        return storageManager.receiveForumManager(cooperForumManager);
+    }
+
 }

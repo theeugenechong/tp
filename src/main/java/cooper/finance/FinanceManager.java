@@ -90,29 +90,6 @@ public class FinanceManager {
         LOGGER.info("An entry to the cash flow statement is created: " + amount);
     }
 
-    //@@author theeugenechong
-    public void generateBalanceSheetAsPdf() {
-        runTotalAmountsCheck(cooperBalanceSheet.getBalanceSheet());
-
-        balanceSheetGenerator.addAssets(cooperBalanceSheet);
-        balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
-        balanceSheetGenerator.addShareholderEquity(cooperBalanceSheet);
-        balanceSheetGenerator.addBalance();
-
-        balanceSheetGenerator.compilePdfAndSend();
-    }
-
-    public void generateCashFlowStatementAsPdf() {
-        runNetAmountsCheck(cooperCashFlowStatement.getCashFlowStatement());
-
-        cashFlowStatementGenerator.addCfFromOperatingActivities(cooperCashFlowStatement);
-        cashFlowStatementGenerator.addCfFromInvestingActivities(cooperCashFlowStatement);
-        cashFlowStatementGenerator.addCfFromFinancingActivities(cooperCashFlowStatement);
-
-        cashFlowStatementGenerator.compilePdfAndSend();
-    }
-
-    //@@author ChrisLangton
     @SuppressWarnings("UnnecessaryLocalVariable")
     public int calculateFreeCashFlow(ArrayList<Integer> cashFlowStatement) {
         int freeCashFlow = netOA - cashFlowStatement.get(capExIndex);
@@ -163,4 +140,34 @@ public class FinanceManager {
         }
     }
 
+    //@@author theeugenechong
+    /**
+     * Creates a pdf version of the balance sheet using an online LaTeX compiler. A backup text file is created
+     * in the event that there is no internet connection.
+     */
+    public void generateBalanceSheetAsPdf() {
+        runTotalAmountsCheck(cooperBalanceSheet.getBalanceSheet());
+
+        balanceSheetGenerator.addAssets(cooperBalanceSheet);
+        balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
+        balanceSheetGenerator.addShareholderEquity(cooperBalanceSheet);
+        balanceSheetGenerator.addCheckValue();
+
+        balanceSheetGenerator.compilePdfAndSend();
+    }
+
+    /**
+     * Creates a pdf version of the cash flow statement using an online LaTeX compiler. A backup text file is created
+     * in the event that there is no internet connection.
+     */
+    public void generateCashFlowStatementAsPdf() {
+        runNetAmountsCheck(cooperCashFlowStatement.getCashFlowStatement());
+
+        cashFlowStatementGenerator.addCfFromOperatingActivities(cooperCashFlowStatement);
+        cashFlowStatementGenerator.addCfFromInvestingActivities(cooperCashFlowStatement);
+        cashFlowStatementGenerator.addCfFromFinancingActivities(cooperCashFlowStatement);
+        cashFlowStatementGenerator.addFreeCashFlow(cooperCashFlowStatement);
+
+        cashFlowStatementGenerator.compilePdfAndSend();
+    }
 }

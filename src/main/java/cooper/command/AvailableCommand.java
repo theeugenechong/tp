@@ -9,6 +9,7 @@ import cooper.storage.StorageManager;
 import cooper.ui.MeetingsUi;
 import cooper.verification.SignInDetails;
 import cooper.resources.ResourcesManager;
+import cooper.verification.UserRole;
 
 //@@author fansxx
 
@@ -33,7 +34,8 @@ public class AvailableCommand extends Command {
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager, StorageManager storageManager)
             throws InvalidAccessException {
         String username = signInDetails.getUsername();
-        MeetingManager meetingManager = resourcesManager.getMeetingManager();
+        UserRole userRole = signInDetails.getUserRole();
+        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
 
         try {
             meetingManager.addAvailability(dateTime, username);
