@@ -26,7 +26,7 @@ public class MeetingsCommand extends Command {
                         StorageManager storageManager) throws InvalidAccessException {
         UserRole userRole = signInDetails.getUserRole();
         String username = signInDetails.getUsername();
-        MeetingManager meetingManager = resourcesManager.getMeetingManager(userRole);
+        MeetingManager meetingManager = resourcesManager.getMeetingManager();
         MeetingsUi.printMeetings(meetingManager.getUserSpecificMeetings(username));
     }
 }

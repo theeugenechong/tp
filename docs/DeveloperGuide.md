@@ -310,7 +310,16 @@ The `Command` component:
 </p>
 
 - The `Resources` component contains `ResourcesManager` which manages access rights to feature managers based on `UserRole`.
-- It also implements a *give-receive* pattern to pass private members of `ResourcesManager` class to `StorageManager` safely. This is because `StorageManager` has "super privilege" to access internal data structures of feature managers and save to/ load from hard disk.
+
+
+  - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole== ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+
+    ```java
+    FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
+    ```
+
+
+- It also implements a *give-receive* pattern to pass private members of `ResourcesManager` class to `StorageManager` safely. This is because `StorageManager` has "super privilege" to access internal data structures of feature managers and save to/ load from hard disk. 
 
 The `Resources` component:
 
@@ -335,7 +344,7 @@ The `Resources` component:
 The `Forum` component:
 
 + handles adding/deleting/listing of posts, comments
-+ a forum post or comment is only deleted if the user requesting the action *owns* the post or comment, i.e. the username of request body must match the username field of the post or comment.
++ Deletes a post or comment only if the user requesting the action *owns* the post or comment, i.e. the username of request body must match the username field of the post or comment.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -396,8 +405,7 @@ into the following fields:
   "role-hint" : admin }
 ```
 
-This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command 
-and adding new commands to cOOPer for new features become trivial.
+This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command and adding new commands to cOOPer for new features become trivial.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -420,27 +428,37 @@ When the user wants to enter an availability, `MeetingManager` will check if the
 
 When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
 
-### Forum 
+### Interacting with forum
 
-`Forum` provides features like posting a forum thread, commenting on a post, listing posts. 
+The folloing sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
 
-#### Forum module descriptions
++ For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
 
-`ForumManager` stores a list of `ForumPost`objects. Each `ForumPost` object stores a list of `ForumComment` objects. Both `ForumPost` and `ForumComment` need to store two attributes, username and content. When a user wants to delete a post or comment, `ForumManager` will check if the username of the post matches the user performing the action and deletion is successful only if these two are a match.
++ For commenting on a post, `ForumManager` will first check if the `postId` specified is a valid index. If it is not, an exception will be thrown. Otherwise, it will get the `ForumPost` by its `postId` and add a new `ForumComment` to it.
 
-### Resources
++ For deleting a post, `ForumManager` will again check the `postId` and delete the post only if the `postId` is valid.
 
-`Resources` manages other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`.
+  > ℹ️ In the actual implementation, `ForumManager` will also ensure the username of the user requesting for the `deletePost` operation matches the *owner* of the forum post. This checking is omitted in this sequence diagram for simplicity and represented as the method call to`remove(postId)`.
+
+
+
+<p align="center">
+    <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
+</p>
+
+### Requesting a resources
+
+`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingsManager` and `ForumManager`. 
 
 #### Resources module descriptions
 
-`ResourcesManager` grants reference to other manager modules for different `Command` objects to perform their execution functions  by checking the `UserRole`. For example, 
 
-```java 
-FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
-```
 
-will return a `FinanceManager` object only if `userRole` is an `admin`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
+
+
+
+
+
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -629,10 +647,10 @@ Example Users:
    1. Download cOOPer's latest JAR file [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) and copy the JAR file into an empty folder.
    2. Launch the Command Prompt / Terminal from the folder.
    3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
-   4. Run `java -jar cOOPer.jar`. 
+   4. Run `java -jar cOOPer.jar`. <br>
    **Expected output:** cOOPer's greeting message is shown.
 2. Exiting cOOPer
-   1. Enter `exit`.
+   1. Enter `exit`.<br>
    **Expected output:** cOOPer's bye message is shown and the program exits successfully.
 
 ### Sign-in
@@ -676,5 +694,13 @@ The `generate` command works regardless of whether the prompt label is showing `
    **Expected output:** A list of commands specific to your role is shown along with their formats.
    
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+
+
+
+
+
+
+
 
 <div style="page-break-after: always;"></div>
