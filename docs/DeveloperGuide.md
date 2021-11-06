@@ -97,7 +97,6 @@ This section includes the sources of code, documentation and third-party librari
    1. Navigate to `src/main/java/cooper/Cooper.java`
    2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
    3. You should see the following output if the setup was done correctly:
-      
 ```
             /$$$$$$   /$$$$$$  /$$$$$$$
            /$$__  $$ /$$__  $$| $$__  $$
@@ -183,7 +182,7 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 #### Interaction of the architecture components to process user input
 - The sequence diagram below shows how cOOPer's components interact with each other when a user enters their **sign in details** at the _verification layer_.
 
-> ℹ️`userInput` represents the credentials input by the user for verification. For example, `register John pw 12345 as admin`.
+> ℹ️`userInput` represents the credentials input by the user for verification. For example, `register John /pw 12345 /as admin`.
 
 <p align="center">
     <img src="developerGuideDiagrams/signInSequenceDiagram.png" alt="signInSequenceDiagram"><br>
@@ -191,7 +190,7 @@ Apart from `Cooper`, the rest of the app consists of these seven components:
 
 - The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
 
-> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
+> ℹ️ `userInput` represents a command input by the user. For example, `meetings`.
 > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
 
 <p align="center">
@@ -305,11 +304,55 @@ The `Command` component:
 
 ### Resources Component
 
-#### Finance 
+**API**: [`Resources`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/resources)
 
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesComponent.png" alt="resourcesComponent"><br>
+</p>
+
+- The `Resources` component contains `ResourcesManager` which manages access rights to feature managers based on `UserRole`.
+- It also implements a *give-receive* pattern to pass private members of `ResourcesManager` class to `StorageManager` safely. This is because `StorageManager` has "super privilege" to access internal data structures of feature managers and save to/ load from hard disk.
+
+The `Resources` component:
+
+- Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only `Admin` is able to get `FinanceManager` successfully.
+- Returns references to `StorageManager` safely upon request.
+
+
+#### Finance
+
+**API**: [`Finance`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/finance)
+
+<p align="center">
+    <img src="developerGuideDiagrams/financeComponent.png" alt="financeComponent"><br>
+</p>
+
++ The `Finance` component contains the `FinanceManager`, `BalanceSheet`, `CashFlow`, and `Projection` classes, as well as the `FinanceCommand` enumeration.
++ The `FinanceManager` constructs the instances of the `BalanceSheet`, `CashFlow` and `Projection` for use, and holds attributes and methods that aid the related functions.
++ The `FinanceCommamnd` enum helps the `Parser` to understand what `Finance` function is being used, with four states: `CF`, `BS`, and `IDLE`.
+
+The `Finance` component:
+
++ Handles adding/listing/generating of Balance Sheets, Cash Flow Statements, and Cash Flow Projections.
++ Assists the parser in identifying which function is being used at any given time.
++ Contains the `PdfGenerator` class for the `generate` command, more info can be found [here](#generating-a-pdf-from-the-financial-statement).
 #### Meetings
 
 #### Forum
+
+**API**: [`Forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
+
+<p align="center">
+    <img src="developerGuideDiagrams/forumComponent.png" alt="forumComponent"><br>
+</p>
+
++ The `Forum` component contains a `ForumManager`, `ForumPost` , `ForumComment` and `ForumPostBase`. Both `ForumPost` and `ForumComment` are inherited from abstract base class `ForumPostBase` as they contains the attributes `content` and `username`. 
++ Forum posts are stored in a hierarchical way where`ForumManager` keeps a list of `ForumPost`s and each `ForumPost` keeps a list of `ForumComment`s.
+
+The `Forum` component:
+
++ handles adding/deleting/listing of posts, comments
++ a forum post or comment is only deleted if the user requesting the action *owns* the post or comment, i.e. the username of request body must match the username field of the post or comment.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -328,6 +371,10 @@ The `Command` component:
 The `Storage` component:
 - Loads stored user data from the storage file specified by `filePath` into the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` objects upon launching the app.
 - Saves data to the storage file specified by `filePath` from the `Verifier`, `FinanceManager`, `MeetingsManager` and `ForumManager` whenever a change is made to the data in these objects.
+> We do not put `Storage` class under `Resources` for 2 reasons:
+>
+> 1. `Storage` class is cOOPer's internal construct for bookkeeping various internal data structures and recover them at startup. This does not categorise under any features user can interact with and hence should not be kept under `ResourcesManager`.
+> 2. `Storage` has super priviledges to access internal data structures of all feature components. This contradicts the goal of `ResourcesManager` which is to manage access rights to different features depending on user roles, and hence should be kept separate from it.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -597,11 +644,11 @@ Example Users:
    1. Download cOOPer's latest JAR file [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) and copy the JAR file into an empty folder.
    2. Launch the Command Prompt / Terminal from the folder.
    3. Check the Java version being used by entering `java -version`. Ensure that you are using Java 11 or above.
-   4. Run `java -jar cOOPer.jar`. <br>
-**Expected output:** cOOPer's greeting message is shown.
+   4. Run `java -jar cOOPer.jar`. 
+   **Expected output:** cOOPer's greeting message is shown.
 2. Exiting cOOPer
-   1. Enter `exit`.<br>
-**Expected output:** cOOPer's bye message is shown and the program exits successfully.
+   1. Enter `exit`.
+   **Expected output:** cOOPer's bye message is shown and the program exits successfully.
 
 ### Sign-in
 To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label can be seen beside cOOPer's command prompt as such:
@@ -613,11 +660,11 @@ To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label
 1. Registering
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
    2. Enter `register [username] /pw [password] /as [role]` where `[username]` is your username, `[password]` is your password and `[role]` is one of 'admin' or 'employee'.<br>
-**Expected output:** A message informing you that you have successfully registered is shown.
+   **Expected output:** A message informing you that you have successfully registered is shown.
 2. Logging in
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
    2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.<br>
-**Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
+   **Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
 
 ### Generating the PDF
 
@@ -628,14 +675,14 @@ The `generate` command works regardless of whether the prompt label is showing `
    2. Fill up the balance sheet with `bs` → `add`.
    3. Ensure that you have an active Internet connection.
    4. Enter `generate bs`.<br>
-**Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+   **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
 
 2. Generating the cash flow statement
    1. Ensure that you are logged in as an *admin*.
    2. Fill up the cash flow statement with `cf` → `add`.
    3. Ensure that you have an active Internet connection.
    4. Enter `generate cf`.<br>
-**Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+   **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
 
 ### Viewing help
 1. Viewing help
