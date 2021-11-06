@@ -250,7 +250,7 @@ The `Parser`component:
 
 ### Verification Component
 
-**API**: [`Verifier.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
+**API**: [`cooper.verification`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/verification)
 
 <p align="center">
     <img src="developerGuideDiagrams/verificationComponent.png" alt="verificationComponent"><br>
@@ -315,7 +315,7 @@ The `Command` component:
 
 ### Storage Component
 
-**API**: [`Storage.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
+**API**: [`cooper.storage`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/storage)
 
 <p align="center">
     <img src="developerGuideDiagrams/storageComponent.png" alt="storageComponent"><br>
