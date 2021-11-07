@@ -539,6 +539,12 @@ The following sequence diagram shows the process of **manual** scheduling a meet
 ### Finance
 `Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
 
+<p align="center">
+    <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
+</p>
+
+The sequence diagram above illustrates the process of **adding** to a given financial statement, in this case the Balance Sheet.
+
 #### Finance module descriptions
 'FinanceManager' stores **3** attributes:
 1. the **balance sheet**, which is a `BalanceSheet` object.
