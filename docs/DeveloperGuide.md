@@ -52,6 +52,7 @@ This developer guide is for software designers, developers, and software testers
   - [Sign-in](#sign-in)
   - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Meetings actions](#meetings-actions)
   - [Forum actions](#forum-actions)
 
 <div style="page-break-after: always;"></div>
@@ -838,17 +839,37 @@ The `generate` command works regardless of whether the prompt label is showing `
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
 
+### Meetings actions
+1. Declaring availability
+    1. Ensure that you are logged in to cOOPer.
+    2. Enter `available [date in dd-MM-yyyy] [time in HH:mm]`.
+    **Expected output:** A confirmation informing you that your username has been added to the date and time
+2. Viewing availability
+    1. Ensure that you are logged in to cOOPer.
+    2. Enter `availability`.
+   **Expected output:** A table with the availability of all users.
+3. Scheduling meeting
+    1. Ensure that you are logged in to cOOPer.
+    2. Ensure that you and one or more users have entered their availability at a common date and time.
+    3. Enter `schedule [meetingName] /with [username]`. `[username]` is a user(not you) who is available in at least one common date and time as you.
+    4. Alternatively, you can also enter `schedule [meetingName] /with [username] /at [date] [time]`. `[username]` and yourself must be both available at this date and time.
+   **Expected output:** A confirmation message informing you that the meeting is successfully scheduled.
+4. Viewing meetings
+    1. Ensure that you are logged in to cOOPer.
+    2. Enter `meetings`.
+   **Expected output:** A table with all your meetings, their date and time, and their attendees.
+
 ### Forum actions
 
 1. Adding a post
    1. Ensure that you are logged in to cOOPer.
    2. Enter `post add hello world`.<br>
-      **Expected output**: A box with the post you just added is shown as confirmation.
+   **Expected output**: A box with the post you just added is shown as confirmation.
 2. Commenting a post
    1. Ensure that you are logged in to cOOPer.
    2. Ensure you have added at least 1 post
    3. Enter `post comment hello world 2 /on 1`. <br>
-      **Expected output**: A box with the post and your comment you just entered is shown as confirmation.
+   **Expected output**: A box with the post and your comment you just entered is shown as confirmation.
 3. Deleting a post
    1. Ensure that you are logged in to cOOPer.
    2. Ensure you have added at least 1 post
@@ -858,7 +879,7 @@ The `generate` command works regardless of whether the prompt label is showing `
    1. Ensure that you are logged in to cOOPer.
    2. Ensure you have added at least 1 post
    3. Enter `post list all`.<br>
-      **Expected output**: A box containing all posts and comments you have entered so far is shown.
+   **Expected output**: A box containing all posts and comments you have entered so far is shown.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
