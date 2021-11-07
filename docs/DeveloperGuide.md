@@ -516,7 +516,7 @@ If the password is correct, the user's role will then be checked to determine if
 #### Registering a user
 The following sequence diagram shows the detailed process of registering a user. 
 > ℹ️`userInput` is `register John /pw 123 /as admin`.<br>
-> ℹ️The `executeSignIn()` method actually takes in a `rawPassword` as its parameters but is omitted in this sequence diagram as the registration process does not require the raw password of the user.
+> ℹ️The `executeSignIn()` method actually takes in `rawPassword` as its parameter but is omitted in this sequence diagram as the registration process does not require the raw password of the user.
 
 <p align="center">
     <img src="developerGuideDiagrams/registrationSequenceDiagram.png" alt="registrationSequenceDiagram"><br>
@@ -538,7 +538,7 @@ Assuming that the above registration has taken place successfully, the following
 </p>
 
 #### Hashing user passwords
-The Password Based Key Derivation Function (PBKDF2) hashing algorithm is used for hashing user passwords. This algorithm is used together with a 64-bit salt text for each password before it is hashed to improve security and decrease susceptibility to rainbow-table attacks, where duplicate user passwords are still stored securely.
+The Password Based Key Derivation Function (PBKDF2) hashing algorithm is used for hashing user passwords. This algorithm is used together with a 64-bit salt text for each password before it is hashed to improve security and decrease susceptibility to rainbow-table attacks, hence duplicate user passwords can still be stored securely.
 
 This algorithm is recommended by the National Institute of Standards and Technology (NIST) for password storage and our implementation also adheres to NIST specifications: <br>
 - The hashing algorithm is run for 25000 iterations while NIST only specifies a minimum of 10000 iterations. 
