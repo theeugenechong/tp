@@ -358,8 +358,6 @@ The `Finance` component:
     <img src="developerGuideDiagrams/meetingsComponent.png" alt="meetingsComponent"><br>
 </p>
 
-`Meetings` component provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
-
 The `Meetings` component contains the `MeetingManager` and `Meeting` classes.
 
 `MeetingManager` stores **2** attributes:
@@ -368,14 +366,11 @@ The `Meetings` component contains the `MeetingManager` and `Meeting` classes.
 
 The `MeetingManager` constructs the instances of `Meeting`, and stores it as an `ArrayList<Meeting>` in itself.
 
-`Meeting` object stores 3 attributes:
-1. the `meetingName`, which is a `String` object,
-2. the `time`, which is a `LocalTime` object,
-3. the `listOfAttendees`, which is an `ArrayList<String>` object
+The `Meetings` component:
 
-When the user wants to enter an availability, `MeetingManager` will check if the time entered is in the **correct format** and if the user has **not already entered their availability to that time**. Addition of availability is successful only if those two requirements are satisfied.
-
-When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
++ Handles the **declaration of availability**
++ Assists in  the **scheduling** of meetings
++ Lists the current availability and meetings
 
 #### Forum
 
@@ -390,7 +385,7 @@ When the user wants to schedule a meeting, `ScheduleCommand` will check if the u
 
 The `Forum` component:
 
-+ handles adding/deleting/listing of posts, comments
++ Handles adding/deleting/listing of posts, comments
 + Deletes a post or comment only if the user requesting the action *owns* the post or comment, i.e. the username of request body must match the username field of the post or comment.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
@@ -501,11 +496,29 @@ When the user declares an availability, the `addAvailability` function in `Meeti
 
 The following sequence diagram shows the detailed process of declaring an availability. `username` is `Sebastian` and `userInput` is `available 11-08-2021 14:00`.
 
+<p align="center">
+    <img src="developerGuideDiagrams/availableSequenceDiagram.png" alt="availableSequenceDiagram"><br>
+</p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Scheduling a meeting
+The `MeetingManager` class facilitates the scheduling of meetings.
 
+#### Scheduling process
+When the user schedules a meeting `ScheduleCommand` checks if the `[date]` and `[time]` parameter is entered and calls `manualScheduleMeeting` in `MeetingManager` if it is and `autoScheduleMeeting` if it isn't.
+
+The following sequence diagram shows the process of **auto** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/autoScheduleSequenceDiagram.png" alt="autoScheduleSequenceDiagram"><br>
+</p>
+
+The following sequence diagram shows the process of **manual** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene /at 11-08-2021 14:00`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/manualScheduleSequenceDiagram.png" alt="manualScheduleSequenceDiagram"><br>
+</p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
