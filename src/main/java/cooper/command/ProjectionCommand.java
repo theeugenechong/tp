@@ -10,6 +10,8 @@ import cooper.ui.FinanceUi;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+import java.util.ArrayList;
+
 //@@author ChrisLangton
 
 public class ProjectionCommand extends Command {
@@ -32,18 +34,23 @@ public class ProjectionCommand extends Command {
             throw new InvalidAccessException();
         }
 
-        boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+        ArrayList<Integer> cashFlowStatement = financeManager.cooperCashFlowStatement.getCashFlowStatement();
 
+        boolean isEmptyCf = isEmptyFinancialStatement(cashFlowStatement);
         if (isEmptyCf) {
             throw new EmptyFinancialStatementException();
         }
-        int newFreeCF = financeManager.calculateFreeCashFlow(
-                financeManager.cooperCashFlowStatement.getCashFlowStatement());
-        int oldFreeCF = financeManager.cooperCashFlowStatement.cashFlowStatement.get(oldIndex);
+
+        FinanceManager.runNetAmountsCheck(cashFlowStatement);
+
+        int newFreeCF = financeManager.calculateFreeCashFlow(cashFlowStatement);
+        int oldFreeCF = cashFlowStatement.get(oldIndex);
         int differenceFreeCF = newFreeCF - oldFreeCF;
+
         double rateOfGrowth = (differenceFreeCF / (double) oldFreeCF) * 100.0;
         double finalGrowthValue = financeManager.createProjection(newFreeCF, rateOfGrowth, years);
         FinanceUi.printProjections(finalGrowthValue, financeManager.cooperProjection.getProjection());
+
         financeManager.cooperProjection.getProjection().clear();
     }
 }

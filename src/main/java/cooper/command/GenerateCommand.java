@@ -8,6 +8,8 @@ import cooper.storage.StorageManager;
 import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 
+import java.util.ArrayList;
+
 //@@author theeugenechong
 
 /**
@@ -42,18 +44,23 @@ public class GenerateCommand extends Command {
             throw new InvalidAccessException();
         }
 
-        boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());
-        boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+        ArrayList<Integer> balanceSheet = financeManager.cooperBalanceSheet.getBalanceSheet();
+        boolean isEmptyBs = isEmptyFinancialStatement(balanceSheet);
+
+        ArrayList<Integer> cashFlowStatement = financeManager.cooperCashFlowStatement.getCashFlowStatement();
+        boolean isEmptyCf = isEmptyFinancialStatement(cashFlowStatement);
 
         if (documentToGenerate.equals(BS)) {
             if (isEmptyBs) {
                 throw new EmptyFinancialStatementException();
             }
+            FinanceManager.runTotalAmountsCheck(balanceSheet);
             financeManager.generateBalanceSheetAsPdf();
         } else if (documentToGenerate.equals(CF)) {
             if (isEmptyCf) {
                 throw new EmptyFinancialStatementException();
             }
+            FinanceManager.runNetAmountsCheck(cashFlowStatement);
             financeManager.generateCashFlowStatementAsPdf();
         }
     }

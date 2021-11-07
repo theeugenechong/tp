@@ -10,6 +10,8 @@ import cooper.verification.SignInDetails;
 import cooper.verification.UserRole;
 import cooper.resources.ResourcesManager;
 
+import java.util.ArrayList;
+
 //@@author ChrisLangton
 /**
  * The child class of Command that handles the 'list' function specifically.
@@ -44,19 +46,24 @@ public class ListCommand extends Command {
             FinanceUi.showPleaseSpecifyFinancialStatementToView();
         }
 
-        boolean isEmptyBs = isEmptyFinancialStatement(financeManager.cooperBalanceSheet.getBalanceSheet());
-        boolean isEmptyCf = isEmptyFinancialStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+        ArrayList<Integer> balanceSheet = financeManager.cooperBalanceSheet.getBalanceSheet();
+        boolean isEmptyBs = isEmptyFinancialStatement(balanceSheet);
+
+        ArrayList<Integer> cashFlowStatement = financeManager.cooperCashFlowStatement.getCashFlowStatement();
+        boolean isEmptyCf = isEmptyFinancialStatement(cashFlowStatement);
 
         if (financeFlag == FinanceCommand.BS) {
             if (isEmptyBs) {
                 throw new EmptyFinancialStatementException();
             }
-            FinanceUi.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
+            FinanceManager.runTotalAmountsCheck(balanceSheet);
+            FinanceUi.printBalanceSheet(balanceSheet);
         } else if (financeFlag == FinanceCommand.CF) {
             if (isEmptyCf) {
                 throw new EmptyFinancialStatementException();
             }
-            FinanceUi.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
+            FinanceManager.runNetAmountsCheck(cashFlowStatement);
+            FinanceUi.printCashFlowStatement(cashFlowStatement);
         }
     }
 }

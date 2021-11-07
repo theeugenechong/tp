@@ -25,20 +25,22 @@ public class MeetingsUi extends Ui {
 
     /* Error messages */
     public static final String INVALID_DATE_TIME_FORMAT_MESSAGE =
-            "The date and time format you entered is not accepted or the date/time entered is not valid! "
-                    + "Please enter again.";
+            "The date and time you entered is not valid! Please enter again.";
     public static final String CORRECT_DATE_TIME_FORMAT_MESSAGE = "The correct format is: [dd-MM-yyyy HH:mm]";
     public static final String INVALID_TIME_MESSAGE =
             "The time you entered is not the start of the hour! Please enter again.";
     public static final String DUPLICATE_USERNAME_ERROR_MESSAGE =
             "The username has already been entered under that timeslot.";
-    public static final String CANNOT_SCHEDULE_MEETING_ERROR_MESSAGE = "Oops, no meeting can be scheduled!";
+    public static final String CANNOT_SCHEDULE_MEETING_ERROR_MESSAGE = "Oops, no meeting can be scheduled! "
+            + "Not all users are available at a common timing.";
     public static final String DUPLICATE_MEETING_ERROR_MESSAGE = "Please schedule a meeting at another time!";
     public static final String INVALID_SCHEDULE_FORMAT_ERROR_MESSAGE =
             "Please enter the users you would like to schedule a meeting with.";
     public static final String NO_TIME_ENTERED_ERROR_MESSAGE = "Please enter the time of the meeting after /at";
     public static final String NO_USERNAME_AFTER_COMMA_ERROR_MESSAGE =
             "You must enter a username after a comma! Please enter again.";
+    public static final String NO_AVAILABILITY_TIMING_ERROR_MESSAGE =
+            "Oops, no users are available at the time you entered!";
 
     /* formatting */
     public static final String DATE_FORMAT = "dd-MM-yyyy";
@@ -96,6 +98,12 @@ public class MeetingsUi extends Ui {
     public static void showMeetingTimeFull(String username, String time) {
         show(LINE);
         show("Oops, no meeting can be scheduled because " + username + " already has a meeting at " + time);
+    }
+
+    public static void showTimeNotInAvailabilityException() {
+        show(LINE);
+        show(NO_AVAILABILITY_TIMING_ERROR_MESSAGE);
+        show(LINE);
     }
 
     /* print successful commands */

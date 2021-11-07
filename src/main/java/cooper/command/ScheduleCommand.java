@@ -5,6 +5,7 @@ import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.InvalidAccessException;
+import cooper.exceptions.TimeNotInAvailabilityException;
 import cooper.meetings.MeetingManager;
 import cooper.resources.ResourcesManager;
 import cooper.storage.StorageManager;
@@ -68,6 +69,8 @@ public class ScheduleCommand extends Command {
                 MeetingsUi.showCannotScheduleMeetingException();
             } catch (DuplicateMeetingException e4) {
                 MeetingsUi.showDuplicateMeetingException();
+            } catch (TimeNotInAvailabilityException e5) {
+                MeetingsUi.showTimeNotInAvailabilityException();
             }
         }
     }

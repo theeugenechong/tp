@@ -5,6 +5,7 @@ import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.DuplicateMeetingException;
 import cooper.exceptions.CannotScheduleMeetingException;
+import cooper.exceptions.TimeNotInAvailabilityException;
 import cooper.ui.MeetingsUi;
 
 import java.time.LocalDateTime;
@@ -196,7 +197,7 @@ public class MeetingManager {
      */
     public void manualScheduleMeeting(String meetingName, ArrayList<String> usernames, String dateTime)
             throws InvalidDateTimeFormatException, InvalidTimeException,
-            CannotScheduleMeetingException, DuplicateMeetingException {
+            CannotScheduleMeetingException, DuplicateMeetingException, TimeNotInAvailabilityException {
         LocalDateTime localDateTime;
         if (isValidDateTimeFormat(dateTime)) {
             localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
@@ -206,6 +207,16 @@ public class MeetingManager {
 
         if (!isStartOfHour(getTime(dateTime))) {
             throw new InvalidTimeException();
+        }
+
+        boolean dateTimeExist = false;
+        for (LocalDateTime ldt: availability.keySet()) {
+            if (localDateTime.equals(ldt)) {
+                dateTimeExist = true;
+            }
+        }
+        if (!dateTimeExist) {
+            throw new TimeNotInAvailabilityException();
         }
 
         if (availability.get(localDateTime).containsAll(usernames)) {

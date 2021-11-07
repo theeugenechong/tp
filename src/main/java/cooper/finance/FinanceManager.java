@@ -146,8 +146,6 @@ public class FinanceManager {
      * in the event that there is no internet connection.
      */
     public void generateBalanceSheetAsPdf() {
-        runTotalAmountsCheck(cooperBalanceSheet.getBalanceSheet());
-
         balanceSheetGenerator.addAssets(cooperBalanceSheet);
         balanceSheetGenerator.addLiabilities(cooperBalanceSheet);
         balanceSheetGenerator.addShareholderEquity(cooperBalanceSheet);
@@ -161,8 +159,6 @@ public class FinanceManager {
      * in the event that there is no internet connection.
      */
     public void generateCashFlowStatementAsPdf() {
-        runNetAmountsCheck(cooperCashFlowStatement.getCashFlowStatement());
-
         cashFlowStatementGenerator.addCfFromOperatingActivities(cooperCashFlowStatement);
         cashFlowStatementGenerator.addCfFromInvestingActivities(cooperCashFlowStatement);
         cashFlowStatementGenerator.addCfFromFinancingActivities(cooperCashFlowStatement);
