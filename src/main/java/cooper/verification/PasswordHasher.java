@@ -23,7 +23,12 @@ public class PasswordHasher {
     /* National Institute of Standards and Technology (NIST) recommends at least 10000 iterations of the hash
      * function be performed.
      **/
-    private static final int ITERATIONS = 20000;
+    private static final int ITERATIONS = 25000;
+
+    /* constants for algorithm used*/
+    private static final String ALGORITHM = "PBKDF2WithHmacSHA1";
+    private static final String SHA_1_PRNG = "SHA1PRNG";
+    private static final int NUM_BYTES = 8;
 
     /**
      * Generates hash for {@code password} with {@code salt} added to it.
@@ -36,11 +41,9 @@ public class PasswordHasher {
         byte[] encodedBytes = null;
 
         try {
-            String algorithm = "PBKDF2WithHmacSHA1";
-
             byte[] saltBytes = Base64.getDecoder().decode(salt);
             KeySpec spec = new PBEKeySpec(password.toCharArray(), saltBytes, ITERATIONS, KEY_LENGTH);
-            SecretKeyFactory factory = SecretKeyFactory.getInstance(algorithm);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITHM);
 
             encodedBytes = factory.generateSecret(spec).getEncoded();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -56,10 +59,10 @@ public class PasswordHasher {
      * @return Salt text which has been generated
      */
     public static String getNewSalt() {
-        byte[] salt = new byte[8];
+        byte[] salt = new byte[NUM_BYTES];
 
         try {
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            SecureRandom random = SecureRandom.getInstance(SHA_1_PRNG);
             random.nextBytes(salt);
         } catch (NoSuchAlgorithmException nse) {
             nse.printStackTrace();

@@ -1,47 +1,74 @@
-# Duke project template
+![cOOPer](docs/userGuideImages/cooperLogo.png)
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+# What is COOPER?
 
-## Setting up in Intellij
+cOOPer is a **desktop application** developed to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 
-Prerequisites: JDK 11 (use the exact version), update Intellij to the most recent version.
+If you are running a tech startup, cOOPer can help you with **accounting** and **communicative** tasks like:
 
-1. **Ensure Intellij JDK 11 is defined as an SDK**, as described [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) -- this step is not needed if you have used JDK 11 in a previous Intellij project.
-   * In the same dialog, you _may_ have to set the Project language level field to the SDK default option.
-1. **Import the project _as a Gradle project_**, as described [here](https://se-education.org/guides/tutorials/intellijImportGradleProject.html).
-1. **Verify the set up**: After the importing is complete, locate the `src/main/java/seedu/duke/Duke.java` file, right-click it, and choose `Run Duke.main()`. If the setup is correct, you should see something like the below:
-   ```
-   > Task :compileJava
-   > Task :processResources NO-SOURCE
-   > Task :classes
-   
-   > Task :Duke.main()
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   
-   What is your name?
-   ```
-   Type some word and press enter to let the execution proceed to the end.
+- **Generating** your company's **financial statements**
+- **Forecasting** your company's **cash flow**
+- **Scheduling meetings** with your employees
+- Having **discussions on forum** with your colleagues
 
-## Build automation using Gradle
+## Setting up cOOPer on your computer
+
+> 💡 Here are the **software / tools** used in developing cOOPer. You are recommended to use them :
+>
+> + _**IDE**_: IntelliJ IDEA (highly recommended)
+> + _**JDK**_: Java 11 
+> + **Version control**: Git 
+> + **Git GUI**: Sourcetree
+> + **Build system**: Gradle
+
+1. Fork [this repo](https://github.com/AY2122S1-CS2113T-W13-4/tp) and clone the fork into your computer.
+2. If you are using IntelliJ IDEA, ensure that IntelliJ is configured to use **JDK 11**. You can refer to IntelliJ's own documentation [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk) to correctly configure the JDK.
+3. Import the project as a Gradle project. You can follow [this guide](https://se-education.org/guides/tutorials/intellijImportGradleProject.html) to find out how to import the project into IntelliJ.
+4. Verify the setup by running `cooper.Cooper`
+   1. Navigate to `src/main/java/cooper/Cooper.java`
+   2. Right click on `Cooper.java` and select 'Run Cooper.main()'.
+   3. You should see the following output if the setup was done correctly:
+
+```
+            /$$$$$$   /$$$$$$  /$$$$$$$
+           /$$__  $$ /$$__  $$| $$__  $$
+  /$$$$$$$| $$  \ $$| $$  \ $$| $$  \ $$ /$$$$$$   /$$$$$$
+ /$$_____/| $$  | $$| $$  | $$| $$$$$$$//$$__  $$ /$$__  $$
+| $$      | $$  | $$| $$  | $$| $$____/| $$$$$$$$| $$  \__/
+| $$      | $$  | $$| $$  | $$| $$     | $$_____/| $$
+|  $$$$$$$|  $$$$$$/|  $$$$$$/| $$     |  $$$$$$$| $$
+ \_______/ \______/  \______/ |__/      \_______/|__/
+=========================================================================
+Hello I'm cOOPer! Nice to meet you!
+=========================================================================
+Log in or register to gain access to my features!
+To log in, enter "login [yourUsername] /pw [password] /as [yourRole]".
+To register, enter "register [yourUsername] /pw [password] /as [yourRole]".
+
+To exit, enter "exit".
+=========================================================================
+>> [Logged out]
+```
+
+5. Build automation using Gradle
 
 * This project uses Gradle for build automation and dependency management. It includes a basic build script as well (i.e. the `build.gradle` file).
 * If you are new to Gradle, refer to the [Gradle Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/gradle.html).
 
 ## Testing
 
-### I/O redirection tests
-
-* To run _I/O redirection_ tests (aka _Text UI tests_), navigate to the `text-ui-test` and run the `runtest(.bat/.sh)` script.
-
 ### JUnit tests
 
-* A skeleton JUnit test (`src/test/java/seedu/duke/DukeTest.java`) is provided with this project template. 
-* If you are new to JUnit, refer to the [JUnit Tutorial at se-education.org/guides](https://se-education.org/guides/tutorials/junit.html).
+* Run JUnit tests:
+  1. Navigate to `src/test`.
+  2. Right click on `test` and select 'Run 'All tests' '.
+  3. All the tests should pass, and you should see the following:
+
+<p align="center">
+    <img width=250 src="docs/developerGuideDiagrams/junitPassed.png" alt="junitPassed"><br>
+</p> 
+
+
 
 ## Checkstyle
 
@@ -54,12 +81,6 @@ The project uses [GitHub actions](https://github.com/features/actions) for CI. W
 
 ## Documentation
 
-`/docs` folder contains a skeleton version of the project documentation.
-
-Steps for publishing documentation to the public: 
-1. If you are using this project template for an individual project, go your fork on GitHub.<br>
-   If you are using this project template for a team project, go to the team fork on GitHub.
-1. Click on the `settings` tab.
-1. Scroll down to the `GitHub Pages` section.
-1. Set the `source` as `master branch /docs folder`.
-1. Optionally, use the `choose a theme` button to choose a theme for your documentation.
+* For users, refer to cOOPer's [User Guide](UserGuide.md) 
+* For developers, refer to our [Developer Guide](DeveloperGuide.md)
+* To know more about the team of developers, click [here](AboutUs.md)
