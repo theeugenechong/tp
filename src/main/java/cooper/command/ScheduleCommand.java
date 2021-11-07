@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 public class ScheduleCommand extends Command {
     private final String meetingName;
-    private final String time;
+    private final String dateTime;
     private final ArrayList<String> usernames;
 
-    public ScheduleCommand(String meetingName, ArrayList<String> usernames, String time) {
+    public ScheduleCommand(String meetingName, ArrayList<String> usernames, String dateTime) {
         this.meetingName = meetingName;
         this.usernames = usernames;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
     /**
@@ -47,7 +47,7 @@ public class ScheduleCommand extends Command {
         }
 
         // if time field is not entered, proceed to auto schedule a meeting at the earliest time
-        if (time == null) {
+        if (dateTime == null) {
             try {
                 usernames.add(username);
                 meetingManager.autoScheduleMeeting(meetingName, usernames);
@@ -58,7 +58,7 @@ public class ScheduleCommand extends Command {
         } else {
             try {
                 usernames.add(username);
-                meetingManager.manualScheduleMeeting(meetingName, usernames, time);
+                meetingManager.manualScheduleMeeting(meetingName, usernames, dateTime);
                 storageManager.saveMeetings(meetingManager);
             } catch (InvalidDateTimeFormatException e1) {
                 MeetingsUi.showInvalidDateTimeFormatException();

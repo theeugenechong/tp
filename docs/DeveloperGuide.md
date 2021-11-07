@@ -32,12 +32,14 @@ This developer guide is for software designers, developers, and software testers
   - [Storage component](#storage-component)
   - [Util component](#util-component)
 - [Implementation](#Implementation)
-  - [Parsing user input](#parsing-user-input)
-  - [Interacting with the forum](#interacting-with-the-forum)
-  - [Requesting a resource](#requesting-a-resource)
-  - [Verifying user credentials](#verifying-user-credentials)
-  - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
-  - [Saving and loading data](#saving-and-loading-data)
+    - [Parsing user input](#parsing-user-input)
+    - [Verifying user credentials](#verifying-user-credentials)
+    - [Declaring an availability](#declaring-an-availability)
+    - [Scheduling a meeting](#scheduling-a-meeting)
+    - [Interacting with the forum](#interacting-with-the-forum)
+    - [Requesting a resource](#requesting-a-resource)
+    - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
+    - [Saving and loading data](#saving-and-loading-data)
 - [Appendix: Requirements](#appendix-requirements)
   - [Product Scope](#product-scope)
     - [Target user profile](#target-user-profile)
@@ -318,7 +320,7 @@ The `Command` component:
 
   - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole == UserRole.ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
-    ```java
+    ```
     FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
     ```
 
@@ -348,7 +350,29 @@ The `Finance` component:
 + Handles adding / listing / generating of balance sheets, cash flow statements, and free cash flow projections.
 + Assists the parser in identifying which function is being used at any given time.
 
++ Contains the `PdfGenerator` class for the `generate` command, more info can be found [here](#generating-a-pdf-from-the-financial-statement).
+
 #### Meetings
+
+**API**: [`cooper.meetings`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/meetings)
+
+<p align="center">
+    <img src="developerGuideDiagrams/meetingsComponent.png" alt="meetingsComponent"><br>
+</p>
+
+The `Meetings` component contains the `MeetingManager` and `Meeting` classes.
+
+`MeetingManager` stores **2** attributes:
+1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
+2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
+
+The `MeetingManager` constructs the instances of `Meeting`, and stores it as an `ArrayList<Meeting>` in itself.
+
+The `Meetings` component:
+
++ Handles the **declaration of availability**
++ Assists in  the **scheduling** of meetings
++ Lists the current availability and meetings
 
 #### Forum
 
@@ -429,24 +453,87 @@ This gives great flexibility and extensibility to the `Parser` component as you 
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
-### Meetings
-`Meetings` provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
+### Verifying user credentials
+The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer.
 
-#### Meeting module descriptions
-`MeetingManager` stores **2** attributes:
-1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
-2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
+#### Verification process
 
-The `ArrayList<Meeting>` object stores 0 or more `Meeting` objects
+Different conditions are checked depending on whether a user is trying to log in or register. For example, if a user is trying to register, cOOPer will check if the username is already registered and asks the user to log in if they are not registered yet.
+On the other hand, if an unregistered user is trying to log in, cOOPer will ask the user to register first.
 
-Meeting object stores 3 attributes:
-1. the `meetingName`, which is a `String` object,
-2. the `time`, which is a `LocalTime` object,
-3. the `listOfAttendees`, which is an `ArrayList<String>` object
+For a registered user trying to log in, cOOPer will first check if the entered password is correct. This is done with the help of the `PasswordHasher` class which hashes the entered password with the user's salt stored by cOOPer. The hash obtained will then be compared to the user's stored hash to determine if the entered password is correct.
 
-When the user wants to enter an availability, `MeetingManager` will check if the time entered is in the **correct format** and if the user has **not already entered their availability to that time**. Addition of availability is successful only if those two requirements are satisfied.
+If the password is correct, the user's role will then be checked to determine if they are logging in with the role they registered with.
 
-When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
+#### Registering a user
+The following sequence diagram shows the detailed process of registering a user.
+> ℹ️`userInput` is `register John /pw 123 /as admin`.<br>
+> ℹ️The `executeSignIn()` method actually takes in a `rawPassword` as its parameters but is omitted in this sequence diagram as the registration process does not require the raw password of the user.
+
+<p align="center">
+    <img src="developerGuideDiagrams/registrationSequenceDiagram.png" alt="registrationSequenceDiagram"><br>
+</p>
+
+The `SignInDetailsParser` constructs a `SignInDetails` object parsed from the arguments in `userInput`. This `SignInDetails` object is then used to construct a `Registration` object which executes the registration of the user. This process is shown by the sequence diagram below.
+
+<p align="center">
+    <img src="developerGuideDiagrams/refFrameRegistration.png" alt="refFrameSequenceDiagram"><br>
+</p>
+
+#### Logging in
+Assuming that the above registration has taken place successfully, the following sequence diagram shows the login process of the user.
+> ℹ️`userInput` is `login John /pw 123 /as admin`.<br>
+> ℹ️The process of parsing `userInput` takes place similar to when a user is registering. The reference frame is omitted in this sequence diagram for simplicity.
+
+<p align="center">
+    <img src="developerGuideDiagrams/loginSequenceDiagram.png" alt="loginSequenceDiagram"><br>
+</p>
+
+#### Hashing user passwords
+The Password Based Key Derivation Function (PBKDF2) hashing algorithm is used for hashing user passwords. This algorithm is used together with a 64-bit salt text for each password before it is hashed to improve security and decrease susceptibility to rainbow-table attacks, where duplicate user passwords are still stored securely.
+
+This algorithm is recommended by the National Institute of Standards and Technology (NIST) for password storage and our implementation also adheres to NIST specifications: <br>
+- The hashing algorithm is run for 25000 iterations while NIST only specifies a minimum of 10000 iterations.
+- A 64-bit salt text is used while NIST specifies a 32-bit salt text.
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Declaring an availability
+The `MeetingManager` class facilitates the storing of availability in cOOPer.
+
+#### Availability declaration process
+When the user declares an availability, the `addAvailability` function in `MeetingManager` performs some checks before successfully storing their availability.
+1. `addAvailability` looks at the format of the `[date]` and `[time]` entered, which will be checked using the `isValidDateTimeFormat` function.
+2. `addAvailability` checks if the time entered is at the **start of the hour**, using the `isStartOfHour` function.
+3. `addAvailability` checks if the user has already entered their availability under the same date and time, by checking all the names under the specified date and time in the `availability` TreeMap.
+
+The following sequence diagram shows the detailed process of declaring an availability. `username` is `Sebastian` and `userInput` is `available 11-08-2021 14:00`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/availableSequenceDiagram.png" alt="availableSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Scheduling a meeting
+The `MeetingManager` class facilitates the scheduling of meetings.
+
+#### Scheduling process
+When the user schedules a meeting `ScheduleCommand` checks if the `[date]` and `[time]` parameter is entered and calls `manualScheduleMeeting` in `MeetingManager` if it is and `autoScheduleMeeting` if it isn't.
+
+The following sequence diagram shows the process of **auto** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/autoScheduleSequenceDiagram.png" alt="autoScheduleSequenceDiagram"><br>
+</p>
+
+The following sequence diagram shows the process of **manual** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene /at 11-08-2021 14:00`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/manualScheduleSequenceDiagram.png" alt="manualScheduleSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Finance
 `Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
@@ -469,7 +556,7 @@ When the user wants to list a financial statement, `FinanceManager` will run a c
 
 When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
 
-### Forum 
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Interacting with the forum
 
@@ -487,6 +574,8 @@ The following sequence diagram shows three operations with the forum. `addPost`,
 <p align="center">
     <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
 </p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Requesting a resource
 
