@@ -12,7 +12,8 @@ public class FinanceUi extends Ui {
     private static final String VIEW_CURRENT_BS = "You can enter 'list' to view the current Balance Sheet or ";
     private static final String FIRST_ENTRY_BALANCE_SHEET = "start off by entering Cash & Cash Equivalents:";
     private static final String BALANCE_OPENING = "This is the company's current Balance Sheet (in SGD):";
-    private static final String ACCOUNT_MISTAKE = "THERE IS AN ACCOUNTING MISTAKE! One of your entries is incorrect.";
+    private static final String ACCOUNT_MISTAKE = "THERE IS AN ACCOUNTING MISTAKE! "
+            + "One or more of your entries are incorrect.";
     private static final String ACCOUNT_CORRECT = "Balance Sheet is perfectly balanced, as all things should be.";
     private static final String BALANCE_SHEET_COMPLETE = "The Balance Sheet is complete! enter 'list' to view.";
 
@@ -32,7 +33,8 @@ public class FinanceUi extends Ui {
     private static final String STATEMENT_TO_ADD = "Please specify the financial statement you wish to add to.";
     private static final String STATEMENT_TO_VIEW = "Please specify the financial statement you wish to view.";
 
-    private static final String INPUT_VALID_RANGE = "Please enter a valid integer (0 to 999,999,999) for the argument.";
+    private static final String INPUT_VALID_RANGE = "Please enter a positive integer "
+            + "(up to 300,000,000) for the argument.";
     private static final String INPUT_VALID_ASSET = "Please enter the asset as a positive number.";
     private static final String INPUT_VALID_LIABILITY = "Please enter the liability as a negative number.";
     private static final String INPUT_VALID_ADD = "Please use the format \"add [amount]\" with [amount] in parentheses"
@@ -110,7 +112,6 @@ public class FinanceUi extends Ui {
         show(BALANCE_OPENING);
         show(HEADERS_UI[3]);
         int i;
-        FinanceManager.runTotalAmountsCheck(balanceSheet);
         for (i = 0; i < balanceSheet.size(); i++) {
             switch (i) {
             case FinanceManager.endOfAssets:
@@ -187,7 +188,6 @@ public class FinanceUi extends Ui {
         show(FinanceUi.STATEMENT_OPENING);
         show(FinanceUi.HEADERS_UI[0]);
         int i;
-        FinanceManager.runNetAmountsCheck(cashFlowStatement);
         for (i = 0; i < cashFlowStatement.size(); i++) {
             switch (i) {
             case FinanceManager.endOfOA:

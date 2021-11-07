@@ -34,7 +34,7 @@ public class PostCommentCommand extends Command {
      */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
-                        StorageManager storageManager) throws InvalidAccessException {
+                        StorageManager storageManager) throws InvalidAccessException, NumberFormatException {
         UserRole userRole = signInDetails.getUserRole();
         ForumManager forumManager = resourcesManager.getForumManager(userRole);
         if (forumManager == null) {

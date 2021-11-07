@@ -20,13 +20,13 @@ public class ForumManager {
     }
 
     public void addComment(String username, String content, int postId)
-            throws InvalidForumPostIdException {
+            throws InvalidForumPostIdException, NumberFormatException {
         checkValidPostId(postId);
         forumPosts.get(postId).addComment(username, content);
     }
 
     public String deletePost(String username, int postId) 
-            throws InvalidForumPostIdException, InvalidForumDeleteByNonOwnerException {
+            throws InvalidForumPostIdException, InvalidForumDeleteByNonOwnerException, NumberFormatException {
         checkValidPostId(postId);
         ForumPost post = forumPosts.get(postId);
         if (post.getUsername().equals(username)) {
@@ -40,7 +40,7 @@ public class ForumManager {
     }
     
     public String commentPost(String username, String content, int postId)  
-            throws InvalidForumPostIdException {
+            throws InvalidForumPostIdException, NumberFormatException {
         checkValidPostId(postId);
         forumPosts.get(postId).addComment(username, content);
         return forumPosts.get(postId).getContent(); // return the original post for Ui
@@ -50,13 +50,16 @@ public class ForumManager {
         ForumUi.printForumPosts(forumPosts);
     }
 
-    public void listPost(int postId) throws InvalidForumPostIdException {
+    public void listPost(int postId) throws InvalidForumPostIdException, NumberFormatException {
         checkValidPostId(postId);
         ForumUi.printForumPost(forumPosts, postId);
     }
 
-    private void checkValidPostId(int postId) throws InvalidForumPostIdException {
+    private void checkValidPostId(int postId) throws InvalidForumPostIdException, NumberFormatException {
         if (postId >= forumPosts.size() || postId < 0) {
+            if (postId > 300_000_000) {
+                throw new NumberFormatException();
+            }
             throw new InvalidForumPostIdException();
         }
     }
