@@ -32,12 +32,14 @@ This developer guide is for software designers, developers, and software testers
   - [Storage component](#storage-component)
   - [Util component](#util-component)
 - [Implementation](#Implementation)
-  - [Parsing user input](#parsing-user-input)
-  - [Interacting with forum](#interacting-with-forum)
-  - [Requesting a resource](#requesting-a-resource)
-  - [Verifying user credentials](#verifying-user-credentials)
-  - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
-  - [Saving and loading data](#saving-and-loading-data)
+    - [Parsing user input](#parsing-user-input)
+    - [Verifying user credentials](#verifying-user-credentials)
+    - [Declaring an availability](#declaring-an-availability)
+    - [Scheduling a meeting](#scheduling-a-meeting)
+    - [Interacting with forum](#interacting-with-forum)
+    - [Requesting a resource](#requesting-a-resource)
+    - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
+    - [Saving and loading data](#saving-and-loading-data)
 - [Appendix: Requirements](#appendix-requirements)
   - [Product Scope](#product-scope)
     - [Target user profile](#target-user-profile)
@@ -317,7 +319,7 @@ The `Command` component:
 
   - E.g. the following line will only return a valid reference to `FinanceManager` if `userRole == UserRole.ADMIN`. Otherwise, `null` will be returned indicating the user does not have the access right to that module.
 
-    ```java
+    ```
     FinanceManager financeManager = resourcesManager.getFinanceManager(userRole);
     ```
 
@@ -347,7 +349,33 @@ The `Finance` component:
 + Handles adding/listing/generating of Balance Sheets, Cash Flow Statements, and Free Cash Flow Projections.
 + Assists the parser in identifying which function is being used at any given time.
 + Contains the `PdfGenerator` class for the `generate` command, more info can be found [here](#generating-a-pdf-from-the-financial-statement).
+
 #### Meetings
+
+**API**: [`cooper.meetings`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/meetings)
+
+<p align="center">
+    <img src="developerGuideDiagrams/meetingsComponent.png" alt="meetingsComponent"><br>
+</p>
+
+`Meetings` component provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
+
+The `Meetings` component contains the `MeetingManager` and `Meeting` classes.
+
+`MeetingManager` stores **2** attributes:
+1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
+2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
+
+The `MeetingManager` constructs the instances of `Meeting`, and stores it as an `ArrayList<Meeting>` in itself.
+
+`Meeting` object stores 3 attributes:
+1. the `meetingName`, which is a `String` object,
+2. the `time`, which is a `LocalTime` object,
+3. the `listOfAttendees`, which is an `ArrayList<String>` object
+
+When the user wants to enter an availability, `MeetingManager` will check if the time entered is in the **correct format** and if the user has **not already entered their availability to that time**. Addition of availability is successful only if those two requirements are satisfied.
+
+When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
 
 #### Forum
 
@@ -428,87 +456,15 @@ This gives great flexibility and extensibility to the `Parser` component as you 
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
-### Meetings
-`Meetings` provides features like **declaring** availability, **viewing** availability, **scheduling** meetings, and **viewing** user-specific scheduled meetings.
-
-#### Meeting module descriptions
-`MeetingManager` stores **2** attributes:
-1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
-2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
-
-The `ArrayList<Meeting>` object stores 0 or more `Meeting` objects
-
-Meeting object stores 3 attributes:
-1. the `meetingName`, which is a `String` object,
-2. the `time`, which is a `LocalTime` object,
-3. the `listOfAttendees`, which is an `ArrayList<String>` object
-
-When the user wants to enter an availability, `MeetingManager` will check if the time entered is in the **correct format** and if the user has **not already entered their availability to that time**. Addition of availability is successful only if those two requirements are satisfied.
-
-When the user wants to schedule a meeting, `ScheduleCommand` will check if the user has entered a **valid time value**. If so, it will call the `MeetingManager` to run an **auto scheduling** function. If not, it will call the `MeetingManager` to run a **manual scheduling** function.
-
-### Finance
-`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
-
-#### Finance module descriptions
-'FinanceManager' stores **3** attributes:
-1. the **balance sheet**, which is a `BalanceSheet` object.
-2. the **cash flow statement**, which is a `CashFlow` object.
-3. the **free cash flow projections**, which is a `Projection` object.
-
-The `BalanceSheet` object stores the attribute `balanceSheet` which is an `ArrayList<Integer>` object.
-
-The `CashFlow` object stores the attribute `cashFlowStatement` which is an `ArrayList<Integer>` object.
-
-The `Projection` object stores the attribute `growthValues` which is an `ArrayList<Double>` object.
-
-When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
-
-When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
-
-When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
-### Forum 
-
-### Interacting with forum
-
-The following sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
-
-+ For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
-
-+ For commenting on a post, `ForumManager` will first check if the `postId` specified is a valid index. If it is not, an exception will be thrown. Otherwise, it will get the `ForumPost` by its `postId` and add a new `ForumComment` to it.
-
-+ For deleting a post, `ForumManager` will again check the `postId` and delete the post only if the `postId` is valid.
-
-  > ℹ️ In the actual implementation, `ForumManager` will also ensure the username of the user requesting for the `deletePost` operation matches the *owner* of the forum post. This checking is omitted in this sequence diagram for simplicity and represented as the method call to`remove(postId)`.
-
-
-
-<p align="center">
-    <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
-</p>
-
-### Requesting a resource
-
-`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
-
-+ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
-+ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using `give-receive` pattern, instead of universal `getters`.
-
-<p align="center">
-    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
-</p>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
 ### Verifying user credentials
-The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer. 
+The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer.
 
 #### Verification process
 
 Different conditions are checked depending on whether a user is trying to log in or register. For example, if a user is trying to register, cOOPer will check if the username is already registered and asks the user to log in if they are not registered yet.
 On the other hand, if an unregistered user is trying to log in, cOOPer will ask the user to register first.
 
-For a registered user trying to log in, cOOPer will first check if the entered password is correct. This is done with the help of the `PasswordHasher` class which hashes the entered password with the user's salt stored by cOOPer. The hash obtained will then be compared to the user's stored hash to determine if the entered password is correct. 
+For a registered user trying to log in, cOOPer will first check if the entered password is correct. This is done with the help of the `PasswordHasher` class which hashes the entered password with the user's salt stored by cOOPer. The hash obtained will then be compared to the user's stored hash to determine if the entered password is correct.
 
 If the password is correct, the user's role will then be checked to determine if they are logging in with the role they registered with.
 
@@ -530,6 +486,81 @@ Assuming that the above registration has taken place successfully, the following
 
 <p align="center">
     <img src="developerGuideDiagrams/loginSequenceDiagram.png" alt="loginSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Declaring an availability
+The `MeetingManager` class facilitates the storing of availability in cOOPer.
+
+#### Availability declaration process
+When the user declares an availability, the `addAvailability` function in `MeetingManager` performs some checks before successfully storing their availability.
+1. `addAvailability` looks at the format of the `[date]` and `[time]` entered, which will be checked using the `isValidDateTimeFormat` function.
+2. `addAvailability` checks if the time entered is at the **start of the hour**, using the `isStartOfHour` function.
+3. `addAvailability` checks if the user has already entered their availability under the same date and time, by checking all the names under the specified date and time in the `availability` TreeMap.
+
+The following sequence diagram shows the detailed process of declaring an availability. `username` is `Sebastian` and `userInput` is `available 11-08-2021 14:00`.
+
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Scheduling a meeting
+
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Finance
+`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
+
+#### Finance module descriptions
+'FinanceManager' stores **3** attributes:
+1. the **balance sheet**, which is a `BalanceSheet` object.
+2. the **cash flow statement**, which is a `CashFlow` object.
+3. the **free cash flow projections**, which is a `Projection` object.
+
+The `BalanceSheet` object stores the attribute `balanceSheet` which is an `ArrayList<Integer>` object.
+
+The `CashFlow` object stores the attribute `cashFlowStatement` which is an `ArrayList<Integer>` object.
+
+The `Projection` object stores the attribute `growthValues` which is an `ArrayList<Double>` object.
+
+When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
+
+When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
+
+When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Interacting with forum
+
+The following sequence diagram shows 3 operations with forum. `addPost`, `commentPost` and `deletePost`.
+
++ For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
+
++ For commenting on a post, `ForumManager` will first check if the `postId` specified is a valid index. If it is not, an exception will be thrown. Otherwise, it will get the `ForumPost` by its `postId` and add a new `ForumComment` to it.
+
++ For deleting a post, `ForumManager` will again check the `postId` and delete the post only if the `postId` is valid.
+
+  > ℹ️ In the actual implementation, `ForumManager` will also ensure the username of the user requesting for the `deletePost` operation matches the *owner* of the forum post. This checking is omitted in this sequence diagram for simplicity and represented as the method call to`remove(postId)`.
+
+
+
+<p align="center">
+    <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Requesting a resource
+
+`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
+
++ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
++ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using `give-receive` pattern, instead of universal `getters`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
 </p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
