@@ -17,7 +17,7 @@ If you are running a tech startup, cOOPer can help you with **accounting** and *
 - **Scheduling meetings** with your employees
 - Having **discussions** with your colleagues
 
-cOOPer is optimized for use via a [**Command Line Interface (CLI)**](https://simple.wikipedia.org/wiki/Command-line_interface), so if you are someone who types fast,
+cOOPer is optimized for use via a **Command Line Interface (CLI)**, so if you are someone who types fast,
 cOOPer can help you manage your startup efficiently.
 
 This user guide is written to assist users like you in using cOOPer. It provides you with the necessary guidance you need for using cOOPer's features to manage your startup.
@@ -73,9 +73,9 @@ The table below explains the formatting and symbols in this user guide.
 *italics* |Text in italics represent special terminology specific to using cOOPer.
 **bold**|Text in bold emphasizes the text's importance and indicates that you should pay more attention to the text.
 <kbd>key</kbd> | Text formatted as such represents a key you can press on your keyboard. 
-`command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt/Terminal.<br> Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt/Terminal.
+`command` |Short lines of text highlighted as such represent a command that can be entered in the Command Prompt / Terminal.<br> Large segments on the other hand (for e.g. in [Setup](#setup)) represent the expected output on the Command Prompt / Terminal.
 `[argument]`|Text highlighted in grey wrapped in square brackets represent a command argument that needs to be present when a command is entered. You are free to decide the argument entered. 
-`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands.<br> Refer to the [cOOPer's Commands](#coopers-commands) section for additional info regarding the prompt.
+`>>`|This symbol appears in the examples given for cOOPer's features. It represents cOOPer's [command prompt](https://en.wikipedia.org/wiki/Command-line_interface#Command_prompt) and it should not be included when you enter subsequent commands. Refer to the [cOOPer's Commands](#coopers-commands) section for additional info regarding the prompt.
 ℹ️  |The info symbol indicates useful information about cOOPer's features.
 💡     |The light bulb symbol indicates a useful tip which eases your usage of cOOPer. 
 ⚠️  |The hazard symbol indicates an important message you should take note of in order to avoid negative consequences.
@@ -122,7 +122,7 @@ To exit, enter "exit".
 >> [Logged out]
 ```
 
-Refer to the [Getting Started](#getting-started) section for information on how to start using cOOPer.
+You are now ready to use cOOPer! Refer to the [Getting Started](#getting-started) section for information on how to start using cOOPer.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -133,9 +133,10 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 ℹ️Here are some things to note about cOOPer's **commands**.<br>
 
 - Extraneous arguments for commands that do not have arguments (e.g. `exit`, `meetings`, `cf`, `help`, etc.) will be **ignored**. For example, `exit 123` will be interpreted as `exit`.<br>
-- For commands having arguments, extraneous arguments added to the back of the command **will be considered as part of the command argument** too, and this may lead to the command **not being interpreted correctly** by cOOPer. For example, if `available 14:00 abc` is entered, cOOPer interprets the argument as `14:00 abc` which according to cOOPer is an invalid time.<br>
+- For commands having arguments, extra characters added to the back of the command **will be considered as part of the command argument** too, and this may lead to the argument **not being interpreted correctly** by cOOPer. For example, if `available 08-11-2021 14:00 abc` is entered, cOOPer interprets the argument as `08-11-2021 14:00 abc` which according to cOOPer is an invalid time.<br>
+- cOOPer does not accept **empty** arguments.
 - All commands are **case-insensitive**. For example, `list` is the same as `List` or `LIST`.<br>
-- Empty input (for e.g. simply pressing <kbd>Enter</kbd>, entering whitespaces or <kbd>Tab</kbd> characters) will be ignored and cOOPer will continue prompting you for your next command.<br>
+- **Empty** input (for e.g. simply pressing <kbd>Enter</kbd>, entering whitespaces or <kbd>Tab</kbd> characters) will be ignored and cOOPer will continue prompting you for your next command.<br>
 
 ℹ️Here is some additional information about cOOPer's **command prompt**.<br>
 
@@ -144,7 +145,7 @@ Refer to the [Getting Started](#getting-started) section for information on how 
   - `[Logged out]` indicates you are currently **logged out** of cOOPer
   - `[Balance Sheet]` indicates you are using cOOPer's **[balance sheet](#creating-the-balance-sheet-bs--add) function**
   - `[Cash Flow]` indicates you are using cOOPer's **[cash flow](#creating-the-cash-flow-statement-cf--add) function**
-- No label shown indicates you are **logged in** to the cOOPer, but you are using **neither** the balance sheet function nor the cash flow statement function.
+- No label shown indicates you are **logged in** to cOOPer, but you are using **neither** the balance sheet function nor the cash flow statement function.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -171,7 +172,7 @@ Refer to the [Getting Started](#getting-started) section for information on how 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
 - How to register a user:
-  1. When you see cOOPer asking you to log in, register or exit, enter `register [username] /pw [password] /as [role]`. 
+  1. When you see the `[Logged out]` label beside cOOPer's prompt, enter `register [username] /pw [password] /as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
   3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to find out more about logging in.
 
@@ -199,8 +200,9 @@ Sebastian is now successfully registered as an admin!
 ## Login
 - Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
 - How to log in:
-  1. When you see cOOPer asking you to log in, register or exit, enter `login [username] /pw [password] /as [role]`.
-  2. You now have access to cOOPer's features specific to your role.
+  1. When you see the `[Logged out]` label beside cOOPer's prompt, enter `login [username] /pw [password] /as [role]`.
+  2. You should see a message informing you of your successful login. The `[Logged out]` label is no longer present beside the prompt.
+  3. You now have access to cOOPer's features specific to your role.
 
 > ℹ️`[username]`, `[password]` and `[role]` refer to your name, password and role as registered in cOOPer's system.<br>
 > ⚠️The username you are logging in with is **case-sensitive**. *e.g.* logging in with the username `sebastian` is not the same as logging in with `Sebastian`.
@@ -226,15 +228,15 @@ You are now logged in successfully as Sebastian!
 
 ## Features for All Users
 
-- This section explains cOOPer's features for all users, i.e. users with either the _**admin**_ role or the _**employee**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined.
+- This section explains cOOPer's features for all users, regardless of your role.
 - These features are accessible to you only **after** you have successfully [logged in](#login).
 
 <!--@@author Rrraaaeee-->
 
 ### Adding a forum post: `post add`
 
-+ You can post a message to forum for cOOPer's users to discuss certain topics.
-+ How to post a message to the forum:
++ You can add a post to the forum to discuss certain topics with cOOPer's users .
++ How to add a post to the forum:
   1. Enter `post add [postContent]`.
   2. Your post will be added to the forum, and you will see a confirmation message indicating that the post was successful.
 
@@ -265,7 +267,7 @@ Sebastian has just posted to the forum:
 + How to view a specific post / posts in the forum:
   1. Enter `post list all` to view all the active forum posts.
   2. cOOPer lists all posts along with their comments in a hierarchical manner.
-  3. Enter `post list [postId]` to view the single post with `[postId]`.
+  3. Enter `post list [postId]` to view the `[postId]`th post along with its comments.
 
 > ℹ️`[postId]` refers to the index of the post you want to view. It must be a **positive integer** and also an index of the posts **in the list**.<br>
 > 💡 Enter `post list all` to know the index of the specific post you want to view.
@@ -317,7 +319,7 @@ Here is the forum post:
 + Adds a comment on a post in the forum.
 + How to comment on a post:
   1. When you see a post on the forum, comment on the post by entering `post comment [commentContent] /on [postId]`.
-  2. A comment `[commentContent]` will be added to the post with `[postId]`.
+  2. A comment `[commentContent]` will be added to the `[postId]`th post.
 
 > ℹ️`[postId]` refers to the index of the post you want to comment on. It must be a **positive integer** and also an index of the posts **in the list**.<br>
 > 💡 Enter [`post list all`](#viewing-a-post--posts-in-the-forum-post-list) before commenting on a post to know the index of the specific post you want to comment on.
@@ -346,7 +348,7 @@ Eugene has just commented on a post from the forum:
 - Deletes an active post on the forum along with its comments.
 - How to delete a post:
   1. Enter `post delete [postId]`.
-  2. The post will be deleted from the forum.
+  2. The `[postId]`th post will be deleted from the forum.
 
 > ℹ️ You are only allowed to delete the posts **made by you**.<br>
 > ℹ️ `[postId]` refers to the index of the post you want to delete. It must be a **positive integer** and also an index of the posts **in the list**.<br>
@@ -430,7 +432,7 @@ Here are the availabilities:
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing scheduled meetings: `meetings`
-- Shows you your meetings (for the day) which have been scheduled successfully for easier visualisation. Refer to [this](#scheduling-meetings-with-different-users-schedule) section to know how meetings are scheduled.
+- Shows you your meetings (for the day) which have been scheduled successfully for easier visualisation. Refer to [this](#scheduling-meetings-with-different-users-schedule) section to find out how meetings are scheduled.
 - How to view meetings:
   1. After a meeting has been scheduled successfully, enter `meetings`.
   2. You will now see a table with all your meetings with date and time.
@@ -459,7 +461,9 @@ Here are your meetings for today:
 <!--@@author theeugenechong-->
 
 ### Logging out: `logout`
-- Logs you out of your account and brings you back to the part of the app where you can either [log in](#login), [register](#user-registration) or [exit](#exiting-the-program-exit).
+- Logs you out of your account.
+- You will now see the `[Logged out]` label beside cOOPer's prompt.
+
 - Example input:
 
 ```
@@ -476,6 +480,7 @@ To register, enter "register [yourUsername] /pw [password] /as [yourRole]".
 
 To exit, enter "exit".
 =========================================================================
+>> [Logged out] 
 ```
 
 [⬆️ Back to top](#whats-in-this-user-guide)
@@ -483,7 +488,9 @@ To exit, enter "exit".
 <div style="page-break-after: always;"></div>
 
 ## Admin Features 
-This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny** users without the admin role access to these features.
+This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. 
+
+cOOPer will **deny your access** to these features if you do not have the admin role.
 
 <!--@@author ChrisLangton-->
 
@@ -491,16 +498,17 @@ This section explains cOOPer's features for specific to users, with the _**admin
 - Fills up the different fields of cOOPer's balance sheet like 'Cash and Cash Equivalents', 'Inventory', 'Accounts Payable', 'Equity Capital', etc.
 - How to create the balance sheet:
   1. Enter `bs`.
-  2. cOOPer initiates the balance sheet function and prompts you to enter the first entry, 'Cash and Cash Equivalents'.
-  3. Enter `add [amount]` as an unsigned integer with no brackets.
-  4. `[amount]` will be added as 'Cash and Cash Equivalents' as an **asset**.
-  5. cOOPer then continues prompting you for the rest of the balance sheet fields. All assets should be added without brackets, and all liabilities should be added with brackets. Shareholder's Equity can be with or without brackets. To see which fields belong where, see [here](#accessing-the-balance-sheet-bs--list).
-  6. When the balance sheet is complete, cOOPer prompts the user to enter [`list`](#accessing-the-balance-sheet-bs--list) to view the complete balance sheet.
+  2. cOOPer initiates the balance sheet function and a `[Balance Sheet]` label will appear beside cOOPer's prompt.
+  3. cOOPer will prompt you to enter the first entry, 'Cash and Cash Equivalents'.
+  4. Enter `add [amount]` as an unsigned integer with no brackets.
+  5. `[amount]` will be added as 'Cash and Cash Equivalents' as an **asset**.
+  6. cOOPer will continue prompting you for the rest of the balance sheet fields. All assets should be added without brackets, and all liabilities should be added with brackets. Shareholder's equity can be with or without brackets. To see which fields belong where, see [here](#accessing-the-balance-sheet-bs--list).
+  7. When the balance sheet is complete, cOOPer will prompt you to enter [`list`](#accessing-the-balance-sheet-bs--list) to view the complete balance sheet.
 
-> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an asset of $5000 while `add (5000)` specifies a liability of $5000.<br>
+> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of brackets should be added around `[amount]`. For example, `add 5000` specifies an asset of $5000 while `add (5000)` specifies a liability of $5000.<br>
 > ℹ️ `[amount]` should be an **unsigned integer** representing the amount of assets / liabilities added as the balance sheet field.<br>
 > 💡    Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
-> ⚠️Running `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
+> ⚠️Entering `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
 > ℹ️ Any entries more than or equal to 1 Billion SGD (positive or negative) will not be added.
 
 - Example input for initiating the balance sheet function:
@@ -542,16 +550,17 @@ Next, please enter Accounts Receivable
 - Fills up the different fields of cOOPer's cash flow statement like 'Net Income', 'Depreciation and Amortisation', 'Capital Expenditures', 'Dividends Paid', etc.
 - How to create the cash flow statement:
   1. Enter `cf`.
-  2. cOOPer initiates the cash flow statement function and prompts you to enter the first entry, 'Net Income'.
-  3. Enter `add [amount]`.
-  4. `[amount]` will be added as 'Net Income'.
-  5. cOOPer then continues prompting you for the rest of the cash flow statement fields.
-  6. When the cash flow statement is complete, cOOPer prompts the user to enter [`list`](#accessing-the-cash-flow-statement-cf--list) to view the complete cash flow statement.
+  2. cOOPer initiates the cash flow statement function and a `[Cash Flow]` label will appear beside cOOPer's prompt.
+  3. cOOPer will prompt you to enter the first entry, 'Net Income'.
+  4. Enter `add [amount]`.
+  5. `[amount]` will be added as 'Net Income'.
+  6. cOOPer will continue prompting you for the rest of the cash flow statement fields.
+  7. When the cash flow statement is complete, cOOPer will prompt you to enter [`list`](#accessing-the-cash-flow-statement-cf--list) to view the complete cash flow statement.
 
 > ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
 > ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the cash flow statement field.<br>
 > 💡    Remember to enter `cf` before entering `add` or cOOPer will not know which financial statement to add to.<br>
-> ⚠️Running `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**. <br>
+> ⚠️Entering `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**. <br>
 > ℹ️ Any entries more than or equal to 1 Billion SGD (positive or negative) will not be added.
 
 - Example input for initiating the cash flow statement function:
@@ -602,6 +611,7 @@ Next, please enter Depreciation and Amortisation
 > ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.<br>
 > ℹ️The check can only inform you if the statement does or does not tally, and not which entry is incorrect as that comes down to human error.<br>
 > ℹ️ Any scalar values more than or equal to 1 Billion SGD (positive or negative) will be displayed as such, and not as their exact values.
+
 - Example input:
 
 ```
@@ -622,11 +632,11 @@ Property and Equipment  1500
 Goodwill  1500
 Total Assets: 9000
 -----LIABILITIES-----
-Accounts Payable  1500
-Accrued Expenses  1500
-Unearned Revenue  1500
-Long-term debt  1500
-Total Liabilities: 6000
+Accounts Payable  -1500
+Accrued Expenses  -1500
+Unearned Revenue  -1500
+Long-term debt  -1500
+Total Liabilities: -6000
 -----SHAREHOLDER'S EQUITY-----
 Equity Capital  1500
 Retained Earnings  1500
@@ -738,16 +748,16 @@ The pdf file has been successfully generated!
     <img width="500" src="userGuideImages/generateCfOutput.png" alt="CfOutputPdf"><br>
 </p> 
 
-> ℹ️You **do not** need to be currently using the balance sheet function or the cash flow statement function in order to use this command. <br>
+> ℹ️You **do not** need to be currently using the balance sheet function or the cash flow statement function in order to use this feature. <br>
 > 💡   Always [**fill up** the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
-> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current PDF with the latest version of the financial statement.
+> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current PDF with the latest version of the financial statement.<br>
+> 
+> ⚠️ **Important:**
+> - The creation of the PDF requires an **active internet connection**. 
+> - In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
+> - The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). <br>
 >
-> ⚠️ **Important:** <br>
->- The creation of the PDF requires an **active internet connection**. 
->- In the event that there is no internet connection, a backup '.txt' file will be created in the same 'output' folder in which the PDF was supposed to be created.
->- The contents of the backup '.txt' file created can be used to recreate the PDF file with the use of an [online LaTeX Editor](https://www.overleaf.com/). <br>
->
-> 💡 **Always** ensure that you have an active internet connection before using the `generate` command. 
+> 💡 **Always** ensure that you have an active Internet connection before using the `generate` command. 
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -770,8 +780,9 @@ The pdf file has been successfully generated!
 > ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. <br>
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
 > 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
+> ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and will result in incorrect behaviour.<br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
-> ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and will result in incorrect behaviour.
+
 
 - Example input for **auto** schedule meeting:
 
@@ -846,7 +857,7 @@ Bye, see you next time!
 <!--@@author theeugenechong-->
 
 ### cOOPer's Data Storage
-This section explains how cOOPer stores the data input by the user throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
+This section explains how cOOPer stores the data input by you throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
 This folder is created in the *home folder* upon starting up cOOPer for the first time.
 
 The contents of the folder is as shown in the diagram below.
@@ -860,19 +871,19 @@ The contents of the folder is as shown in the diagram below.
 
 #### availability.txt
 - What it stores: The different timings and the users associated with each timing. 
-- When is the data stored: Immediately after you enter the [`available`](#declaring-available-timing-for-meetings-available) command.
+- When is the data stored: Immediately after you successfully add your availability with the [`available`](#declaring-available-timing-for-meetings-available) command.
 
 #### balanceSheet.txt
 - What it stores: The fields of the balance sheet.
-- When is the data stored: Each individual field is updated immediately after you enter the [`add`](#creating-the-balance-sheet-bs--add) command.
+- When is the data stored: Each individual field is updated immediately after you successfully add an entry to the balance sheet with the [`add`](#creating-the-balance-sheet-bs--add) command.
 
 #### cashFlowStatement.txt
 - What it stores: The fields of the cash flow statement.
-- When is the data stored: Each individual field is updated immediately after you enter the [`add`](#creating-the-cash-flow-statement-cf--add) command.
+- When is the data stored: Each individual field is updated immediately after you successfully add an entry to the cash flow statement with the [`add`](#creating-the-cash-flow-statement-cf--add) command.
 
 #### forum.txt
 - What it stores: The posts created in the forum along with its comments.
-- When is the data stored: Immediately after a new forum [post](#adding-a-forum-post-post-add) / [comment](#commenting-on-a-forum-post-post-comment) is created or when a post is [deleted](#deleting-a-forum-post-post-delete).
+- When is the data stored: Immediately after a new forum [post](#adding-a-forum-post-post-add) / [comment](#commenting-on-a-forum-post-post-comment) is successfully created or when a post is [deleted](#deleting-a-forum-post-post-delete).
 
 #### meetings.txt
 - What it stores: The meetings which have been successfully scheduled, the meeting time and the users associated with the meeting.
@@ -880,7 +891,7 @@ The contents of the folder is as shown in the diagram below.
 
 #### signInDetails.txt
 - What it stores: The username, an encrypted hash of the user's password, the salt used to generate the password hash, and the user's role.
-- When is the data stored: Immediately after you [register](#user-registration) as a user of cOOPer.
+- When is the data stored: Immediately after you [register](#user-registration) successfully as a user of cOOPer.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -889,17 +900,20 @@ The contents of the folder is as shown in the diagram below.
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
 
+**Q**: What is a Command Line Interface (CLI)?
+> A CLI is a means of interacting with a computer program where you issue commands to the program in the form of lines of text, also known as command lines.
+
 **Q**: Do I need any programming knowledge to use cOOPer?<br>
-> No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to [this](#command-summary) section to know the formats of each command.
+> No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to the [Command Summary](#command-summary) section to know the formats of each command.
 
 **Q**: How do I know which commands to enter when using cOOPer?<br>
-> After you have successfully [logged in](#login) to cOOPer, you can either enter `help` or refer to [this](#command-summary) section to know the commands recognised by cOOPer.
+> After you have successfully [logged in](#login) to cOOPer, you can either enter `help` or refer to the [Command Summary](#command-summary) section to know the commands recognised by cOOPer.
 
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 > Follow the steps below:<br>
 > 1. [Download](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases) cOOPer in the other computer. 
-> 2. In the current desktop, you should see a folder named `cooperData` in cOOPer's home folder. Refer to [Setup](#setup) if you do not know what the *home folder* is.
-> 3. Copy `cooperData` over to cOOPer's home folder in the other desktop. 
+> 2. In the current desktop, you should see a folder named 'cooperData' in cOOPer's home folder. Refer to [Setup](#setup) if you do not know what the *home folder* is.
+> 3. Copy 'cooperData' over to cOOPer's home folder in the other desktop. 
 > 4. Running cOOPer on the other desktop should load your saved data.
 
 **Q**: What is the folder named 'tmp' in the home folder?<br>

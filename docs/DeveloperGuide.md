@@ -590,6 +590,51 @@ The following sequence diagram shows three operations with the forum. `addPost`,
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+### Verifying user credentials
+The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer. 
+
+#### Verification process
+
+Different conditions are checked depending on whether a user is trying to log in or register. For example, if a user is trying to register, cOOPer will check if the username is already registered and asks the user to log in if they are not registered yet.
+On the other hand, if an unregistered user is trying to log in, cOOPer will ask the user to register first.
+
+For a registered user trying to log in, cOOPer will first check if the entered password is correct. This is done with the help of the `PasswordHasher` class which hashes the entered password with the user's salt stored by cOOPer. The hash obtained will then be compared to the user's stored hash to determine if the entered password is correct. 
+
+If the password is correct, the user's role will then be checked to determine if they are logging in with the role they registered with.
+
+#### Registering a user
+The following sequence diagram shows the detailed process of registering a user. 
+> ℹ️`userInput` is `register John /pw 123 /as admin`.<br>
+> ℹ️The `executeSignIn()` method actually takes in `rawPassword` as its parameter but is omitted in this sequence diagram as the registration process does not require the raw password of the user.
+
+<p align="center">
+    <img src="developerGuideDiagrams/registrationSequenceDiagram.png" alt="registrationSequenceDiagram"><br>
+</p>
+
+The `SignInDetailsParser` constructs a `SignInDetails` object parsed from the arguments in `userInput`. This `SignInDetails` object is then used to construct a `Registration` object which executes the registration of the user. This process is shown by the sequence diagram below.
+
+<p align="center">
+    <img src="developerGuideDiagrams/refFrameRegistration.png" alt="refFrameSequenceDiagram"><br>
+</p>
+
+#### Logging in
+Assuming that the above registration has taken place successfully, the following sequence diagram shows the login process of the user. 
+> ℹ️`userInput` is `login John /pw 123 /as admin`.<br>
+> ℹ️The process of parsing `userInput` takes place similar to when a user is registering. The reference frame is omitted in this sequence diagram for simplicity. 
+
+<p align="center">
+    <img src="developerGuideDiagrams/loginSequenceDiagram.png" alt="loginSequenceDiagram"><br>
+</p>
+
+#### Hashing user passwords
+The Password Based Key Derivation Function (PBKDF2) hashing algorithm is used for hashing user passwords. This algorithm is used together with a 64-bit salt text for each password before it is hashed to improve security and decrease susceptibility to rainbow-table attacks, hence duplicate user passwords can still be stored securely.
+
+This algorithm is recommended by the National Institute of Standards and Technology (NIST) for password storage and our implementation also adheres to NIST specifications: <br>
+- The hashing algorithm is run for 25000 iterations while NIST only specifies a minimum of 10000 iterations. 
+- A 64-bit salt text is used while NIST specifies a 32-bit salt text.
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
 ### Generating a PDF from the financial statement
 The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF.
 
