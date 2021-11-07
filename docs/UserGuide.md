@@ -507,7 +507,7 @@ cOOPer will **deny your access** to these features if you do not have the admin 
   
 > ℹ️`[amount]` must be an **unsigned integer**.<br>
 > ℹ️cOOPer treats `[amount]` as positive and `[amount]` enclosed in parentheses as negative.<br>
-> ℹ️All **assets** are positive, hence no parentheses are needed, while all **liabilities** are negative, hence parentheses are needed. Shareholder's equity can be either positive or negative, hence parentheses are optional. To see which fields belong where, see the example output of the[`list`](#accessing-the-balance-sheet-bs--list) feature.<br>
+> ℹ️All **assets** are positive, hence no parentheses are needed, while all **liabilities** are negative, hence parentheses are needed. **Shareholder's equity** can be either positive or negative, hence parentheses are optional. To see which fields belong where, see the example output of the[`list`](#accessing-the-balance-sheet-bs--list) feature.<br>
 > ⚠️️Any entries **more than** 300 Million SGD (positive or negative) will **not** be added.<br>
 > 💡   Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
 > ⚠️Entering `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, updating the *current draft* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
