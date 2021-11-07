@@ -52,6 +52,7 @@ This developer guide is for software designers, developers, and software testers
   - [Sign-in](#sign-in)
   - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Meetings actions](#meetings-actions)
   - [Forum actions](#forum-actions)
 
 <div style="page-break-after: always;"></div>
@@ -538,6 +539,12 @@ The following sequence diagram shows the process of **manual** scheduling a meet
 ### Finance
 `Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
 
+<p align="center">
+    <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
+</p>
+
+The sequence diagram above illustrates the process of **adding** to a given financial statement, in this case the Balance Sheet.
+
 #### Finance module descriptions
 'FinanceManager' stores **3** attributes:
 1. the **balance sheet**, which is a `BalanceSheet` object.
@@ -587,51 +594,6 @@ The following sequence diagram shows three operations with the forum. `addPost`,
 <p align="center">
     <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
 </p>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
-### Verifying user credentials
-The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer. 
-
-#### Verification process
-
-Different conditions are checked depending on whether a user is trying to log in or register. For example, if a user is trying to register, cOOPer will check if the username is already registered and asks the user to log in if they are not registered yet.
-On the other hand, if an unregistered user is trying to log in, cOOPer will ask the user to register first.
-
-For a registered user trying to log in, cOOPer will first check if the entered password is correct. This is done with the help of the `PasswordHasher` class which hashes the entered password with the user's salt stored by cOOPer. The hash obtained will then be compared to the user's stored hash to determine if the entered password is correct. 
-
-If the password is correct, the user's role will then be checked to determine if they are logging in with the role they registered with.
-
-#### Registering a user
-The following sequence diagram shows the detailed process of registering a user. 
-> ℹ️`userInput` is `register John /pw 123 /as admin`.<br>
-> ℹ️The `executeSignIn()` method actually takes in `rawPassword` as its parameter but is omitted in this sequence diagram as the registration process does not require the raw password of the user.
-
-<p align="center">
-    <img src="developerGuideDiagrams/registrationSequenceDiagram.png" alt="registrationSequenceDiagram"><br>
-</p>
-
-The `SignInDetailsParser` constructs a `SignInDetails` object parsed from the arguments in `userInput`. This `SignInDetails` object is then used to construct a `Registration` object which executes the registration of the user. This process is shown by the sequence diagram below.
-
-<p align="center">
-    <img src="developerGuideDiagrams/refFrameRegistration.png" alt="refFrameSequenceDiagram"><br>
-</p>
-
-#### Logging in
-Assuming that the above registration has taken place successfully, the following sequence diagram shows the login process of the user. 
-> ℹ️`userInput` is `login John /pw 123 /as admin`.<br>
-> ℹ️The process of parsing `userInput` takes place similar to when a user is registering. The reference frame is omitted in this sequence diagram for simplicity. 
-
-<p align="center">
-    <img src="developerGuideDiagrams/loginSequenceDiagram.png" alt="loginSequenceDiagram"><br>
-</p>
-
-#### Hashing user passwords
-The Password Based Key Derivation Function (PBKDF2) hashing algorithm is used for hashing user passwords. This algorithm is used together with a 64-bit salt text for each password before it is hashed to improve security and decrease susceptibility to rainbow-table attacks, hence duplicate user passwords can still be stored securely.
-
-This algorithm is recommended by the National Institute of Standards and Technology (NIST) for password storage and our implementation also adheres to NIST specifications: <br>
-- The hashing algorithm is run for 25000 iterations while NIST only specifies a minimum of 10000 iterations. 
-- A 64-bit salt text is used while NIST specifies a 32-bit salt text.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -799,12 +761,6 @@ Example Users:
    **Expected output:** cOOPer's bye message is shown and the program exits successfully.
 
 ### Sign-in
-To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label can be seen beside cOOPer's command prompt as such:
-
-```
->> [Logged out]
-```
-
 1. Registering
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
    2. Enter `register [username] /pw [password] /as [role]` where `[username]` is your username, `[password]` is your password and `[role]` is one of 'admin' or 'employee'.<br>
@@ -813,9 +769,56 @@ To indicate that the user is not signed in to cOOPer yet, a `[Logged out]` label
    1. Ensure that the label beside cOOPer's command prompt shows `[Logged out]`.
    2. Enter `login [username], /pw [password] /as [role]` where `[username]`, `[password]` and `[role]` are the username, password and role you registered with.<br>
    **Expected output:** A message informing you that you are now successfully logged in is shown. The `[Logged out]` label at the command prompt is no longer present.
+   
+### Viewing help
+1. Viewing help
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `help`.<br>
+   **Expected output:** A list of commands specific to your role is shown along with their formats.
+
+### Meetings actions
+1. Declaring availability
+    1. Ensure that you are logged in to cOOPer.
+    2. Enter `available [date in dd-MM-yyyy] [time in HH:mm]`.<br>
+    **Expected output:** A confirmation informing you that your username has been added to the date and time is shown.
+2. Viewing availability
+    1. Ensure that you are logged in to cOOPer.
+    2. Enter `availability`.<br>
+   **Expected output:** A table with the availability of all users is shown.
+3. Scheduling meeting
+    1. Ensure that you are logged in to cOOPer.
+    2. Ensure that you and one or more users have entered their availability at a common date and time.
+    3. Enter `schedule [meetingName] /with [username]`. `[username]` is a user(not you) who is available in at least one common date and time as you.
+    4. Alternatively, you can also enter `schedule [meetingName] /with [username] /at [date] [time]`. `[username]` and yourself must be both available at this date and time.<br>
+   **Expected output:** A confirmation message informing you that the meeting is successfully scheduled is shown.
+4. Viewing meetings
+    1. Ensure that you are logged in to cOOPer.
+    2. Enter `meetings`.<br>
+   **Expected output:** A table with all your meetings, their date and time, and their attendees is shown.
+
+### Forum actions
+1. Adding a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `post add hello world`.<br>
+   **Expected output**: A box with the post you just added is shown as confirmation.
+2. Commenting on a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least one post.
+   3. Enter `post comment hello world 2 /on 1`. <br>
+   **Expected output**: A box with the post and your comment you just entered is shown as confirmation.
+3. Deleting a post
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least one post
+   3. Enter `post delete 1`. <br>
+   **Expected output**: A box with the post you just deleted is shown as confirmation.
+4. Listing all posts
+   1. Ensure that you are logged in to cOOPer.
+   2. Ensure you have added at least one post
+   3. Enter `post list all`.<br>
+   **Expected output**: A box containing all posts and comments you have entered so far is shown.
+
 
 ### Generating the PDF
-
 The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
 
 1. Generating the balance sheet
@@ -824,7 +827,6 @@ The `generate` command works regardless of whether the prompt label is showing `
    3. Ensure that you have an active Internet connection.
    4. Enter `generate bs`.<br>
    **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
-
 2. Generating the cash flow statement
    1. Ensure that you are logged in as an *admin*.
    2. Fill up the cash flow statement with `cf` → `add`.
@@ -832,33 +834,4 @@ The `generate` command works regardless of whether the prompt label is showing `
    4. Enter `generate cf`.<br>
    **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
 
-### Viewing help
-1. Viewing help
-   1. Ensure that you are logged in to cOOPer.
-   2. Enter `help`.<br>
-   **Expected output:** A list of commands specific to your role is shown along with their formats.
-
-### Forum actions
-
-1. Adding a post
-   1. Ensure that you are logged in to cOOPer.
-   2. Enter `post add hello world`.<br>
-      **Expected output**: A box with the post you just added is shown as confirmation.
-2. Commenting a post
-   1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least 1 post
-   3. Enter `post comment hello world 2 /on 1`. <br>
-      **Expected output**: A box with the post and your comment you just entered is shown as confirmation.
-3. Deleting a post
-   1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least 1 post
-   3. Enter `post delete 1`. <br>
-      Expected output: A box with the post you just deleted is shown as confirmation.
-4. Listing all posts
-   1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least 1 post
-   3. Enter `post list all`.<br>
-      **Expected output**: A box containing all posts and comments you have entered so far is shown.
-
 [⬆️ Back to top](#whats-in-this-developer-guide)
-

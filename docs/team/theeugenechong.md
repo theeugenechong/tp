@@ -23,7 +23,7 @@ All the code I contributed for this project can be found at this [RepoSense link
   - This feature generates one of cOOPer's financial statements (balance sheet or cash flow statement) as a LaTeX-formatted PDF document.
   - This feature allows the user to view a neatly-formatted financial statement which may not always be possible when using a CLI.
   - The PDF document is generated with the help of an online LaTeX compiler, and in the event that there is no Internet connection while using this feature, a backup text file is created representing the LaTeX file used to create the PDF.
-  - I worked together with Ray on this feature, who came up with the code for sending a POST Request to the online LaTeX compiler. He also came up with the base LaTeX template for the PDF, and I made enhancements to the template which formatted the PDF like an actual financial statement.
+  - I worked together with @Rrraaaeee on this feature, who came up with the code for sending a POST Request to the online LaTeX compiler. He also came up with the base LaTeX template for the PDF, and I made enhancements to the template which formatted the PDF like an actual financial statement.
 
 - **Feature 3:** Implemented the storage feature for cOOPer
   - The storage feature saves and loads user data to and from storage files.
@@ -79,13 +79,14 @@ All the code I contributed for this project can be found at this [RepoSense link
 <div style="page-break-after: always;"></div>
 
 ### Contribution to Team-based Tasks
-- Maintained the issue tracker (added issues, labels, milestones, proper descriptions etc.)
-- Set soft deadlines for project tasks
-- Set date / time for team meetings
-- Inspected / ran IDE analysis on code after merges to determine if there are any parts of the code which need cleaning up (unused variables, unused methods etc.)
-- Added the '⬆️Back to top' labels in both the User Guide and Developer Guide for easier navigation
-- Did both releases for v1.0 and v2.0
-- Troubleshoot CI-related problems
+- Maintained the issue tracker. (added issues, labels, milestones, proper descriptions etc.)
+- Set soft deadlines for project tasks.
+- Set date / time for team meetings.
+- Inspected / ran IDE analysis on code after merges to determine if there are any parts of the code which need cleaning up. (unused variables, unused methods etc.)
+- Added the '⬆️Back to top' labels in both the User Guide and Developer Guide for easier navigation.
+- Helped test the JAR for both releases on my Linux VM.
+- Did both releases for v1.0 and v2.0.
+- Troubleshoot CI-related problems.
 
 ### Review/mentoring contributions
 - Pull requests I reviewed:
@@ -94,14 +95,14 @@ All the code I contributed for this project can be found at this [RepoSense link
   - Pull request [#86](https://github.com/AY2122S1-CS2113T-W13-4/tp/pull/86)
   - Pull request [#93](https://github.com/AY2122S1-CS2113T-W13-4/tp/pull/93)
   - Pull request [#217](https://github.com/AY2122S1-CS2113T-W13-4/tp/pull/217)
-- Helped Chris resolve Git-related issues, as well as demonstrated usage of Git's stash feature.
-- Helped Shixi solve the Git password authentication problem.
+- Helped @ChrisLangton resolve Git-related issues, as well as demonstrated usage of Git's stash feature.
+- Helped @fansxx solve the Git password authentication problem.
 - Provided tips to configure IntelliJ to not automatically use wildcard imports.
 - Helped to test code written by my teammates.
 - Helped my teammates fix bugs.
 
 ### Contributions beyond the project team
-- [Reported bugs for the PE Dry Run](https://github.com/theeugenechong/ped/issues).
+- [Reported bugs for the Practical Exam Dry Run](https://github.com/theeugenechong/ped/issues).
 
 <div style="page-break-after: always;"></div>
 
@@ -130,7 +131,7 @@ Here is an extract of one of my contributions to the User Guide:
 > - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 > 
 > - How to register a user:
->    1. When you see cOOPer asking you to log in, register or exit, enter `register [username] /pw [password] /as [role]`.
+>    1. When you see the `[Logged out]` label beside cOOPer's prompt, enter `register [username] /pw [password] /as [role]`.
 >    2. Upon successful registration, you should see a message informing you of your successful registration.
 >    3. You can now log in to access cOOPer's features specific to your role. Refer to the Login section to find out more about logging in.
 >
@@ -188,7 +189,7 @@ Here is an extract of one of my contributions to the Developer Guide:
 > `Cooper` contains the main method of the program. `Cooper`'s responsibilities are as such:
 > - Upon **launching the app**, `Cooper` initializes the components and loads stored user data into the components.
 > - While the **app is running**, `Cooper` reads user input which is then processed by the components to produce a result.
-> - Upon **shutting down the app**, `Cooper` shuts down the components.
+> - Upon **shutting down the app**, `Cooper` shuts down the components and performs cleaning up where necessary.
 >
 > Apart from `Cooper`, the rest of the app consists of these seven components:
 > - `Ui`: Handles the reading of user input and printing of messages to the terminal.
@@ -200,7 +201,7 @@ Here is an extract of one of my contributions to the Developer Guide:
 > - `Util`: Provides utility which help with some of cOOPer's features.
 >
 > #### Interaction of the architecture components to process user input
-> - The sequence diagram below shows how cOOPer's components interact with each other when a user enters their **sign in details** at the _verification layer_.
+> - The sequence diagram below provides a general overview of how cOOPer's components interact with each other when a user enters their **sign in details** at the _verification layer_.
 >
 > > ℹ️`userInput` represents the credentials input by the user for verification. For example, `register John /pw 12345 /as admin`.
 >
@@ -208,10 +209,10 @@ Here is an extract of one of my contributions to the Developer Guide:
 >     <img src="../developerGuideDiagrams/signInSequenceDiagram.png" alt="signInSequenceDiagram"><br>
 > </p> 
 >
-> - The next sequence diagram below shows how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
+> - The next sequence diagram below provides a general overview of how cOOPer's components interact with each other when a user enters a **command** at the _features layer_.
 >
 > > ℹ️ `userInput` represents a command input by the user. For example, `meetings`.<br>
-> > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `AddCommand`.
+> > ℹ️`XYZCommand` is an object representing a command recognised by cOOPer. For example, `MeetingCommand`.
 >
 > <p align="center">
 >     <img src="../developerGuideDiagrams/commandSequenceDiagram.png" alt="commandSequenceDiagram"><br>
