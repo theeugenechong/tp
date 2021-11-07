@@ -765,24 +765,23 @@ The `generate` command works regardless of whether the prompt label is showing `
 
 1. Adding a post
    1. Ensure that you are logged in to cOOPer.
-   2. Enter `post add hello world`
+   2. Enter `post add hello world`.<br>
       **Expected output**: A box with the content you just entered as confirmation
 2. Commenting a post
    1. Ensure that you are logged in to cOOPer.
    2. Ensure you have added at least 1 post
-   3. Enter `post comment hello world 2 /on 1`
+   3. Enter `post comment hello world 2 /on 1`. <br>
       **Expected output**: A box with the post and your comment you just entered as confirmation
 3. Deleting a post
    1. Ensure that you are logged in to cOOPer.
    2. Ensure you have added at least 1 post
-   3. Enter `post delete 1`
+   3. Enter `post delete 1`. <br>
       Expected output: A box with the post you just deleted as confirmation
 4. Listing all posts
    1. Ensure that you are logged in to cOOPer.
    2. Ensure you have added at least 1 post
-   3. Enter `post list all`
+   3. Enter `post list all`.<br>
       **Expected output**: A box containing all posts and comments you have entered so far
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
-<div style="page-break-after: always;"></div>
