@@ -103,7 +103,7 @@ public class FinanceManager {
         }
 
         if (projectionIterator <= years) {
-            double growth = (principal * Math.pow(1 + (rate / 100), projectionIterator));
+            double growth = principal * (1 + (rate / 100));
             cooperProjection.getProjection().add(growth);
             projectionIterator++;
             return createProjection(growth, rate, years);
