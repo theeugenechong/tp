@@ -20,7 +20,11 @@ public class ResourcesManager {
         cooperForumManager = new ForumManager();
     }
 
-    
+    /**
+     * This method returns financeManager only if user is an admin
+     * @param userRole
+     * @return
+     */
     public FinanceManager getFinanceManager(UserRole userRole) {
         if (checkFinanceAccessibility(userRole)) {
             return cooperFinanceManager;
@@ -29,6 +33,11 @@ public class ResourcesManager {
         }
     }
 
+    /**
+     * This method returns meetingManager if user is an admin or employee
+     * @param userRole
+     * @return
+     */
     public MeetingManager getMeetingManager(UserRole userRole) {
         if (checkMeetingAccessibility(userRole)) {
             return cooperMeetingManager;
@@ -41,6 +50,11 @@ public class ResourcesManager {
         return cooperMeetingManager;
     }
 
+    /**
+     * This method returns forumManager if user is an admin or employee
+     * @param userRole
+     * @return
+     */
     public ForumManager getForumManager(UserRole userRole) {
         if (checkForumAccessibility(userRole)) {
             return cooperForumManager;
@@ -61,12 +75,15 @@ public class ResourcesManager {
         return (userRole.equals(UserRole.ADMIN) || userRole.equals(UserRole.EMPLOYEE));
     }
 
+
     /**
      * Storage class has "super privilege" to access private member in resources class.
      * Use this give-receive pattern to get private members from ResourcesManager (Similar to friend class)
      * Pattern adapted from:
      * https://stackoverflow.com/questions/14226228/implementation-of-friend-concept-in-javat
-     **/
+     * @param storageManager
+     * @return
+     */
     public FinanceManager giveFinanceManager(StorageManager storageManager) {
         return storageManager.receiveFinanceManager(cooperFinanceManager);
     }
