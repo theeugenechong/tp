@@ -23,6 +23,8 @@ All the code I contributed for this project can be found at this [RepoSense Link
     - I made the algorithm that finds a common time for the meeting fast and efficient, such that it saves users' time.
     - The `meetings` feature generates a table of meetings customized for the user.
 
+<div style="page-break-after: always;"></div>
+
 - **Feature 3:** Implemented the storage function for availability and meetings storage
   - I built on the 'template' @theeugenechong came up with.
   - This feature stores `availability` and `meetings` in their own custom format, and reads the storage files when cOOPer starts.
