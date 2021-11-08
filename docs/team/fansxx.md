@@ -62,6 +62,7 @@ All the code I contributed for this project can be found at this [RepoSense Link
 - Pull requests I reviewed:
   1. Pull request [#48](https://github.com/AY2122S1-CS2113T-W13-4/tp/pull/48)
   2. Pull request [#200](https://github.com/AY2122S1-CS2113T-W13-4/tp/pull/200)
+- Reviewed the content and formatting of both the User Guide and Developer Guide.
 
 ### Contributions beyond the project team
 - [Reported bugs for the Practical Exam Dry Run](https://github.com/fansxx/ped/issues).
@@ -71,3 +72,59 @@ All the code I contributed for this project can be found at this [RepoSense Link
 ## [Optional] Contribution to the User Guide
 
 Here is an extract of one of my contributions to the User Guide:
+
+> ### Declaring available timing for meetings: `available`
+> - Enters your available timing for easier scheduling of meetings.
+> - How to declare your available timing:
+>  1. Enter `available [date] [time]`.
+>  2. You will now have your name stored under the specified time in the system.
+>
+>> ℹ️`[time]` refers to the **start of the hour** that you are available at. For example, `available 14:00` means that you are available from **14:00** to **14:59**.<br>
+>> ⚠️`[date]` has a format of **dd-MM-yyyy**. Any other format will **not** be accepted and your availability will not be stored. <br>
+>> ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*. Any other format will **not** be accepted and your availability will not be stored.<br>
+>> ⚠️Duplicate `[username]` in one timeslot will **not** be accepted.
+>
+> - Example input:
+> 
+>```
+>>> available 08-11-2021 14:00
+>```
+>
+> - Expected output:
+>
+>```
+>=========================================================================
+>Success!
+>Sebastian's availability has been added to 08-11-2021 14:00
+>=========================================================================
+>```
+>
+>[⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
+
+## [Optional] Contribution to the Developer Guide
+
+Here is an extract of one of my contributions to the Developer Guide:
+
+> #### Meetings
+>
+>**API**: [`cooper.meetings`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/meetings)
+>
+><p align="center">
+>    <img src="developerGuideDiagrams/meetingsComponent.png" alt="meetingsComponent"><br>
+></p>
+>
+>The `Meetings` component contains the `MeetingManager` and `Meeting` classes.
+>
+>`MeetingManager` stores **2** attributes:
+>1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
+>2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
+>
+>The `MeetingManager` constructs the instances of `Meeting`, and stores it as an `ArrayList<Meeting>` in itself.
+>
+>The `Meetings` component:
+>
+>+ Handles the **declaration of availability**
+>+ Assists in  the **scheduling** of meetings
+>+ Lists the current availability and meetings
