@@ -11,7 +11,7 @@ Welcome to cOOPer's User Guide!
 cOOPer is a **desktop application** developed to simplify administrative processes of **tech startups**
 such as **communication** and **finance management**.
 
-If you are running a tech startup, cOOPer can help you with **accounting** and **communicative** tasks like:
+If you are running a tech startup, cOOPer can help you with **accounting** and **communicating** tasks like:
 - **Generating** your company's **financial statements**
 - **Forecasting** your company's **cash flow**
 - **Scheduling meetings** with your employees
@@ -101,7 +101,7 @@ This section details how you can install a working cOOPer on your desktop.
    1. In the Command Prompt / Terminal, enter `java -version`.
    2. You should see the following on the Command Prompt / Terminal:
    ![javaVersion.png](userGuideImages/javaVersion.png)
-   3. The section enclosed in red shows you the version you currently have installed.
+   3. The section enclosed in red shows the version you currently have installed.
    4. If nothing appeared on the Command Prompt / Terminal, it most likely means you do not have Java installed on your computer. Do not worry, you can download it [here](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html).
 5. Run cOOPer by entering `java -jar cOOPer.jar`.
 6. A greeting from cOOPer should appear as such:
@@ -151,7 +151,7 @@ You are now ready to use cOOPer! Refer to the [Getting Started](#getting-started
   - `[Balance Sheet]` indicates you are using cOOPer's **[balance sheet](#creating-the-balance-sheet-bs--add) function**
   - `[Cash Flow]` indicates you are using cOOPer's **[cash flow](#creating-the-cash-flow-statement-cf--add) function**
 - No label shown indicates you are **logged in** to cOOPer, but you are using **neither** the balance sheet function nor the cash flow statement function.
-- While using the balance sheet / cash flow statement functions, you may exit the function at any time by entering a non-finance related command. For example, a command related to cOOPer's meetings or forum features.
+- While using the balance sheet / cash flow statement functions, you may exit the function at any time by entering any other command. For example, a command related to cOOPer's meetings or forum features.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -162,15 +162,15 @@ You are now ready to use cOOPer! Refer to the [Getting Started](#getting-started
 This section explains how you can register an account with cOOPer in order to gain access to cOOPer's features.
 
 ### How cOOPer is to be used
-- The **correct** way (as of v2.1) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
+- The **correct** way (as of v2.1) to use cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
 > ⚠️cOOPer's features **will not work** as described in this user guide if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
 
 ### Roles
 - There are two main roles you can hold as a user of cOOPer, namely the _**admin**_ role or the _**employee**_ role.
 
-- You are eligible to hold the admin role if you hold a high position in the startup. e.g. Chief Executive Officer (CEO), Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
+- You may choose to hold the admin role if you hold a management position in the startup. e.g. Chief Executive Officer (CEO), Chief Financial Officer (CFO), Human Resources Manager (HR), accountant etc.
 
-- On the other hand, you hold the employee role if you are a basic employee at the startup.
+- On the other hand, you may hold the employee role if you are a working employee at the startup.
 
 - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
@@ -201,7 +201,7 @@ Sebastian is now successfully registered as an admin!
 ```
 
 > ℹ️A similar output should be observed when an employee is registered, with the output now showing 'employee' instead of 'admin'.<br>
-> 💡 Just like when you are using any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
+> 💡 Just like when you use any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -411,7 +411,7 @@ Sebastian's availability has been added to 08-11-2021 14:00
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Viewing users available at different timings: `availability`
+### Viewing which users are available at different timings: `availability`
 - Generates a table of the availabilities for easier visualisation.
 - How to view the availabilities:
   1. Enter `availability`.
@@ -443,7 +443,7 @@ Here are the availabilities:
 - Shows you your meetings. Refer to the [schedule](#scheduling-meetings-with-different-users-schedule) feature to find out how meetings are scheduled.
 - How to view meetings:
   1. After a meeting has been scheduled successfully, enter `meetings`.
-  2. You will now see a table with all your meetings along with their date and time.
+  2. You will now see a table with all your meetings, along with their date and time.
 
 - Example input:
 
@@ -469,12 +469,12 @@ Here are your meetings for today:
 <div style="page-break-after: always;"></div>
 
 ## Admin Features 
-This section explains cOOPer's features for specific to users, with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny your access** to these features if you do not have the admin role.
+This section explains cOOPer's features specific to users with the _**admin**_ role. Refer to the [Roles](#roles) section if you do not know how roles are determined. cOOPer will **deny your access** to these features if you do not have the admin role.
 
 <!--@@author ChrisLangton-->
 
 ### Creating the balance sheet: `bs` → `add`
-- Fills up the different fields of cOOPer's balance sheet like 'Cash and Cash Equivalents', 'Inventory', 'Accounts Payable', 'Equity Capital', etc.
+- Fills up the different fields of cOOPer's balance sheet such as 'Cash and Cash Equivalents', 'Inventory', 'Accounts Payable', 'Equity Capital', etc.
 - How to create the balance sheet:
   1. Enter `bs`.
   2. cOOPer initiates the balance sheet function and a `[Balance Sheet]` label will appear beside cOOPer's prompt.
@@ -528,7 +528,7 @@ Next, please enter Accounts Receivable
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Creating the cash flow statement: `cf` → `add`
-- Fills up the different fields of cOOPer's cash flow statement like 'Net Income', 'Depreciation and Amortisation', 'Capital Expenditures', 'Dividends Paid', etc.
+- Fills up the different fields of cOOPer's cash flow statement such as 'Net Income', 'Depreciation and Amortisation', 'Capital Expenditures', 'Dividends Paid', etc.
 - How to create the cash flow statement:
   1. Enter `cf`.
   2. cOOPer initiates the cash flow statement function and a `[Cash Flow]` label will appear beside cOOPer's prompt.
@@ -582,7 +582,7 @@ Next, please enter Depreciation and Amortisation
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing the balance sheet: `bs` → `list`
-- Displays the complete balance sheet with extra fields like 'Total Assets', 'Total Liabilities' and 'Total Shareholder's Equity'.
+- Displays the complete balance sheet with extra fields such as 'Total Assets', 'Total Liabilities' and 'Total Shareholder's Equity'.
 - Informs you if the balance sheet does not tally correctly.
 - How to view the balance sheet:
   1. After [creating the balance sheet](#creating-the-balance-sheet-bs--add), cOOPer would have prompted you to enter `list` to view the balance sheet.
@@ -631,7 +631,7 @@ Check: 0
 [⬆️ Back to top](#whats-in-this-user-guide)
 
 ### Viewing the cash flow statement: `cf` → `list`
-- Displays the complete cash flow statement with extra fields like 'Net Cash from Operating Activities', Net Cash from Investing Activities' and 'Net Financing Activities'.
+- Displays the complete cash flow statement with extra fields such as 'Net Cash from Operating Activities', Net Cash from Investing Activities' and 'Net Financing Activities'.
 - How to view the cash flow statement:
   1. After [creating the cash flow statement](#creating-the-cash-flow-statement-cf--add), cOOPer would have prompted you to enter `list` to view the balance sheet.
   2. Enter `list`.
@@ -688,7 +688,7 @@ Free Cash Flow   3000
 >> proj 3
 ```
 
-- Expected output for a Free Cash Flow of 3500, at a growth of 16.67% for three years:
+- Expected output for a Free Cash Flow of 3500, at a growth rate of 16.67% for three years:
 
 ```
 =========================================================================
@@ -732,7 +732,7 @@ The pdf file has been successfully generated!
 
 > ℹ️You **do not** need to be currently using the balance sheet function or the cash flow statement function in order to use this feature. <br>
 > 💡   Always [**fill up** the balance sheet](#creating-the-balance-sheet-bs--add) / [cash flow statement](#creating-the-cash-flow-statement-cf--add) first before generating it as a PDF.<br>
-> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the current PDF with the current draft of the financial statement.<br>
+> ℹ️As of v2.1, `generate` is only able to create **one** document for a financial statement. Entering `generate` more than one time overwrites the existing PDF with the current draft of the financial statement.<br>
 > 
 > ⚠️ **Important:**
 > - The creation of the PDF document requires an **active internet connection**. 
@@ -747,7 +747,7 @@ The pdf file has been successfully generated!
 
 ### Scheduling meetings with different users: `schedule`
 - Schedules meetings either **automatically** or **manually**. 
-- **Automatically** scheduling a meeting means cOOPer picks the **earliest timing** all specified users and yourself are available at and schedules a meeting then. 
+- **Automatically** scheduling a meeting means cOOPer will pick the **earliest timing** all specified users and yourself are available at, and schedules a meeting then. 
 - How to **automatically** schedule a meeting:
   1. Enter `schedule [meetingName] /with [username1], [username2]`.
   2. If successful, cOOPer will create a new meeting at that time. Otherwise, cOOPer will inform you that no meeting can be scheduled with the specified users.
@@ -799,7 +799,7 @@ You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 14:00 with atten
 <div style="page-break-after: always;"></div>
 
 ## Employee Features
-As of v2.1, cOOPer does not have features exclusive to employees yet 😥, there will be more to come in future versions!
+As of v2.1, cOOPer does not yet have features exclusive to employees 😥, these will come in future versions!
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -862,16 +862,16 @@ Bye, see you next time!
 <div style="page-break-after: always;"></div>
 
 ## cOOPer's Data Storage
-This section explains how cOOPer stores the data input by you throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
-This folder is created in the *home folder* upon starting up cOOPer for the first time.
+This section explains how cOOPer stores the data you keyed in throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
+This folder is created in the *home folder* upon starting cOOPer up for the first time.
 
-The contents of the folder is as shown in the diagram below.
+The contents of the folder are as shown in the diagram below.
 
 <p align="center">
     <img width="500" src="userGuideImages/cooperStorage.png" alt="cooperStorage"><br>
 </p> 
 
->⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
+>⚠️The contents of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
 
 
 ### availability.txt
@@ -891,7 +891,7 @@ The contents of the folder is as shown in the diagram below.
 - When is the data stored: Immediately after a new forum [post](#adding-a-forum-post-post-add) / [comment](#commenting-on-a-forum-post-post-comment) is successfully created or when a post is [deleted](#deleting-a-forum-post-post-delete).
 
 ### meetings.txt
-- What it stores: The meetings which have been successfully scheduled, the meeting time and the users associated with the meeting.
+- What it stores: The meetings that have been successfully scheduled, the meeting time and the users associated with the meeting.
 - When is the data stored: Immediately after a meeting has been successfully scheduled using the [`schedule`](#scheduling-meetings-with-different-users-schedule) command.
 
 ### signInDetails.txt
@@ -928,7 +928,7 @@ This section contains some frequently asked questions you may have when using cO
 > A CLI is a means of interacting with a computer program where you issue commands to the program in the form of lines of text, also known as command lines.
 
 **Q**: Do I need any programming knowledge to use cOOPer?<br>
-> No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to the [Command Summary](#command-summary) section to know the formats of each command.
+> No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to the [Command Summary](#command-summary) section to familiarise yourself with the format of each command.
 
 **Q**: How do I know which commands to enter when using cOOPer?<br>
 > After you have successfully [logged in](#logging-in-login) to cOOPer, you can either enter `help` or refer to the [Command Summary](#command-summary) section to know the commands recognised by cOOPer.
@@ -941,7 +941,7 @@ This section contains some frequently asked questions you may have when using cO
 > 4. Running cOOPer on the other desktop should load your saved data.
 
 **Q**: What is the folder named 'tmp' in the home folder?<br>
-> The 'tmp' folder is created upon starting up cOOPer for the first time. This folder contains important data which enables to cOOPer to process your commands. You **should not** do anything to these files.
+> The 'tmp' folder is created upon starting cOOPer up for the first time. This folder contains important data which enables cOOPer to process your commands. You **should not** do anything to these files.
 
 **Q**: Another person using cOOPer on their desktop stated their availability / posted to the forum. However, I am unable to see their availability / post when I run cOOPer on my desktop. Why does this occur?<br>
 > Refer to the [How cOOPer is to be Used](#how-cooper-is-to-be-used) section to find out why this occurs.
