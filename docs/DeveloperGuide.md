@@ -366,7 +366,7 @@ The `Finance` component:
 
 The `Meetings` component contains the `MeetingManager` and `Meeting` classes.
 
-`MeetingManager` stores **2** attributes:
+`MeetingManager` stores **two** attributes:
 1. the **timings** along with the **usernames** of the available users, which is a `TreeMap<LocalTime, ArrayList<String>>` object,
 2. the **list of meetings** scheduled, which is an `ArrayList<Meeting>` object.
 
@@ -603,13 +603,13 @@ The `MeetingManager` class facilitates the scheduling of meetings.
 #### Scheduling process
 When the user schedules a meeting `ScheduleCommand` checks if the `[date]` and `[time]` parameter is entered and calls `manualScheduleMeeting` in `MeetingManager` if it is and `autoScheduleMeeting` if it isn't.
 
-The following sequence diagram shows the process of **auto** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene`.
+The following sequence diagram shows the process of **automatically** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene`.
 
 <p align="center">
     <img src="developerGuideDiagrams/autoScheduleSequenceDiagram.png" alt="autoScheduleSequenceDiagram"><br>
 </p>
 
-The following sequence diagram shows the process of **manual** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene /at 11-08-2021 14:00`.
+The following sequence diagram shows the process of **manually** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene /at 11-08-2021 14:00`.
 
 <p align="center">
     <img src="developerGuideDiagrams/manualScheduleSequenceDiagram.png" alt="manualScheduleSequenceDiagram"><br>
