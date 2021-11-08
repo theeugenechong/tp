@@ -88,7 +88,7 @@ The table below explains the formatting and symbols in this user guide.
 ## Setup
 
 1. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
-2. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
+2. Copy the JAR (.jar) file to an **empty** folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
 3. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
    in the home folder. If you are using Mac or Linux, [open a Terminal window](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/#:~:text=To%20open%20a%20Terminal%20window%20from%20within%20a%20folder%20in,window%20to%20the%20selected%20folder.) 
    in the home folder.
@@ -507,7 +507,7 @@ cOOPer will **deny your access** to these features if you do not have the admin 
   
 > ℹ️`[amount]` must be an **unsigned integer**.<br>
 > ℹ️cOOPer treats `[amount]` as positive and `[amount]` enclosed in parentheses as negative.<br>
-> ℹ️All **assets** are positive, hence no parentheses are needed, while all **liabilities** are negative, hence parentheses are needed. Shareholder's equity can be either positive or negative, hence parentheses are optional. To see which fields belong where, see the example output of the[`list`](#accessing-the-balance-sheet-bs--list) feature.<br>
+> ℹ️All **assets** are positive, hence no parentheses are needed, while all **liabilities** are negative, hence parentheses are needed. **Shareholder's equity** can be either positive or negative, hence parentheses are optional. To see which fields belong where, see the example output of the[`list`](#accessing-the-balance-sheet-bs--list) feature.<br>
 > ⚠️️Any entries **more than** 300 Million SGD (positive or negative) will **not** be added.<br>
 > 💡   Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
 > ⚠️Entering `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, updating the *current draft* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
@@ -869,7 +869,7 @@ The contents of the folder is as shown in the diagram below.
     <img width="500" src="userGuideImages/cooperStorage.png" alt="cooperStorage"><br>
 </p> 
 
->⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content of these files.
+>⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
 
 
 #### availability.txt
