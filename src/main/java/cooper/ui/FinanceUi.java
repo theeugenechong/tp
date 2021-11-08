@@ -107,6 +107,10 @@ public class FinanceUi extends Ui {
         "Check: "
     };
 
+    /**
+     * Prints the balance sheet to the command line.
+     * @param balanceSheet the balance sheet
+     */
     public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);
         show(BALANCE_OPENING);

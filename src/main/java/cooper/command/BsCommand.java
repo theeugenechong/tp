@@ -13,12 +13,22 @@ import cooper.verification.UserRole;
 
 //@@author ChrisLangton
 
+/**
+ * The command to initiate the balance sheet function.
+ */
 public class BsCommand extends Command {
 
     public BsCommand() {
         super();
     }
 
+    /**
+     * The override function to reset and initiate the balance sheet state.
+     * @param signInDetails the sign in details
+     * @param resourcesManager the resources manager
+     * @param storageManager the storage manager
+     * @throws InvalidAccessException the exception
+     */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
                         StorageManager storageManager) throws InvalidAccessException {
@@ -34,6 +44,9 @@ public class BsCommand extends Command {
         FinanceUi.initiateBalanceSheet();
     }
 
+    /**
+     * Resets the balance sheet stage and values.
+     */
     private void resetBalanceSheet() {
         BalanceSheet.balanceSheetStage = 0;
         FinanceManager.netAssets = 0;
