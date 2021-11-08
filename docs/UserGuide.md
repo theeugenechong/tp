@@ -409,7 +409,7 @@ Sebastian's availability has been added to 08-11-2021 14:00
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Viewing users availability at different timings: `availability`
+### Viewing which users are available at different timings: `availability`
 - Generates a table of the availabilities for easier visualisation.
 - How to view the availabilities:
   1. Enter `availability`.
