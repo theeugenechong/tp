@@ -5,7 +5,7 @@ import cooper.CooperState;
 //@@author ChrisLangton
 
 /**
- * The enum to indicate the state of the finance function
+ * The enum to indicate the state of the finance function.
  */
 public enum FinanceCommand {
     CF,
@@ -13,8 +13,8 @@ public enum FinanceCommand {
     IDLE;
 
     /**
-     * function changes the state of the finance function
-     * @param state
+     * function changes the state of the finance function.
+     * @param state the state
      * @return
      */
     public static FinanceCommand getCommandFromState(CooperState state) {

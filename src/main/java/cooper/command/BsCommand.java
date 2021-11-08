@@ -14,7 +14,7 @@ import cooper.verification.UserRole;
 //@@author ChrisLangton
 
 /**
- * The command to initiate the balance sheet function
+ * The command to initiate the balance sheet function.
  */
 public class BsCommand extends Command {
 
@@ -23,11 +23,11 @@ public class BsCommand extends Command {
     }
 
     /**
-     * The override function to reset and initiate the balance sheet state
-     * @param signInDetails
-     * @param resourcesManager
-     * @param storageManager
-     * @throws InvalidAccessException
+     * The override function to reset and initiate the balance sheet state.
+     * @param signInDetails the sign in details
+     * @param resourcesManager the resources manager
+     * @param storageManager the storage manager
+     * @throws InvalidAccessException the exception
      */
     @Override
     public void execute(SignInDetails signInDetails, ResourcesManager resourcesManager,
@@ -45,7 +45,7 @@ public class BsCommand extends Command {
     }
 
     /**
-     * Resets the balance sheet stage and values
+     * Resets the balance sheet stage and values.
      */
     private void resetBalanceSheet() {
         BalanceSheet.balanceSheetStage = 0;

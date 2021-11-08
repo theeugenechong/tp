@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //@@author ChrisLangton
 
 /**
- * The class in which the balance sheet is kept
+ * The class in which the balance sheet is kept.
  */
 public class BalanceSheet {
     private static final int BS_SIZE = 12;

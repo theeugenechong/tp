@@ -70,10 +70,10 @@ public class FinanceManager {
     }
 
     /**
-     * Adds entries to the correct cash flow statement section in order
-     * @param amount
-     * @param isInflow
-     * @param cashFlowStage
+     * Adds entries to the correct cash flow statement section in order.
+     * @param amount the amount input
+     * @param isInflow the inflow or outflow boolean
+     * @param cashFlowStage the stage of the statement
      */
     public void addCashFlow(int amount, boolean isInflow, int cashFlowStage) {
         int signedAmount = amount;
@@ -106,12 +106,12 @@ public class FinanceManager {
     }
 
     /**
-     * recursively finds the compounded free cash flow projection for each year up to the specified year
-     * @param principal
-     * @param rate
-     * @param years
+     * recursively finds the compounded free cash flow projection for each year up to the specified year.
+     * @param principal the current principal
+     * @param rate the fixed rate
+     * @param years the number of years indicated
      * @return principal the final projection value
-     * @throws InvalidProjectionException
+     * @throws InvalidProjectionException the exception
      */
     public double createProjection(double principal, double rate, int years) throws InvalidProjectionException {
 
@@ -130,8 +130,8 @@ public class FinanceManager {
     }
 
     /**
-     * checks that the net amounts of the balance sheet are correctly summed
-     * @param balanceSheet
+     * checks that the net amounts of the balance sheet are correctly summed.
+     * @param balanceSheet the balance sheet
      */
     public static void runTotalAmountsCheck(ArrayList<Integer> balanceSheet) {
         netAssets = netLiabilities = netSE = 0;
@@ -147,8 +147,8 @@ public class FinanceManager {
     }
 
     /**
-     * checks that the net amounts of the cash flow statement are correctly summed
-     * @param cashFlowStatement
+     * checks that the net amounts of the cash flow statement are correctly summed.
+     * @param cashFlowStatement the cash flow statement
      */
     public static void runNetAmountsCheck(ArrayList<Integer> cashFlowStatement) {
         netOA = netIA = netFA = pastFCF = 0;

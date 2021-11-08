@@ -108,8 +108,8 @@ public class FinanceUi extends Ui {
     };
 
     /**
-     * Prints the balance sheet to the command line
-     * @param balanceSheet
+     * Prints the balance sheet to the command line.
+     * @param balanceSheet the balance sheet
      */
     public static void printBalanceSheet(ArrayList<Integer> balanceSheet) {
         show(LINE);

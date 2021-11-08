@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //@@author ChrisLangton
 
 /**
- * class where the projected free cash flow values are kept
+ * class where the projected free cash flow values are kept.
  */
 public class Projection {
 
