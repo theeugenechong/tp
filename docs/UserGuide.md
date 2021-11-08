@@ -46,8 +46,8 @@ This user guide is written to assist users like you in using cOOPer. It provides
 - [Admin Features](#admin-features)
   - [Creating the balance sheet: `bs` → `add`](#creating-the-balance-sheet-bs--add)
   - [Creating the cash flow statement: `cf` → `add`](#creating-the-cash-flow-statement-cf--add)
-  - [Accessing the balance sheet: `bs` → `list`](#accessing-the-balance-sheet-bs--list)
-  - [Accessing the cash flow statement: `cf` → `list`](#accessing-the-cash-flow-statement-cf--list)
+  - [Viewing the balance sheet: `bs` → `list`](#viewing-the-balance-sheet-bs--list)
+  - [Viewing the cash flow statement: `cf` → `list`](#viewing-the-cash-flow-statement-cf--list)
   - [Projecting cash flow: `proj`](#projecting-cash-flow-proj)
   - [Generating a PDF from the financial statement: `generate`](#generating-a-pdf-from-the-financial-statement--generate)
   - [Scheduling meetings with different users: `schedule`](#scheduling-meetings-with-different-users-schedule)
@@ -88,7 +88,7 @@ The table below explains the formatting and symbols in this user guide.
 ## Setup
 
 1. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
-2. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
+2. Copy the JAR (.jar) file to an **empty** folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
 3. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
    in the home folder. If you are using Mac or Linux, [open a Terminal window](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/#:~:text=To%20open%20a%20Terminal%20window%20from%20within%20a%20folder%20in,window%20to%20the%20selected%20folder.) 
    in the home folder.
@@ -500,16 +500,18 @@ cOOPer will **deny your access** to these features if you do not have the admin 
   1. Enter `bs`.
   2. cOOPer initiates the balance sheet function and a `[Balance Sheet]` label will appear beside cOOPer's prompt.
   3. cOOPer will prompt you to enter the first entry, 'Cash and Cash Equivalents'.
-  4. Enter `add [amount]` as an unsigned integer with no brackets.
+  4. Enter `add [amount]`.
   5. `[amount]` will be added as 'Cash and Cash Equivalents' as an **asset**.
-  6. cOOPer will continue prompting you for the rest of the balance sheet fields. All assets should be added without brackets, and all liabilities should be added with brackets. Shareholder's equity can be with or without brackets. To see which fields belong where, see [here](#accessing-the-balance-sheet-bs--list).
+  6. cOOPer will continue prompting you for the rest of the balance sheet fields. 
   7. When the balance sheet is complete, cOOPer will prompt you to enter [`list`](#accessing-the-balance-sheet-bs--list) to view the complete balance sheet.
+  
+> ℹ️`[amount]` must be an **unsigned integer**.<br>
+> ℹ️cOOPer treats `[amount]` as positive and `[amount]` enclosed in parentheses as negative.<br>
+> ℹ️All **assets** are positive, hence no parentheses are needed, while all **liabilities** are negative, hence parentheses are needed. **Shareholder's equity** can be either positive or negative, hence parentheses are optional. To see which fields belong where, see the example output of the[`list`](#accessing-the-balance-sheet-bs--list) feature.<br>
+> ⚠️️Any entries **more than** 300 Million SGD (positive or negative) will **not** be added.<br>
+> 💡   Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
+> ⚠️Entering `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, updating the *current draft* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
 
-> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of brackets should be added around `[amount]`. For example, `add 5000` specifies an asset of $5000 while `add (5000)` specifies a liability of $5000.<br>
-> ℹ️ `[amount]` should be an **unsigned integer** representing the amount of assets / liabilities added as the balance sheet field.<br>
-> 💡    Remember to enter `bs` before entering `add` or cOOPer will not know which financial statement to add to.<br>
-> ⚠️Entering `bs` and `add` after the balance sheet is complete will **overwrite** the current fields of the balance sheet one by one, creating a *new version* of the balance sheet. Hence, it is important to add the balance sheet fields to **completion**. <br>
-> ℹ️ Any entries more than or equal to 1 Billion SGD (positive or negative) will not be added.
 
 - Example input for initiating the balance sheet function:
 
@@ -557,11 +559,12 @@ Next, please enter Accounts Receivable
   6. cOOPer will continue prompting you for the rest of the cash flow statement fields.
   7. When the cash flow statement is complete, cOOPer will prompt you to enter [`list`](#accessing-the-cash-flow-statement-cf--list) to view the complete cash flow statement.
 
-> ℹ️ By default, cOOPer treats `[amount]` as a positive integer. To specify a negative integer, a pair of parentheses should be added around `[amount]`. For example, `add 5000` specifies an inflow of $5000 while `add (5000)` specifies an outflow of $5000.<br>
-> ℹ️ `[amount]` should be a **positive integer** representing the amount of inflow / outflow added as the cash flow statement field.<br>
+> ℹ️`[amount]` must be an **unsigned integer**.<br>
+> ℹ️cOOPer treats `[amount]` as positive and `[amount]` enclosed in parentheses as negative.<br>
+> ⚠️Any entries **more than** 300 Million SGD (positive or negative) will **not** be added.<br>
 > 💡    Remember to enter `cf` before entering `add` or cOOPer will not know which financial statement to add to.<br>
-> ⚠️Entering `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, creating a *new version* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**. <br>
-> ℹ️ Any entries more than or equal to 1 Billion SGD (positive or negative) will not be added.
+> ⚠️Entering `cf` and `add` after the cash flow statement is complete will **overwrite** the current fields of the cash flow statement one by one, updating the *current draft* of the cash flow statement. Hence, it is important to add the cash flow statement fields to **completion**. <br>
+
 
 - Example input for initiating the cash flow statement function:
 
@@ -599,7 +602,7 @@ Next, please enter Depreciation and Amortisation
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Accessing the balance sheet: `bs` → `list`
+### Viewing the balance sheet: `bs` → `list`
 - Displays the complete balance sheet with extra fields like 'Total Assets', 'Total Liabilities' and 'Total Shareholder's Equity'.
 - Informs you if the balance sheet does not tally correctly.
 - How to view the balance sheet:
@@ -607,8 +610,8 @@ Next, please enter Depreciation and Amortisation
   2. Enter `list`.
 
 > 💡 Remember to fill up the fields of the balance sheet with `add` before entering `list`.<br>
-> ℹ️`list` displays the *latest version* of the balance sheet. Refer to [this](#creating-the-balance-sheet-bs--add) section to know what *latest version* means.<br>
-> ℹ️Entering `list` while the balance sheet is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields.<br>
+> ℹ️`list` displays the *current draft* of the balance sheet. Refer to the info section of the [add](#creating-the-balance-sheet-bs--add) feature to know what *current draft* means.<br>
+> ℹ️Entering `list` at any time will display any overwritten fields from the *current draft* of the balance sheet, and any non-overwritten fields from the *previous draft* .<br>
 > ℹ️The check can only inform you if the statement does or does not tally, and not which entry is incorrect as that comes down to human error.<br>
 > ℹ️ Any scalar values more than or equal to 1 Billion SGD (positive or negative) will be displayed as such, and not as their exact values.
 
@@ -648,16 +651,16 @@ Check: 0
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Accessing the cash flow statement: `cf` → `list`
+### Viewing the cash flow statement: `cf` → `list`
 - Displays the complete cash flow statement with extra fields like 'Net Cash from Operating Activities', Net Cash from Investing Activities' and 'Net Financing Activities'.
 - How to view the cash flow statement:
   1. After [creating the cash flow statement](#creating-the-cash-flow-statement-cf--add), cOOPer would have prompted you to enter `list` to view the balance sheet.
   2. Enter `list`.
 
 > 💡 Remember to fill up the fields of the cash flow statement with `add` before entering `list`.<br>
-> ℹ️`list` displays the *latest version* of the cash flow statement. Refer to [this](#creating-the-cash-flow-statement-cf--add) section to know what *latest version* means.<br>
-> ℹ️Entering `list` while the cash flow statement is incomplete will display the latest values for the fields already filled along with the old values for unfilled fields. <br>
-> ℹ ️Any scalar values more than or equal to 1 Billion SGD (positive or negative) will be displayed as such, and not as their exact values.
+> ℹ️`list` displays the *current draft* of the cash flow statement. Refer to the info section of the [add](#creating-the-cash-flow-statement-cf--add) feature to know what *current draft* means.<br>
+> ℹ️Entering `list` at any time will display any overwritten fields from the *current draft* of the cash flow statement, and any non-overwritten fields from the *previous draft* .<br>
+> ℹ️Any scalar values more than or equal to 1 Billion SGD (positive or negative) will be displayed as such, and not as their exact values.
 
 - Example input:
 
@@ -700,7 +703,7 @@ Free Cash Flow   3000
 
 > ℹ️FCF is the last field of the cash flow statement.
 
-- Example input based on a FCF of 3000:
+- Example input:
 
 ```
 >> proj 3
@@ -866,7 +869,7 @@ The contents of the folder is as shown in the diagram below.
     <img width="500" src="userGuideImages/cooperStorage.png" alt="cooperStorage"><br>
 </p> 
 
->⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content of these files.
+>⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
 
 
 #### availability.txt

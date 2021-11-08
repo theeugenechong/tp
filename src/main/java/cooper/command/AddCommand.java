@@ -24,8 +24,8 @@ public class AddCommand extends Command {
     public boolean isInflow;
     public int amount;
     public FinanceCommand financeFlag;
-    private static final int AMOUNT_UPPER_LIMIT = 1_000_000_000;
-    private static final int AMOUNT_LOWER_LIMIT = -1_000_000_000;
+    private static final int AMOUNT_UPPER_LIMIT = 300_000_001;
+    private static final int AMOUNT_LOWER_LIMIT = -300_000_001;
 
     public AddCommand(int amount, boolean isInflow, FinanceCommand financeFlag) {
         super();

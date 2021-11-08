@@ -5,6 +5,7 @@ import cooper.exceptions.InvalidDateTimeFormatException;
 import cooper.exceptions.DuplicateUsernameException;
 import cooper.exceptions.CannotScheduleMeetingException;
 import cooper.exceptions.DuplicateMeetingException;
+import cooper.exceptions.TimeNotInAvailabilityException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class MeetingManagerTest {
     @Order(3)
     void manualScheduleMeeting_duplicateMeeting_expectException() throws DuplicateUsernameException,
             InvalidDateTimeFormatException, InvalidTimeException, CannotScheduleMeetingException,
-            DuplicateMeetingException {
+            DuplicateMeetingException, TimeNotInAvailabilityException {
         meetingManager.addAvailability("12-02-2021 12:00", "shixi");
         meetingManager.addAvailability("12-02-2021 12:00", "fan");
 
