@@ -84,15 +84,7 @@ public class CommandParser extends ParserBase {
     /**
      * API to parse a string input into a command object.
      * @param input user input
-     * @return
-     * @throws UnrecognisedCommandException
-     * @throws NoSuchElementException
-     * @throws InvalidCommandFormatException
-     * @throws InvalidScheduleFormatException
-     * @throws NoTimeEnteredException
-     * @throws NoUsernameAfterCommaException
-     * @throws InvalidDocumentException
-     * @throws InvalidAddFormatException
+     * @return the command object
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
@@ -106,17 +98,9 @@ public class CommandParser extends ParserBase {
     }
 
     /**
-     * Impl for parse() method
+     * Impl for parse() method.
      * @param input command to be parsed
-     * @return
-     * @throws UnrecognisedCommandException
-     * @throws NoSuchElementException
-     * @throws InvalidCommandFormatException
-     * @throws InvalidScheduleFormatException
-     * @throws NoTimeEnteredException
-     * @throws NoUsernameAfterCommaException
-     * @throws InvalidDocumentException
-     * @throws InvalidAddFormatException
+     * @return the command object
      */
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
@@ -148,10 +132,9 @@ public class CommandParser extends ParserBase {
     }
 
     /**
-     * Method to parse single-word input
+     * Method to parse single-word input.
      * @param commandWord single-word input string
      * @return a command object
-     * @throws UnrecognisedCommandException
      */
     private Command parseSimpleInput(String commandWord) throws UnrecognisedCommandException {
         assert commandWord != null;
@@ -183,14 +166,6 @@ public class CommandParser extends ParserBase {
      * Method to parse a multi-word input. Using the Dopsun cli library
      * @param input multi-word input
      * @return a command object
-     * @throws UnrecognisedCommandException
-     * @throws NoSuchElementException
-     * @throws InvalidCommandFormatException
-     * @throws InvalidScheduleFormatException
-     * @throws NoTimeEnteredException
-     * @throws NoUsernameAfterCommaException
-     * @throws InvalidDocumentException
-     * @throws InvalidAddFormatException
      */
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,

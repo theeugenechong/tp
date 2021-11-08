@@ -34,7 +34,7 @@ public abstract class ParserBase {
 
     /**
      * Constructor to initialise the dopsun parser.
-     * @param schema
+     * @param schema the schema for dopsum parser to recognise patterns
      */
     public ParserBase(String schema) {
         try {
