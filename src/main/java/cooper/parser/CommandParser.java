@@ -305,7 +305,7 @@ public class CommandParser extends ParserBase {
     }
 
     /**
-     * Gets the last username in the schedule command
+     * Gets the last username in the schedule command.
      *
      * @param usernamesArrayList the list of usernames to add this last username to
      * @param trimmedUsername the last argument of the schedule command (after the last comma)
@@ -326,7 +326,7 @@ public class CommandParser extends ParserBase {
     }
 
     /**
-     * Gets the time parameter in the schedule command
+     * Gets the time parameter in the schedule command.
      *
      * @param args thea argument after the /with
      * @return a String that corresponds to the time. A null string is returned if there is no time
