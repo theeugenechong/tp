@@ -694,8 +694,8 @@ Last year's Free Cash Flow   3000
 
 ```
 =========================================================================
-At your current rate of profitability growth in Free Cash Flow, 
-these are future year's projections:
+At your current rate of profitability growth in Free Cash Flow, these are 
+future year's projections:
 1 year: 4083
 2 year: 4763
 3 year: 5557
