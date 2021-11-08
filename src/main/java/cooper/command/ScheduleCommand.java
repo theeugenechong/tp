@@ -29,7 +29,7 @@ public class ScheduleCommand extends Command {
     }
 
     /**
-     * The override function for executing the 'add' command, calls for 'add' and subsequently
+     * The override function for executing the 'schedule' command, calls for 'schedule' and subsequently
      * printing the status to the command line if and only if
      * the command is being accessed by an 'admin' level user.
      * @param signInDetails Sign in details of user to provide correct access

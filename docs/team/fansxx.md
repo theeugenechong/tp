@@ -11,11 +11,15 @@ cOOPer was developed in Java following an **Object-Oriented Programming (OOP)** 
 All the code I contributed for this project can be found at this [RepoSense Link](https://nus-cs2113-ay2122s1.github.io/tp-dashboard/?search=&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-25&tabOpen=true&tabType=authorship&tabAuthor=fansxx&tabRepo=AY2122S1-CS2113T-W13-4%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false).
 
 #### Enhancements Implemented
+I was in charge of the availability and meetings component of cOOPer, which I coded from scratch (from the parsing logic to the actual features).
+
 - **Feature 1:** Implemented the `available` and `availability` features
     - This feature allows users to key in their available date and time, as well as view everyone's availability.
     - The `available` feature comes with error-checking, to make sure the time and date entered are of the correct format.
     - Viewing of `availability` generates a neatly formatted table, enhancing the user experience of cOOPer.
     - Date and time are filtered chronologically when the table of availability is generated.
+
+<div style="page-break-after: always;"></div>
 
 - **Feature 2:** Implemented the `schedule` and `meetings` features
     - The `schedule` feature allows admins to schedule meetings with an in-built algorithm, or with a timing manually inputted by the user.
@@ -23,14 +27,10 @@ All the code I contributed for this project can be found at this [RepoSense Link
     - I made the algorithm that finds a common time for the meeting fast and efficient, such that it saves users' time.
     - The `meetings` feature generates a table of meetings customized for the user.
 
-<div style="page-break-after: always;"></div>
-
 - **Feature 3:** Implemented the storage function for availability and meetings storage
   - I built on the 'template' @theeugenechong came up with.
   - This feature stores `availability` and `meetings` in their own custom format, and reads the storage files when cOOPer starts.
   - This storage feature also does error checking of the `availability.txt` and `meetings.txt` files to make sure the content and times are correctly formatted, before loading into cOOPer.
-
-<div style="page-break-after: always;"></div>
 
 ### Contributions to the User Guide
 - **Contribution 1:** Documented the `available` and `availability` commands
@@ -56,9 +56,10 @@ All the code I contributed for this project can be found at this [RepoSense Link
 <div style="page-break-after: always;"></div>
 
 ### Contribution to Team-based Tasks
-- Helped with the maintenance of the issue tracker (created tags, added issues with their respective tags and milestones)
+- Created tags in the issue tracker
+- Helped with the maintenance of the issue tracker (added issues with their respective tags and milestones)
 - Resolved merge conflicts when merging multiple pull requests.
-- Contributed in team meetings to plan out the tasks to do for milestones.
+- Contributed in team meetings to plan out the tasks to do.
 
 ### Review/mentoring contributions
 - Pull requests I reviewed:

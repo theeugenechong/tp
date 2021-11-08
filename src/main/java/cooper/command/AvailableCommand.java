@@ -22,9 +22,8 @@ public class AvailableCommand extends Command {
     }
 
     /**
-     * The override function for executing the 'add' command, calls for 'add' and subsequently
-     * printing the status to the command line if and only if
-     * the command is being accessed by an 'admin' level user.
+     * The override function for executing the 'available' command, which all users have access to.
+     *
      * @param signInDetails Sign in details of user to provide correct access
      * @param resourcesManager Provides access to manipulate data in the cOOPer's {@code FinanceManager},
      *                         {@code MeetingsManager} and {@code ForumManager}
