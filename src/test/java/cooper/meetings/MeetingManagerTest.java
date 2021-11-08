@@ -94,4 +94,24 @@ public class MeetingManagerTest {
         assertThrows(CannotScheduleMeetingException.class, () ->
                 meetingManager.autoScheduleMeeting(meetingName, listOfAttendees));
     }
+
+    @Test
+    @Order(7)
+    void manualScheduleMeeting_timeNotInAvailability_expectException() {
+        String meetingName = "Project Meeting";
+        ArrayList<String> listOfAttendees = new ArrayList<>();
+        listOfAttendees.add("shixi");
+        listOfAttendees.add("fan");
+        String time = "10-02-2021 12:00";
+        assertThrows(TimeNotInAvailabilityException.class, () ->
+                meetingManager.manualScheduleMeeting(meetingName, listOfAttendees, time));
+    }
+
+    @Test
+    @Order(8)
+    void addAvailability_notStartOfHour_expectException() {
+        String inputTime = "12-02-2021 16:24";
+        String inputName = "shixi";
+        assertThrows(InvalidTimeException.class, () -> meetingManager.addAvailability(inputTime, inputName));
+    }
 }
