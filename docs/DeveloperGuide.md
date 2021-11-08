@@ -141,12 +141,12 @@ To exit, enter "exit".
 </p> 
 
 ### Before you code
-- **Configure coding style**
-  - If you are using IntelliJ IDEA, follow [this guide](https://se-education.org/guides/tutorials/intellijCodeStyle.html) to set up IntelliJ to match our coding style.
-- **Set up Continuous Integration (CI)**
-  - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
-- **Get to know cOOPer's design**
-  - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
+1. **Configure coding style**<br>
+If you are using IntelliJ IDEA, follow [this guide](https://se-education.org/guides/tutorials/intellijCodeStyle.html) to set up IntelliJ to match our coding style.
+2. **Set up Continuous Integration (CI)**<br>
+GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
+3. **Get to know cOOPer's design**<br>
+One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -519,16 +519,19 @@ This algorithm is recommended by the National Institute of Standards and Technol
 ### Interacting with finance functions
 `Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
 
+#### Adding to the financial statement
+The sequence diagram below illustrates the process of **adding** to a given financial statement, in this case the balance sheet.
+
 <p align="center">
     <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
 </p>
 
-The sequence diagram above illustrates the process of **adding** to a given financial statement, in this case the Balance Sheet.
+When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive** or **negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
 
-When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
+#### Viewing the financial statement
+When the user wants to view a financial statement with `list`, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
 
-When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
-
+#### Generating cash flow projections
 When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
@@ -563,7 +566,6 @@ Depreciation and Amortisation
 & 1500
 \\[3ex]
 ```
-
 
 When compiled, the LaTeX code above will correspond to an entry 'Depreciation and Amortisation' on the PDF with the amount $1500. This technique can be used on the header and summary templates which will format the header and summary of a particular section in the financial statement.
 
@@ -615,7 +617,6 @@ The following sequence diagram shows the process of **manual** scheduling a meet
 </p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
-
 
 ### Interacting with the forum
 
@@ -706,7 +707,7 @@ Example Users:
 | `***`    | new user     | register an account | login and return to my saved work at any point later on |
 | `***`    | user     | see a list of roles at login | login to the specific role I need to carry out a task |
 | `***`    | user     | have a password encrypted login | have my saved work be protected from any external tampering |
-| `***`    | finance admin     | automatically generate the company's financial statements | assess the company's current financial health accurately and quickly |
+| `***`    | finance admin     | create the company's financial statements | assess the company's current financial health accurately and quickly |
 | `***`    | secretary employee     | see all company personnel's daily availability | schedule meetings between all available members easily |
 | `**`    | finance admin     | automatically generate projections on the company's yearly profitability | assess the company's potential future growth|
 | `**` | finance admin | generate the company's financial statements as a PDF document | view and share a neat version of the financial statement with my colleagues
@@ -733,8 +734,8 @@ Example Users:
 * *JDK* - Java Development Kit
 * *UML* - Unified Modelling Language
 * *API* - Application Programming Interface
-* *give-receive pattern* - A Java implementation of the 'friend' concept in C++
-* *POST Request* - A request used to send data to the server to create or update a resource
+* *give-receive pattern* - A Java implementation of the ['friend' concept](https://en.cppreference.com/w/cpp/language/friend) in C++
+* *POST Request* - A request used to send data to a server to create / update a resource
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
