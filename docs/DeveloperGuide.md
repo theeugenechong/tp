@@ -172,6 +172,8 @@ Upon launching the app, the user starts at the _**verification** layer_ where th
 Entering valid credentials will then grant the user access to the _**features** layer_ where they can input commands to use cOOPer's features. 
 At this layer, entering the `logout` command will bring the user back to the _verification layer_.
 
+<div style="page-break-after: always;"></div>
+
 ### Architecture
 
 <p align="center">
@@ -525,7 +527,7 @@ This algorithm is recommended by the National Institute of Standards and Technol
 
 The `Resources` component manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
 
-+ To get a feature manager, such as the `FinanceManager`, the user needs to pass in his `UserRole`. `ResourcesManager` will check if the user has the right access to the feature and returns the requested object if so, and `null` otherwise.
++ To get a feature manager, such as the `FinanceManager`, the user needs to pass in their `UserRole`. `ResourcesManager` will check if the user has the right access to the feature and returns the requested object if so, and `null` otherwise.
 + The `StorageManager` class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using the *give-receive* pattern, instead of universal `getters`.
 
 <p align="center">
