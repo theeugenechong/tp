@@ -8,6 +8,8 @@ Welcome to cOOPer's Developer Guide!
 
 cOOPer is a **Command Line Interface (CLI) desktop** application developed to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 
+cOOPer was developed in **Java 11** following an **Object-Oriented Programming (OOP)** paradigm, hence the letters OOP in its name.
+
 This developer guide is for software designers, developers, and software testers of cOOPer. It will be your reference manual if you are looking to:
 - **Know more** about cOOPer's internal **software design**
 - **Improve** cOOPer's internal **software design**
@@ -34,11 +36,12 @@ This developer guide is for software designers, developers, and software testers
 - [Implementation](#Implementation)
     - [Parsing user input](#parsing-user-input)
     - [Verifying user credentials](#verifying-user-credentials)
+    - [Requesting a resource](#requesting-a-resource)
+    - [Interacting with finance functions](#interacting-with-finance-functions)
+    - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
     - [Declaring an availability](#declaring-an-availability)
     - [Scheduling a meeting](#scheduling-a-meeting)
     - [Interacting with the forum](#interacting-with-the-forum)
-    - [Requesting a resource](#requesting-a-resource)
-    - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
     - [Saving and loading data](#saving-and-loading-data)
 - [Appendix: Requirements](#appendix-requirements)
   - [Product Scope](#product-scope)
@@ -50,10 +53,12 @@ This developer guide is for software designers, developers, and software testers
 - [Appendix: Instructions for Manual Testing](#appendix-instructions-for-manual-testing)
   - [Launch and shutdown](#launch-and-shutdown)
   - [Sign-in](#sign-in)
-  - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Finance actions](#finance-actions)
+  - [Generating the PDF](#generating-the-pdf)
   - [Meetings actions](#meetings-actions)
   - [Forum actions](#forum-actions)
+  - [Logging out](#logging-out)
 
 <div style="page-break-after: always;"></div>
 
@@ -81,6 +86,7 @@ This section includes the sources of code, documentation and third-party librari
 3. The implementation of the PBKDF2 algorithm for storing passwords was adapted from [this website](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html). The two methods for generating the hash as well as obtaining the salt were reused, but tweaked slightly in our implementation.
 4. The method used to convert an input stream to a file in `Util.java` was adapted from [this website](https://www.baeldung.com/convert-input-stream-to-a-file). 
 5. The method used to make a _POST Request_ to an online LaTeX compiler for the `generate` feature was adapted from [this website](https://www.baeldung.com/httpurlconnection-post).
+6. [JUnit 5](https://junit.org/junit5/) is a third-party library used to perform software testing for cOOPer.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -88,7 +94,7 @@ This section includes the sources of code, documentation and third-party librari
 
 ## Setting Up and Getting Started
 
-> 💡 These are the **software / tools** used in developing cOOPer. You are recommended to use them :
+> 💡 These are the **software / tools** used in developing cOOPer. You are recommended to use them too:
 > - _**IDE**_: IntelliJ IDEA (highly recommended)
 > - _**JDK**_: Java 11 
 > - **Version control**: Git 
@@ -135,12 +141,12 @@ To exit, enter "exit".
 </p> 
 
 ### Before you code
-- **Configure coding style**
-  - If you are using IntelliJ IDEA, follow [this guide](https://se-education.org/guides/tutorials/intellijCodeStyle.html) to set up IntelliJ to match our coding style.
-- **Set up Continuous Integration (CI)**
-  - GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
-- **Get to know cOOPer's design**
-  - One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
+1. **Configure coding style**<br>
+If you are using IntelliJ IDEA, follow [this guide](https://se-education.org/guides/tutorials/intellijCodeStyle.html) to set up IntelliJ to match our coding style.
+2. **Set up Continuous Integration (CI)**<br>
+GitHub automatically detects the GitHub Actions config file located in the `.github/workflows` folder. CI for cOOPer is automatically run at each push to the 'master' branch or whenever a pull request is created.
+3. **Get to know cOOPer's design**<br>
+One last thing to know before you start coding is cOOPer's overall software design. You are recommended to get some sense of cOOPer's overall design in the [Design](#design) section below.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -351,8 +357,6 @@ The `Finance` component:
 + Handles adding / listing / generating of balance sheets, cash flow statements, and free cash flow projections.
 + Assists the parser in identifying which function is being used at any given time.
 
-+ Contains the `PdfGenerator` class for the `generate` command, more info can be found [here](#generating-a-pdf-from-the-financial-statement).
-
 #### Meetings
 
 **API**: [`cooper.meetings`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/meetings)
@@ -499,6 +503,84 @@ This algorithm is recommended by the National Institute of Standards and Technol
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+### Requesting a resource
+
+`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
+
++ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
++ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using the *give-receive* pattern, instead of universal `getters`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Interacting with finance functions
+`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
+
+#### Adding to the financial statement
+The sequence diagram below illustrates the process of **adding** to a given financial statement, in this case the balance sheet.
+
+<p align="center">
+    <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
+</p>
+
+When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive** or **negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
+
+#### Viewing the financial statement
+When the user wants to view a financial statement with `list`, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
+
+#### Generating cash flow projections
+When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Generating a PDF from the financial statement
+The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF.
+
+#### Creating the PDF with LaTeX
+The PDF is generated with the help of an online LaTeX compiler. The LaTeX (`.tex`) templates for the PDF can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`.
+Certain identifiers (in the form of LaTeX comments '`%`') in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
+
+The example below shows the template of an entry in the financial statement:
+
+```
+\centering
+% {Description}
+& \centering
+& \centering
+& \centering
+& % {Amount}
+\\[3ex]
+```
+
+Calling `replace("% {Description}", "Depreciation and Amortisation")` and `replace("% {Amount}", 1500)` on the template above will result in the following:
+
+```
+\centering
+Depreciation and Amortisation
+& \centering
+& \centering
+& \centering
+& 1500
+\\[3ex]
+```
+
+When compiled, the LaTeX code above will correspond to an entry 'Depreciation and Amortisation' on the PDF with the amount $1500. This technique can be used on the header and summary templates which will format the header and summary of a particular section in the financial statement.
+
+The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGenerator` perform the text replacement as shown above. The diagram below shows how these methods correspond to the different parts of the 'Operating Activities' section in the cash flow statement PDF.
+
+<p align="center">
+    <img width="750" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
+</p>
+
+#### Compiling the LaTeX code online
+`createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. Iterating through the `ArrayList`, these templates are then appended together using `append()`.
+This forms a long `String` which is then sent to the online LaTeX compiler via a POST request. The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
 ### Declaring an availability
 The `MeetingManager` class facilitates the storing of availability in cOOPer.
 
@@ -536,35 +618,6 @@ The following sequence diagram shows the process of **manual** scheduling a meet
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
-### Finance
-`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
-
-<p align="center">
-    <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
-</p>
-
-The sequence diagram above illustrates the process of **adding** to a given financial statement, in this case the Balance Sheet.
-
-#### Finance module descriptions
-'FinanceManager' stores **3** attributes:
-1. the **balance sheet**, which is a `BalanceSheet` object.
-2. the **cash flow statement**, which is a `CashFlow` object.
-3. the **free cash flow projections**, which is a `Projection` object.
-
-The `BalanceSheet` object stores the attribute `balanceSheet` which is an `ArrayList<Integer>` object.
-
-The `CashFlow` object stores the attribute `cashFlowStatement` which is an `ArrayList<Integer>` object.
-
-The `Projection` object stores the attribute `growthValues` which is an `ArrayList<Double>` object.
-
-When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
-
-When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
-
-When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
 ### Interacting with the forum
 
 The following sequence diagram shows three operations with the forum. `addPost`, `commentPost` and `deletePost`.
@@ -584,64 +637,6 @@ The following sequence diagram shows three operations with the forum. `addPost`,
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
-### Requesting a resource
-
-`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
-
-+ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
-+ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using the *give-receive* pattern, instead of universal `getters`.
-
-<p align="center">
-    <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
-</p>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
-### Generating a PDF from the financial statement
-The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF.
-
-#### Creating the PDF with LaTeX
-The PDF is generated with the help of an online LaTeX compiler. The LaTeX (`.tex`) templates for the PDF can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
-Certain identifiers (in the form of LaTeX comments '`%`') in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
-
-The example below shows the template of an entry in the financial statement:
-
-```
-\centering
-% {Description}
-& \centering
-& \centering
-& \centering
-& % {Amount}
-\\[3ex]
-```
-
-Calling `replace("% {Description}", "Depreciation and Amortisation")` and `replace("% {Amount}", 1500)` on the template above will result in the following:
-
-```
-\centering
-Depreciation and Amortisation
-& \centering
-& \centering
-& \centering
-& 1500
-\\[3ex]
-```
-
-
-When compiled, the LaTeX code above will correspond to an entry 'Depreciation and Amortisation' on the PDF with the amount $1500. This technique can be used on the header and summary templates which will format the header and summary of a particular section in the financial statement.
-
-The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGenerator` perform the text replacement as shown above. The diagram below shows how these methods correspond to the different parts of the 'Operating Activities' section in the cash flow statement PDF.
-
-<p align="center">
-    <img width="750" src="developerGuideDiagrams/pdfSections.png" alt="pdfSections"><br>
-</p>
-
-#### Compiling the LaTeX code online
-`createHeader()`, `createEntry()` and `createSummary()` also add the template to an `ArrayList` after performing the text replacement on the template. Iterating through the `ArrayList`, these templates are then appended together using `append()`.
-This forms a long `String` which is then sent to the online LaTeX compiler via a POST request. The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Saving and loading data
 > ℹ️Due to the way the `Storage` component is implemented, the classes and methods used for storage have names which are quite similar. In order to generalize the explanations in this section for how data is saved and loaded, the term `XYZ` will be used as a placeholder where `XYZ` is `signInDetails`, `balanceSheet`, `cashFlowStatement`, `availability`, `meetings` and `forum`.
@@ -712,7 +707,7 @@ Example Users:
 | `***`    | new user     | register an account | login and return to my saved work at any point later on |
 | `***`    | user     | see a list of roles at login | login to the specific role I need to carry out a task |
 | `***`    | user     | have a password encrypted login | have my saved work be protected from any external tampering |
-| `***`    | finance admin     | automatically generate the company's financial statements | assess the company's current financial health accurately and quickly |
+| `***`    | finance admin     | create the company's financial statements | assess the company's current financial health accurately and quickly |
 | `***`    | secretary employee     | see all company personnel's daily availability | schedule meetings between all available members easily |
 | `**`    | finance admin     | automatically generate projections on the company's yearly profitability | assess the company's potential future growth|
 | `**` | finance admin | generate the company's financial statements as a PDF document | view and share a neat version of the financial statement with my colleagues
@@ -739,8 +734,8 @@ Example Users:
 * *JDK* - Java Development Kit
 * *UML* - Unified Modelling Language
 * *API* - Application Programming Interface
-* *give-receive pattern* - A Java implementation of the 'friend' concept in C++
-* *POST Request* - A request used to send data to the server to create or update a resource
+* *give-receive pattern* - A Java implementation of the ['friend' concept](https://en.cppreference.com/w/cpp/language/friend) in C++
+* *POST Request* - A request used to send data to a server to create / update a resource
 * *mainstream OS* - Windows, OS-X, Linux, Unix
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
@@ -776,6 +771,55 @@ Example Users:
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
 
+### Finance actions
+1. Creating the balance sheet
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `bs` to initiate the balance sheet function.
+   3. Ensure that the label beside the command prompt shows `[Balance Sheet]`.
+   4. Enter `add [amount]` to add the first entry. <br>
+   **Expected output:** You will be prompted by cOOPer for the next entry.
+   5. Repeat step iv until cOOPer prompts you to enter `list` upon completion of the balance sheet.
+2. Viewing the balance sheet
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `bs` to initiate the balance sheet function.
+   3. Ensure that the label beside the command prompt shows `[Balance Sheet]`.
+   4. Enter `list` to view the current balance sheet. <br>
+   **Expected output:** All entries will be displayed with the respective net amounts, as well as a check for if the sheet balances.
+3. Creating the cash flow statement
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `cf` to initiate the cash flow statement function.
+   3. Ensure that the label beside the command prompt shows `[Cash Flow]`.
+   4. Enter `add [amount]` to add the first entry. <br>
+   **Expected output:** You will be prompted by cOOPer for the next entry.
+   5. Repeat step iv until cOOPer prompts you to enter `list` upon completion of the cash flow statement.
+4. Viewing the cash flow statement
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `cf` to initiate the cash flow statement function.
+   3. Ensure that the label beside the command prompt shows `[Cash Flow]`.
+   4. Enter `list` to view the current cash flow statement. <br>
+   **Expected output:** All entries will be displayed with the respective net amounts.
+5. Generating cash flow projections
+   1. Ensure that you are logged in as an *admin*.
+   2. Ensure all the fields of the cash flow statement have been filled using `cf` → `add`.
+   3. Enter `proj [years]` to project up to your specified number of years. <br>
+   **Expected output:** All the projected values of free cash flow will be displayed up to the specified year.
+
+### Generating the PDF
+The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
+
+1. Generating the balance sheet
+    1. Ensure that you are logged in as an *admin*.
+    2. Fill up the balance sheet with `bs` → `add`.
+    3. Ensure that you have an active Internet connection.
+    4. Enter `generate bs`.<br>
+       **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+2. Generating the cash flow statement
+    1. Ensure that you are logged in as an *admin*.
+    2. Fill up the cash flow statement with `cf` → `add`.
+    3. Ensure that you have an active Internet connection.
+    4. Enter `generate cf`.<br>
+       **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+
 ### Meetings actions
 1. Declaring availability
     1. Ensure that you are logged in to cOOPer.
@@ -808,30 +852,20 @@ Example Users:
    **Expected output**: A box with the post and your comment you just entered is shown as confirmation.
 3. Deleting a post
    1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least one post
+   2. Ensure you have added at least one post.
    3. Enter `post delete 1`. <br>
    **Expected output**: A box with the post you just deleted is shown as confirmation.
 4. Listing all posts
    1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least one post
+   2. Ensure you have added at least one post.
    3. Enter `post list all`.<br>
    **Expected output**: A box containing all posts and comments you have entered so far is shown.
 
+### Logging out
+1. Logging out
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `logout`.
+   **Expected output**: A message informing you that you have logged out of cOOPer is shown along with the instructions on how to log in, register or exit. The label at the command prompt now shows `[Logged out]`.
 
-### Generating the PDF
-The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
-
-1. Generating the balance sheet
-   1. Ensure that you are logged in as an *admin*.
-   2. Fill up the balance sheet with `bs` → `add`.
-   3. Ensure that you have an active Internet connection.
-   4. Enter `generate bs`.<br>
-   **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
-2. Generating the cash flow statement
-   1. Ensure that you are logged in as an *admin*.
-   2. Fill up the cash flow statement with `cf` → `add`.
-   3. Ensure that you have an active Internet connection.
-   4. Enter `generate cf`.<br>
-   **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
