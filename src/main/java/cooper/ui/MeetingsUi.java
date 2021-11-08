@@ -120,8 +120,8 @@ public class MeetingsUi extends Ui {
         show(SUCCESS_MESSAGE);
         show("You have scheduled a <<" + meetingName + ">> meeting at "
                 + dateTime.toLocalDate().format(DateTimeFormatter.ofPattern(DATE_FORMAT)) + " "
-                + dateTime.toLocalTime().format(DateTimeFormatter.ofPattern(TIME_FORMAT))
-                + " with attendees: " + listOfAvailabilities(usernames));
+                + dateTime.toLocalTime().format(DateTimeFormatter.ofPattern(TIME_FORMAT)));
+        show("with attendees: " + listOfAvailabilities(usernames));
         show(LINE);
     }
 

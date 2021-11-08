@@ -1,6 +1,6 @@
 ![cOOPer](docs/userGuideImages/cooperLogo.png)
 
-# What is COOPER?
+# What is cOOPer?
 
 cOOPer is a **desktop application** developed to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 

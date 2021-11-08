@@ -49,12 +49,27 @@ public class CommandParser extends ParserBase {
     private static final String BS = "bs";
     private static final String CF = "cf";
     private static final String DOCUMENT_HINT = "document-hint";
+    private static final String PARSER_SCHEMA = "command-data.properties"; 
+    private static final String LIST = "list";
+    private static final String HELP = "help";
+    private static final String AVAILABILITY = "availability";
+    private static final String MEETINGS = "meetings";
+    private static final String EXIT = "exit";
+    private static final String LOGOUT = "logout";
+    private static final String ADD = "add";
+    private static final String AVAILABLE = "available";
+    private static final String SCHEDULE = "schedule";
+    private static final String POST = "post";
+    private static final String GENERATE = "generate";
+    private static final String PROJ = "proj";
+    private static final String POSTADD = "postAdd";
+    private static final String POSTDELETE = "postDelete";
+    private static final String POSTCOMMENT = "postComment";
+    private static final String POSTLIST = "postList";
 
-    /**
-     * Constructor. Initialise internal parser.
-     */
+
     private CommandParser()  {
-        super("command-data.properties");
+        super(PARSER_SCHEMA);
     }
 
     public static boolean isLogout() {
@@ -67,9 +82,9 @@ public class CommandParser extends ParserBase {
     }
 
     /**
-     * API to parse a command in string.
-     * @param input command to be parsed
-     * @return a command object, to be passed into command handler
+     * API to parse a string input into a command object.
+     * @param input user input
+     * @return the command object
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
@@ -82,6 +97,11 @@ public class CommandParser extends ParserBase {
         return command;
     }
 
+    /**
+     * Impl for parse() method.
+     * @param input command to be parsed
+     * @return the command object
+     */
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
@@ -90,43 +110,48 @@ public class CommandParser extends ParserBase {
         String commandWord = input.split(WHITESPACE_SEQUENCE)[0].toLowerCase();
 
         switch (commandWord) {
-        case "list":
-        case "help":
-        case "availability":
-        case "meetings":
-        case "exit":
+        case LIST:
+        case HELP:
+        case AVAILABILITY:
+        case MEETINGS:
+        case EXIT:
         case BS:
         case CF:
-        case "logout":
+        case LOGOUT:
             return parseSimpleInput(commandWord);
-        case "add":
-        case "available":
-        case "schedule":
-        case "post":
-        case "generate":
-        case "proj":
+        case ADD:
+        case AVAILABLE:
+        case SCHEDULE:
+        case POST:
+        case GENERATE:
+        case PROJ:
             return parseComplexInput(input);
         default:
             throw new UnrecognisedCommandException();
         }
     }
 
+    /**
+     * Method to parse single-word input.
+     * @param commandWord single-word input string
+     * @return a command object
+     */
     private Command parseSimpleInput(String commandWord) throws UnrecognisedCommandException {
         assert commandWord != null;
         switch (commandWord) {
-        case "list":
+        case LIST:
             return new ListCommand(FinanceCommand.getCommandFromState(cooperState));
-        case "help":
+        case HELP:
             return new HelpCommand();
-        case "availability":
+        case AVAILABILITY:
             cooperState = CooperState.LOGIN;
             return new AvailabilityCommand();
-        case "meetings":
+        case MEETINGS:
             cooperState = CooperState.LOGIN;
             return new MeetingsCommand();
-        case "logout":
+        case LOGOUT:
             return new LogoutCommand();
-        case "exit":
+        case EXIT:
             return new ExitCommand();
         case CF:
             return new CfCommand();
@@ -137,6 +162,11 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    /**
+     * Method to parse a multi-word input. Using the Dopsun cli library
+     * @param input multi-word input
+     * @return a command object
+     */
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
             NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
@@ -146,29 +176,29 @@ public class CommandParser extends ParserBase {
             String command = result.allCommands().get(0).name();
             List<Argument> commandArgs = result.allCommands().get(0).arguments();
             switch (command) {
-            case "add":
+            case ADD:
                 return parseAddArgs(commandArgs);
-            case "available":
+            case AVAILABLE:
                 cooperState = CooperState.LOGIN;
                 return parseAvailableArgs(commandArgs);
-            case "schedule":
+            case SCHEDULE:
                 cooperState = CooperState.LOGIN;
                 return parseScheduleArgs(commandArgs);
-            case "postAdd":
+            case POSTADD:
                 cooperState = CooperState.LOGIN;
                 return parsePostAddArgs(commandArgs);
-            case "postDelete":
+            case POSTDELETE:
                 cooperState = CooperState.LOGIN;
                 return parsePostDeleteArgs(commandArgs);
-            case "postComment":
+            case POSTCOMMENT:
                 cooperState = CooperState.LOGIN;
                 return parsePostCommentArgs(commandArgs);
-            case "postList":
+            case POSTLIST:
                 cooperState = CooperState.LOGIN;
                 return parsePostListArgs(commandArgs);
-            case "generate":
+            case GENERATE:
                 return parseGenerateArgs(commandArgs);
-            case "proj":
+            case PROJ:
                 return parseProjectionArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
@@ -250,6 +280,14 @@ public class CommandParser extends ParserBase {
         return new ScheduleCommand(meetingName, usernames, time);
     }
 
+    /**
+     * Gets the usernames in the schedule command.
+     *
+     * @param args the arguments after the /with
+     * @return an ArrayList of usernames detected in the command argument
+     * @throws InvalidScheduleFormatException if there are no arguments after /with and before /at
+     * @throws NoUsernameAfterCommaException if there are no usernames after the last comma
+     */
     private ArrayList<String> parseUsernamesInSchedule(String args) throws InvalidScheduleFormatException,
             NoUsernameAfterCommaException {
         if (args.length() < 1) {
@@ -279,6 +317,13 @@ public class CommandParser extends ParserBase {
         return usernamesArrayList;
     }
 
+    /**
+     * Gets the last username in the schedule command.
+     *
+     * @param usernamesArrayList the list of usernames to add this last username to
+     * @param trimmedUsername the last argument of the schedule command (after the last comma)
+     * @throws NoUsernameAfterCommaException if there are no usernames after the last comma
+     */
     private void getLastUsername(ArrayList<String> usernamesArrayList, String trimmedUsername) throws
             NoUsernameAfterCommaException {
         if (trimmedUsername.contains("/at")) {
@@ -293,6 +338,13 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    /**
+     * Gets the time parameter in the schedule command.
+     *
+     * @param args thea argument after the /with
+     * @return a String that corresponds to the time. A null string is returned if there is no time
+     * @throws NoTimeEnteredException if there is no time entered after /at
+     */
     private String parseTimeInSchedule(String args) throws NoTimeEnteredException {
         if (args.contains("/at")) {
             String[] argsArray = args.split("/at");

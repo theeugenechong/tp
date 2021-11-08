@@ -111,7 +111,8 @@ All the code I contributed for this project can be found at this [RepoSense link
 Here is an extract of one of my contributions to the User Guide:
 
 > ## Getting Started
->
+> This section explains how you can register an account with cOOPer in order to gain access to cOOPer's features.
+> 
 > ### How cOOPer is to be used
 > - The **correct** way (as of v2.1) of using cOOPer is to run cOOPer on a **single** desktop with only **a single user** interacting with cOOPer at a time.
 > > ⚠️cOOPer's features **will not work** as described in this user guide if **multiple users** are interacting with cOOPer on **multiple desktops** at the same time.
@@ -126,7 +127,7 @@ Here is an extract of one of my contributions to the User Guide:
 > - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 > 
 > ### User registration
-> - Upon first-time use of cOOPer, an individual holding the admin role in the startup is in charge of ensuring all members of the startup are registered with the correct role.
+> - Upon first-time use of cOOPer, ensure that all members of the startup are registered with the correct role.
 > 
 > - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 > 

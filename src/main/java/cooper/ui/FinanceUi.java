@@ -42,7 +42,7 @@ public class FinanceUi extends Ui {
 
     private static final String INPUT_VALID_PROJECTION = "Please key in a valid number of years (1 or more)";
     private static final String AT_CURRENT_PROFITABILITY = "At your current rate of profitability growth ";
-    private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are\n future year's projections:";
+    private static final String IN_FREE_CASH_FLOW = "in Free Cash Flow, these are\nfuture year's projections:";
     private static final String YEARS_CAN_EXPECT = " years you can expect Free Cash Flow of ";
 
     private static final String MORE_THAN_ONE_BILLION = "1 Billion SGD or more ";

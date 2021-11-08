@@ -33,7 +33,8 @@ public abstract class ParserBase {
     protected static final String WHITESPACE_SEQUENCE = "\\s+";
 
     /**
-     * Constructor. Initialise internal parser.
+     * Constructor to initialise the dopsun parser.
+     * @param schema the schema for dopsum parser to recognise patterns
      */
     public ParserBase(String schema) {
         try {

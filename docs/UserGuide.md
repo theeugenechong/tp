@@ -34,17 +34,16 @@ This section helps you navigate the guide.
 - [Getting Started](#getting-started)
   - [How cOOPer is to be used](#how-cooper-is-to-be-used)
   - [Roles](#roles) 
-  - [User registration](#user-registration)
-- [Login](#login)
+  - [Registration](#registration)
+- [Logging In: `login`](#logging-in-login)
 - [Features for All Users](#features-for-all-users)
   - [Adding a forum post: `post add`](#adding-a-forum-post-post-add)
   - [Viewing a post / posts in the forum: `post list`](#viewing-a-post--posts-in-the-forum-post-list)
   - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
   - [Deleting a forum post: `post delete`](#deleting-a-forum-post-post-delete)
   - [Declaring available timings for meetings: `available`](#declaring-available-timing-for-meetings-available)
-  - [Viewing users available at different timings: `availability`](#viewing-users-available-at-different-timings-availability)
+  - [Viewing users available at different timings: `availability`](#viewing-which-users-are-available-at-different-timings-availability)
   - [Viewing scheduled meetings: `meetings`](#viewing-scheduled-meetings-meetings)
-  - [Logging out: `logout`](#logging-out-logout)
 - [Admin Features](#admin-features)
   - [Creating the balance sheet: `bs` → `add`](#creating-the-balance-sheet-bs--add)
   - [Creating the cash flow statement: `cf` → `add`](#creating-the-cash-flow-statement-cf--add)
@@ -55,7 +54,8 @@ This section helps you navigate the guide.
   - [Scheduling meetings with different users: `schedule`](#scheduling-meetings-with-different-users-schedule)
 - [Employee Features](#employee-features)
 - [Viewing Help: `help`](#viewing-help-help)
-- [Exiting the Program: `exit`](#exiting-the-program-exit)
+- [Logging Out: `logout`](#logging-out-logout)
+- [Exiting cOOPer: `exit`](#exiting-cooper-exit)
 - [cOOPer's Data Storage](#coopers-data-storage)
 - [Coming Soon](#coming-soon)
 - [FAQ](#faq)
@@ -158,6 +158,7 @@ You are now ready to use cOOPer! Refer to the [Getting Started](#getting-started
 <div style="page-break-after: always;"></div>
 
 ## Getting Started
+
 This section explains how you can register an account with cOOPer in order to gain access to cOOPer's features.
 
 ### How cOOPer is to be used
@@ -173,7 +174,7 @@ This section explains how you can register an account with cOOPer in order to ga
 
 - cOOPer offers tailor-made functions and features specific to your role to ensure the correct level of administrative access within the company throughout cOOPer's usage.
 
-### User registration
+### Registration
 - Upon first-time use of cOOPer, ensure that all members of the startup are registered with the correct role.
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
@@ -181,7 +182,7 @@ This section explains how you can register an account with cOOPer in order to ga
 - How to register a user:
   1. When you see the `[Logged out]` label beside cOOPer's prompt, enter `register [username] /pw [password] /as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
-  3. You can now log in to access cOOPer's features specific to your role. Refer to the [Login](#login) section to find out more about logging in.
+  3. You can now log in to access cOOPer's features specific to your role. Refer to the [Logging In](#logging-in-login) section to find out more about logging in.
 
 > ℹ️`[username]` refers to your name, `[password]` refers to your password, while `[role]` refers to your role as determined [here](#roles).
 
@@ -204,8 +205,11 @@ Sebastian is now successfully registered as an admin!
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-## Login
-- Once you are successfully [registered](#user-registration), you can now log in to access cOOPer's features.
+<div style="page-break-after: always;"></div>
+
+## Logging in: `login`
+- Logs you in to cOOPer to access cOOPer's features.
+- You must be [registered](#registration) in order to log in.
 - How to log in:
   1. When you see the `[Logged out]` label beside cOOPer's prompt, enter `login [username] /pw [password] /as [role]`.
   2. You should see a message informing you of your successful login. The `[Logged out]` label is no longer present beside the prompt.
@@ -235,7 +239,7 @@ You are now logged in successfully as Sebastian!
 
 ## Features for All Users
 
-This section explains cOOPer's features for all users, regardless of your role. These features are accessible to you only **after** you have successfully [logged in](#login).
+This section explains cOOPer's features for all users, regardless of your role. These features are accessible to you only **after** you have successfully [logged in](#logging-in-login).
 
 <!--@@author Rrraaaeee-->
 
@@ -464,33 +468,6 @@ Here are your meetings for today:
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-<!--@@author theeugenechong-->
-
-### Logging out: `logout`
-- Logs you out of your account.
-- You will now see the `[Logged out]` label beside cOOPer's prompt.
-
-- Example input:
-
-```
->> logout
-```
-
-- Expected output:
-
-```
-=========================================================================
-You are now logged out!
-To log in, enter "login [yourUsername] /pw [password] /as [yourRole]".
-To register, enter "register [yourUsername] /pw [password] /as [yourRole]".
-
-To exit, enter "exit".
-=========================================================================
->> [Logged out] 
-```
-
-[⬆️ Back to top](#whats-in-this-user-guide)
-
 <div style="page-break-after: always;"></div>
 
 ## Admin Features 
@@ -693,7 +670,7 @@ Proceeds from Issuing Debt  300
 Dividends Paid  200
 Net Cash from Financing Activities:  500
 -----FREE CASH FLOW-----
-Free Cash Flow   3000
+Last year's Free Cash Flow   3000
 =========================================================================
 ```
 
@@ -717,7 +694,8 @@ Free Cash Flow   3000
 
 ```
 =========================================================================
-At your current rate of profitability growth in Free Cash Flow, these are future year's projections:
+At your current rate of profitability growth in Free Cash Flow, these are 
+future year's projections:
 1 year: 4083
 2 year: 4763
 3 year: 5557
@@ -745,7 +723,7 @@ After 3 years you can expect Free Cash Flow of 5558
 
 ```
 =========================================================================
-The pdf file has been successfully generated!
+The PDF file has been successfully generated!
 =========================================================================
 ```
 
@@ -784,7 +762,7 @@ The pdf file has been successfully generated!
 
 > ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. <br>
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
-> 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
+> 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-which-users-are-available-at-different-timings-availability) table for better success rates.<br>
 > ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and will result in incorrect behaviour.<br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
 
@@ -792,7 +770,7 @@ The pdf file has been successfully generated!
 - Example input for **automatically** scheduling a meeting:
 
 ```
->> schedule Progress Meeting /with Eugene
+>> schedule PR /with Eugene
 ```
 
 - Expected output:
@@ -800,14 +778,15 @@ The pdf file has been successfully generated!
 ```
 =========================================================================
 Success!
-You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 10:00 with attendees: Eugene, Sebastian
+You have scheduled a <<PR>> meeting at 08-11-2021 10:00 
+with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
 - Example input for **manually** scheduling a meeting:
 
 ```
->> schedule Progress Meeting /with Eugene /at 08-11-2021 14:00
+>> schedule PR /with Eugene /at 08-11-2021 14:00
 ```
 
 - Expected output:
@@ -815,7 +794,8 @@ You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 10:00 with atten
 ```
 =========================================================================
 Success!
-You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 14:00 with attendees: Eugene, Sebastian
+You have scheduled a <<PR>> meeting at 08-11-2021 14:00 
+with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
@@ -830,6 +810,8 @@ As of v2.1, cOOPer does not yet have features exclusive to employees 😥, these
 
 <div style="page-break-after: always;"></div>
 
+<!--@@author theeugenechong-->
+
 ## Viewing help: `help`
 - Shows you a list of commands **specific to your role**, along with their formats. Refer to the [Roles](#roles) section if you do not know how roles are determined.
 
@@ -838,8 +820,33 @@ As of v2.1, cOOPer does not yet have features exclusive to employees 😥, these
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-## Exiting the program: `exit`
-- Exits the program.
+## Logging out: `logout`
+- Logs you out of your account.
+- You will now see the `[Logged out]` label beside cOOPer's prompt.
+
+- Example input:
+
+```
+>> logout
+```
+
+- Expected output:
+
+```
+=========================================================================
+You are now logged out!
+To log in, enter "login [yourUsername] /pw [password] /as [yourRole]".
+To register, enter "register [yourUsername] /pw [password] /as [yourRole]".
+
+To exit, enter "exit".
+=========================================================================
+>> [Logged out] 
+```
+
+[⬆️ Back to top](#whats-in-this-user-guide)
+
+## Exiting cOOPer: `exit`
+- Exits cOOPer.
 
 - Example input:
 
@@ -859,8 +866,6 @@ Bye, see you next time!
 
 <div style="page-break-after: always;"></div>
 
-<!--@@author theeugenechong-->
-
 ## cOOPer's Data Storage
 This section explains how cOOPer stores the data you keyed in throughout cOOPer's usage. cOOPer's data is stored on your hard disk in a folder named 'cooperData'.
 This folder is created in the *home folder* upon starting cOOPer up for the first time.
@@ -873,6 +878,7 @@ The contents of the folder are as shown in the diagram below.
 
 >⚠️The contents of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
 
+<div style="page-break-after: always;"></div>
 
 ### availability.txt
 - What it stores: The different timings and the users associated with each timing. 
@@ -896,7 +902,7 @@ The contents of the folder are as shown in the diagram below.
 
 ### signInDetails.txt
 - What it stores: The username, an encrypted hash of the user's password, the salt used to generate the password hash, and the user's role.
-- When is the data stored: Immediately after you [register](#user-registration) successfully as a user of cOOPer.
+- When is the data stored: Immediately after you [register](#registration) successfully as a user of cOOPer.
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
@@ -912,10 +918,15 @@ In future versions, you will be able to:
 - Create more than one balance sheet / cash flow statement
 - View each balance sheet / cash flow statement individually
 - Calculate your loan repayment
-- Generate the PDF for a specific balance sheet / cash flow statement.
+- Generate the PDF for a specific balance sheet / cash flow statement
 - Specify the name of the PDF document you want to generate.
 - Delete your comment on a forum post
 - Edit your forum post
+- Asynchronously give feedback to management as an employee, with weekly reviews
+
+[⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 This section contains some frequently asked questions you may have when using cOOPer.
@@ -927,7 +938,7 @@ This section contains some frequently asked questions you may have when using cO
 > No, you do not. As long as the commands you enter follow the format specified by cOOPer, you will be able to use cOOPer's features with ease! You can refer to the [Command Summary](#command-summary) section to familiarise yourself with the format of each command.
 
 **Q**: How do I know which commands to enter when using cOOPer?<br>
-> After you have successfully [logged in](#login) to cOOPer, you can either enter `help` or refer to the [Command Summary](#command-summary) section to know the commands recognised by cOOPer.
+> After you have successfully [logged in](#logging-in-login) to cOOPer, you can either enter `help` or refer to the [Command Summary](#command-summary) section to know the commands recognised by cOOPer.
 
 **Q**: How do I transfer cOOPer's data from the current desktop to another desktop?<br>
 > Follow the steps below:<br>
