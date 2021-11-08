@@ -166,7 +166,7 @@ cOOPer recognizes different sets of inputs at each layer.
     <img src="developerGuideDiagrams/layerDiagram.png" alt="layerDiagram"><br>
 </p> 
 
-Upon launching the app, the user starts at the _**verification** layer_ where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). 
+Upon launching the app, the user starts at the _**verification** layer_ where they can only [log in](UserGuide.md#logging-in-login) or [register](UserGuide.md#registration). 
 Entering valid credentials will then grant the user access to the _**features** layer_ where they can input commands to use cOOPer's features. 
 At this layer, entering the `logout` command will bring the user back to the _verification layer_.
 
