@@ -42,7 +42,7 @@ This section helps you navigate the guide.
   - [Commenting on a forum post: `post comment`](#commenting-on-a-forum-post-post-comment)
   - [Deleting a forum post: `post delete`](#deleting-a-forum-post-post-delete)
   - [Declaring available timings for meetings: `available`](#declaring-available-timing-for-meetings-available)
-  - [Viewing users available at different timings: `availability`](#viewing-users-available-at-different-timings-availability)
+  - [Viewing users available at different timings: `availability`](#viewing-which-users-are-available-at-different-timings-availability)
   - [Viewing scheduled meetings: `meetings`](#viewing-scheduled-meetings-meetings)
 - [Admin Features](#admin-features)
   - [Creating the balance sheet: `bs` → `add`](#creating-the-balance-sheet-bs--add)
@@ -204,6 +204,8 @@ Sebastian is now successfully registered as an admin!
 > 💡 Just like when you use any other app with a sign in feature, remember to record down your username and password somewhere (e.g. Sticky Notes, a password manager).<br>
 
 [⬆️ Back to top](#whats-in-this-user-guide)
+
+<div style="page-break-after: always;"></div>
 
 ## Logging in: `login`
 - Logs you in to cOOPer to access cOOPer's features.
@@ -759,7 +761,7 @@ The pdf file has been successfully generated!
 
 > ℹ️You do not have to enter your own `[username]` as cOOPer assumes you are in the meeting that you want to schedule. <br>
 > ℹ️There is no limit to the number of `[username]`s you can enter. cOOPer supports scheduling a meeting with a large number of users. However, a large number of users may **slow** cOOPer down.<br>
-> 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-users-available-at-different-timings-availability) table for better success rates.<br>
+> 💡   Before you do a manual schedule, you may want to check the [`availability`](#viewing-which-users-are-available-at-different-timings-availability) table for better success rates.<br>
 > ⚠️`[date]` has a format of **dd-MM-yyyy**, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and will result in incorrect behaviour.<br>
 > ⚠️`[time]` has a format of **HH:mm**, in *24-hour clock*, similar to the format [`available`](#declaring-available-timing-for-meetings-available) uses. Any other format will **not** be accepted and may result in incorrect behaviour.
 
@@ -767,7 +769,7 @@ The pdf file has been successfully generated!
 - Example input for **automatically** scheduling a meeting:
 
 ```
->> schedule Progress Meeting /with Eugene
+>> schedule PR /with Eugene
 ```
 
 - Expected output:
@@ -775,14 +777,14 @@ The pdf file has been successfully generated!
 ```
 =========================================================================
 Success!
-You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 10:00 with attendees: Eugene, Sebastian
+You have scheduled a <<PR>> meeting at 08-11-2021 10:00 with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
 - Example input for **manually** scheduling a meeting:
 
 ```
->> schedule Progress Meeting /with Eugene /at 08-11-2021 14:00
+>> schedule PR /with Eugene /at 08-11-2021 14:00
 ```
 
 - Expected output:
@@ -790,7 +792,7 @@ You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 10:00 with atten
 ```
 =========================================================================
 Success!
-You have scheduled a <<Progress Meeting>> meeting at 08-11-2021 14:00 with attendees: Eugene, Sebastian
+You have scheduled a <<PR>> meeting at 08-11-2021 14:00 with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
@@ -873,6 +875,7 @@ The contents of the folder are as shown in the diagram below.
 
 >⚠️The contents of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
 
+<div style="page-break-after: always;"></div>
 
 ### availability.txt
 - What it stores: The different timings and the users associated with each timing. 
@@ -912,10 +915,11 @@ In future versions, you will be able to:
 - Create more than one balance sheet / cash flow statement
 - View each balance sheet / cash flow statement individually
 - Calculate your loan repayment
-- Generate the PDF for a specific balance sheet / cash flow statement.
+- Generate the PDF for a specific balance sheet / cash flow statement
 - Specify the name of the PDF document you want to generate.
 - Delete your comment on a forum post
 - Edit your forum post
+- Asynchronously give feedback to management as an employee, with weekly reviews
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 

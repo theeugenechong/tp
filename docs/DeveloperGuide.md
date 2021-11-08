@@ -1,5 +1,7 @@
 ![cOOPer](userGuideImages/cooperLogo.png)
 
+<!--@@author theeugenechong-->
+
 # Developer Guide
 
 ## Introducing cOOPer
@@ -170,6 +172,8 @@ Upon launching the app, the user starts at the _**verification** layer_ where th
 Entering valid credentials will then grant the user access to the _**features** layer_ where they can input commands to use cOOPer's features. 
 At this layer, entering the `logout` command will bring the user back to the _verification layer_.
 
+<div style="page-break-after: always;"></div>
+
 ### Architecture
 
 <p align="center">
@@ -279,6 +283,8 @@ The `Verification` component:
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+<!--@@author Rrraaaeee-->
+
 ### Command Component
 
 **API**: [`Command.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/command/Command.java)
@@ -338,6 +344,7 @@ The `Resources` component:
 - Returns references of feature managers such as `MeetingManager`, `FinanceManager` or `ForumManager` based on `UserRole` of the request body. E.g. Only an *admin* is able to get `FinanceManager` successfully.
 - Returns references to `StorageManager` safely upon request.
 
+<!--@@author ChrisLangton-->
 
 #### Finance
 
@@ -355,6 +362,8 @@ The `Resources` component:
 The `Finance` component:
 + Handles adding / listing / generating of balance sheets, cash flow statements, and free cash flow projections.
 + Assists the parser in identifying which function is being used at any given time.
+
+<!--@@author fansxx-->
 
 #### Meetings
 
@@ -378,6 +387,8 @@ The `Meetings` component:
 + Assists in  the **scheduling** of meetings
 + Lists the current availability and meetings
 
+<!--@@author Rrraaaeee-->
+
 #### Forum
 
 **API**: [`cooper.forum`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/forum)
@@ -395,6 +406,8 @@ The `Forum` component:
 + Deletes a post or comment only if the user requesting the action owns the post or comment, i.e. the `username` of the request body must match the `username` field of the post or comment.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<!--@@author theeugenechong-->
 
 ### Storage Component
 
@@ -418,6 +431,8 @@ The `Storage` component:
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+<!--@@author ChrisLangton-->
+
 ### Util Component
 
 **API**: [`Util.java`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/util/Util.java)
@@ -432,6 +447,8 @@ This method is used to convert the `.tex` template files (located in `src/main/r
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
+
+<!--@@author Rrraaaeee-->
 
 ## Implementation
 
@@ -456,6 +473,8 @@ into the following fields:
 This gives great flexibility and extensibility to the `Parser` component as you do not need to worry about writing new parsing schemes for every command and adding new commands to cOOPer for new features become trivial.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<!--@@author theeugenechong-->
 
 ### Verifying user credentials
 The `Verifier` class facilitates the verification of the credentials of a user registering or logging in to cOOPer.
@@ -502,11 +521,13 @@ This algorithm is recommended by the National Institute of Standards and Technol
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+<!--@@author Rrraaaeee-->
+
 ### Requesting a resource
 
 The `Resources` component manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
 
-+ To get a feature manager, such as the `FinanceManager`, the user needs to pass in his `UserRole`. `ResourcesManager` will check if the user has the right access to the feature and returns the requested object if so, and `null` otherwise.
++ To get a feature manager, such as the `FinanceManager`, the user needs to pass in their `UserRole`. `ResourcesManager` will check if the user has the right access to the feature and returns the requested object if so, and `null` otherwise.
 + The `StorageManager` class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using the *give-receive* pattern, instead of universal `getters`.
 
 <p align="center">
@@ -514,6 +535,8 @@ The `Resources` component manages the access rights to other manager components 
 </p>
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<!--@@author ChrisLangton-->
 
 ### Interacting with finance functions
 The `Finance` component provides features such as **adding** and **listing** of financial statements, i.e. the balance sheet and cash flow statement as well as **compounded projection** of Free Cash Flow growth.
@@ -534,6 +557,8 @@ When the user wants to view a financial statement with `list`, `FinanceManager` 
 When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+<!--@@author theeugenechong-->
 
 ### Generating a PDF from the financial statement
 The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF.
@@ -580,6 +605,8 @@ This forms a long `String` which is then sent to the online LaTeX compiler via a
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+<!--@@author fansxx-->
+
 ### Declaring an availability
 The `MeetingManager` class facilitates the storing of availability in cOOPer.
 
@@ -617,6 +644,8 @@ The following sequence diagram shows the process of **manually** scheduling a me
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+<!--@@author Rrraaaeee-->
+
 ### Interacting with the forum
 
 The following sequence diagram shows three operations with the forum, `addPost`, `commentPost` and `deletePost`.
@@ -636,6 +665,7 @@ The following sequence diagram shows three operations with the forum, `addPost`,
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+<!--@@author theeugenechong-->
 
 ### Saving and loading data
 > ℹ️Due to the way the `Storage` component is implemented, the classes and methods used for storage have names which are quite similar. In order to generalize the explanations in this section for how data is saved and loaded, the term `XYZ` will be used as a placeholder where `XYZ` is `signInDetails`, `balanceSheet`, `cashFlowStatement`, `availability`, `meetings` and `forum`.
@@ -676,6 +706,8 @@ The following sequence diagram shows the general procedure of loading data from 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 <div style="page-break-after: always;"></div>
+
+<!--@@author ChrisLangton-->
 
 ## Appendix: Requirements
 
@@ -727,6 +759,8 @@ Example Users:
 
 <div style="page-break-after: always;"></div>
 
+<!--@@author theeugenechong-->
+
 ### Glossary
 
 * *IDE* - Integrated Development Environment
@@ -770,6 +804,8 @@ Example Users:
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
 
+<!--@@author ChrisLangton-->
+
 ### Finance actions
 1. Creating the balance sheet
    1. Ensure that you are logged in as an *admin*.
@@ -803,6 +839,8 @@ Example Users:
    3. Enter `proj [years]` to project up to your specified number of years. <br>
    **Expected output:** All the projected values of free cash flow will be displayed up to the specified year.
 
+<!--@@author theeugenechong-->
+
 ### Generating the PDF
 The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
 
@@ -818,6 +856,8 @@ The `generate` command works regardless of whether the prompt label is showing `
     3. Ensure that you have an active Internet connection.
     4. Enter `generate cf`.<br>
        **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+
+<!--@@author fansxx-->
 
 ### Meetings actions
 1. Declaring availability
@@ -838,6 +878,8 @@ The `generate` command works regardless of whether the prompt label is showing `
     1. Ensure that you are logged in to cOOPer.
     2. Enter `meetings`.<br>
    **Expected output:** A table with all your meetings, their date and time, and their attendees is shown.
+
+<!--@@author Rrraaaeee-->
 
 ### Forum actions
 1. Adding a post
@@ -860,11 +902,12 @@ The `generate` command works regardless of whether the prompt label is showing `
    3. Enter `post list all`.<br>
    **Expected output**: A box containing all posts and comments you have entered so far is shown.
 
+<!--@@author theeugenechong-->
+
 ### Logging out
 1. Logging out
    1. Ensure that you are logged in to cOOPer.
    2. Enter `logout`.
    **Expected output**: A message informing you that you have logged out of cOOPer is shown along with the instructions on how to log in, register or exit. The label at the command prompt now shows `[Logged out]`.
-
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
