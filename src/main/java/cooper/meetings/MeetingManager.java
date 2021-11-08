@@ -146,6 +146,13 @@ public class MeetingManager {
         return false;
     }
 
+    /**
+     * Checks if any of the users already has a meeting scheduled at a particular time.
+     *
+     * @param usernames the usernames to be checked
+     * @param timing the time that the user wants to schedule a meeting at
+     * @return true if all the users already have another meeting at the timing, false otherwise
+     */
     private boolean isMeetingTimeFullForAll(ArrayList<String> usernames, LocalDateTime timing) {
         for (Meeting meeting : meetingsList) {
             if (meeting.getDateTime().equals(timing) && isOneUserNotAvailable(usernames, meeting)) {
@@ -155,6 +162,13 @@ public class MeetingManager {
         return false;
     }
 
+    /**
+     * Checks if the particular meeting has at least one user in the usernames list.
+     *
+     * @param usernames the usernames to be checked if they have a meeting at a particular time
+     * @param meeting the meeting to be checked to see if any of the specified users are in
+     * @return true if there is at least one user in the usernames list in the meeting, false otherwise
+     */
     private boolean isOneUserNotAvailable(ArrayList<String> usernames, Meeting meeting) {
         for (String username : usernames) {
             if (meeting.getListOfAttendees().contains(username)) {
@@ -191,6 +205,7 @@ public class MeetingManager {
      * @param dateTime the date and time the user is trying to schedule a meeting at
      * @throws InvalidDateTimeFormatException if the format of the date and time is not the specified format
      * @throws InvalidTimeException if the time is not the start of the hour
+     * @throws TimeNotInAvailabilityException if the time does not have any available users
      * @throws CannotScheduleMeetingException if no meeting can be scheduled because one or more of the users entered
      *      is unavailable
      * @throws DuplicateMeetingException if one or more user already has a meeting at the date and time
@@ -213,6 +228,7 @@ public class MeetingManager {
         for (LocalDateTime ldt: availability.keySet()) {
             if (localDateTime.equals(ldt)) {
                 dateTimeExist = true;
+                break;
             }
         }
         if (!dateTimeExist) {
