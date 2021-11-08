@@ -46,8 +46,8 @@ This user guide is written to assist users like you in using cOOPer. It provides
 - [Admin Features](#admin-features)
   - [Creating the balance sheet: `bs` → `add`](#creating-the-balance-sheet-bs--add)
   - [Creating the cash flow statement: `cf` → `add`](#creating-the-cash-flow-statement-cf--add)
-  - [Accessing the balance sheet: `bs` → `list`](#accessing-the-balance-sheet-bs--list)
-  - [Accessing the cash flow statement: `cf` → `list`](#accessing-the-cash-flow-statement-cf--list)
+  - [Viewing the balance sheet: `bs` → `list`](#viewing-the-balance-sheet-bs--list)
+  - [Viewing the cash flow statement: `cf` → `list`](#viewing-the-cash-flow-statement-cf--list)
   - [Projecting cash flow: `proj`](#projecting-cash-flow-proj)
   - [Generating a PDF from the financial statement: `generate`](#generating-a-pdf-from-the-financial-statement--generate)
   - [Scheduling meetings with different users: `schedule`](#scheduling-meetings-with-different-users-schedule)
@@ -602,7 +602,7 @@ Next, please enter Depreciation and Amortisation
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Accessing the balance sheet: `bs` → `list`
+### Viewing the balance sheet: `bs` → `list`
 - Displays the complete balance sheet with extra fields like 'Total Assets', 'Total Liabilities' and 'Total Shareholder's Equity'.
 - Informs you if the balance sheet does not tally correctly.
 - How to view the balance sheet:
@@ -651,7 +651,7 @@ Check: 0
 
 [⬆️ Back to top](#whats-in-this-user-guide)
 
-### Accessing the cash flow statement: `cf` → `list`
+### Viewing the cash flow statement: `cf` → `list`
 - Displays the complete cash flow statement with extra fields like 'Net Cash from Operating Activities', Net Cash from Investing Activities' and 'Net Financing Activities'.
 - How to view the cash flow statement:
   1. After [creating the cash flow statement](#creating-the-cash-flow-statement-cf--add), cOOPer would have prompted you to enter `list` to view the balance sheet.
