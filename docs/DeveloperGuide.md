@@ -36,11 +36,12 @@ This developer guide is for software designers, developers, and software testers
 - [Implementation](#Implementation)
     - [Parsing user input](#parsing-user-input)
     - [Verifying user credentials](#verifying-user-credentials)
+    - [Requesting a resource](#requesting-a-resource)
+    - [Interacting with finance functions](#interacting-with-finance-functions)
+    - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
     - [Declaring an availability](#declaring-an-availability)
     - [Scheduling a meeting](#scheduling-a-meeting)
     - [Interacting with the forum](#interacting-with-the-forum)
-    - [Requesting a resource](#requesting-a-resource)
-    - [Generating a PDF from the financial statement](#generating-a-pdf-from-the-financial-statement)
     - [Saving and loading data](#saving-and-loading-data)
 - [Appendix: Requirements](#appendix-requirements)
   - [Product Scope](#product-scope)
@@ -356,8 +357,6 @@ The `Finance` component:
 + Handles adding / listing / generating of balance sheets, cash flow statements, and free cash flow projections.
 + Assists the parser in identifying which function is being used at any given time.
 
-+ Contains the `PdfGenerator` class for the `generate` command, more info can be found [here](#generating-a-pdf-from-the-financial-statement).
-
 #### Meetings
 
 **API**: [`cooper.meetings`](https://github.com/AY2122S1-CS2113T-W13-4/tp/tree/master/src/main/java/cooper/meetings)
@@ -504,91 +503,6 @@ This algorithm is recommended by the National Institute of Standards and Technol
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
-### Declaring an availability
-The `MeetingManager` class facilitates the storing of availability in cOOPer.
-
-#### Availability declaration process
-When the user declares an availability, the `addAvailability` function in `MeetingManager` performs some checks before successfully storing their availability.
-1. `addAvailability` looks at the format of the `[date]` and `[time]` entered, which will be checked using the `isValidDateTimeFormat` function.
-2. `addAvailability` checks if the time entered is at the **start of the hour**, using the `isStartOfHour` function.
-3. `addAvailability` checks if the user has already entered their availability under the same date and time, by checking all the names under the specified date and time in the `availability` TreeMap.
-
-The following sequence diagram shows the detailed process of declaring an availability. `username` is `Sebastian` and `userInput` is `available 11-08-2021 14:00`.
-
-<p align="center">
-    <img src="developerGuideDiagrams/availableSequenceDiagram.png" alt="availableSequenceDiagram"><br>
-</p>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
-### Scheduling a meeting
-The `MeetingManager` class facilitates the scheduling of meetings.
-
-#### Scheduling process
-When the user schedules a meeting `ScheduleCommand` checks if the `[date]` and `[time]` parameter is entered and calls `manualScheduleMeeting` in `MeetingManager` if it is and `autoScheduleMeeting` if it isn't.
-
-The following sequence diagram shows the process of **auto** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene`.
-
-<p align="center">
-    <img src="developerGuideDiagrams/autoScheduleSequenceDiagram.png" alt="autoScheduleSequenceDiagram"><br>
-</p>
-
-The following sequence diagram shows the process of **manual** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene /at 11-08-2021 14:00`.
-
-<p align="center">
-    <img src="developerGuideDiagrams/manualScheduleSequenceDiagram.png" alt="manualScheduleSequenceDiagram"><br>
-</p>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
-### Finance
-`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
-
-<p align="center">
-    <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
-</p>
-
-The sequence diagram above illustrates the process of **adding** to a given financial statement, in this case the Balance Sheet.
-
-#### Finance module descriptions
-'FinanceManager' stores **3** attributes:
-1. the **balance sheet**, which is a `BalanceSheet` object.
-2. the **cash flow statement**, which is a `CashFlow` object.
-3. the **free cash flow projections**, which is a `Projection` object.
-
-The `BalanceSheet` object stores the attribute `balanceSheet` which is an `ArrayList<Integer>` object.
-
-The `CashFlow` object stores the attribute `cashFlowStatement` which is an `ArrayList<Integer>` object.
-
-The `Projection` object stores the attribute `growthValues` which is an `ArrayList<Double>` object.
-
-When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
-
-When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
-
-When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
-### Interacting with the forum
-
-The following sequence diagram shows three operations with the forum. `addPost`, `commentPost` and `deletePost`.
-
-+ For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
-
-+ For commenting on a post, `ForumManager` will first check if the `postId` specified is a valid index. If it is not, an exception will be thrown. Otherwise, it will get the `ForumPost` by its `postId` and add a new `ForumComment` to it.
-
-+ For deleting a post, `ForumManager` will again check the `postId` and delete the post only if the `postId` is valid.
-
-  > ℹ️ In the actual implementation, `ForumManager` will also ensure the username of the user requesting for the `deletePost` operation matches the *owner* of the forum post. This checking is omitted in this sequence diagram for simplicity and represented as the method call to`remove(postId)`.
-
-
-<p align="center">
-    <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
-</p>
-
-[⬆️ Back to top](#whats-in-this-developer-guide)
-
 ### Requesting a resource
 
 `Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
@@ -602,11 +516,28 @@ The following sequence diagram shows three operations with the forum. `addPost`,
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
+### Interacting with finance functions
+`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
+
+<p align="center">
+    <img src="developerGuideDiagrams/financeSequenceDiagram.png" alt="financeSequenceDiagram"><br>
+</p>
+
+The sequence diagram above illustrates the process of **adding** to a given financial statement, in this case the Balance Sheet.
+
+When the user wants to add an entry to a financial statement, `FinanceManager` will first determine if the amount should reflect as **positive or negative** in the financial statement, as well as **which section** of the financial statement the entry belongs to. `FinanceManager` will then add the entry to the respective financial statement and its section's net amount.
+
+When the user wants to list a financial statement, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
+
+When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
 ### Generating a PDF from the financial statement
 The [`PdfGenerator`](https://github.com/AY2122S1-CS2113T-W13-4/tp/blob/master/src/main/java/cooper/finance/pdfgenerator/PdfGenerator.java) abstract class is responsible for the generation of the financial statement as a PDF via the `generate` command. It is inherited by the subclasses, `BalanceSheetGenerator` and `CashFlowStatementGenerator`, with each subclass containing different methods to add different sections to the PDF.
 
 #### Creating the PDF with LaTeX
-The PDF is generated with the help of an online LaTeX compiler. The LaTeX (`.tex`) templates for the PDF can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`. 
+The PDF is generated with the help of an online LaTeX compiler. The LaTeX (`.tex`) templates for the PDF can be found under `src/main/resources/pdf`. The `PdfGenerator` class employs the use of the `inputStreamToString()` method of the [`Util`](#util-component) component to convert the contents of these LaTeX templates into a `String` object. The LaTeX template, which is now a `String` is then manipulated by calling Java `String` methods like `replace()` and `append()`.
 Certain identifiers (in the form of LaTeX comments '`%`') in the LaTeX template will be replaced by the actual values of cOOPer's financial statement.
 
 The example below shows the template of an entry in the financial statement:
@@ -647,6 +578,64 @@ The methods `createHeader()`, `createEntry()` and `createSummary()` in `PdfGener
 This forms a long `String` which is then sent to the online LaTeX compiler via a POST request. The reply data obtained from the request is used to construct the PDF via the `write()` method of Java's `FileOutputStream` class.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Declaring an availability
+The `MeetingManager` class facilitates the storing of availability in cOOPer.
+
+#### Availability declaration process
+When the user declares an availability, the `addAvailability` function in `MeetingManager` performs some checks before successfully storing their availability.
+1. `addAvailability` looks at the format of the `[date]` and `[time]` entered, which will be checked using the `isValidDateTimeFormat` function.
+2. `addAvailability` checks if the time entered is at the **start of the hour**, using the `isStartOfHour` function.
+3. `addAvailability` checks if the user has already entered their availability under the same date and time, by checking all the names under the specified date and time in the `availability` TreeMap.
+
+The following sequence diagram shows the detailed process of declaring an availability. `username` is `Sebastian` and `userInput` is `available 11-08-2021 14:00`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/availableSequenceDiagram.png" alt="availableSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+### Scheduling a meeting
+The `MeetingManager` class facilitates the scheduling of meetings.
+
+#### Scheduling process
+When the user schedules a meeting `ScheduleCommand` checks if the `[date]` and `[time]` parameter is entered and calls `manualScheduleMeeting` in `MeetingManager` if it is and `autoScheduleMeeting` if it isn't.
+
+The following sequence diagram shows the process of **auto** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/autoScheduleSequenceDiagram.png" alt="autoScheduleSequenceDiagram"><br>
+</p>
+
+The following sequence diagram shows the process of **manual** scheduling a meeting. `username` of the user scheduling is `Sebastian` and `userInput` is `schedule Project Meeting /with Eugene /at 11-08-2021 14:00`.
+
+<p align="center">
+    <img src="developerGuideDiagrams/manualScheduleSequenceDiagram.png" alt="manualScheduleSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
+
+### Interacting with the forum
+
+The following sequence diagram shows three operations with the forum. `addPost`, `commentPost` and `deletePost`.
+
++ For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
+
++ For commenting on a post, `ForumManager` will first check if the `postId` specified is a valid index. If it is not, an exception will be thrown. Otherwise, it will get the `ForumPost` by its `postId` and add a new `ForumComment` to it.
+
++ For deleting a post, `ForumManager` will again check the `postId` and delete the post only if the `postId` is valid.
+
+  > ℹ️ In the actual implementation, `ForumManager` will also ensure the username of the user requesting for the `deletePost` operation matches the *owner* of the forum post. This checking is omitted in this sequence diagram for simplicity and represented as the method call to`remove(postId)`.
+
+
+<p align="center">
+    <img src="developerGuideDiagrams/forumSequenceDiagram.png" alt="forumSequenceDiagram"><br>
+</p>
+
+[⬆️ Back to top](#whats-in-this-developer-guide)
+
 
 ### Saving and loading data
 > ℹ️Due to the way the `Storage` component is implemented, the classes and methods used for storage have names which are quite similar. In order to generalize the explanations in this section for how data is saved and loaded, the term `XYZ` will be used as a placeholder where `XYZ` is `signInDetails`, `balanceSheet`, `cashFlowStatement`, `availability`, `meetings` and `forum`.
@@ -783,10 +772,36 @@ Example Users:
 
 ### Finance actions
 1. Creating the balance sheet
-2. Accessing the balance sheet
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `bs` to initiate the balance sheet function.
+   3. Ensure that the label beside the command prompt shows `[Balance Sheet]`.
+   4. Enter `add [amount]` to add the first entry. <br>
+   **Expected output:** You will be prompted by cOOPer for the next entry.
+   5. Repeat step iv until cOOPer prompts you to enter `list` upon completion of the balance sheet.
+2. Viewing the balance sheet
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `bs` to initiate the balance sheet function.
+   3. Ensure that the label beside the command prompt shows `[Balance Sheet]`.
+   4. Enter `list` to view the current balance sheet. <br>
+   **Expected output:** All entries will be displayed with the respective net amounts, as well as a check for if the sheet balances.
 3. Creating the cash flow statement
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `cf` to initiate the cash flow statement function.
+   3. Ensure that the label beside the command prompt shows `[Cash Flow]`.
+   4. Enter `add [amount]` to add the first entry. <br>
+   **Expected output:** You will be prompted by cOOPer for the next entry.
+   5. Repeat step iv until cOOPer prompts you to enter `list` upon completion of the cash flow statement.
 4. Viewing the cash flow statement
+   1. Ensure that you are logged in as an *admin*.
+   2. Enter `cf` to initiate the cash flow statement function.
+   3. Ensure that the label beside the command prompt shows `[Cash Flow]`.
+   4. Enter `list` to view the current cash flow statement. <br>
+   **Expected output:** All entries will be displayed with the respective net amounts.
 5. Generating cash flow projections
+   1. Ensure that you are logged in as an *admin*.
+   2. Ensure all the fields of the cash flow statement have been filled using `cf` → `add`.
+   3. Enter `proj [years]` to project up to your specified number of years. <br>
+   **Expected output:** All the projected values of free cash flow will be displayed up to the specified year.
 
 ### Generating the PDF
 The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
