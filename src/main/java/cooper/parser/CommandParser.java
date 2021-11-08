@@ -67,9 +67,7 @@ public class CommandParser extends ParserBase {
     private static final String POSTCOMMENT = "postComment";
     private static final String POSTLIST = "postList";
 
-    /**
-     * Constructor. Initialise internal parser.
-     */
+
     private CommandParser()  {
         super(PARSER_SCHEMA);
     }
@@ -84,9 +82,9 @@ public class CommandParser extends ParserBase {
     }
 
     /**
-     * API to parse a command in string.
-     * @param input command to be parsed
-     * @return a command object, to be passed into command handler
+     * API to parse a string input into a command object.
+     * @param input user input
+     * @return the command object
      */
     public static Command parse(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
@@ -99,6 +97,11 @@ public class CommandParser extends ParserBase {
         return command;
     }
 
+    /**
+     * Impl for parse() method.
+     * @param input command to be parsed
+     * @return the command object
+     */
     @Override
     public Command parseInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
@@ -128,6 +131,11 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    /**
+     * Method to parse single-word input.
+     * @param commandWord single-word input string
+     * @return a command object
+     */
     private Command parseSimpleInput(String commandWord) throws UnrecognisedCommandException {
         assert commandWord != null;
         switch (commandWord) {
@@ -154,6 +162,11 @@ public class CommandParser extends ParserBase {
         }
     }
 
+    /**
+     * Method to parse a multi-word input. Using the Dopsun cli library
+     * @param input multi-word input
+     * @return a command object
+     */
     private Command parseComplexInput(String input) throws UnrecognisedCommandException, NoSuchElementException,
             InvalidCommandFormatException, InvalidScheduleFormatException, NoTimeEnteredException,
             NoUsernameAfterCommaException, InvalidDocumentException, InvalidAddFormatException {
