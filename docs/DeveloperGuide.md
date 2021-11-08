@@ -166,7 +166,7 @@ cOOPer recognizes different sets of inputs at each layer.
     <img src="developerGuideDiagrams/layerDiagram.png" alt="layerDiagram"><br>
 </p> 
 
-Upon launching the app, the user starts at the _**verification** layer_ where they can only [log in](UserGuide.md#login) or [register](UserGuide.md#user-registration). 
+Upon launching the app, the user starts at the _**verification** layer_ where they can only [log in](UserGuide.md#logging-in-login) or [register](UserGuide.md#registration). 
 Entering valid credentials will then grant the user access to the _**features** layer_ where they can input commands to use cOOPer's features. 
 At this layer, entering the `logout` command will bring the user back to the _verification layer_.
 
@@ -245,7 +245,7 @@ The `Ui` component:
 </p>
 
 - The `Parser` component consists of an abstract `ParserBase` class with its subclasses, `CommandParser` and `SignInDetailsParser`. 
-- To emphasize the different [layers](#overview) of cOOPer and to increase cohesiveness, different types of objects are constructed from user input at different layers. 
+- To emphasize the different [layers](#overview) of cOOPer, different types of objects are constructed from user input at different layers. 
 User input at the _verification layer_ will be parsed to construct a `SignInProtocol` object while user input at the _features layer_ will be parsed to construct a `Command` object. 
 - The `SignInProtocol` object executes the signing in of the user with details provided while the `Command` object executes the command input by the user.
 - `ParserBase` contains a reference to the `Parser` *interface* from the [dopsun chatbot-cli](https://github.com/dopsun/chatbot-cli) library used by cOOPer. 
@@ -267,8 +267,7 @@ The `Parser`component:
     <img src="developerGuideDiagrams/verificationComponent.png" alt="verificationComponent"><br>
 </p>
 
-- The `Verification` component consists of a `Verifier` class which verifies user credentials and performs the necessary action in granting access to the user. 
-- `Cooper` contains a reference to a `Verifier` object.
+- The `Verification` component consists of a `Verifier` class which contains the list of registered users and methods to verify user credentials.
 - The `SignInProtocol` class is an abstract class representing one of the two sign in protocols, `Login` or `Registration`. 
 - The `SignInProtocol` class contains a reference to a `SignInDetails` object which as a whole, represents a **sign in attempt** by the user using one of the two protocols, with the corresponding `SignInDetails`.
 For example, a `Login` object containing `SignInDetailsX` represents the user's login attempt with the details `SignInDetailsX`.
@@ -505,10 +504,10 @@ This algorithm is recommended by the National Institute of Standards and Technol
 
 ### Requesting a resource
 
-`Resources` manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
+The `Resources` component manages the access rights to other manager components like the `FinanceManager`, `MeetingManager` and `ForumManager`. The following sequence diagram shows the two main operations of `ResourcesManager`:
 
-+ To get a feature manager, such as the `FinanceManager`, user needs to pass in his `userRole`. `ResourcesManager` will check if the user has the right accessibility and either return the requested object, or a null.
-+ Storage class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using the *give-receive* pattern, instead of universal `getters`.
++ To get a feature manager, such as the `FinanceManager`, the user needs to pass in his `UserRole`. `ResourcesManager` will check if the user has the right access to the feature and returns the requested object if so, and `null` otherwise.
++ The `StorageManager` class has "super privilege" to access internal data structure of `FinanceManager`, `MeetingManager` and `ForumManager`. Private members are passed safely using the *give-receive* pattern, instead of universal `getters`.
 
 <p align="center">
     <img src="developerGuideDiagrams/resourcesSequenceDiagram.png" alt="resourcesSequenceDiagram"><br>
@@ -517,7 +516,7 @@ This algorithm is recommended by the National Institute of Standards and Technol
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
 ### Interacting with finance functions
-`Finance` provides features such as **adding** and **listing** of financial statements, such as the Balance Sheet and Cash Flow Statement as well as **compounded projection** of Free Cash Flow growth.
+The `Finance` component provides features such as **adding** and **listing** of financial statements, i.e. the balance sheet and cash flow statement as well as **compounded projection** of Free Cash Flow growth.
 
 #### Adding to the financial statement
 The sequence diagram below illustrates the process of **adding** to a given financial statement, in this case the balance sheet.
@@ -531,7 +530,7 @@ When the user wants to add an entry to a financial statement, `FinanceManager` w
 #### Viewing the financial statement
 When the user wants to view a financial statement with `list`, `FinanceManager` will run a check that the net amounts of each section of the financial statement are calculated correctly before the statement is displayed to the output.
 
-#### Generating cash flow projections
+#### Projecting cash flow
 When the user wants to project free cash flow, `FinanceManager` will first help to calculate free cash flow by subtracting the CapEx (Capital Expenditure: a field of the cash flow statement) from the total cash from Operating Activities. Subsequently `FinanceManager` will compare this value to the previous year's value, and calculate the percentage increase. This percentage increase will then be used in a recursive [periodic compound interest](https://en.wikipedia.org/wiki/Compound_interest) formula to calculate the following year's free cash flow, at the same percentage increase.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
@@ -620,7 +619,7 @@ The following sequence diagram shows the process of **manual** scheduling a meet
 
 ### Interacting with the forum
 
-The following sequence diagram shows three operations with the forum. `addPost`, `commentPost` and `deletePost`.
+The following sequence diagram shows three operations with the forum, `addPost`, `commentPost` and `deletePost`.
 
 + For adding a post, `ForumManager` will create a new `ForumPost` object and store its username and content.
 
@@ -655,9 +654,9 @@ The following sequence diagram shows the general procedure of saving data to the
 </p>
 
 #### Loading data
-Data is loaded from cOOPer's storage files to the `Verification` and `Resources` component upon launching the app. The `StorageManager` constructor is first called and each subclass `XYZStorage` is initialized with the file paths of their storage files, `XYZ.txt`.
+Data is loaded from cOOPer's storage files into the `Verification` and `Resources` component upon launching the app. The `StorageManager` constructor is first called and each subclass `XYZStorage` is initialized with the file paths of their storage files, `XYZ.txt`.
 The `loadAllData()` method of `StorageManager` is then called and this method in turn calls the `loadXYZ()` methods of the `XYZStorage` subclasses. If the storage files are not present upon launching cOOPer, the storage files will be created and any error in file creation will be made known to the user. 
-Since data in the storage files are of a specific format, any change to the storage format will throw an `InvalidFileDataException` and a message will be printed for the user specifying the file containing invalid data. 
+Since data in the storage files are of a specific format, any change to the storage format will throw an `InvalidFileDataException` and a message will be printed to specify the file containing invalid data. 
 
 The following sequence diagram shows the general procedure of loading data from the storage file upon launching cOOPer.
 
