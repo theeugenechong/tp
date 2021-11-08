@@ -84,8 +84,8 @@ All the code I contributed for this project can be found at this [RepoSense link
 - Set date / time for team meetings.
 - Inspected / ran IDE analysis on code after merges to determine if there are any parts of the code which need cleaning up. (unused variables, unused methods etc.)
 - Added the '⬆️Back to top' labels in both the User Guide and Developer Guide for easier navigation.
-- Helped test the JAR for both releases on my Linux VM.
-- Did both releases for v1.0 and v2.0.
+- Tested the JAR for all the releases on my Linux VM.
+- Did the v1.0 and v2.0 releases.
 - Troubleshoot CI-related problems.
 
 ### Review/mentoring contributions

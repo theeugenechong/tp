@@ -8,6 +8,8 @@ Welcome to cOOPer's Developer Guide!
 
 cOOPer is a **Command Line Interface (CLI) desktop** application developed to simplify administrative processes of **tech startups** such as **communication** and **finance management**.
 
+cOOPer was developed in **Java 11** following an **Object-Oriented Programming (OOP)** paradigm, hence the letters OOP in its name.
+
 This developer guide is for software designers, developers, and software testers of cOOPer. It will be your reference manual if you are looking to:
 - **Know more** about cOOPer's internal **software design**
 - **Improve** cOOPer's internal **software design**
@@ -50,10 +52,12 @@ This developer guide is for software designers, developers, and software testers
 - [Appendix: Instructions for Manual Testing](#appendix-instructions-for-manual-testing)
   - [Launch and shutdown](#launch-and-shutdown)
   - [Sign-in](#sign-in)
-  - [Generating the PDF](#generating-the-pdf)
   - [Viewing help](#viewing-help)
+  - [Finance actions](#finance-actions)
+  - [Generating the PDF](#generating-the-pdf)
   - [Meetings actions](#meetings-actions)
   - [Forum actions](#forum-actions)
+  - [Logging out](#logging-out)
 
 <div style="page-break-after: always;"></div>
 
@@ -81,6 +85,7 @@ This section includes the sources of code, documentation and third-party librari
 3. The implementation of the PBKDF2 algorithm for storing passwords was adapted from [this website](https://www.quickprogrammingtips.com/java/how-to-securely-store-passwords-in-java.html). The two methods for generating the hash as well as obtaining the salt were reused, but tweaked slightly in our implementation.
 4. The method used to convert an input stream to a file in `Util.java` was adapted from [this website](https://www.baeldung.com/convert-input-stream-to-a-file). 
 5. The method used to make a _POST Request_ to an online LaTeX compiler for the `generate` feature was adapted from [this website](https://www.baeldung.com/httpurlconnection-post).
+6. [JUnit 5](https://junit.org/junit5/) is a third-party library used to perform software testing for cOOPer.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)
 
@@ -88,7 +93,7 @@ This section includes the sources of code, documentation and third-party librari
 
 ## Setting Up and Getting Started
 
-> 💡 These are the **software / tools** used in developing cOOPer. You are recommended to use them :
+> 💡 These are the **software / tools** used in developing cOOPer. You are recommended to use them too:
 > - _**IDE**_: IntelliJ IDEA (highly recommended)
 > - _**JDK**_: Java 11 
 > - **Version control**: Git 
@@ -776,6 +781,29 @@ Example Users:
    2. Enter `help`.<br>
    **Expected output:** A list of commands specific to your role is shown along with their formats.
 
+### Finance actions
+1. Creating the balance sheet
+2. Accessing the balance sheet
+3. Creating the cash flow statement
+4. Viewing the cash flow statement
+5. Generating cash flow projections
+
+### Generating the PDF
+The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
+
+1. Generating the balance sheet
+    1. Ensure that you are logged in as an *admin*.
+    2. Fill up the balance sheet with `bs` → `add`.
+    3. Ensure that you have an active Internet connection.
+    4. Enter `generate bs`.<br>
+       **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+2. Generating the cash flow statement
+    1. Ensure that you are logged in as an *admin*.
+    2. Fill up the cash flow statement with `cf` → `add`.
+    3. Ensure that you have an active Internet connection.
+    4. Enter `generate cf`.<br>
+       **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
+
 ### Meetings actions
 1. Declaring availability
     1. Ensure that you are logged in to cOOPer.
@@ -808,30 +836,20 @@ Example Users:
    **Expected output**: A box with the post and your comment you just entered is shown as confirmation.
 3. Deleting a post
    1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least one post
+   2. Ensure you have added at least one post.
    3. Enter `post delete 1`. <br>
    **Expected output**: A box with the post you just deleted is shown as confirmation.
 4. Listing all posts
    1. Ensure that you are logged in to cOOPer.
-   2. Ensure you have added at least one post
+   2. Ensure you have added at least one post.
    3. Enter `post list all`.<br>
    **Expected output**: A box containing all posts and comments you have entered so far is shown.
 
+### Logging out
+1. Logging out
+   1. Ensure that you are logged in to cOOPer.
+   2. Enter `logout`.
+   **Expected output**: A message informing you that you have logged out of cOOPer is shown along with the instructions on how to log in, register or exit. The label at the command prompt now shows `[Logged out]`.
 
-### Generating the PDF
-The `generate` command works regardless of whether the prompt label is showing `[Balance Sheet]`, `[Cash Flow]` or is not even present.
-
-1. Generating the balance sheet
-   1. Ensure that you are logged in as an *admin*.
-   2. Fill up the balance sheet with `bs` → `add`.
-   3. Ensure that you have an active Internet connection.
-   4. Enter `generate bs`.<br>
-   **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'BalanceSheet.pdf' is created in a folder named 'output' in the folder containing the JAR file.
-2. Generating the cash flow statement
-   1. Ensure that you are logged in as an *admin*.
-   2. Fill up the cash flow statement with `cf` → `add`.
-   3. Ensure that you have an active Internet connection.
-   4. Enter `generate cf`.<br>
-   **Expected output**: A message informing you that the PDF has been successfully generated is shown. A PDF named 'CashFlowStatement.pdf' is created in a folder named 'output' in the folder containing the JAR file.
 
 [⬆️ Back to top](#whats-in-this-developer-guide)

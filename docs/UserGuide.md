@@ -88,7 +88,7 @@ The table below explains the formatting and symbols in this user guide.
 ## Setup
 
 1. Download the latest version of cOOPer [here](https://github.com/AY2122S1-CS2113T-W13-4/tp/releases).
-2. Copy the JAR (.jar) file to an empty folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
+2. Copy the JAR (.jar) file to an **empty** folder of your choice. This folder will be used as the *home folder* for your cOOPer application.
 3. If you are using Windows, [launch the Command Prompt](https://www.lifewire.com/open-command-prompt-in-a-folder-5185505)
    in the home folder. If you are using Mac or Linux, [open a Terminal window](https://www.groovypost.com/howto/open-command-window-terminal-window-specific-folder-windows-mac-linux/#:~:text=To%20open%20a%20Terminal%20window%20from%20within%20a%20folder%20in,window%20to%20the%20selected%20folder.) 
    in the home folder.
@@ -869,7 +869,7 @@ The contents of the folder is as shown in the diagram below.
     <img width="500" src="userGuideImages/cooperStorage.png" alt="cooperStorage"><br>
 </p> 
 
->⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content of these files.
+>⚠️The content of these storage files are in a specific format comprehensible by cOOPer. **Do not** edit the content or read/write access of these files.
 
 
 #### availability.txt
