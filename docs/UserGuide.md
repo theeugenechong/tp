@@ -670,7 +670,7 @@ Proceeds from Issuing Debt  300
 Dividends Paid  200
 Net Cash from Financing Activities:  500
 -----FREE CASH FLOW-----
-Free Cash Flow   3000
+Last year's Free Cash Flow   3000
 =========================================================================
 ```
 
@@ -694,7 +694,8 @@ Free Cash Flow   3000
 
 ```
 =========================================================================
-At your current rate of profitability growth in Free Cash Flow, these are future year's projections:
+At your current rate of profitability growth in Free Cash Flow, these are 
+future year's projections:
 1 year: 4083
 2 year: 4763
 3 year: 5557
@@ -722,7 +723,7 @@ After 3 years you can expect Free Cash Flow of 5558
 
 ```
 =========================================================================
-The pdf file has been successfully generated!
+The PDF file has been successfully generated!
 =========================================================================
 ```
 
@@ -777,7 +778,8 @@ The pdf file has been successfully generated!
 ```
 =========================================================================
 Success!
-You have scheduled a <<PR>> meeting at 08-11-2021 10:00 with attendees: Eugene, Sebastian
+You have scheduled a <<PR>> meeting at 08-11-2021 10:00 
+with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
@@ -792,7 +794,8 @@ You have scheduled a <<PR>> meeting at 08-11-2021 10:00 with attendees: Eugene, 
 ```
 =========================================================================
 Success!
-You have scheduled a <<PR>> meeting at 08-11-2021 14:00 with attendees: Eugene, Sebastian
+You have scheduled a <<PR>> meeting at 08-11-2021 14:00 
+with attendees: Eugene, Sebastian
 =========================================================================
 ```
 
