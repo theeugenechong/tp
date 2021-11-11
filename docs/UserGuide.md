@@ -179,7 +179,7 @@ This section explains how you can register an account with cOOPer in order to ga
 
 - Once a member has been registered, they will be able to log in to cOOPer to access its features.
 
-- How to register a user:
+- How to register:
   1. When you see the `[Logged out]` label beside cOOPer's prompt, enter `register [username] /pw [password] /as [role]`. 
   2. Upon successful registration, you should see a message informing you of your successful registration.
   3. You can now log in to access cOOPer's features specific to your role. Refer to the [Logging In](#logging-in-login) section to find out more about logging in.
